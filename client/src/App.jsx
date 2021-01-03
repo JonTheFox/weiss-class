@@ -49,97 +49,70 @@ const App = (props) => {
 							render={(route) => (
 								<EntireView>
 									<ErrorBoundary>
-										<Suspense
-											key="main-suspense"
-											fallback={<WeissSpinner />}
+										<View
+											responsive={true}
+											animateChildren={true}
+											key="innerView"
 										>
-											<Switch location={route.location}>
-												<Route
-													path={`${route.match.path}${baseRoute}`}
+											<Suspense
+												key="main-suspense"
+												fallback={<WeissSpinner />}
+											>
+												<Switch
+													location={route.location}
 												>
-													<View
-														responsive={true}
-														animateChildren={true}
-														key="innerView"
+													<Route
+														path={`${baseRoute}advice`}
 													>
-														<Suspense
-															key="app-suspense"
-															fallback={
-																<WeissSpinner />
-															}
-														>
-															<Switch
-																location={
-																	route.location
-																}
-															>
-																<Route
-																	path={`${route.match.path}${baseRoute}advice`}
-																>
-																	<SageAdvice />
-																</Route>
+														<SageAdvice />
+													</Route>
 
-																<Route
-																	path={`${route.match.path}${baseRoute}login`}
-																	render={(
-																		route
-																	) => (
-																		<LazyLogin
-																			route={
-																				route
-																			}
-																		/>
-																	)}
-																/>
-
-																<Route
-																	path={`${route.match.path}${baseRoute}loading`}
-																>
-																	<WeissSpinner
-																		route={
-																			route
-																		}
-																	/>
-																</Route>
-																<Route
-																	path={`${route.match.path}${baseRoute}error`}
-																>
-																	<ErrorBoundary
-																		debug={
-																			true
-																		}
-																		route={
-																			route
-																		}
-																	/>
-																</Route>
-
-																<Route
-																	path={`${route.match.path}${baseRoute}error`}
-																>
-																	<LogoScreen
-																		route={
-																			route
-																		}
-																	></LogoScreen>
-																</Route>
-															</Switch>
-														</Suspense>
-													</View>
-												</Route>
-												<Route
-													path={`${route.match.path}realtime`}
-												>
-													<LazyRealtimeRoom
-														route={route}
+													<Route
+														path={`${baseRoute}login`}
+														render={(route) => (
+															<LazyLogin
+																route={route}
+															/>
+														)}
 													/>
-												</Route>
 
-												<Redirect
-													to={`${route.match.path}`}
-												/>
-											</Switch>
-										</Suspense>
+													<Route
+														path={`${route.match.path}${baseRoute}loading`}
+													>
+														<WeissSpinner
+															route={route}
+														/>
+													</Route>
+													<Route
+														path={`${route.match.path}${baseRoute}error`}
+													>
+														<ErrorBoundary
+															debug={true}
+															route={route}
+														/>
+													</Route>
+
+													<Route
+														path={`${route.match.path}${baseRoute}realtime`}
+													>
+														<LazyRealtimeRoom
+															route={route}
+														/>
+													</Route>
+
+													<Route
+														path={`${route.match.path}${baseRoute}`}
+													>
+														<LogoScreen
+															route={route}
+														></LogoScreen>
+													</Route>
+													<Redirect
+														to={`${baseRoute}`}
+													></Redirect>
+												</Switch>
+											</Suspense>
+										</View>
 									</ErrorBoundary>
 								</EntireView>
 							)}

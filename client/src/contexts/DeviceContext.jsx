@@ -143,21 +143,7 @@ const DeviceContextProvider = (props) => {
 			//there is no cross-browser mechanism to detect fullscreen :( (Chrome treats maximzed window as full screen, which is not good for us if we want to hide the appbar when in fullscreen mode)
 			// let fullscreen = isInFullScreen();
 			let fullscreen = false;
-			// debugger;
 
-			// const appbar = document.querySelector(".appbar-container");
-			// if (!appbar) {
-			// 	loggError(
-			// 		`Did not find the appbar element, so can't toggle its opacity when entering/exiting fullscreen mode`
-			// 	);
-			// } else {
-			// 	//hide the appbar when in fullscreen
-			// 	debugger;
-			// 	const opacity = fullscreen ? 0 : 1;
-			// 	appbar.style.opacity = opacity;
-			// 	// appbar.style.setProperty("--appbar-height", "0px");
-			// 	logg("appbar: ", fullscreen ? "hidden" : "visible");
-			// }
 			const {
 				//appbarHeightXs,
 				appbarHeightSm,
@@ -183,7 +169,6 @@ const DeviceContextProvider = (props) => {
 
 			const docElemStyle = document.documentElement.style;
 			docElemStyle.setProperty("--appbar-height", appbarHeightValue);
-			debugger;
 			docElemStyle.setProperty("--drawer-width", appbarWidthValue);
 
 			const responsiveData = {

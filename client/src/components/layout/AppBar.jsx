@@ -66,7 +66,7 @@ import { DeviceContext } from "../../contexts/DeviceContext.jsx";
 
 import "./_Appbar.scss";
 
-const APP_ROUTE = "app/";
+const APP_ROUTE = "/";
 const SLIDES_ROUTE = "present-simple/";
 
 const mainLinks = [
@@ -256,7 +256,6 @@ const ResponsiveDrawer = (props) => {
   } = appUtils;
 
   const [searchOptions, setSearchOptions] = useState([]);
-  // debugger;
   const [getOptionLabel, setGetOptionLabel] = useState(EMPTY_FUNC);
 
   const sharedRefs = useRef(props.sharedRefs?.current || {});
@@ -373,9 +372,7 @@ const ResponsiveDrawer = (props) => {
     }
 
     setSearchOptions(searchables.options?.flat() || []);
-
     setGetOptionLabel(searchables.getOptionLabel);
-    // debugger;
   }, [appState]);
 
   const renderMenuList = useCallback((menuItems, secondary = false) => {
