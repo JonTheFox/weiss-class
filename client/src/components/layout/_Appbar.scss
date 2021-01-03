@@ -63,12 +63,10 @@
 	}
 }
 
-#root .appbar {
-	.appbar--drawer {
-		width: var(--drawer-width, 48px);
-		flex-shrink: 0;
-		font-size: 1.25rem;
-	}
+.appbar--drawer {
+	min-width: var(--drawer-width, 200px);
+	flex-shrink: 0;
+	font-size: 1.25rem;
 }
 
 #root .appbar {

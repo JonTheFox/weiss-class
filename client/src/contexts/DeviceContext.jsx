@@ -12,8 +12,6 @@ let logg;
 let loggError;
 
 const isInFullScreen = () => {
-	// debugger;
-
 	return Boolean(
 		(!window.screenTop && !window.screenY) ||
 			document.isFullScreen ||
@@ -31,7 +29,7 @@ const setAppbarHeight = (cssValueString = "") => {
 	);
 };
 
-const setAppbarSize = ev => {
+const setAppbarSize = (ev) => {
 	const appbar = document.querySelector(".appbar-container");
 	debugger;
 	if (!appbar) {
@@ -40,14 +38,6 @@ const setAppbarSize = ev => {
 		);
 		return null;
 	}
-	//const nowInFullScreen = isInFullScreen();
-	// const opacity = nowInFullScreen ? 0 : 1;
-	// appbar.style.opacity = opacity;
-	// // appbar.style.setProperty("--appbar-height", "0px");
-	// setAppbarHeight("0px");
-	// logg("appbar is now ", nowInFullScreen ? "hidden" : "visible");
-
-	// return { opacity };
 };
 
 const isPhoneOrTablet = () => {
@@ -87,7 +77,7 @@ const getDecimalString = (num, withPx = true) => {
 	//with 2 digits after the decimal point
 	return (num * 0.01).toString().slice(0, 6);
 };
-const addPxSuffix = str => str + "px";
+const addPxSuffix = (str) => str + "px";
 
 /*Important: this Context should be consumed only by components that do not mind re-render on orientation change or screen resizing (which may cause orientation change, at least insofar as orientation detection goes).
  */
@@ -97,7 +87,7 @@ const addPxSuffix = str => str + "px";
 const DeviceContext = React.createContext([{}, () => {}]);
 
 //wrap the context in a stateful component, so that we can provide *dynamic* context (i.e. data and functionality that can be changed during application runtime)
-const DeviceContextProvider = props => {
+const DeviceContextProvider = (props) => {
 	const [appUtils] = useContext(AppContext);
 	const { Logger } = appUtils;
 	if (!logg || !loggError) {
@@ -172,7 +162,8 @@ const DeviceContextProvider = props => {
 				//appbarHeightXs,
 				appbarHeightSm,
 				appbarHeightMd,
-				appbarHeightLg
+				appbarHeightLg,
+				drawerWidth,
 			} = theme.layout;
 
 			const appbarHeight = fullscreen
@@ -184,12 +175,16 @@ const DeviceContextProvider = props => {
 				: screenType === "largeScreen" || screenType === "xlScreen"
 				? appbarHeightMd
 				: appbarHeightSm; //mobile-first design
+			const appmenuWidth = drawerWidth;
 			const isAppbarVisible = Boolean(appbarHeight);
 			const appbarHeightValue = addPxSuffix(appbarHeight);
+			const appbarWidthValue = addPxSuffix(appmenuWidth);
 			// setAppbarHeight(appbarHeightValue);
 
 			const docElemStyle = document.documentElement.style;
 			docElemStyle.setProperty("--appbar-height", appbarHeightValue);
+			debugger;
+			docElemStyle.setProperty("--drawer-width", appbarWidthValue);
 
 			const responsiveData = {
 				isMobile,
@@ -202,7 +197,7 @@ const DeviceContextProvider = props => {
 				appbarHeight,
 				isAppbarVisible,
 				size, //legacy
-				screenSize: size
+				screenSize: size,
 				//fullscreen
 			};
 
@@ -229,7 +224,7 @@ const DeviceContextProvider = props => {
 					//full viewport sizes for landscape-only
 					vw_max__landscape: vw_max__landscapePx,
 					vh_max__landscape: vh_max__landscapePx,
-					vh_max__landscape___minus_appbar: vh_max__landscape___minus_appbarPx
+					vh_max__landscape___minus_appbar: vh_max__landscape___minus_appbarPx,
 				};
 				return setResponsiveData(responsiveData);
 			}
@@ -313,7 +308,7 @@ const DeviceContextProvider = props => {
 				//full viewport sizes for landscape-only
 				vw_max__landscape: vw_max__landscapePx,
 				vh_max__landscape: vh_max__landscapePx,
-				vh_max__landscape___minus_appbar: vh_max__landscape___minus_appbarPx
+				vh_max__landscape___minus_appbar: vh_max__landscape___minus_appbarPx,
 			};
 
 			return setResponsiveData(responsiveData);

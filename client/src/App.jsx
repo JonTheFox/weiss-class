@@ -35,7 +35,7 @@ const LazyLogin = lazy(() =>
 	import(/* webpackChunkName: "Login" */ "./components/pages/Login.jsx")
 );
 
-const baseRoute = "app/";
+const baseRoute = "/";
 const slidesRoute = "present-simple/";
 //meaningless comment
 
@@ -114,16 +114,14 @@ const App = (props) => {
 																	/>
 																</Route>
 
-																<Redirect
-																	to={`${route.match.path}`}
-																/>
-
-																<Route>
+																<Route
+																	path={`${route.match.path}${baseRoute}error`}
+																>
 																	<LogoScreen
 																		route={
 																			route
 																		}
-																	/>
+																	></LogoScreen>
 																</Route>
 															</Switch>
 														</Suspense>
@@ -138,7 +136,7 @@ const App = (props) => {
 												</Route>
 
 												<Redirect
-													to={`${route.match.path}${baseRoute}`}
+													to={`${route.match.path}`}
 												/>
 											</Switch>
 										</Suspense>

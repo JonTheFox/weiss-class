@@ -71,81 +71,15 @@ const SLIDES_ROUTE = "present-simple/";
 
 const mainLinks = [
   { title: "Home", path: `${APP_ROUTE}animals/home`, Icon: Home },
-
-  { title: "Quiz", path: `${APP_ROUTE}animals/quiz`, Icon: VideoGameAsset },
-  {
-    title: "Vocabulary",
-    path: `${APP_ROUTE}/vocabulary`,
-    Icon: Collections,
-  },
-  {
-    title: "Animals Review",
-    path: `${APP_ROUTE}animals/review`,
-    Icon: Collections,
-  },
-  {
-    title: "Song Lyrics",
-    path: `${APP_ROUTE}song-lyrics`,
-    Icon: MusicNote,
-  },
 ];
 
 const secondaryLinks = [
-  {
-    title: "Speak",
-    path: `${APP_ROUTE}color-recognizer`,
-    Icon: RecordVoiceOver,
-    adminOnly: false,
-  },
   {
     title: "Realtime",
     path: `realtime`,
     Icon: Chat,
     adminOnly: true,
   },
-  {
-    title: "Present Simple",
-    path: `${SLIDES_ROUTE}`,
-    Icon: SlideShow,
-  },
-  {
-    title: "Sleep And Emotions",
-    path: `${SLIDES_ROUTE}sleep`,
-    Icon: SlideShow,
-  },
-  {
-    title: "Past-Tense Verb Forms",
-    path: `${APP_ROUTE}past-tense-verb-forms`,
-    Icon: Toc,
-  },
-  {
-    title: "Present Simple Verb Form",
-    path: `${APP_ROUTE}present-simple-verb-forms`,
-    Icon: Toc,
-  },
-  {
-    title: "Ordinals Table",
-    path: `${APP_ROUTE}ordinals-table`,
-    Icon: FormatListNumbered,
-  },
-
-  {
-    title: "Sentence Types",
-    path: `${APP_ROUTE}sentence-types`,
-    Icon: Toc,
-  },
-
-  // {
-  //   title: "Speech Recognizer",
-  //   path: `${APP_ROUTE}speech-recognizer`,
-  //   Icon: RecordVoiceOver,
-  // },
-  // {
-  //   title: "Speech Recorder",
-  //   path: `${APP_ROUTE}speech-recorder`,
-  //   Icon: Mic,
-  // },
-
   {
     title: "Advice",
     path: `${APP_ROUTE}advice`,
@@ -416,11 +350,6 @@ const ResponsiveDrawer = (props) => {
       loggError("No searchables items in appState ?");
       return;
     }
-
-    // for (let [linkName, link] of Object.entries(allLinks)) {
-    //   link.groupName =
-    //   linkList.push(link);
-    // }
 
     if (!appState.searchables.options.length) {
       const linkList = [];
