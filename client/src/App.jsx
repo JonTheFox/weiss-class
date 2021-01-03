@@ -19,6 +19,8 @@ import { AppContextProvider } from "./contexts/AppContext.jsx";
 import { DeviceContextProvider } from "./contexts/DeviceContext.jsx";
 import theme from "./constants/theme.js";
 
+//
+
 const LazyAnimals = lazy(() =>
 	import(
 		/* webpackChunkName: "Animals" */ "./components/sections/Animals.jsx"
