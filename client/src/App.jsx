@@ -77,14 +77,14 @@ const App = (props) => {
 													/>
 
 													<Route
-														path={`${route.match.path}${baseRoute}loading`}
+														path={`${baseRoute}loading`}
 													>
 														<WeissSpinner
 															route={route}
 														/>
 													</Route>
 													<Route
-														path={`${route.match.path}${baseRoute}error`}
+														path={`${baseRoute}error`}
 													>
 														<ErrorBoundary
 															debug={true}
@@ -93,7 +93,7 @@ const App = (props) => {
 													</Route>
 
 													<Route
-														path={`${route.match.path}${baseRoute}realtime`}
+														path={`${baseRoute}realtime`}
 													>
 														<LazyRealtimeRoom
 															route={route}
@@ -101,7 +101,7 @@ const App = (props) => {
 													</Route>
 
 													<Route
-														path={`${route.match.path}${baseRoute}`}
+														path={`${baseRoute}`}
 													>
 														<LogoScreen
 															route={route}
