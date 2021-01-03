@@ -93,7 +93,7 @@ const App = (props) => {
 													</Route>
 
 													<Route
-														path={`${baseRoute}realtime`}
+														path={`${baseRoute}classroom-select`}
 													>
 														<LazyRealtimeRoom
 															route={route}

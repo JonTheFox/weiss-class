@@ -11,7 +11,7 @@ import "./LogoScreen.scss";
 import View from "../layout/View.jsx";
 import VideoPlayer from "../partials/VideoPlayer.jsx";
 
-const BASE_ROUTE = "app/";
+const BASE_ROUTE = "/";
 
 const resolveUrl = "https://soundcloud.com/ksmtk/chronemics";
 
@@ -49,10 +49,6 @@ const LogoScreen = (props) => {
 	const { navigateTo, request, Logger, PromiseKeeper, EMPTY_FUNC } = appUtils;
 	const [video, setVideo] = useState(CLOUD_VIDEOS[0]);
 
-	const [isAwaitingRedirect, setIsAwitingRedirect] = useState(
-		appState.isFirstVisit
-	);
-
 	const [isPlaying, setIsPlaying] = useState(false);
 
 	// const [searchOptions, setSearchOptions] = useState([]);
@@ -63,83 +59,13 @@ const LogoScreen = (props) => {
 		logg = logger.logg;
 		loggError = logger.loggError;
 		promiseKeeper = new PromiseKeeper({ label });
-
-		// const YOUR_API_KEY =
-		// 	"563492ad6f917000010000016e7376111d2542b78cd27c7178641425";
-
-		// request(
-		// 	"GET",
-		// 	"https://api.pexels.com/videos/search?query=beach&per_page=15&page=1",
-		// 	null,
-		// 	{ headers: { Authorization: YOUR_API_KEY } }
-		// ).then((res) => {
-		// 	debugger;
-		// });
-
-		/*
-https://api.pexels.com/v1/search?query=example+query&per_page=15&page=1
-
-		*/
-
-		/*
-
-query	Get photos related to this query. (required)
-per_page	Defines the number of results per page. (optional, default: 15, max: 80)
-page	Defines the number of the page. (optional, default: 1)
-		*/
-
-		const { pathname } = props.route.location;
-		if (
-			!appState.isFirstVisit ||
-			pathname.length === 1 ||
-			pathname === "/app/"
-		) {
-			return setIsAwitingRedirect(false);
-		}
-		//Upon first visit in the current session, request the server to provide the riginal URL that was sent to it, so that the client app can know where to navigate
-		appState.isFirstVisit = false;
-		request("GET", "/redirect/originalUrl").then((ajaxResult) => {
-			try {
-				const { error, subroutes } = ajaxResult;
-				if (error) throw new Error(error);
-				if (!subroutes) {
-					logg(
-						"Not redirecting because the HTTP request was made to the application root."
-					);
-					setIsAwitingRedirect(false);
-
-					return;
-				}
-
-				logg("Redirecting to originally-requested URL: ", subroutes);
-
-				logg(`match.path: ${match.path}`);
-				const redirectPath = `${match.path}/${subroutes}`;
-				logg(redirectPath);
-
-				window.requestAnimationFrame(() => {
-					navigateTo(redirectPath, props.history);
-				});
-			} catch (err) {
-				loggError("Did not redirect. Reason:", err.message);
-				appState.isFirstVisit = true;
-				setIsAwitingRedirect(false);
-			}
-		});
 	}, []);
-
-	useEffect(() => {
-		logg("isAwaitingRedirect: ", isAwaitingRedirect);
-	}, [isAwaitingRedirect]);
 
 	return (
 		<View
 			animate={false}
 			className={clsx(
 				"logo-screen",
-				isAwaitingRedirect
-					? "awaiting-redirect"
-					: "not-awaiting-redirect",
 				"position--relative",
 				showVideo && "show-video",
 				isPlaying && "playing"
@@ -162,10 +88,7 @@ page	Defines the number of the page. (optional, default: 1)
 					}}
 				></VideoPlayer>
 			)}
-			<Link
-				className={"link slide--from-bottom"}
-				to={`/${BASE_ROUTE}animals/home`}
-			>
+			<Link className={"link"} to={`${BASE_ROUTE}classroom-select`}>
 				<Button
 					className={"enter-btn"}
 					variant="outlined"
@@ -175,7 +98,14 @@ page	Defines the number of the page. (optional, default: 1)
 					Enter
 				</Button>
 			</Link>
-			<h1 className={clsx("weiss-title unselectable")}>Weiss</h1>
+			<h1 className={clsx("weiss-title unselectable")}>
+				<Link
+					className={"weiss-title--link"}
+					to={`${BASE_ROUTE}classroom-select`}
+				>
+					Weiss
+				</Link>
+			</h1>
 		</View>
 	);
 };

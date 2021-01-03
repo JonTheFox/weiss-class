@@ -494,7 +494,7 @@ const RTEntrance = (props) => {
 
 			<div className={clsx("section section--header flex")}>
 				<PosedTitle pose={"enter"} initialPose="exit">
-					<h2>What kind of user are you?</h2>
+					<h2>I am a...</h2>
 				</PosedTitle>
 			</div>
 			<div

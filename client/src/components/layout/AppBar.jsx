@@ -71,15 +71,15 @@ const SLIDES_ROUTE = "present-simple/";
 
 const mainLinks = [
   { title: "Home", path: `${APP_ROUTE}animals/home`, Icon: Home },
+  {
+    title: "Classrooms",
+    path: `classroom-select`,
+    Icon: Chat,
+    adminOnly: false,
+  },
 ];
 
 const secondaryLinks = [
-  {
-    title: "Realtime",
-    path: `realtime`,
-    Icon: Chat,
-    adminOnly: true,
-  },
   {
     title: "Advice",
     path: `${APP_ROUTE}advice`,

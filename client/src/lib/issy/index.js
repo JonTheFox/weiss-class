@@ -173,7 +173,6 @@ var timing = (function() {
     let intervalIndex = 0;
     const _clear = (timeoutOrInterval = "timeout", timerID, timerItem = {}) => {
         if (!timerID) {
-            debugger;
             loggError(`_clear(): called without a timerID`);
             return null;
         }
@@ -1759,7 +1758,7 @@ const request = async (method = "GET", uri = "", payload = {}, config = {}) => {
             error: err.message,
             response: parsedResponse,
         };
-        debugger;
+
         logg(ajaxResult);
         const throwOnError = config.throwOnError || false;
         if (throwOnError) {

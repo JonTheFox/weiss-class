@@ -98,12 +98,6 @@
     transition: all 0.5s ease-in-out;
     transform: scale(1);
   }
-  &.awaiting-redirect {
-    .enter-btn {
-      opacity: 0;
-      transform: scale(0);
-    }
-  }
 }
 
 #root .phone.portrait:not(*.mobile) {
@@ -227,6 +221,11 @@
       //   left: 50%;
       //   top: 45%;
       // }
+
+      .weiss-title--link {
+        text-decoration: none;
+        color: var(--white, white);
+      }
 
       .link {
         // position: fixed;
