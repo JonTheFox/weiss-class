@@ -19,7 +19,7 @@ import { AppContextProvider } from "./contexts/AppContext.jsx";
 import { DeviceContextProvider } from "./contexts/DeviceContext.jsx";
 import theme from "./constants/theme.js";
 //
-
+//
 const SageAdvice = lazy(() =>
 	import(
 		/* webpackPrefetch: true, webpackChunkName: "SageAdvice" */ "./components/pages/SageAdvice.jsx"
