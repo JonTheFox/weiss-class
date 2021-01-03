@@ -1,0 +1,1217 @@
+@import "../_shapes.scss";
+
+//use a .background element if you want to have an animated background that doesn't create scrollbars (or make the container scrollable) when it's bigger than the container
+.background {
+	position: absolute;
+	top: 0;
+	left: 0;
+	// z-index: 0; //this puts the background ABOVE element that don't have a defined z-index... so, no. no z-index, not even zero
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	//use a .has-before on the .background element, along with .show-before or .show-after
+	background: unset;
+}
+
+.white-out {
+	z-index: -10;
+	&:after {
+		content: "";
+		position: absolute;
+		background-color: $white;
+		height: 100%;
+		width: 100%;
+		top: 0;
+		left: 0;
+		opacity: 0;
+		transition: opacity 0.75s;
+		opacity: 1;
+		// z-index: 200;
+	}
+}
+
+.bg-anim--move---left {
+	background-size: 150% 400%;
+	animation-name: bg-anim--move---left-KF;
+	animation-duration: 3s;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease;
+}
+@keyframes bg-anim--move---left-KF {
+	0% {
+		background-position: 0% 0%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+}
+
+// #root .flash-bar {
+// 	background-size: 50% 80%;
+// 	background: linear-gradient(75deg, var(--white), var(--primary));
+// 	animation-name: flash-bar-KF;
+// 	animation-duration: 1s;
+// 	animation-iteration-count: infinite;
+// 	animation-timing-function: ease;
+// 	// background-size: 50% 25%;
+// }
+// @keyframes flash-bar-KF {
+// 	0% {
+// 		background-position: 0% 0%;
+// 	}
+// 	50% {
+// 		background-position: 150% 500%;
+// 	}
+// }
+
+.has-before.cloud-left:before,
+.before--background-sky:before {
+	background-image: linear-gradient(
+		125deg,
+		var(--secondary),
+		var(--white),
+		var(--secondary)
+	);
+	background-size: 400% 200%;
+	animation-name: cloud-left-KF;
+	animation-duration: 4s;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease;
+}
+@keyframes cloud-left-KF {
+	0% {
+		background-position: 0% 0%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+}
+
+#root .shine--left:not(*.has-before),
+#root .shine--left---before:before,
+#root .shine--left---after:after {
+	background-image: linear-gradient(
+		125deg,
+		var(--transparent),
+		var(--white),
+		var(--transparent)
+	);
+	background-position: 300% 200%;
+	background-size: 300% 200%;
+	z-index: 100;
+	animation-name: move-left-KF;
+	animation-duration: 1s;
+	animation-iteration-count: infinite;
+	animation-fill-mode: both;
+	animation-timing-function: ease-in;
+}
+
+@keyframes move-left-KF {
+	0% {
+		background-position: 0% 0%;
+	}
+	100% {
+		background-position: 100% 100%;
+	}
+}
+
+.has-before.sun---up:before,
+.before--sun---up:before {
+	background-image: linear-gradient(
+		125deg,
+		var(--eye-darker-1),
+		var(--white)
+	);
+	background-size: 100% 200%;
+	animation-name: sun-up-KF;
+	animation-duration: 6s;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+	animation-direction: normal;
+}
+@keyframes sun-up-KF {
+	0% {
+		background-position: 0% 0%;
+	}
+	50% {
+		background-position: 100% 100%;
+	}
+}
+
+.has-before.clear-bg:before {
+	background: linear-gradient(
+		-190deg,
+		var(--white),
+		var(--transparent-secondary)
+	);
+	background-size: 300% 200%;
+	animation-name: cloud-up-KF;
+	animation-duration: 20s;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease;
+}
+
+.has-before.cloud-up:before {
+	background: linear-gradient(
+		-190deg,
+		var(--secondary),
+		var(--white),
+		var(--white)
+	);
+	background-size: 300% 200%;
+	animation-name: cloud-up-KF;
+	animation-duration: 20s;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease;
+}
+@keyframes cloud-up-KF {
+	0% {
+		background-position: 0% 0%;
+	}
+	50% {
+		background-position: 0% 30%;
+	}
+	70% {
+		background-position: 0% 40%;
+	}
+	100% {
+		background-position: 0% 0%;
+	}
+}
+
+#root .after-spheres:after {
+	// background: linear-gradient(-45deg, chocolate, $black, chocolate);
+
+	background-image: radial-gradient(
+		circle,
+		var(--yellow) 20%,
+		var(--transparent-white) 21%,
+		var(--black) 22%
+	);
+	background-color: var(--transparent);
+	// background-size: 50% 50%;
+	background-size: 20% 100%;
+	animation-name: spheres-KF;
+	animation-duration: 20s;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+	// transition: transform 1.2s;
+	animation-direction: normal;
+	// border-radius: 50%;
+}
+
+#root .sun {
+	background-image: radial-gradient(
+		circle,
+		var(--yellow) 40%,
+		var(--transparent-yellow) 35%,
+		var(--transparent) 50%
+	);
+	position: absolute;
+	width: 20vw;
+	height: 20vw;
+	z-index: 1;
+	&.show-sun {
+		opacity: 1;
+	}
+}
+
+#root .cloudy-sky {
+	//fallback
+	// background-color: var(--secondary, white);
+	// z-index: 0;
+	&.has-before:before,
+	&.has-after:after {
+		z-index: -1;
+
+		background-color: var(--transparent);
+		background-image: radial-gradient(
+			circle,
+			var(--white) 18.5%,
+			// var(--transparent-black) 19.25%,
+			var(--transparent-white) 19.5%
+		);
+		background-size: 20% 150%; //cloud
+		animation-name: before--cloudy-sky-KF;
+		animation-duration: 40s;
+		animation-iteration-count: infinite;
+		animation-timing-function: ease;
+		// transition: transform 1.2s;
+		animation-direction: normal;
+		// border-radius: 50%;
+		transform: scale3d(3, 1.5, 1.5) rotate3d(3, 1.5, 1.5, -5deg);
+	}
+}
+
+//landscacpe version, when available
+#root .landscape .cloudy-sky.has-before:not(*.portrait-only--phone):before {
+	transform: scale3d(3, 3, 3) rotate3d(3, 1.5, 1.5, -10deg);
+	background-size: 10% 150%; //cloud
+}
+@keyframes before--cloudy-sky-KF {
+	0% {
+		background-position: 0% 0%;
+	}
+
+	50% {
+		background-position: -100% -10%;
+	}
+	100% {
+		background-position: -200% 0%;
+	}
+}
+
+#root .cloudy-top {
+	overflow: visible;
+
+	&.has-after:after {
+		--local-height: var(--cloud-height, 2rem);
+		z-index: 100;
+		// background-color: var(--secondary);
+		background-image: radial-gradient(
+			circle,
+			var(--white) 60%,
+			var(--canvas) 64%,
+			var(--transparent) 67.5%
+		);
+		background-size: 3.33% 135%;
+		animation-name: cloudy-top-KF;
+		animation-duration: 120s;
+		animation-iteration-count: infinite;
+		animation-timing-function: linear;
+		animation-direction: normal;
+		z-index: 1000;
+		height: var(--local-height);
+		right: 0;
+		transform: scale3d(3, 1, 1) rotate3d(10, 1, 1, 0deg);
+		// top: calc(-1 * var(--local-height));
+	}
+}
+
+@keyframes cloudy-top-KF {
+	0% {
+		background-position: 0% 0%;
+		// transform: scale3d(3, 1.5, 1.5) rotate3d(10, 1.5, 1.5, -2deg);
+	}
+
+	50% {
+		background-position: -333% -10%;
+		// transform: scale3d(3, 1.5, 1.5) rotate3d(10, 1.5, 1.5, 2deg);
+	}
+	100% {
+		background-position: -666% 0%;
+	}
+}
+
+#root .has-before.bg-changing {
+	background-color: var(--color-bg, white);
+	// background: radial-gradient(
+	// 	circle at 65% 15%,
+	// 	var(--bg-color-1) 3%,
+	// 	var(--bg-color-2) 60%,
+	// 	var(--bg-color-1) 100%
+	// );
+	transition: background-color 0.85s;
+	// animation-name: bg-changing-KF;
+	// animation: bg-changing-KF 1s infinite;
+	// animation-delay: 0s;
+	// animation-fill-mode: forwards;
+
+	&:before {
+		// background: linear-gradient(-45deg, chocolate, $black, chocolate);
+		//has to have a z-index to be on top of the background-color. The tradeoff is that it wont transition in smoothly
+		z-index: 0;
+
+		background-image: radial-gradient(
+			circle,
+			var(--color-bg, black) 18%,
+			var(--color-main) 21%,
+			var(--color-secondary) 22%,
+			var(--transparent) 22.5%
+		);
+
+		// background-image: radial-gradient(
+		// 	circle,
+		// 	var(--black) 15%,
+		// 	var(--red-2) 21%,
+		// 	var(--red-1) 22%,
+		// 	var(--transparent) 25%
+		// );
+
+		// background-color: none;
+		background-size: 100% 100%;
+		animation-name: bg-changing-ball-KF;
+		animation-duration: 60s;
+		animation-iteration-count: infinite;
+		animation-timing-function: linear;
+		// transition: transform 1.2s;
+		animation-direction: forward;
+		// border-radius: 50%;
+	}
+}
+
+@keyframes bg-changing-KF {
+	0%,
+	100% {
+		// background-color: var(--bg-color-1);
+		// opacity: 0;
+	}
+
+	20%,
+	90% {
+		// background-color: var(--bg-color-2);
+		// opacity: 1;
+	}
+}
+
+@keyframes bg-changing-ball-KF {
+	0% {
+		background-position: 0% 0%;
+		transform: scale3d(0.1, 0.1, 0.1) translateX(-100%) translateY(-1000%);
+	}
+
+	20% {
+		background-position: 0% 200%;
+		transform: translateX(100%) translateY(100%) scale3d(1, 1, 1);
+	}
+
+	50% {
+		background-position: 200% 400%;
+		transform: scale3d(2, 2, 2) translateX(-120%) translateY(-100%);
+	}
+	60% {
+		background-position: 0% 200%;
+		transform: scale3d(1, 1, 1) translateX(20%) translateY(-80%);
+	}
+
+	100% {
+		background-position: 200% 400%;
+		transform: scale3d(1, 1, 1) translateX(-200%) translateY(200%);
+	}
+}
+
+#root .has-before.fireballs {
+	background-color: black;
+	&:before {
+		// background: linear-gradient(-45deg, chocolate, $black, chocolate);
+		//has to have a z-index to be on top of the background-color. The tradeoff is that it wont transition in smoothly
+		z-index: 0;
+
+		background-image: radial-gradient(
+			circle,
+			var(--black) 15%,
+			var(--red-2) 21%,
+			var(--red-1) 22%,
+			var(--transparent) 25%
+		);
+
+		background-color: none;
+		background-size: 100% 100%;
+		animation-name: fireballs-KF;
+		animation-duration: 25s;
+		animation-iteration-count: infinite;
+		animation-timing-function: linear;
+		// transition: transform 1.2s;
+		animation-direction: forward;
+		// border-radius: 50%;
+	}
+}
+
+@keyframes fireballs-KF {
+	0% {
+		background-position: 0% 0%;
+		transform: scale3d(0.1, 0.1, 0.1) translateX(-100%) translateY(-1000%);
+	}
+
+	20% {
+		background-position: 0% 200%;
+		transform: translateX(100%) translateY(100%) scale3d(1, 1, 1);
+	}
+
+	50% {
+		background-position: 200% 400%;
+		transform: scale3d(2, 2, 2) translateX(-120%) translateY(-100%);
+	}
+	60% {
+		background-position: 0% 200%;
+		transform: scale3d(1, 1, 1) translateX(20%) translateY(-80%);
+	}
+
+	100% {
+		background-position: 200% 400%;
+		transform: scale3d(1, 1, 1) translateX(-200%) translateY(200%);
+	}
+}
+
+#root .has-before.spheres:before {
+	// background: linear-gradient(-45deg, chocolate, $black, chocolate);
+
+	background-image: radial-gradient(
+		circle,
+		var(--yellow) 20%,
+		var(--transparent-white) 21%,
+		var(--hair-darker-1) 22%
+	);
+	background-color: none;
+	background-size: 50% 50%;
+	animation-name: falling-spheres-KF;
+	animation-duration: 100s;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+	// transition: transform 1.2s;
+	animation-direction: normal;
+	// border-radius: 50%;
+}
+
+@keyframes spheres-KF {
+	0% {
+		background-position: 0% 0%;
+		transform: scale3d(2, 2, 2) rotate3d(2, 1, 2, 15deg);
+	}
+
+	50% {
+		transform: scale3d(4, 4, 4) rotate3d(1, 1, 4, 15deg);
+	}
+
+	100% {
+		background-position: -1000% -40%;
+		// transform: scale3d(1, 1, 1) rotate3d(1, 1, 1, 45deg);
+	}
+}
+
+#root .has-before.falling-spheres:before {
+	// background: linear-gradient(-45deg, chocolate, $black, chocolate);
+
+	background-image: radial-gradient(
+		circle,
+		var(--light-blue) 16%,
+		var(--transparent-white) 19%,
+		var(--black) 20%
+	);
+	background-color: var(--transparent);
+	background-size: 50% 50%;
+	animation-name: falling-spheres-KF;
+	animation-duration: 60s;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+	// transition: transform 1.2s;
+	animation-direction: normal;
+	// border-radius: 50%;
+}
+@keyframes falling-spheres-KF {
+	0% {
+		background-position: 0% 0%;
+		transform: scale3d(2, 2, 3) rotate3d(1, 1, 1, 0deg);
+	}
+
+	50% {
+		background-position: 400% 600%;
+		transform: scale3d(1.5, 1.5, 1.5) rotate3d(1.5, 1.5, 4.5, 45deg);
+	}
+
+	100% {
+		background-position: 800% 1200%;
+		transform: scale3d(2, 2, 3) rotate3d(1, 1, 1, 360deg);
+	}
+}
+
+.wave-crashing {
+	background: linear-gradient(-45deg, $white, $secondary, $secondary);
+	background-size: 300% 200%;
+	animation-name: wave-crashing-KF;
+	animation-duration: 6s;
+	animation-iteration-count: 1;
+	animation-timing-function: ease;
+}
+
+@keyframes wave-crashing-KF {
+	0% {
+		background-position: 0% 0%;
+	}
+	60% {
+		background-position: 50% 125%;
+	}
+	100% {
+		background-position: 0% 0%;
+	}
+}
+
+.wave {
+	background: linear-gradient(-45deg, $secondary, $white, $white);
+	background-size: 300% 200%;
+	animation-name: wave-KF;
+	animation-duration: 6s;
+	animation-iteration-count: 1;
+	animation-timing-function: ease;
+}
+
+@keyframes wave-KF {
+	0% {
+		background-position: 0% 0%;
+	}
+	60% {
+		background-position: -100% 0%;
+	}
+	100% {
+		background-position: -100% 0%;
+	}
+}
+
+.gradient-animation-secondary {
+	background: linear-gradient(-45deg, $secondary, $white, $secondary);
+	background-size: 400% 300%;
+	animation: gradient-animation-KF 3s ease-in infinite;
+}
+.gradient-animation {
+	background: linear-gradient(-45deg, $secondary, $white, $primary);
+	background-size: 300% 300%;
+	animation: gradient-animation-KF 15s ease infinite;
+}
+
+@keyframes gradient-animation-KF {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+.gradient-animation-radial {
+	background-image: radial-gradient(
+		circle,
+		var(--white),
+		var(--primary),
+		var(--black),
+		var(--secondary)
+	);
+	background-size: 400% 400%;
+	animation-name: gradient-animation-radial-KF;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+	animation-direction: alternate;
+	animation-duration: 130s;
+}
+
+@keyframes gradient-animation-radial-KF {
+	0% {
+		background-position: 0% 0%;
+	}
+	20% {
+		background-position: 120% 80%;
+	}
+	40% {
+		background-position: 200% 120%;
+	}
+	60% {
+		background-position: 320% 250%;
+	}
+	80% {
+		background-position: 400% 350%;
+	}
+	100% {
+		background-position: 500% 400%;
+	}
+}
+
+.gradient-animation-psychedelic {
+	background-image: radial-gradient(
+		circle,
+		var(--color-5),
+		var(--color-4),
+		var(--color-3),
+		var(--color-2),
+		var(--color-1)
+	);
+	background-size: 500% 500%;
+	animation-name: gradient-animation-psychedelic-KF;
+	animation-timing-function: ease-in-out;
+	animation-iteration-count: infinite;
+	animation-direction: normal;
+	animation-duration: 60s;
+	// animation-delay: 2s;
+}
+
+@keyframes gradient-animation-psychedelic-KF {
+	0% {
+		background-position: 0% 0%;
+	}
+	20% {
+		background-position: 200% -20%;
+	}
+	40 {
+		background-position: 250% -400%;
+	}
+	60 {
+		background-position: 600% -600%;
+	}
+	80 {
+		background-position: 1000% -800%;
+	}
+	100% {
+		background-position: 1000% -1000%;
+	}
+}
+
+/* orignally used in Quiz */
+
+.has-before.beach:before,
+.bg-beach {
+	background-image: radial-gradient(
+		circle,
+		var(--white),
+		var(--light-blue),
+		var(--yellow)
+	);
+	background-size: 100% 200%;
+	animation-name: beach;
+	animation-duration: 20s;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+	animation-direction: forwards;
+}
+@keyframes beach {
+	0% {
+		background-position: 0% 0%;
+	}
+	50% {
+		background-position: -100% 100%;
+	}
+	100% {
+		background-position: -200% 200%;
+	}
+}
+
+.has-before.fun-gumi:before {
+	// background: linear-gradient(135deg, var(--white), var(--color-3));
+	background-image: radial-gradient(
+		circle,
+		var(--dark-pink),
+		var(--yellow),
+		var(--white),
+		var(--green),
+		var(--light-blue)
+	);
+	background-size: 200% 200%;
+	animation-name: fun-gumi;
+	animation-duration: 16s;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+	animation-direction: forwards;
+}
+@keyframes fun-gumi {
+	0% {
+		background-position: 0% 0%;
+	}
+	50% {
+		background-position: -100% 100%;
+	}
+	100% {
+		background-position: -200% 200%;
+	}
+}
+
+.has-before.just-white:before {
+	// background: linear-gradient(135deg, var(--white), var(--color-3));
+	background-color: var(--white, white);
+	filter: brightness(95%);
+	// background-size: 200% 200%;
+	// animation-name: colors-moving-kf;
+	// animation-duration: 16s;
+	// animation-iteration-count: infinite;
+	// animation-timing-function: linear;
+	// animation-direction: forwards;
+}
+
+.has-before.white-canvas:before {
+	// background: linear-gradient(135deg, var(--white), var(--color-3));
+	background-image: radial-gradient(
+		circle,
+		var(--white),
+		var(--transparent-white),
+		var(--transparent-canvas),
+		var(--canvas)
+	);
+	background-size: 200% 200%;
+	// animation-name: colors-moving-kf;
+	// animation-duration: 16s;
+	// animation-iteration-count: infinite;
+	// animation-timing-function: linear;
+	// animation-direction: forwards;
+}
+
+.has-before.bg--primary-and-secondary:before {
+	// background: linear-gradient(135deg, var(--white), var(--color-3));
+	background-image: radial-gradient(
+		circle,
+		var(--primary-lighter-2),
+		var(--primary-darker-1),
+		var(--secondary-darker-1),
+		var(--secondary-lighter-2)
+	);
+	background-size: 200% 200%;
+	// animation-name: colors-moving-kf;
+	// animation-duration: 16s;
+	// animation-iteration-count: infinite;
+	// animation-timing-function: linear;
+	// animation-direction: forwards;
+}
+@keyframes colors-moving-kf {
+	0% {
+		background-position: 0% 0%;
+	}
+	25% {
+		background-position: -100% -50%;
+	}
+	50% {
+		background-position: -120% -120%;
+	}
+	75% {
+		background-position: -166% -180%;
+	}
+	100% {
+		background-position: -200% -200%;
+	}
+}
+
+.has-before.great-fragrance:before,
+.bg-great-fragrance {
+	// background: linear-gradient(135deg, var(--white), var(--color-3));
+	background-image: radial-gradient(
+		circle,
+		var(--dark-pink),
+		var(--yellow),
+		var(--white),
+		var(--green),
+		var(--light-blue)
+	);
+	background-size: 10% 200%;
+	animation-name: great-fragrance;
+	animation-duration: 16s;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+	animation-direction: forwards;
+}
+@keyframes great-fragrance {
+	0% {
+		background-position: 0% 0%;
+	}
+	50% {
+		background-position: -100% 100%;
+	}
+	100% {
+		background-position: -200% 200%;
+	}
+}
+
+.has-before.field-day:before,
+.bg-field-day {
+	// background: linear-gradient(135deg, var(--white), var(--color-3));
+	background-image: radial-gradient(
+		circle,
+		var(--yellow),
+		var(--white),
+		var(--green),
+		var(--light-blue)
+	);
+	background-size: 200% 66.66%;
+	animation-name: field-day;
+	animation-duration: 16s;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+	animation-direction: forwards;
+}
+@keyframes field-day {
+	0% {
+		background-position: 0% 0%;
+	}
+	50% {
+		background-position: -100% 100%;
+	}
+	100% {
+		background-position: -200% 200%;
+	}
+}
+
+.has-before.rects--primary:before {
+	position: absolute;
+	content: "";
+	padding: 0;
+	margin: 0;
+	top: 0;
+	left: 0;
+	z-index: -1;
+	height: 100%;
+	width: 100%;
+	background: linear-gradient(25deg, var(--primary), var(--white));
+	background-size: 25% 25%;
+	animation-name: rects--2d-KF;
+	animation-duration: 40s;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+	animation-direction: forwards;
+}
+.has-before.rects--3-colors:before {
+	position: absolute;
+	content: "";
+	padding: 0;
+	margin: 0;
+	top: 0;
+	left: 0;
+	z-index: -1;
+	height: 100%;
+	width: 100%;
+	background: linear-gradient(
+		135deg,
+		var(--white),
+		var(--dark-pink),
+		var(--black)
+	);
+	background-size: 33% 33%;
+	animation-name: rects--2d-KF;
+	animation-duration: 50s;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+	animation-direction: forwards;
+}
+@keyframes rects--2d-KF {
+	0% {
+		background-position: 0% 0%;
+	}
+
+	100% {
+		background-position: -200% 200%;
+	}
+}
+
+.has-before.rects--multi-direction:before {
+	background: linear-gradient(-125deg, var(--black), orange);
+	background-size: 50% 50%;
+	animation-name: rects-multi-KF;
+	animation-duration: 10s;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+	animation-direction: forwards;
+}
+@keyframes rects-multi-KF {
+	0% {
+		background-position: 0% 0%;
+	}
+	20% {
+		background-position: -50% 0%;
+	}
+	40% {
+		background-position: -50% 50%;
+	}
+	60% {
+		background-position: -100% 50%;
+	}
+	80% {
+		background-position: -150% 25%;
+	}
+	100% {
+		background-position: -200% 0%;
+	}
+}
+
+.has-before.rects-tube {
+	// background-color: var(--black);
+	&:before {
+		background: linear-gradient(20deg, var(--black), red);
+		background-size: 20% 50%;
+		animation-name: rect-tube-KF;
+		animation-duration: 60s;
+		animation-iteration-count: infinite;
+		animation-timing-function: ease-in-out;
+		animation-direction: forwards;
+		z-index: -1;
+	}
+}
+@keyframes rect-tube-KF {
+	0% {
+		background-position: 0% 0%;
+		transform: scale3d(0) rotate(0deg);
+	}
+	50% {
+		background-position: -200% 200%;
+		transform: scale3d(1.25, 1.25, 1.25) rotate(180deg);
+	}
+	100% {
+		background-position: -400% 400%;
+		transform: scale3d(0) rotate(360deg);
+	}
+}
+
+.has-before.rects-nearing:before {
+	position: absolute;
+	content: "";
+	padding: 0;
+	margin: 0;
+	top: 0;
+	left: 0;
+	z-index: -1;
+	height: 200%;
+	width: 200%;
+	background: linear-gradient(
+		80deg,
+		var(--transparent-black),
+		var(--transparent-white)
+	);
+	background-size: 50% 50%;
+	animation-name: rects-nearing;
+	animation-duration: 20s;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+	animation-direction: normal;
+}
+@keyframes rects-nearing {
+	0% {
+		background-position: 0% 0%;
+		transform: scale3d(0) rotate(0deg) skewX(0deg);
+		background-color: var(--canvas);
+	}
+	25% {
+		background-color: var(--primary);
+	}
+	50% {
+		background-position: -200% 100%;
+		transform: scale3d(2, 2, 2) rotate(15deg) skewX(5deg);
+		background-color: var(--secondary);
+	}
+	75% {
+		background-color: var(--yellow);
+	}
+	100% {
+		background-position: -400% 200%;
+		transform: scale3d(0) rotate(0deg) skewX(0deg);
+		background-color: var(--canvas);
+	}
+}
+
+#root .has-before.spheres-floating {
+	&:before {
+		background-image: radial-gradient(
+			circle,
+			var(--white) 20%,
+			var(--black) 21%,
+			var(--transparent) 22%
+		);
+		background-color: unset;
+		background-size: 40% 50%;
+		animation-name: spheres-floating-KF;
+		// animation-duration: 240s;
+		animation-duration: 120s;
+		animation-iteration-count: infinite;
+		animation-timing-function: linear;
+		// transition: transform 1.2s;
+		animation-direction: normal;
+	}
+}
+@keyframes spheres-floating-KF {
+	0% {
+		background-position: 0% 0%;
+		transform: scale(2) rotate3d(1, 1, 1, 10deg);
+		background-color: var(--yellow);
+	}
+
+	25% {
+		transform: scale(2) rotate3d(1.5, 1.5, 1.5, 20deg);
+		background-position: 50% 0%;
+		background-color: var(--canvas);
+	}
+
+	50% {
+		transform: scale(2) rotate3d(2, 2, 2, 30deg);
+		background-color: var(--light-blue);
+		background-position: 100% 0%;
+	}
+
+	75% {
+		transform: scale(2) rotate3d(1.5, 1.5, 1.5, 20deg);
+		background-position: 150% 0%;
+		background-color: var(--dark-pink);
+	}
+	100% {
+		background-position: 200% 0%;
+		transform: scale(2) rotate3d(1, 1, 1, 10deg);
+		background-color: var(--yellow);
+	}
+}
+
+#root .has-before.spheres-floating-old {
+	&:before {
+		background-image: radial-gradient(
+			circle,
+			var(--transparent-white) 20%,
+			var(--transparent-black) 21%,
+			var(--transparent) 21.25%
+		);
+		background-color: unset;
+		background-size: 20% 20%;
+		animation-name: spheres-floating-old-KF;
+		// animation-duration: 240s;
+		animation-duration: 180s;
+		animation-iteration-count: infinite;
+		animation-timing-function: linear;
+		// transition: transform 1.2s;
+		animation-direction: normal;
+	}
+}
+
+#root
+	.landscape
+	has-before.spheres-floating-old:not(*.portrait-only--phone):before {
+	&:before {
+		background-image: radial-gradient(
+			circle,
+			var(--transparent-white) 20%,
+			var(--transparent-black) 21%,
+			var(--transparent-primary) 21.25%
+		);
+
+		background-size: 40% 60%;
+	}
+}
+
+@keyframes spheres-floating-old-KF {
+	0% {
+		background-position: 0% 0%;
+		transform: scale(2) rotate3d(1, 1, 1, 15deg);
+		background-color: var(--yellow);
+	}
+
+	25% {
+		transform: scale(2) rotate3d(1.5, 1.5, 1.5, 15deg);
+		background-position: 50% 0%;
+	}
+
+	50% {
+		transform: scale(2) rotate3d(2, 2, 2, 15deg);
+		background-color: var(--green);
+		background-position: 100% 0%;
+	}
+
+	75% {
+		transform: scale(2) rotate3d(1.5, 1.5, 1.5, 15deg);
+		background-position: 150% 0%;
+	}
+	100% {
+		background-position: 200% 0%;
+		transform: scale(2) rotate3d(1, 1, 1, 15deg);
+		background-color: var(--yellow);
+	}
+}
+
+#root .has-before.spheres-blob {
+	&:before {
+		background-image: radial-gradient(
+			circle,
+			var(--green) 20%,
+			var(--transparent-black) 21%,
+			var(--transparent-white) 21.2%
+		);
+		background-color: none;
+		background-size: 80% 20%;
+		animation-name: spheres-blob-KF;
+		animation-duration: 20s;
+		animation-iteration-count: infinite;
+		animation-timing-function: ease-in-out;
+		// transition: transform 1.2s;
+		animation-direction: normal;
+	}
+}
+
+#root .landscape:not(*.mobile) .has-before.spheres-blob:before {
+	transform: scale3d(3, 3, 3) rotate3d(3, 1.5, 1.5, -10deg);
+	background-size: 50% 33%; //cloud
+}
+
+@keyframes spheres-blob-KF {
+	0% {
+		background-position: 0% 0%;
+		transform: scale3d(2, 2, 2) rotate3d(1, 2, 2, 15deg);
+	}
+	25% {
+		transform: scale3d(1.9, 1.9, 1.9) rotate3d(2, 0.025, 2, 45deg);
+	}
+
+	50% {
+		transform: scale3d(2, 2, 2) rotate3d(1, 2, 2, 15deg);
+	}
+	75% {
+		transform: scale3d(1.9, 1.9, 1.9) rotate3d(2, 0.025, 2, -45deg);
+	}
+
+	100% {
+		background-position: 0% 0%;
+		transform: scale3d(2, 2, 2) rotate3d(1, 2, 2, 15deg);
+	}
+}
+
+.has-before.wall-climbing:before {
+	position: absolute;
+	content: "";
+	padding: 0;
+	margin: 0;
+	top: 0;
+	left: 0;
+	z-index: -1;
+	height: 200%;
+	width: 200%;
+	background: linear-gradient(80deg, var(--black), var(--salmon));
+	background-size: 80% 20%;
+	animation-name: wall-climbing-KF;
+	animation-duration: 6s;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease-in-out;
+	animation-direction: normal;
+}
+@keyframes wall-climbing-KF {
+	0% {
+		background-position: 0% 0%;
+	}
+	20% {
+		background-position: 0% 20%;
+	}
+	40% {
+		background-position: -80% 40%;
+	}
+	60% {
+		background-position: -160% 60%;
+	}
+	80% {
+		background-position: 80% 80%;
+	}
+	100% {
+		background-position: 0% 100%;
+	}
+}
+
+.has-after.level-opener:after {
+	background: linear-gradient(135deg, var(--white), var(--secondary));
+	background-size: 140% 140%;
+	animation-name: level-opener;
+	animation-duration: 5s;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease;
+}
+@keyframes level-opener {
+	0% {
+		background-position: 0% 0%;
+	}
+	10% {
+		background-position: 80% 100%;
+	}
+	20% {
+		background-position: 120% 140%;
+	}
+	60% {
+		background-position: 120% 140%;
+	}
+	100% {
+		background-position: 0% 0%;
+	}
+}

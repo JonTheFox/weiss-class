@@ -1,0 +1,55 @@
+{
+  "name": "Weiss-English",
+  "version": "0.3.0",
+  "description": "A web server for Weiss English",
+  "engines": {
+    "node": "12.13.0",
+    "npm": "6.9.0"
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node test.js",
+    "client": "cd client && npm start",
+    "server": "start http://localhost:5000 && nodemon index.js",
+    "build": "cd client && npm run build && cd.. && npm run server",
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "cd client && npm install && npm run build"
+  },
+  "dependencies": {
+    "@egjs/flicking-plugins": "^3.2.0",
+    "@egjs/react-flicking": "^3.2.2",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "concurrently": "^4.0.1",
+    "cors": "^2.8.4",
+    "dotenv": "^8.2.0",
+    "express": "^4.16.3",
+    "helmet": "^3.21.2",
+    "mongoose": "^5.6.8",
+    "node-fetch": "^2.6.0",
+    "puppeteer": "^2.0.0",
+    "react-images": "^1.1.7",
+    "socket.io": "^2.3.0",
+    "unsplash-js": "^6.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.11",
+    "request": "^2.81.0",
+    "tape": "^4.7.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JonTheFox/Weiss-English"
+  },
+  "keywords": [
+    "foox",
+    "kettem",
+    "khoot",
+    "cloudio",
+    "best esl app",
+    "learn english online free",
+    "educational app",
+    "practice",
+    "learn animal names"
+  ]
+}

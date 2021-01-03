@@ -1,0 +1,122 @@
+// To add a backdrop to a DOM element, give it a class of "has-before". To add an overlay to an element, give it a class of "has-after". The pseudo-element will be hidden by default.
+//To show the pseudo-element, give its parent element a class of "show-before" or "show-after". To transition it out, give the parent a class of "fadeout-before" or "fadeout-after". To completely hide it and put lower in the z-index stack, give it a class of "hide-before" or "hide-after" (or both).
+
+//using SASS' extend keyword, both :before and :after pseudo elements will have the following rules:
+.pseudo-element {
+	content: "";
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	//hide the pseudo-element
+	z-index: -1;
+	opacity: 0;
+	transition: opacity var(--enter);
+}
+
+#root .has-after {
+	&:after {
+		@extend .pseudo-element;
+	}
+
+	&.show-after {
+		&:after {
+			opacity: 1;
+			transition: opacity 1s;
+			z-index: 201;
+		}
+	}
+	&.fadeout-after {
+		&:after {
+			opacity: 0;
+			transition: opacity var(--between-levels, 1s);
+			z-index: 201;
+		}
+	}
+	&.hide-after {
+		&:after {
+			opacity: 0;
+			z-index: -1;
+		}
+	}
+}
+#root .has-before {
+	&:before {
+		@extend .pseudo-element;
+		z-index: -1;
+	}
+
+	&.show-before {
+		&:before {
+			opacity: 1;
+			transition: opacity 1s;
+			// z-index: 0;
+		}
+	}
+	&.fadeout-before {
+		&:before {
+			opacity: 0;
+			transition: opacity var(--between-levels, 1s);
+			// z-index: 0;
+		}
+	}
+	&.hide-before {
+		&:before {
+			opacity: 0;
+			z-index: -10;
+		}
+	}
+}
+
+//  effects using :before / :after;
+#root .has-after.white-out {
+	&:after {
+		background-color: var(--white);
+		transition: opacity var(--between-levels, 1s);
+	}
+}
+
+#root .before--bubble {
+	&:before {
+		@extend .circle;
+		background-color: var(--transparent-white);
+
+		opacity: 0.25;
+		// box-shadow: $spacing * -1 $spacing $spacing * 4 var(--robe-base);
+		transition: opacity var(--between-levels, 1s);
+		z-index: -1;
+	}
+	&.show-before:before {
+		opacity: 0.25;
+		z-index: -1;
+	}
+	&.hide-before:before {
+		opacity: 0;
+		z-index: -10;
+	}
+}
+
+#root .after--magic-field:after {
+	background-color: var(--robe-base);
+	border-radius: 50%;
+	top: $spacing;
+	left: $spacing;
+	//hide the pseudo-element
+	opacity: 0.25;
+	transition: opacity var(--between-levels, 1s);
+	box-shadow: $spacing * -1 $spacing $spacing * 4 var(--robe-darker-1);
+	z-index: 10;
+}
+#root .after--magic-field.show-after {
+	&:after {
+		opacity: 0.25;
+		z-index: 10;
+	}
+}
+#root .after--magic-field.hide-after {
+	&:after {
+		opacity: 0;
+		z-index: 10;
+	}
+}

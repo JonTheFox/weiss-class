@@ -1,0 +1,151 @@
+#root .tiles {
+	position: relative;
+
+	// width: 100%;
+	height: 100%;
+	display: flex;
+	flex-flow: row;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	padding: 0;
+	overflow-y: auto;
+	.item {
+		position: relative;
+		width: 50%;
+		// opacity: 0.7;
+		// height: 33.33%;
+		height: 50%;
+		padding: 0;
+		transition: all 0.3s ease-in-out;
+		background-size: cover;
+		overflow: hidden;
+		imag &:nth-child(even) {
+			background-color: var(--primary);
+		}
+		&:nth-child(odd) {
+			background-color: var(--canvas);
+		}
+		img {
+			opacity: 0.85;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			transition: all 0.3s ease-in-out;
+		}
+
+		.primary-action-btn {
+			width: auto;
+			height: auto;
+			min-width: calc(var(--spacing) * 2);
+			min-height: calc(var(--spacing) * 2);
+			opacity: 0;
+			user-select: none;
+			//transform: skewY(10deg) scale3d(0.25, 0.25, 0.25);
+			transition: all 0.3s ease-in-out;
+			// z-index: 3;
+		}
+
+		&:after {
+			opacity: 0;
+			background-color: var(--black, black);
+			transition-duration: 0.3s;
+		}
+		&:hover {
+			opacity: 1;
+			img {
+				transform: scale3d(1.25, 1.25, 1.25) rotate(2.5deg)
+					translateX(4px) translateY(4px);
+
+				opacity: 1;
+				background-size: 130%;
+				//smaller, tilted
+				/* transform: scale3d(0.75, 0.75, 0.75) rotate(5deg)
+						translateX(4px) translateY(4px); */
+			}
+
+			.primary-action-btn {
+				opacity: 1;
+				z-index: 10;
+				// color: var(--white);
+				background-color: var(--transparent-white);
+				//transform: scale3d(1, 1, 1);
+			}
+
+			&:after {
+				opacity: 0.33;
+				z-index: 9;
+			}
+		}
+	}
+}
+
+#root .phone.landscape .tiles {
+	.item {
+		height: 100%;
+		&.even:last-child {
+			width: 100%;
+		}
+	}
+}
+
+#root .tablet.portrait .tiles,
+#root .large-screen.portrait .tiles,
+#root .xl-screen.portrait .tiles {
+	.item {
+		width: 50%;
+	}
+}
+
+#root .tablet.portrait {
+	.tiles {
+		.items-section,
+		.tiles {
+			.item {
+				width: 50%;
+				&.even:last-child {
+					//make up for the extra space
+					width: 100%;
+				}
+			}
+		}
+	}
+}
+
+#root .tablet.landscape .tiles {
+	.tiles {
+		.item {
+			width: 50%;
+			&.even:last-child {
+				//make up for the extra space
+				width: 100%;
+			}
+		}
+	}
+}
+
+#root .large-screen.landscape .tiles,
+#root .xl-screen.landscape .tiles {
+	.items-section,
+	.tiles {
+		.item {
+			width: 33.33%;
+		}
+	}
+}
+
+#root .large-screen,
+#root .xl-screen {
+	.tiles {
+		.items-section,
+		.tiles {
+			.item {
+				width: 33.33%;
+				&.odd:last-child {
+					//make up for the extra space
+					width: 66.66%;
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,462 @@
+@font-face {
+	font-family: "Nunito";
+	font-style: normal;
+	font-weight: 400;
+	src: local("Nunito-Regular"),
+		url("./fonts/nunito-v10-latin-regular.woff2") format("woff2"),
+		url("./fonts/nunito-v10-latin-regular.woff") format("woff");
+}
+
+html {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	top: 0;
+	left: 0;
+
+	/*min-height: 100%;*/
+	height: 100vh; /* fallback for older browsers */
+	height: calc(100 * var(--vh));
+
+	//cool dark purple: 7e38f7;
+
+	//global CSS variables ("custom properties")
+	--color-primary: rgba(148, 116, 204, 1);
+	/*--primary: rgb(148, 116, 204);*/
+	--primary: hsl(261, 46%, 63%);
+	--primary-darker-1: hsl(261, 46%, 59.9%);
+	--primary-darker-2: hsl(261, 46%, 56.7%);
+	--primary-darker-3: hsl(261, 46%, 53.5%);
+	--primary-darker-4: hsl(261, 46%, 50.4%);
+	--primary-darker-5: hsl(261, 46%, 47.3%);
+
+	--primary-lighter-1: hsl(261, 46%, 66.2%);
+	--primary-lighter-2: hsl(261, 46%, 69.3%);
+	--primary-lighter-3: hsl(261, 46%, 72.5%);
+	--primary-lighter-4: hsl(261, 46%, 75.6%);
+	--primary-lighter-5: hsl(261, 46%, 78.8%);
+
+	--secondary-darker-1: hsl(186, 83.3%, 54%);
+	--secondary-darker-2: hsl(186, 83.3%, 48%);
+	--secondary-darker-3: hsl(186, 83.3%, 42%);
+	--secondary-darker-4: hsl(186, 83.3%, 36%);
+	--secondary-darker-5: hsl(186, 83.3%, 30%);
+
+	--secondary-lighter-1: hsl(186, 83.3%, 66%);
+	--secondary-lighter-2: hsl(186, 83.3%, 72%);
+	--secondary-lighter-3: hsl(186, 83.3%, 78%);
+	--secondary-lighter-4: hsl(186, 83.3%, 84%);
+	--secondary-lighter-5: hsl(186, 83.3%, 90%);
+
+	--gradient--primary-secondary: linear-gradient(
+		135deg,
+		var(--local-color-1) 0%,
+		var(--local-color-2) 100%
+	);
+	/*--primary-secondary--gradient: linear-gradient(
+		135deg,
+		var(--local-color-1) 0%,
+		var(--local-color-2) 100%
+	);*/
+
+	--transparent-primary: rgba(148, 116, 204, 0.5);
+	--color-secondary: rgba(68, 221, 238, 1);
+	--secondary: rgb(68, 221, 238);
+	--transparent-secondary: rgba(68, 221, 238, 0.5);
+	--canvas: rgb(224, 224, 224);
+	--transparent-canvas: rgba(224, 224, 224, 0.5);
+	--color-canvas: rgba(224, 224, 224, 1);
+	--color-white: rgba(255, 255, 255, 1);
+	--white: rgb(255, 255, 255);
+	--paper: var(--white);
+	--transparent-white: rgba(255, 255, 255, 0.5);
+	--transparent-white-1: rgba(255, 255, 255, 0.95);
+	--transparent-white-gentle: rgba(255, 255, 255, 0.2);
+	--color-black: rgba(0, 0, 0, 1);
+	--black: rgb(0, 0, 0);
+	--transparent-black: rgba(0, 0, 0, 0.5);
+	--dark-gray: rgb(56, 56, 56);
+	--transparent: rgba(0, 0, 0, 0);
+
+	/* initial, default colors */
+	--body-base: #f3ccc2ff;
+	--body-darker-1: #e2c5bfff;
+	--body-lighter-1: #f3ccc2ff;
+
+	--hair-base: #fafafaff;
+	--hair-darker-1: #edeaf0ff;
+	--hair-transparent-1: var(--transparent-white-1);
+
+	--eye-base: #7bfcf7ff;
+	--eye-darker-1: #80d4fdff;
+
+	--sleeve-base: #ae8ef8ff;
+	--sleeve-darker-1: #a680ffff;
+	--sleeve-darker-2: #6e5697ff;
+	--sleeve-darker-3: #564472ff;
+
+	--robe-base: #966cdcff;
+	--robe-darker-1: #7f4fccff;
+	--robe-darker-2: #853affff;
+	--robe-darker-3: #6e28dfff;
+
+	--red-1: #e80909;
+	--red-2: #b70707;
+	--red-3: #860505;
+	--red-4: #f72d2d;
+
+	/*marker colors*/
+	--yellow: rgb(255, 255, 170);
+	--transparent-yellow: rgba(255, 255, 170, 0.75);
+	--green: #d6ffa6;
+	--light-blue: rgb(187, 255, 238);
+	--dark-pink: rgb(238, 170, 255);
+	--salmon: rgb(255, 204, 204);
+
+	--color-1: var(--color-white);
+	--color-2: var(--color-primary);
+	--color-3: var(--color-secondary);
+	--color-4: var(--yellow);
+	--color-5: var(--green);
+
+	/*background-color: var(--white);*/
+	background-color: var(--white);
+
+	/* sizes */
+	--spacing: 8px;
+	--appbar-height-sm: 48px;
+	--appbar-height-md: 56px;
+	--appbar-height-lg: 64px;
+	/*--appbar-height: 48px;*/
+
+	--full-vh: calc(100 * var(--vh));
+	--full-vh--minus-appbar: calc(100 * var(--vh) - var(--appbar-height));
+	--full-vw: calc(100 * var(--vw));
+
+	//the same with slightly different names that are consistent with other viewport size classes
+	--vh-full: calc(100 * var(--vh));
+	--vh-full--minus-appbar: calc(100 * var(--vh) - var(--appbar-height));
+	--vw-full: calc(100 * var(--vw));
+
+	/* durations */
+	--enter: 0.4s;
+	--exit: 0.3s;
+	--between-levels: 1s;
+}
+
+#root .primary-darker-1 {
+	background-color: var(--primary-darker-1);
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	/*height: calc(100 * var(--vh));*/
+
+	/*min-height: 100%;*/
+	overflow: hidden;
+	font-family: "Nunito", sans-serif, Helvetica;
+}
+
+#root {
+	position: fixed; /* to avoid overflow on mobile, caused by the address bar*/
+	height: calc(100 * var(--vh));
+	width: 100%;
+	/*overflow: auto;*/
+	overflow: hidden; /*for easy page transitions*/
+}
+
+* {
+	box-sizing: border-box;
+}
+
+#root ::selection {
+	color: var(--white, white);
+	background-color: var(--secondary, blue);
+	opacity: 1;
+}
+
+.fullscreen,
+.fullsize,
+.view--entire-screen {
+	height: calc(100%);
+	min-height: calc(100%);
+	width: 100%;
+	top: 0;
+	left: 0;
+	padding: 0;
+	margin: 0;
+	position: static;
+}
+
+.fullscreen {
+	overflow: hidden;
+}
+
+#root .full-height {
+	height: 100%;
+}
+
+#root {
+	//if you don't care about abrupt changes in viewport height, or if you don't support mobile
+	.vh-full {
+		width: var(--vh-full);
+	}
+	.vh-full--minus-appbar {
+		height: var(--vh-full--minus-appbar);
+	}
+	.vw-full {
+		width: var(--vw-full);
+	}
+
+	/* 	**********************
+		 MAX sizes
+		********************** 
+	// when you want the viewport to ignore abrupt size changes (caused by such events as the opening of the mobile keyboard, or disappearance of the address bar), that may cause the orientation to temporarily turn from portarit to landnscape, you can use the following .v*-max--* classes. They will always give the size of the viewport *prior* to any changes, i.e. the maximum possible.
+	// these classes are also friendly to non-mobile devices. In desktop and laptop, they will simply give the full current viewport height, so they will adjust to window resizing.
+	*/
+	.mobile {
+		.vh-max--portrait {
+			height: calc(100 * var(--vh-max--portrait));
+		}
+		.vh-max--portrait---minus-appbar {
+			height: calc(100 * var(--vh-max--portrait) - var(--appbar-height));
+		}
+		.vw-max--portrait {
+			width: calc(100 * var(--vw-max--portrait));
+		}
+		.vw-max--landscape {
+			width: calc(100 * var(--vw-max--landscape));
+		}
+	}
+
+	.desktop-or-laptop {
+		// in non-mobile devices, simply use the current width of the viewport
+		.vw-max--portrait,
+		.vw-max--landscape {
+			width: calc(100 * var(--vw));
+		}
+		.vh-max--portrait,
+		.vh-max--landscape {
+			width: calc(100 * var(--vh));
+		}
+		.vh-max--portrait---minus-appbar,
+		.vh-max--landscape---minus-appbar {
+			height: calc(100 * var(--vh) - var(--appbar-height));
+		}
+	}
+}
+
+/* In desktop and laptops, .max-size will simply set the height to the full current viewport. 
+//In mobile phones, however, .max-height, when coupled with the .portrait-only--phone class, sets the height to the original, full viewport height -- sans the appbar. i.e: Not the current viewport height, which might be a shurnk-version of it when mobile keyboard is open or when the address bar is visible. .max-height is useful for preventing an ugly "jump" between portrait and landscape designs, when entering an input field causes the mobile keyboard to appear, shrink the viewport up to the point where it's landscape-oriented. Another shrinking case is when the address bar disappears after scroll.
+*/
+
+#root {
+	.full-vh--minus-appbar,
+	.max-height {
+		height: calc(100 * var(--vh) - var(--appbar-height));
+		min-height: unset;
+	}
+
+	.full-vh,
+	.max-height--with-appbar {
+		height: calc(100 * var(--vh));
+	}
+
+	.max-vh {
+		//max possible height
+		height: calc(100 * var(--vh-max--portrait));
+	}
+	.max-vh--minus-appbar,
+	.max-height--minus-appbar {
+		//max possible height
+		height: calc(100 * var(--vh-max--portrait) - var(--appbar-height));
+	}
+	.max-vw {
+		//max possible width
+		width: calc(100 * var(--vw-max--landscape));
+	}
+
+	.full-vw,
+	.max-width {
+		width: calc(100 * var(--vw));
+	}
+}
+
+//deprecated
+#root .mobile {
+	&.phone {
+		/*ignore viewport shrinking, caused by address bar or mobile keyboard opening*/
+		.max-height.portrait-only--phone,
+		.max-height.portrait-only--phone.has-before:before {
+			height: calc(100 * var(--vh-max--portrait) - var(--appbar-height));
+			max-height: calc(
+				100 * var(--vh-max--portrait) - var(--appbar-height)
+			);
+		}
+
+		.max-height--with-appbar.portrait-only--phone,
+		.max-height--with-appbar.portrait-only--phone.has-before:before {
+			height: calc(100 * var(--vh-max--portrait));
+			max-height: calc(100 * var(--vh-max--portrait));
+		}
+
+		.max-width,
+		.max-width.has-before:before {
+			width: calc(100 * var(--vw-max--landscape));
+			max-width: calc(100 * var(--vw-max--landscape));
+		}
+	}
+
+	//deprecated
+	/*.max-height {
+		height: calc(100 * var(--vh) - var(--appbar-height));
+	}*/
+	.max-height--with-appbar {
+		height: calc(100 * var(--vh));
+	}
+	.max-width {
+		width: calc(100 * var(--vw));
+	}
+}
+
+/*useful for background sizing*/
+#root .background.max-screen-square {
+	height: calc(100 * var(--vh-max--portrait));
+	max-height: calc(100 * var(--vh-max--portrait));
+	width: calc(100 * var(--vh-max--portrait));
+	max-width: calc(100 * var(--vh-max--portrait));
+}
+
+#root .mobile .background.max-height {
+	height: calc(100 * var(--vh-max--portrait));
+	max-height: calc(100 * var(--vh-max--portrait));
+}
+#root *:not(.mobile) .background.max-height {
+	height: calc(100 * var(--vh));
+	max-height: calc(100 * var(--vh));
+}
+
+#root .viewport-height {
+	height: calc(100 * var(--vh));
+	min-height: calc(100 * var(--vh));
+}
+
+.fill-space {
+	height: 100%;
+	min-height: 100%;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	top: 0;
+	left: 0;
+}
+
+#root .tight-container {
+	width: fit-content;
+	height: fit-content;
+	margin: auto;
+}
+
+#root .transparent-background {
+	background-color: var(--transparent);
+}
+
+#root {
+	.centered {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+	.centered--important {
+		position: absolute !important;
+		top: 50% !important;
+		left: 50% !important;
+		transform: translate(-50%, -50%) !important;
+	}
+	.centered-x {
+		position: absolute;
+		left: 50%;
+		transform: translateX(-50%);
+	}
+	.centered-y {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+}
+
+#root .raised {
+	z-index: 1000;
+}
+
+#root .flex {
+	display: flex;
+	flex-flow: column;
+	justify-content: space-around;
+	align-items: center;
+	align-content: center;
+}
+
+#root .unselectable {
+	-moz-user-select: -moz-none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+}
+
+.MuiSvgIcon-root {
+	fill: var(--color-primary);
+}
+
+#root .hidden {
+	/*display: "none",*/
+	content: "";
+	opacity: 0;
+	line-height: 0;
+	padding: 0;
+	margin: 0;
+	height: 0;
+	width: 0;
+	user-select: none;
+}
+
+#root .position--relative {
+	position: relative;
+}
+
+#root {
+	.overflow-auto,
+	.overflow--auto {
+		overflow: auto;
+	}
+	.overflow-hidden {
+		overflow: hidden;
+	}
+}
+
+#root {
+	.margin--auto {
+		margin: auto;
+	}
+}
+
+.list-style--none {
+	list-style: none;
+	padding-inline-start: 0;
+}
+
+.cursor--pointer {
+	cursor: pointer;
+}
+.cursor--grab {
+	cursor: grab;
+}
+#root .fixed,
+#root * .fixed {
+	position: fixed;
+}

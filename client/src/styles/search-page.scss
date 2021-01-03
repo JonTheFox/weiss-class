@@ -1,0 +1,210 @@
+@import "/_variables";
+
+//general styles (for all devices and screen sizes)
+#root .search-page {
+	&.flex {
+		justify-content: space-between;
+	}
+	&.view {
+		display: block;
+		overflow-y: auto;
+		overflow-x: hidden;
+		& .input-section {
+			position: sticky;
+			top: 0;
+			z-index: 10;
+			padding: 0;
+			form {
+				padding: #{$spacing * 0.5} #{$spacing * 1};
+			}
+		}
+		& .image-section {
+			// height: 62.5%;
+			//overflow: auto;
+			padding: 0;
+			.find-more-btn {
+				margin: #{$spacing * 3} auto;
+				font-size: 1rem;
+				width: auto;
+				height: auto;
+				padding: #{$spacing * 1} #{$spacing * 4};
+			}
+		}
+		& .image-grid {
+			// height: 62.5%;
+			//overflow: auto;
+			// width: 100%;
+			// height: auto;
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			padding: 0;
+			margin: 0;
+			justify-content: space-evenly;
+			& .image-item {
+				padding: #{$spacing * 0.5};
+				box-sizing: border-box;
+				height: auto;
+				list-style: none;
+				font-size: 1rem;
+				font-weight: normal;
+				margin: 0;
+				padding-bottom: #{$spacing * 0.5};
+				&.selected {
+					width: 100%;
+					height: auto;
+					padding: #{$spacing * 1};
+				}
+			}
+		}
+	}
+}
+
+// device-specific styles
+
+#root .phone.portrait,
+#root .phone.landscape.mobile {
+	.search-page {
+		.search-form {
+			padding: calc(0.5 * var(--spacing));
+			.search-btn {
+				font-size: 0.8rem;
+			}
+			.search-input {
+				width: 65%;
+			}
+		}
+		.image-grid {
+			// opacity: 1;
+			// transition: opacity 0.4;
+			height: 62.5%; //good for iphone6/7/8
+			min-height: 62.5%; //good for iphone6/7/8
+			height: auto;
+			justify-content: space-evenly;
+			.image-item {
+				padding: #{$spacing * 0.5} #{$spacing * 0.1};
+				width: 48%;
+				&.selected {
+					width: 96%;
+					height: auto;
+					padding: #{$spacing * 8} 0 #{$spacing * 0.5} 0;
+				}
+			}
+		}
+	}
+}
+
+#root .phone.landscape:not(*.mobile) {
+	--spacing: 8px;
+	--appbar-height-sm: 48px;
+	.search-page {
+		& .image-grid {
+			height: 62.5%; //good for iphone6/7/8
+			// overflow-x: auto;
+			flex-wrap: wrap;
+			justify-content: center;
+			& .image-item {
+				padding: #{$spacing * 0.5};
+				width: 24.5%;
+				&.selected {
+					width: 76.5%;
+					max-width: 48vw;
+					// height: auto;
+					height: calc(100% - #{$spacing * 8});
+					padding: #{$spacing * 8} #{$spacing * 0.5} #{$spacing * 0.5}
+						#{$spacing * 0.5};
+
+					flex: auto;
+					// max-height: 65vh;
+				}
+			}
+		}
+	}
+}
+
+#root .tablet,
+#root .large-screen,
+#root .xl-screen {
+	&.portrait {
+		.search-page {
+			& .image-section {
+				padding: #{$spacing * 0.5};
+				& .image-grid {
+					height: 72%;
+					justify-content: center;
+					& .image-item {
+						padding: #{$spacing * 0.5};
+						width: 33%;
+						&.selected {
+							// width: 68.5%;
+							width: 98.5%;
+							height: auto;
+							padding: #{$spacing * 8} 0 #{$spacing * 0.5} 0;
+
+							/* flex: auto; */
+							/* max-height: 65vh; */
+						}
+					}
+				}
+			}
+		}
+	}
+	&.landscape {
+		.search-page {
+			& .image-section {
+				padding: #{$spacing * 0.5};
+				& .image-grid {
+					height: 72%;
+					justify-content: center;
+					& .image-item {
+						width: 25%;
+						&.selected {
+							width: 100%;
+							height: auto;
+							padding: #{$spacing * 8} 0 #{$spacing * 0.5} 0;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+#root .largeScreen {
+	&.portrait {
+		.search-page {
+			& .image-grid {
+				height: 72%;
+				justify-content: flex-start;
+				& .selected {
+					width: 68.5%;
+					height: auto;
+					padding: #{$spacing * 1};
+				}
+			}
+		}
+	}
+	&.landscape {
+		.search-page {
+			& .image-grid {
+				height: 72%;
+				justify-content: flex-start;
+				& .image-item {
+					width: 25%;
+					min-width: 20%;
+					&.selected {
+						width: 50%;
+						height: auto;
+						padding: #{$spacing * 1};
+					}
+				}
+			}
+		}
+	}
+}
+
+#root .search-page .floating {
+	position: absolute;
+	bottom: #{$spacing * 1};
+	right: #{$spacing * 1};
+}

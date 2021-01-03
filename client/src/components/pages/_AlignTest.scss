@@ -1,0 +1,85 @@
+@import "../../styles/_variables";
+@import "../../styles/_variables";
+@import "../../styles/_animations";
+@import "../../styles/_shapes";
+
+//general style rules for all screen sizes
+#align-test {
+	position: relative;
+	height: 100%;
+	min-height: auto;
+	width: 100%;
+	min-width: auto;
+	// @extend .gradient-animation-psychedelic;
+
+	.sage-container {
+		// @extend .circle;
+		display: inline-flex;
+
+		width: 50%;
+		height: 50%;
+		background: $transparent-white;
+		padding: #{$spacing * 2};
+		.press-area {
+			// position: relative;
+			height: 100%;
+			width: 50%;
+			margin: auto;
+			float: left;
+		}
+	}
+
+	svg {
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		// @extend .fill-space;
+	}
+
+	.text-container {
+		// @extend .flex;
+		display: inline-flex;
+
+		width: 50%;
+		height: 50%;
+		justify-content: space-evenly;
+		padding: #{$spacing * 2};
+		// position: relative;
+	}
+	.p {
+		margin: #{$spacing * 2};
+	}
+	.go-back {
+		// top: #{$spacing * 1};
+		height: auto;
+		position: absolute;
+		display: flex;
+		bottom: $spacing;
+		left: 0;
+		width: 100%;
+		button {
+			margin: auto;
+			background: $transparent;
+		}
+	}
+	.speech-bubble {
+		position: absolute;
+		// top: #{$spacing * 3};
+		top: 0;
+		right: #{$spacing * 1};
+	}
+	.line {
+		position: absolute;
+		left: 0;
+		top: 0;
+		background-color: $transparent-black;
+		width: 100%;
+		height: 0.5rem;
+	}
+	.target {
+		background-color: var(--lightblue);
+		position: absolute;
+		height: 2rem;
+		width: 2rem;
+	}
+}

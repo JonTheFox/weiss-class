@@ -1,0 +1,24 @@
+#root .sky,
+#root .sky--before.has-before:before {
+	background: var(--gradient-color-1, gray); /* fallback for old browsers */
+	&.has-before:before,
+	&.has-after:after,
+	&:not(*.has-before):not(*.has-after) {
+		// --local-to: var(--to, left);
+		z-index: -100;
+		// position: absolute;
+		// background-position:
+
+		background-image: linear-gradient(
+			45deg,
+			var(--gradient-color-1),
+			var(--gradient-color-2),
+			var(--gradient-color-1, white)
+		);
+		// background-size: 400% 200%;
+		// animation-name: go-left-and-return-KF;
+		// animation-duration: 20s;
+		// animation-iteration-count: infinite;
+		// animation-timing-function: linear;
+	}
+}

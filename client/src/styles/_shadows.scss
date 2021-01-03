@@ -1,0 +1,74 @@
+/* The fast way */
+.make-it-fast {
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+/* Pre-render the bigger shadow, but hide it */
+.make-it-fast::after {
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+	opacity: 0;
+	transition: opacity 0.3s ease-in-out;
+}
+
+/* Transition to showing the bigger shadow on hover */
+.make-it-fast:hover::after {
+	opacity: 1;
+}
+
+#root .dynamic-shadow {
+	//small, constant shadow (without animation, to avoid re-paints)
+	position: relative;
+	// display: inline-block;
+
+	// border-radius: calc(var(--spacing) * 2);
+	background-color: #fff;
+	--local-box-shadow-color: var(--box-shadow-color, rgba(0, 0, 0, 0.15));
+
+	--local-box-shadow-h-offset: var(--box-shadow-h-offset, 0);
+	--local-box-shadow-v-offset: var(--box-shadow-v-offset, 2px);
+	--local-box-shadow-blur: var(--box-shadow-v-offset, 2px);
+	--local-box-shadow-spread: var(--box-shadow-v-offset, 1px);
+
+	box-shadow: var(--local-box-shadow-h-offset)
+		var(--local-box-shadow-v-offset) var(--local-box-shadow-blur)
+		var(--local-box-shadow-color);
+	transition: all 0.15s ease-in-out;
+	// transform-origin: left;
+
+	--local-hover-shadow-h-offset: var(--hover-shadow-h-offset, 0px);
+	--local-hover-shadow-v-offset: var(--hover-shadow-v-offset, 3px);
+	--local-hover-shadow-blur: var(--hover-shadow-blur, 0);
+	--local-hover-shadow-spread: var(--hover-shadow-spread, 0);
+
+	--local-hover-shadow-color: var(--hover-shadow-color, rgba(0, 0, 0, 0.3));
+
+	/* Create the hidden pseudo-element (:after) */
+	/* include the shadow for the end state */
+	&::after {
+		position: absolute;
+		content: "";
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		z-index: -1;
+		width: 100%;
+		height: 100%;
+		opacity: 0;
+		border-radius: 5px;
+		box-shadow: var(--local-hover-shadow-h-offset)
+			var(--local-hover-shadow-v-offset) var(--local-hover-shadow-blur)
+			var(--local-hover-shadow-spread) var(--local-hover-shadow-color);
+		transition: opacity 0.15s ease-in-out;
+		// transform-origin: left;
+	}
+	/* On hover, Scale up the box on hover*/
+	&:hover {
+		transform: scale(1.025, 1.025);
+		// transform-origin: left;
+	}
+	/* ...and fade-in the pseudo-element with the bigger shadow */
+	&:hover::after {
+		opacity: 1;
+	}
+}

@@ -1,0 +1,53 @@
+@import "../../styles/variables";
+@import "../../styles/functions";
+
+#root .basic-table-container {
+	display: flex;
+	.paper {
+		height: auto;
+		margin: 0;
+		padding: 0;
+	}
+
+	.table {
+		table-layout: fixed;
+		margin: auto;
+		width: 100%;
+		padding: $spacing;
+		// background-color: $primary;
+		height: auto;
+		border-spacing: 0.5rem;
+
+		td.table-cell {
+			overflow-y: auto;
+			word-wrap: break-word;
+		}
+		th {
+			text-align: left;
+		}
+		.word-breaker {
+			word-wrap: break-word;
+			overflow-wrap: break-word;
+			width: 100%;
+		}
+
+		.table-header {
+			background-color: var(--canvas, gray);
+		}
+
+		&.hide-header {
+			.table-header {
+				width: 0;
+				height: 0;
+				padding: 0;
+				margin: 0;
+				// display: none;
+			}
+		}
+
+		th.table-header,
+		td.table-cell {
+			padding: 0 $spacing;
+		}
+	}
+}

@@ -1,0 +1,855 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   inkscape:export-ydpi="96"
+   inkscape:export-xdpi="96"
+   inkscape:export-filename="C:\Users\Jon\Google Drive\graphics\Old Sage\OldSageToRight-inside-beard.png"
+   sodipodi:docname="OldSageToRight.svg"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+   id="svg5659"
+   version="1.1"
+   viewBox="0 0 127.2366 217.2972"
+   height="217.29723mm"
+   width="127.23661mm">
+  <style
+     id="style1055" />
+  <title
+     id="title1549">Grandpa Weiss</title>
+  <defs
+     id="defs5653">
+    <inkscape:path-effect
+       effect="bend_path"
+       id="path-effect8825"
+       is_visible="true"
+       bendpath="M 70.194,95.567205 H 86.8403"
+       prop_scale="1"
+       scale_y_rel="false"
+       vertical="false" />
+    <filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter8758"
+       x="-0.012003162"
+       width="1.0240062"
+       y="-0.012003162"
+       height="1.0240062">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="0.054549058"
+         id="feGaussianBlur8760" />
+    </filter>
+    <filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter8758-6"
+       x="-0.012003162"
+       width="1.0240062"
+       y="-0.012003162"
+       height="1.0240062">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="0.054549058"
+         id="feGaussianBlur8760-42" />
+    </filter>
+    <filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter8758-6-4"
+       x="-0.012003162"
+       width="1.0240062"
+       y="-0.012003162"
+       height="1.0240062">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="0.054549058"
+         id="feGaussianBlur8760-42-7" />
+    </filter>
+    <filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter8758-0"
+       x="-0.012003162"
+       width="1.0240062"
+       y="-0.012003162"
+       height="1.0240062">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="0.054549058"
+         id="feGaussianBlur8760-1" />
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.30575285"
+     inkscape:cx="613.38299"
+     inkscape:cy="584.23114"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     showguides="true"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:object-paths="true"
+     inkscape:snap-nodes="false" />
+  <metadata
+     id="metadata5656">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Grandpa Weiss</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-38.382982,-14.618685)">
+    <rect
+       style="display:inline;opacity:1;fill:#6e28df;fill-opacity:1;stroke:none;stroke-width:0.16814969;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+       id="robe-trail-back"
+       width="14.207295"
+       height="77.995918"
+       x="-191.87085"
+       y="61.608765"
+       ry="38.997959"
+       transform="matrix(0.10890436,-0.99405223,0.95534013,0.29550845,0,0)"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"
+       inkscape:export-filename="C:\Jon\graphics\sage-to-right.v2.png"
+       rx="7.1036477"
+       inkscape:label="#robe-trail-back"
+       class="robe-darker-2" />
+    <rect
+       style="opacity:1;fill:#7f4fcc;fill-opacity:1;stroke:none;stroke-width:0.1170425;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+       id="robe-neck"
+       class="robe-darker-1"
+       width="49.522144"
+       height="13.161355"
+       x="-141.80698"
+       y="-74.457954"
+       ry="3.0194731"
+       transform="scale(-1)"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"
+       inkscape:export-filename="C:\Jon\graphics\sage-to-right.v2.png"
+       inkscape:label="#robe-neck" />
+    <path
+       style="fill:#e2c5bf;fill-opacity:1;stroke-width:0.13950181;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke markers fill"
+       id="head-back"
+       class="body-darker-1"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"
+       inkscape:export-filename="C:\Jon\graphics\sage-to-right.v2.png"
+       sodipodi:type="arc"
+       sodipodi:cx="-100.11674"
+       sodipodi:cy="75.479408"
+       sodipodi:rx="25.511843"
+       sodipodi:ry="28.115068"
+       sodipodi:start="0"
+       sodipodi:end="6.278294"
+       d="m -74.604895,75.479408 a 25.511843,28.115068 0 0 1 -25.480645,28.115052 25.511843,28.115068 0 0 1 -25.54296,-28.046292 25.511843,28.115068 0 0 1 25.41817,-28.183639 25.511843,28.115068 0 0 1 25.60513,27.97736 l -25.51154,0.137519 z"
+       inkscape:label="#head-back"
+       transform="matrix(-0.95496423,0.29672096,0.28718664,0.95787464,0,0)" />
+    <rect
+       class="robe-darker-1"
+       inkscape:label="#robe-back"
+       inkscape:export-filename="C:\Jon\graphics\sage-to-right.v2.png"
+       inkscape:export-ydpi="96"
+       inkscape:export-xdpi="96"
+       rx="10.590537"
+       transform="matrix(-0.99999901,-0.00140692,-0.00837717,0.99996491,0,0)"
+       ry="12.240527"
+       y="137.75302"
+       x="-134.17958"
+       height="93.997131"
+       width="51.451637"
+       id="robe-back"
+       style="opacity:1;fill:#853aff;fill-opacity:1;stroke:none;stroke-width:0.11780594;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill" />
+    <rect
+       style="opacity:1;fill:#853aff;fill-opacity:1;stroke:none;stroke-width:0.14212647;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+       id="robe-trail-front"
+       width="13.106734"
+       height="60.401321"
+       x="-183.11266"
+       y="69.81749"
+       ry="15.783505"
+       transform="matrix(0.14250212,-0.9897945,0.91057669,0.41334017,0,0)"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"
+       inkscape:export-filename="C:\Jon\graphics\sage-to-right.v2.png"
+       inkscape:label="#robe-trail-front"
+       class="robe-darker-1" />
+    <rect
+       class="robe-base"
+       inkscape:label="#robe-top"
+       inkscape:export-filename="C:\Jon\graphics\sage-to-right.v2.png"
+       inkscape:export-ydpi="96"
+       inkscape:export-xdpi="96"
+       transform="scale(-1)"
+       ry="11.834458"
+       y="-116.41168"
+       x="-158.67694"
+       height="45.288837"
+       width="93.418846"
+       id="robe-top"
+       style="opacity:1;fill:#966cdc;fill-opacity:1;stroke:none;stroke-width:0.32856202;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill" />
+    <rect
+       class="robe-base"
+       inkscape:label="#robe-middle"
+       inkscape:export-filename="C:\Jon\graphics\sage-to-right.v2.png"
+       inkscape:export-ydpi="96"
+       inkscape:export-xdpi="96"
+       rx="10.047436"
+       transform="matrix(-0.99997552,-0.00699673,-0.00503759,0.99998731,0,0)"
+       ry="15.027999"
+       y="102.61458"
+       x="-132.64397"
+       height="110.01323"
+       width="43.099171"
+       id="robe-middle"
+       style="opacity:1;fill:#966cdc;fill-opacity:1;stroke:none;stroke-width:0.12774758;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill" />
+    <ellipse
+       style="fill:#f3ccc2;fill-opacity:1;stroke-width:0.12326207;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke markers fill"
+       id="head-front"
+       class="body-base"
+       cx="-118.17421"
+       cy="40.136467"
+       rx="23.275291"
+       ry="24.05941"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"
+       inkscape:export-filename="C:\Jon\graphics\sage-to-right.v2.png"
+       inkscape:label="#head-front"
+       transform="scale(-1,1)" />
+    <g
+       id="left-ear"
+       transform="matrix(-0.81536037,0,0,0.81536037,190.92741,-13.018399)"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"
+       inkscape:export-filename="C:\Jon\graphics\sage-to-right.v2.png"
+       inkscape:label="#left-ear">
+      <path
+         inkscape:export-ydpi="96"
+         inkscape:export-xdpi="96"
+         sodipodi:nodetypes="cccc"
+         inkscape:connector-curvature="0"
+         id="left-ear-light"
+         class="body-base"
+         d="m 116.82572,78.105567 0.65447,-15.365904 c 2.71889,-2.108688 5.07685,-1.622127 5.47605,0.303289 1.12113,4.356332 -1.70568,14.358358 -6.13052,15.062615 z"
+         style="opacity:1;fill:#f3ccc2;fill-opacity:1;stroke:none;stroke-width:0.08272441;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+         inkscape:label="#left-ear-light" />
+      <path
+         inkscape:export-ydpi="96"
+         inkscape:export-xdpi="96"
+         sodipodi:nodetypes="cccc"
+         inkscape:connector-curvature="0"
+         id="left-ear-dark"
+         class="black"
+         d="m 117.80392,66.471708 -0.28142,6.886241 c 2.54524,-1.635027 2.93369,-4.42105 3.30984,-7.18814 -0.002,-2.39138 -2.07833,-1.252538 -3.02842,0.301899 z"
+         style="opacity:1;fill:#070007;fill-opacity:1;stroke:none;stroke-width:0.04226689;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+         inkscape:label="#left-ear-dark" />
+    </g>
+    <rect
+       style="opacity:1;fill:#a680ff;fill-opacity:1;stroke:none;stroke-width:0.31791681;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+       class="sleeve-darker-1"
+       id="right-arm"
+       width="21.17984"
+       height="76.495689"
+       x="180.48755"
+       y="-287.42188"
+       ry="34.499386"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"
+       transform="matrix(0.71466867,-0.69946315,-0.07428163,-0.9972373,0,0)"
+       inkscape:export-filename="C:\Jon\graphics\sage-to-right.v2.png"
+       inkscape:label="#right-arm" />
+    <path
+       style="fill:#edeaf0;fill-opacity:1;stroke-width:0.11596922;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke markers fill"
+       d="m 99.419777,124.03065 c 3.040923,6.8025 0.832223,29.91185 5.592213,36.32972 -9.039183,18.93285 19.79704,10.27762 26.10222,-4.44038 12.78638,-9.14554 14.38208,-106.56728 11.57777,-113.609831 -1.74938,1.381273 -0.66866,15.407556 -12.01878,17.206742 -10.68653,4.345022 -27.51903,-2.008645 -30.64947,-3.9625 0,0 -2.707591,-11.339906 -4.808415,-10.8634 0,0 -6.461566,31.124706 4.204462,79.339649 z"
+       id="beard-back"
+       class="hair-darker-1"
+       inkscape:connector-curvature="0"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"
+       sodipodi:nodetypes="cccccscc"
+       inkscape:export-filename="C:\Jon\graphics\sage-to-right.v2.png"
+       inkscape:label="#beard-back" />
+    <rect
+       id="left-arm"
+       style="opacity:1;fill:#a680ff;fill-opacity:1;stroke:none;stroke-width:0.30957434;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+       width="21.4848"
+       height="71.50415"
+       x="-95.305573"
+       y="-136.41711"
+       ry="32.248222"
+       transform="matrix(-0.99509542,-0.09891973,0.1291575,-0.99162409,0,0)"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"
+       inkscape:export-filename="C:\Jon\graphics\sage-to-right.v2.png"
+       inkscape:label="#left-arm"
+       class="sleeve-darker-1" />
+    <path
+       style="display:inline;fill:#fafafa;fill-opacity:1;stroke-width:0.10718504;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke markers fill"
+       d="m 101.63226,116.49701 c -1.06704,11.17365 4.27431,14.57979 6.79691,18.289 4.27884,6.29153 1.9206,23.77901 3.01586,29.87266 7.84609,-5.17236 25.8292,-35.64428 28.02639,-52.92795 1.5904,-12.510482 5.27709,-70.759064 2.34949,-66.639121 -0.83263,1.41435 -1.35751,5.183713 -4.30734,7.931782 0,0 -2.84442,3.651141 -7.92559,0.688154 -1.60583,-0.936408 -13.5395,-0.371291 -13.5395,-0.371291 -3.21338,0.624222 -6.14824,1.883493 -6.14824,1.883493 -9.60845,2.06851 -12.181578,-9.261397 -13.554618,-9.686562 -1.1871,1.159897 -1.21165,34.766571 3.35602,55.912245 z"
+       id="beard-front"
+       class="hair-base"
+       inkscape:connector-curvature="0"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"
+       sodipodi:nodetypes="cscsccsccccc"
+       inkscape:export-filename="C:\Jon\graphics\sage-to-right.v2.png"
+       inkscape:label="#beard-front" />
+    <g
+       id="right-forearm"
+       inkscape:label="#right-forearm"
+       transform="matrix(1.1653223,0,0,1.468468,-27.078936,-50.513117)">
+      <rect
+         style="opacity:1;fill:#ae8ef8;fill-opacity:1;stroke:none;stroke-width:0.22064532;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+         id="right-forearm-main"
+         width="46.202892"
+         height="41.296314"
+         x="112.48844"
+         y="104.70306"
+         ry="10.791167"
+         inkscape:export-xdpi="96"
+         inkscape:export-ydpi="96"
+         transform="matrix(0.10210334,0.9947738,0.99687387,-0.0790094,0,0)"
+         inkscape:export-filename="C:\Jon\graphics\sage-to-right.v2.png"
+         inkscape:label="#right-forearm-main"
+         class="sleeve-base" />
+      <g
+         transform="matrix(1.0561804,0,0,1.1417078,-7.5103169,-21.155158)"
+         inkscape:label="#right-sleeve"
+         id="right-sleeve">
+        <rect
+           style="opacity:1;fill:#6e5697;fill-opacity:1;stroke:none;stroke-width:0.10985599;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+           id="right-sleeve-outer"
+           width="11.803988"
+           height="40.069107"
+           x="-121.90329"
+           y="118.12421"
+           ry="10.470485"
+           transform="matrix(-0.99738019,0.07233773,0.08131072,0.9966888,0,0)"
+           inkscape:export-xdpi="96"
+           inkscape:export-ydpi="96"
+           inkscape:export-filename="C:\Jon\graphics\sage-to-right.v2.png"
+           inkscape:label="#right-sleeve-outer"
+           class="sleeve-darker-2" />
+        <rect
+           class="sleeve-darker-3"
+           inkscape:label="#right-sleeve-inner"
+           inkscape:export-filename="C:\Jon\graphics\sage-to-right.v2.png"
+           inkscape:export-ydpi="96"
+           inkscape:export-xdpi="96"
+           transform="matrix(-0.99753537,0.07016539,0.08382365,0.9964806,0,0)"
+           ry="10.15659"
+           y="119.078"
+           x="-121.50661"
+           height="38.867878"
+           width="8.4444571"
+           id="right-sleeve-inner"
+           style="display:inline;opacity:1;fill:#564472;fill-opacity:1;stroke:none;stroke-width:0.09151366;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill" />
+      </g>
+      <g
+         inkscape:label="#right-hand"
+         inkscape:export-filename="C:\Jon\graphics\sage-to-right.v2.png"
+         inkscape:export-ydpi="96"
+         inkscape:export-xdpi="96"
+         transform="matrix(-0.01526307,-0.2169938,0.14986359,-0.01054122,87.403712,93.958273)"
+         id="right-hand">
+        <rect
+           inkscape:label="#right-hand-thumb"
+           style="opacity:1;fill:#e1b6aa;fill-opacity:1;stroke:none;stroke-width:0.1018211;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+           id="right-hand-thumb"
+           class="body-base"
+           width="14.092028"
+           height="28.833229"
+           x="-196.6301"
+           y="86.055641"
+           ry="7.534431"
+           transform="matrix(-0.1567879,-0.9876323,-0.90870807,0.4174322,0,0)" />
+        <rect
+           style="opacity:1;fill:#d3a89b;fill-opacity:1;stroke:none;stroke-width:0.35306197;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+           id="right-hand-back"
+           class="body-darker-1"
+           width="61.617294"
+           height="79.284843"
+           x="-132.10382"
+           y="-280.51581"
+           ry="20.717978"
+           transform="scale(1,-1)"
+           inkscape:label="#right-hand-back" />
+        <rect
+           inkscape:label="#right-hand-index-finger"
+           class="body-base"
+           style="opacity:1;fill:#e1b6aa;fill-opacity:1;stroke:none;stroke-width:0.12101683;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+           id="right-hand-index-finger"
+           width="11.526227"
+           height="49.796112"
+           x="-93.770088"
+           y="-211.42018"
+           ry="13.012255"
+           transform="scale(1,-1)" />
+        <rect
+           inkscape:label="#right-hand-middle-finger"
+           style="opacity:1;fill:#e1b6aa;fill-opacity:1;stroke:none;stroke-width:0.10021537;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+           id="right-hand-middle-finger"
+           class="body-base"
+           width="9.9358912"
+           height="39.614372"
+           x="-108.95251"
+           y="-206.6506"
+           ry="10.351659"
+           transform="scale(1,-1)" />
+        <rect
+           inkscape:label="#right-hand-ring-finger"
+           style="opacity:1;fill:#e1b6aa;fill-opacity:1;stroke:none;stroke-width:0.08382691;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+           id="right-hand-ring-finger"
+           class="body-base"
+           width="8.4308319"
+           height="32.665367"
+           x="-121.41304"
+           y="-211.42018"
+           ry="8.5358086"
+           transform="scale(1,-1)" />
+        <rect
+           inkscape:label="#right-hand-pinky-finger"
+           style="opacity:1;fill:#e1b6aa;fill-opacity:1;stroke:none;stroke-width:0.06761666;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+           id="right-hand-pinky-finger"
+           class="body-base"
+           width="7.7844534"
+           height="23.018152"
+           x="-133.01315"
+           y="-214.75888"
+           ry="6.0148878"
+           transform="scale(1,-1)" />
+      </g>
+    </g>
+    <rect
+       style="opacity:1;fill:#c75765;fill-opacity:1;stroke:none;stroke-width:1.77800715;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+       id="mouth"
+       width="8.6600389"
+       height="0.92846537"
+       x="-127.42445"
+       y="58.961128"
+       ry="0.46423268"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"
+       transform="scale(-1,1)"
+       inkscape:export-filename="C:\Jon\graphics\sage-to-right.v2.png"
+       inkscape:label="#mouth" />
+    <g
+       id="left-forearm"
+       inkscape:label="#left-forearm"
+       transform="matrix(1.0767037,0,0,1.515208,-4.5808146,-53.416861)">
+      <rect
+         inkscape:export-filename="C:\Jon\graphics\sage-to-right.v2.png"
+         inkscape:export-ydpi="96"
+         inkscape:export-xdpi="96"
+         transform="rotate(90)"
+         ry="13.433002"
+         y="-111.43494"
+         x="99.481171"
+         height="51.714005"
+         width="46.878838"
+         id="left-forearm-main"
+         style="opacity:1;fill:#ae8ef8;fill-opacity:1;stroke:none;stroke-width:0.25077334;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+         inkscape:transform-center-x="-15.837613"
+         inkscape:transform-center-y="4.1440477"
+         inkscape:label="#left-forearm-main"
+         class="sleeve-base" />
+      <g
+         style="display:inline"
+         inkscape:label="#left-sleeve"
+         inkscape:export-ydpi="96"
+         inkscape:export-xdpi="96"
+         inkscape:export-filename="C:\Jon\graphics\sage-to-right.v2.png"
+         transform="matrix(-1,0,0,1,212.65324,1.6225319)"
+         id="left-sleeve">
+        <rect
+           inkscape:label="#left-sleeve-outer"
+           style="opacity:1;fill:#6e5697;fill-opacity:1;stroke:none;stroke-width:0.11839346;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+           id="left-sleeve-outer"
+           width="11.888021"
+           height="46.210087"
+           x="-111.67043"
+           y="100.54752"
+           ry="12.075189"
+           transform="matrix(-1,0,0.0116059,0.99993265,0,0)"
+           inkscape:export-xdpi="96"
+           inkscape:export-ydpi="96"
+           class="sleeve-darker-2" />
+        <rect
+           inkscape:label="#left-sleeve-inner"
+           style="display:inline;opacity:1;fill:#564472;fill-opacity:1;stroke:none;stroke-width:0.09607756;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+           width="8.1603546"
+           height="44.332851"
+           x="-111.06409"
+           y="101.46543"
+           ry="11.584645"
+           transform="matrix(-1,0,0.0116059,0.99993265,0,0)"
+           inkscape:export-xdpi="96"
+           inkscape:export-ydpi="96"
+           class="sleeve-darker-3"
+           id="left-sleeve-inner" />
+      </g>
+      <g
+         inkscape:label="#left-hand"
+         inkscape:export-filename="C:\Jon\graphics\sage-to-right.v2.png"
+         inkscape:export-ydpi="96"
+         inkscape:export-xdpi="96"
+         transform="matrix(0,-0.21752993,-0.16002463,0,145.41519,90.975886)"
+         id="left-hand">
+        <rect
+           inkscape:label="#left-hand-thumb"
+           style="opacity:1;fill:#e1b6aa;fill-opacity:1;stroke:none;stroke-width:0.10850299;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+           id="rect7949-5-4-4"
+           class="body-base"
+           width="14.333518"
+           height="32.19006"
+           x="-203.02536"
+           y="92.477211"
+           ry="8.4116058"
+           transform="matrix(-0.19690423,-0.98042273,-0.94163849,0.33662584,0,0)" />
+        <rect
+           inkscape:label="#left-hand-pinky-finger"
+           style="opacity:1;fill:#e1b6aa;fill-opacity:1;stroke:none;stroke-width:0.06761666;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+           id="left-hand-pinky-finger"
+           class="body-base"
+           width="7.7844534"
+           height="23.018152"
+           x="-133.01315"
+           y="-214.75888"
+           ry="6.0148878"
+           transform="scale(1,-1)" />
+        <rect
+           inkscape:label="#left-hand-back"
+           style="opacity:1;fill:#d3a89b;fill-opacity:1;stroke:none;stroke-width:0.35306197;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+           id="left-hand-back"
+           class="body-darker-1"
+           width="61.617294"
+           height="79.284843"
+           x="-132.10382"
+           y="-280.51581"
+           ry="20.717978"
+           transform="scale(1,-1)" />
+        <rect
+           inkscape:label="#left-hand-index-finger"
+           class="body-base"
+           style="opacity:1;fill:#e1b6aa;fill-opacity:1;stroke:none;stroke-width:0.12101683;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+           id="left-hand-index-finger"
+           width="11.526227"
+           height="49.796112"
+           x="-93.770088"
+           y="-211.42018"
+           ry="13.012255"
+           transform="scale(1,-1)" />
+        <rect
+           inkscape:label="#left-hand-middle-finger"
+           style="opacity:1;fill:#e1b6aa;fill-opacity:1;stroke:none;stroke-width:0.10021537;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+           id="left-hand-middle-finger"
+           class="body-base"
+           width="9.9358912"
+           height="39.614372"
+           x="-108.95251"
+           y="-206.6506"
+           ry="10.351659"
+           transform="scale(1,-1)" />
+        <rect
+           inkscape:label="#left-hand-ring-finger"
+           style="opacity:1;fill:#e1b6aa;fill-opacity:1;stroke:none;stroke-width:0.08382691;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+           id="left-hand-ring-finger"
+           class="body-base"
+           width="8.4308319"
+           height="32.665367"
+           x="-121.41304"
+           y="-211.42018"
+           ry="8.5358086"
+           transform="scale(1,-1)" />
+      </g>
+    </g>
+    <path
+       style="display:inline;opacity:0.95;fill:#ffffff;fill-opacity:0.98039216;stroke-width:0.13942714;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke markers fill"
+       d="m 142.40375,97.999566 c 4.60941,8.624174 -1.22395,46.436244 -8.2242,61.466074 -17.33761,12.7912 -19.80151,13.92713 -25.42007,12.52566 2.86471,-6.22616 -6.00788,-64.8435 -11.176642,-81.902484 14.305452,10.462344 15.324622,5.007154 24.376952,7.555249 z"
+       id="beard-transparent"
+       class="hair-transparent-1"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccccc"
+       inkscape:export-filename="C:\Jon\graphics\sage-to-right.v2.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"
+       inkscape:label="#beard-transparent" />
+    <path
+       style="fill:#392d2d;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 113.50972,47.653213 c 0,0 -1.22901,-0.429386 -3.80909,-0.377557 -2.56388,0.0269 -4.68236,0.15369 -6.85639,0.385264 5.4851,-0.269685 10.66548,-0.0077 10.66548,-0.0077 z"
+       id="left-eye-wrinkle"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccc"
+       inkscape:export-filename="C:\Jon\graphics\sage-to-right.v2.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"
+       inkscape:label="#left-eye-wrinkle" />
+    <path
+       style="fill:#392d2d;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 136.87916,46.322927 c 0,0 -1.22901,-0.429386 -3.80909,-0.377557 -2.56387,0.0269 -4.68235,0.15369 -6.85638,0.385264 5.4851,-0.269685 10.66547,-0.0077 10.66547,-0.0077 z"
+       id="right-eye-wrinkle"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccc"
+       inkscape:export-filename="C:\Jon\graphics\sage-to-right.v2.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"
+       inkscape:label="#right-eye-wrinkle" />
+    <g
+       id="left-eye"
+       inkscape:export-filename="C:\Jon\graphics\sage-to-right.v2.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"
+       inkscape:label="#left-eye">
+      <path
+         transform="scale(-1,1)"
+         d="m -100.78928,38.793594 a 8.9001989,7.7087831 0 0 1 -8.3181,7.692278 8.9001989,7.7087831 0 0 1 -9.40616,-6.686079 8.9001989,7.7087831 0 0 1 7.08771,-8.56686 8.9001989,7.7087831 0 0 1 10.33328,5.565481"
+         sodipodi:open="true"
+         sodipodi:end="6.0213859"
+         sodipodi:start="0"
+         sodipodi:ry="7.7087831"
+         sodipodi:rx="8.9001989"
+         sodipodi:cy="38.793594"
+         sodipodi:cx="-109.68948"
+         sodipodi:type="arc"
+         id="left-eye-socket"
+         style="opacity:1;fill:#988884;fill-opacity:1;stroke:none;stroke-width:0.40358144;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+         inkscape:label="#left-eye-socket" />
+      <path
+         style="fill:#fffff5;fill-opacity:1;stroke-width:0.01677973;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke markers fill"
+         d="m 101.24774,38.898766 a 8.5446667,7.4738533 0 0 1 8.54468,-7.473849 8.5446667,7.4738533 0 0 1 8.54466,7.473849 8.5446667,7.4738533 0 0 1 -8.54466,7.473858 8.5446667,7.4738533 0 0 1 -8.54468,-7.473858 z"
+         id="left-eye-white"
+         class="eye-white"
+         inkscape:connector-curvature="0"
+         inkscape:label="#left-eye-white" />
+      <path
+         transform="matrix(-0.91683661,0,0,-0.95991158,208.74676,-156.10452)"
+         style="fill:#80d4fd;fill-opacity:1;stroke-width:0.01145085;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke markers fill;filter:url(#filter8758-6)"
+         d="m 113.53796,-202.52264 a 5.4534688,5.4534688 0 0 1 -5.45347,5.45346 5.4534688,5.4534688 0 0 1 -5.45347,-5.45346 5.4534688,5.4534688 0 0 1 5.45347,-5.45347 5.4534688,5.4534688 0 0 1 5.45347,5.45347 z"
+         id="left-eye-eyeball-color-dark"
+         class="eye-darker-1"
+         inkscape:connector-curvature="0"
+         inkscape:label="#left-eye-eyeball-color-dark" />
+      <path
+         transform="matrix(-0.89320223,0,0,-0.93516679,206.91013,-150.77832)"
+         style="fill:#7bfcf7;fill-opacity:1;stroke-width:0.01145085;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke markers fill;filter:url(#filter8758)"
+         d="m 113.53796,-202.52264 a 5.4534688,5.4534688 0 0 1 -5.45347,5.45346 5.4534688,5.4534688 0 0 1 -5.45347,-5.45346 5.4534688,5.4534688 0 0 1 5.45347,-5.45347 5.4534688,5.4534688 0 0 1 5.45347,5.45347 z"
+         id="left-eye-eyeball-color-light"
+         class="eye-base"
+         inkscape:connector-curvature="0"
+         inkscape:label="#left-eye-eyeball-color-light" />
+      <g
+         inkscape:label="#left-eye-eyeball-iris"
+         transform="matrix(-0.95142365,0.00940138,-0.00940138,-0.95142365,202.87484,71.650839)"
+         id="left-eye-eyeball-iris">
+        <path
+           inkscape:label="#eye-left-eyeball-iris-black"
+           inkscape:connector-curvature="0"
+           id="eye-left-eyeball-iris-black"
+           d="m 100.02924,35.909872 a 3.1521824,3.0736973 1.5974401 0 0 -3.154357,-3.075896 3.1521824,3.0736973 1.5974401 0 0 -3.149881,3.071621 3.1521824,3.0736973 1.5974401 0 0 3.154357,3.075895 3.1521824,3.0736973 1.5974401 0 0 3.149881,-3.07162 z"
+           style="fill:#070007;fill-opacity:1;stroke-width:0.00653586;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke markers fill" />
+        <path
+           inkscape:label="#eye-left-eyeball-iris-sparkle-top"
+           inkscape:connector-curvature="0"
+           id="eye-left-eyeball-iris-sparkle-top"
+           d="m 98.438928,33.752686 a 0.29964255,0.31372041 0 0 0 -0.299627,-0.313727 0.29964255,0.31372041 0 0 0 -0.299649,0.313727 0.29964255,0.31372041 0 0 0 0.299649,0.313715 0.29964255,0.31372041 0 0 0 0.299627,-0.313715 z"
+           style="fill:#fffff5;fill-opacity:1;stroke-width:0.00064377;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke markers fill" />
+        <path
+           inkscape:label="#eye-left-eyeball-iris-sparkle-bottom"
+           inkscape:connector-curvature="0"
+           id="eye-left-eyeball-iris-sparkle-bottom"
+           d="m 95.116215,37.547201 a 0.26402631,0.25217842 65.616918 0 0 -0.338681,-0.136372 0.26402631,0.25217842 65.616918 0 0 -0.120695,0.344583 0.26402631,0.25217842 65.616918 0 0 0.338693,0.136374 0.26402631,0.25217842 65.616918 0 0 0.120683,-0.344585 z"
+           style="fill:#fffff5;fill-opacity:1;stroke-width:0.0005418;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke markers fill" />
+      </g>
+    </g>
+    <g
+       transform="matrix(0.92265544,0,0,0.93054569,29.386323,1.9461638)"
+       id="right-eye"
+       class="eye"
+       inkscape:export-filename="C:\Jon\graphics\sage-to-right.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"
+       inkscape:label="#right-eye">
+      <path
+         transform="scale(-1,1)"
+         d="m -100.78928,38.793594 a 8.9001989,7.7087831 0 0 1 -8.3181,7.692278 8.9001989,7.7087831 0 0 1 -9.40616,-6.686079 8.9001989,7.7087831 0 0 1 7.08771,-8.56686 8.9001989,7.7087831 0 0 1 10.33328,5.565481"
+         sodipodi:open="true"
+         sodipodi:end="6.0213859"
+         sodipodi:start="0"
+         sodipodi:ry="7.7087831"
+         sodipodi:rx="8.9001989"
+         sodipodi:cy="38.793594"
+         sodipodi:cx="-109.68948"
+         sodipodi:type="arc"
+         id="right-eye-socket"
+         style="opacity:1;fill:#988884;fill-opacity:1;stroke:none;stroke-width:0.40358144;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+         inkscape:label="#right-eye-socket" />
+      <path
+         style="fill:#fffff5;fill-opacity:1;stroke-width:0.01677973;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke markers fill"
+         d="m 101.24774,38.898766 a 8.5446667,7.4738533 0 0 1 8.54468,-7.473849 8.5446667,7.4738533 0 0 1 8.54466,7.473849 8.5446667,7.4738533 0 0 1 -8.54466,7.473858 8.5446667,7.4738533 0 0 1 -8.54468,-7.473858 z"
+         id="right-eye-white"
+         class="eye-white"
+         inkscape:connector-curvature="0"
+         inkscape:label="#right-eye-white" />
+      <path
+         inkscape:connector-curvature="0"
+         id="eye-right-eyeball-color-dark"
+         class="eye-darker-1"
+         d="m 113.53796,-202.52264 a 5.4534688,5.4534688 0 0 1 -5.45347,5.45346 5.4534688,5.4534688 0 0 1 -5.45347,-5.45346 5.4534688,5.4534688 0 0 1 5.45347,-5.45347 5.4534688,5.4534688 0 0 1 5.45347,5.45347 z"
+         style="fill:#80d4fd;fill-opacity:1;stroke-width:0.01145085;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke markers fill;filter:url(#filter8758-6-4)"
+         transform="matrix(-0.93332416,0,0,-0.97717376,210.1353,-159.36382)"
+         inkscape:label="#eye-right-eyeball-color-dark" />
+      <path
+         inkscape:connector-curvature="0"
+         id="eye-right-eyeball-color-light"
+         class="eye-base"
+         d="m 113.53796,-202.52264 a 5.4534688,5.4534688 0 0 1 -5.45347,5.45346 5.4534688,5.4534688 0 0 1 -5.45347,-5.45346 5.4534688,5.4534688 0 0 1 5.45347,-5.45347 5.4534688,5.4534688 0 0 1 5.45347,5.45347 z"
+         style="fill:#7bfcf7;fill-opacity:1;stroke-width:0.01145085;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke markers fill;filter:url(#filter8758-0)"
+         transform="matrix(-0.94085225,0,0,-0.98505552,212.02503,-160.69065)"
+         inkscape:label="#eye-right-eyeball-color-light" />
+      <g
+         id="eye-right-eyeball-iris"
+         transform="matrix(-0.95142365,-0.00940138,-0.00940138,0.95142365,202.35707,5.3703615)"
+         inkscape:label="#eye-right-eyeball-iris">
+        <path
+           inkscape:label="#eye-right-eyeball-iris-black"
+           style="fill:#070007;fill-opacity:1;stroke-width:0.00653586;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke markers fill"
+           d="m 100.02924,35.909872 a 3.1521824,3.0736973 1.5974401 0 0 -3.154357,-3.075896 3.1521824,3.0736973 1.5974401 0 0 -3.149881,3.071621 3.1521824,3.0736973 1.5974401 0 0 3.154357,3.075895 3.1521824,3.0736973 1.5974401 0 0 3.149881,-3.07162 z"
+           id="path4518-1-4-9-3-7"
+           inkscape:connector-curvature="0" />
+        <path
+           inkscape:label="#eye-right-eyeball-iris-sparkle-top"
+           style="fill:#fffff5;fill-opacity:1;stroke-width:0.00064377;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke markers fill"
+           d="m 98.438928,33.752686 a 0.29964255,0.31372041 0 0 0 -0.299627,-0.313727 0.29964255,0.31372041 0 0 0 -0.299649,0.313727 0.29964255,0.31372041 0 0 0 0.299649,0.313715 0.29964255,0.31372041 0 0 0 0.299627,-0.313715 z"
+           id="path4518-1-4-3-3-1"
+           inkscape:connector-curvature="0" />
+        <path
+           inkscape:label="#eye-right-eyeball-iris-sparkle-bottom"
+           style="fill:#fffff5;fill-opacity:1;stroke-width:0.0005418;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke markers fill"
+           d="m 95.116215,37.547201 a 0.26402631,0.25217842 65.616918 0 0 -0.338681,-0.136372 0.26402631,0.25217842 65.616918 0 0 -0.120695,0.344583 0.26402631,0.25217842 65.616918 0 0 0.338693,0.136374 0.26402631,0.25217842 65.616918 0 0 0.120683,-0.344585 z"
+           id="path4518-1-4-3-3-9-8"
+           inkscape:connector-curvature="0" />
+      </g>
+    </g>
+    <path
+       style="fill:#392d2d;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 123.83639,22.008236 c 0,0 -1.28484,-0.597904 -3.98213,-0.525734 -2.68034,0.03745 -4.89505,0.214008 -7.16783,0.536465 5.73427,-0.375525 11.14996,-0.01068 11.14996,-0.01068 z"
+       id="forehead-wrinkle-top"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccc"
+       inkscape:export-filename="C:\Jon\graphics\sage-to-right.v2.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"
+       inkscape:label="#forehead-wrinkle-top" />
+    <path
+       style="fill:#392d2d;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 124.65614,23.948281 c 0,0 -1.17889,-0.384682 -3.65376,-0.338249 -2.45932,0.02409 -4.4914,0.137689 -6.57677,0.345153 5.26142,-0.241607 10.23053,-0.0069 10.23053,-0.0069 z"
+       id="forehead-wrinkle-bottom"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccc"
+       inkscape:export-filename="C:\Jon\graphics\sage-to-right.v2.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"
+       inkscape:label="#forehead-wrinkle-bottom" />
+    <g
+       id="left-eyebrow"
+       transform="matrix(1.1756734,-0.36632882,0.36632882,1.1756734,-29.219182,35.139211)"
+       inkscape:export-filename="C:\Jon\graphics\sage-to-right.v2.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"
+       inkscape:label="#left-eyebrow">
+      <path
+         sodipodi:nodetypes="cccscc"
+         inkscape:connector-curvature="0"
+         id="left-eyebrow-back"
+         class="hair-darker-1"
+         d="m 114.43995,31.366883 c 0,0 -1.48679,-2.312759 -6.0189,-4.191415 -2.82525,0.188332 -7.99548,1.013987 -8.652438,2.500257 0.829698,-0.184066 3.825008,-1.073919 4.569578,-1.314244 1.29939,-0.419405 5.09958,0.674739 5.09958,0.674739 3.49005,1.649522 3.18169,1.628202 5.00218,2.330663 z"
+         style="fill:#edeaf0;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         inkscape:label="#left-eyebrow-back" />
+      <path
+         sodipodi:nodetypes="cccscc"
+         inkscape:connector-curvature="0"
+         id="left-eyebrow-front"
+         class="hair-base"
+         d="m 110.01945,27.784044 c 0,0 -1.1253,-0.588523 -2.91629,-1.2088 -1.99462,-0.613543 -6.02279,-0.122853 -7.355251,2.982078 3.408621,-1.650134 7.293461,-1.801459 9.376181,-0.690494 3.88496,2.072311 5.4682,2.581066 5.4682,2.581066 0,0 -3.19384,-2.026854 -4.57284,-3.66385 z"
+         style="fill:#fafafa;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         inkscape:label="#left-eyebrow-front" />
+    </g>
+    <g
+       transform="matrix(-1.1967674,0,0,1.1967674,260.54495,-5.3660595)"
+       id="right-eyebrow"
+       inkscape:export-filename="C:\Jon\graphics\sage-to-right.v2.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"
+       inkscape:label="#right-eyebrow">
+      <path
+         sodipodi:nodetypes="ccccc"
+         inkscape:connector-curvature="0"
+         id="right-eyebrow-dark"
+         class="hair-darker-1"
+         d="m 115.12319,28.51483 c 0,0 -1.85242,-1.215401 -7.48982,-2.319037 -2.23516,0.03616 -4.89813,1.044703 -5.46172,3.896667 5.00399,-3.847275 13.59187,-0.954057 13.59187,-0.954057 z"
+         style="fill:#edeaf0;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         inkscape:label="#right-eyebrow-dark" />
+      <path
+         sodipodi:nodetypes="ccccc"
+         inkscape:connector-curvature="0"
+         id="right-eyebrow-front"
+         class="hair-base"
+         d="m 112.1223,27.136168 c 0,0 -1.89609,-0.76323 -5.25259,-0.976157 -2.13617,0.270295 -3.65015,0.830007 -4.79788,3.970499 4.5869,-4.923623 13.93068,-0.992294 13.93068,-0.992294 z"
+         style="fill:#fafafa;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         inkscape:label="#right-eyebrow-front" />
+    </g>
+    <g
+       id="g4715"
+       transform="matrix(0.82911175,0,0,0.82911175,33.303914,3.6619001)">
+      <circle
+         inkscape:label="#head-shine"
+         r="0.89516854"
+         inkscape:export-filename="C:\Jon\graphics\sage-to-right.v2.png"
+         cx="-111.07243"
+         cy="-17.363102"
+         transform="scale(-1)"
+         inkscape:export-ydpi="96"
+         inkscape:export-xdpi="96"
+         id="head-shine-9"
+         style="fill:#edfffe;fill-opacity:1;stroke-width:0.00095356;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke markers fill" />
+      <circle
+         inkscape:label="#head-shine"
+         r="0.67883098"
+         inkscape:export-filename="C:\Jon\graphics\sage-to-right.v2.png"
+         cx="-110.99288"
+         cy="-17.181898"
+         transform="scale(-1)"
+         inkscape:export-ydpi="96"
+         inkscape:export-xdpi="96"
+         id="head-shine"
+         style="fill:#fffffe;fill-opacity:1;stroke-width:0.00072311;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke markers fill" />
+    </g>
+  </g>
+</svg>

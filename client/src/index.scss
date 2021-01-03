@@ -1,0 +1,29 @@
+// @font-face {
+// 	font-family: "Nunito";
+// 	src: local("Nunito-Regular"),
+// 		url(/fonts/nunito-v10-latin-regular.woff2) format("woff2"),
+// 		url(/fonts/nunito-v10-latin-regular.woff) format("woff");
+// }
+
+//From the offical SASS docs @ https://sass-lang.com/documentation/at-rules/import :
+//When Sass imports a file, that file is evaluated as though its contents appeared directly in place of the @import. Any mixins, functions, and variables from the imported file are made available, and all its CSS is included at the exact point where the @import was written. What’s more, any mixins, functions, or variables that were defined before the @import (including from other @imports) are available in the imported stylesheet.
+
+@import "./styles/foundations";
+@import "./styles/_variables";
+@import "./styles/_shadows.scss";
+@import "./styles/_gradients";
+@import "./styles/_backgrounds.scss";
+@import "./styles/animations/_background-animations";
+@import "./styles/animations/_animations";
+@import "./styles/_before-and-after.scss";
+@import "./styles/_speech-bubble";
+
+@import "./styles/_typography";
+@import "./styles/_language";
+@import "./styles/_shapes";
+@import "./styles/_functions";
+
+//page-specific stylesheets
+@import "./styles/home";
+@import "./styles/quiz";
+@import "./styles/chat";

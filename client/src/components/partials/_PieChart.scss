@@ -1,0 +1,276 @@
+#root .mobile .PieChart {
+	svg:hover text {
+		fill: var(--white);
+	}
+}
+
+#root .PieChart {
+	svg {
+		transition: all 0.2s ease-in-out;
+		// overflow: visible;
+		padding: calc(2 * var(--spacing));
+		// background-color: var(--white);
+		// border-radius: 50%;
+
+		&:hover {
+			text {
+				// stroke-width: 0.0075rem;
+			}
+		}
+
+		* {
+			transition: all 0.3s ease-in-out;
+			// transform: scale(0) translateX(0) translateY(0)
+			--font-size: 1rem;
+			font-size: 1rem;
+			fill: var(--white, white);
+
+			// opacity: 0.8;
+		}
+
+		.section-btn {
+			width: 1rem;
+		}
+	}
+
+	text {
+		fill: var(--black);
+		// stroke: var(--transparent-black);
+		// stroke-width: 0.0075rem;
+
+		transition: all 0.2s ease-in;
+		// font-size: 0.3rem;
+		--font-size: 0.3rem;
+		// --color: var(--transparent-white);
+		// --shadow-color: var(--secondary);
+		user-select: none;
+		pointer-events: none;
+		z-index: -10;
+	}
+
+	&.active.showHoverAnimation {
+		svg * {
+			//background element
+			&:nth-child(1) {
+				opacity: 0.95;
+			}
+
+			&:hover:not(*:nth-child(1)) {
+				opacity: 0.85;
+			}
+
+			//assuming  startAngle={180},
+			//top
+			&:nth-child(2):hover {
+				animation: openUp 2s infinite;
+				animation-delay: 0s;
+				animation-fill-mode: forwards;
+				// stroke: green;
+				// z-index: 10000
+			}
+			&:nth-child(3):hover {
+				animation: openRight 2s infinite;
+				animation-delay: 0s;
+				animation-fill-mode: forwards;
+				z-index: 10000;
+			}
+			&:nth-child(4):hover {
+				animation: openLeft 2s infinite;
+				animation-delay: 0s;
+				animation-fill-mode: forwards;
+				z-index: 10000;
+			}
+		}
+	}
+
+	&.animate-segment--1 {
+		svg {
+			//first child is the pie's background, so the first actual segment is the second child
+			path:not(*:nth-child(2)) {
+				*,
+				text,
+				title,
+				path {
+					opacity: 0;
+					display: none;
+				}
+				opacity: 0.2;
+				// opacity: 0;
+			}
+			path:nth-child(2) {
+				animation: connecting-top 1.5s infinite;
+				animation-delay: 0s;
+				animation-fill-mode: forwards;
+				animation-timing-function: linear;
+			}
+		}
+	}
+
+	&.animate-segment--2 {
+		svg {
+			path:not(*:nth-child(3)) {
+				*,
+				text,
+				title,
+				path {
+					opacity: 0;
+				}
+				opacity: 0.2;
+			}
+			path:nth-child(3) {
+				animation: connecting-bottom-right 1.5s infinite;
+				animation-delay: 0s;
+				animation-fill-mode: forwards;
+				animation-timing-function: linear;
+			}
+		}
+	}
+
+	&.animate-segment--3 {
+		svg {
+			path:not(*:nth-child(4)) {
+				*,
+				text,
+				title,
+				path {
+					opacity: 0;
+				}
+				opacity: 0.2;
+			}
+			path:nth-child(4) {
+				animation: connecting-bottom-left 1.5s infinite;
+				animation-delay: 0s;
+				animation-fill-mode: forwards;
+				animation-timing-function: linear;
+			}
+		}
+	}
+	&.animate-segment--4 {
+		svg {
+			path:not(*:nth-child(5)) {
+				*,
+				text,
+				title,
+				path {
+					opacity: 0;
+				}
+				opacity: 0.2;
+			}
+			path:nth-child(5) {
+				animation: connecting-bottom-left 1.5s infinite;
+				animation-delay: 0s;
+				animation-fill-mode: forwards;
+				animation-timing-function: linear;
+			}
+		}
+	}
+	&.animate-segment--5 {
+		svg {
+			path:not(*:nth-child(6)) {
+				*,
+				text,
+				title,
+				path {
+					opacity: 0;
+				}
+				opacity: 0.2;
+			}
+			path:nth-child(6) {
+				animation: connecting-bottom-left 1.5s infinite;
+				animation-delay: 0s;
+				animation-fill-mode: forwards;
+				animation-timing-function: linear;
+			}
+		}
+	}
+}
+
+@keyframes openUp {
+	10%,
+	90% {
+		transform: scale(1.02) translateY(-0.2rem);
+	}
+}
+
+@keyframes openRight {
+	10%,
+	90% {
+		transform: scale(1.02) translateX(0.05rem);
+	}
+}
+
+@keyframes openLeft {
+	10%,
+	90% {
+		transform: scale(1.02) translateY(0.05rem) translateX(-0.2rem);
+	}
+}
+
+@keyframes connecting-top {
+	0%,
+	100% {
+		transform: scale(1.02) translateY(-0.2rem) translateX(0.05rem)
+			rotateZ(0deg) rotateY(0deg);
+	}
+
+	20% {
+		transform: rotateZ(5deg) rotateY(0deg) translateY(-0.4rem);
+		background-color: initial;
+	}
+
+	40% {
+		transform: rotateZ(-2deg) rotateY(0deg) translateY(-0.5rem);
+		background-color: initial;
+	}
+
+	70%,
+	90% {
+		transform: rotateZ(0deg) rotateY(0deg) translateY(0);
+		background-color: initial;
+	}
+}
+
+@keyframes connecting-bottom-right {
+	0%,
+	100% {
+		// transform: rotateZ(0deg) translateX(0) translateY(0);
+		transform: scale(1.02) translateX(0.05rem) rotateZ(0deg) translateY(0);
+	}
+
+	20% {
+		transform: rotateZ(-3deg) translateX(0.2rem) translateY(0.5rem);
+		background-color: initial;
+	}
+
+	40% {
+		transform: rotateZ(1.5deg) translateX(0.1rem) translateY(0);
+		background-color: initial;
+	}
+	70%,
+	90% {
+		transform: rotateZ(0) translateX(0rem) translateY(0);
+		background-color: initial;
+	}
+}
+
+@keyframes connecting-bottom-left {
+	0%,
+	100% {
+		transform: scale(1.02) translateY(0.05rem) translateX(-0.2rem);
+	}
+	20% {
+		transform: rotateZ(3deg) translateY(0.06rem) translateX(-0.15rem);
+		background-color: initial;
+	}
+
+	40% {
+		transform: translateX(-0.3rem) translateY(0.06rem);
+		background-color: initial;
+	}
+
+	70%,
+	90% {
+		transform: rotateZ(0deg) translateY(0rem) translateX(0);
+		background-color: initial;
+	}
+}

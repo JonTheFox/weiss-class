@@ -1,0 +1,7 @@
+@function setAlpha($rgb, $a) {
+	//easily add opacity to an RGB color. e.g.:
+	//$white: rgb(255,255,255);
+	//background-color: setAlpha($white, 0.25);
+	//result: rgba(255,255,255,0.25);
+	@return rgba($rgb, $a);
+}

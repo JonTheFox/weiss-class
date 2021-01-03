@@ -1,0 +1,238 @@
+@import "../../styles/_variables";
+// @import "../../styles/_animations";
+@import "../../styles/_functions";
+
+#root .table {
+	th.table-header {
+		background-color: setAlpha($black, 0.1);
+		border-radius: 5%;
+
+		&:nth-child(1) {
+			width: 65%;
+		}
+	}
+
+	th {
+		text-align: left;
+		&.transcript {
+			width: 70%;
+			max-width: 80%;
+		}
+	}
+
+	th.table-header,
+	td.table-cell {
+		padding: 0 $spacing;
+	}
+
+	tbody tr {
+		&.recognized {
+			// color: var(--primary);
+			background-color: setAlpha($lightblue, 0.2);
+			font-weight: 600;
+		}
+	}
+}
+
+.big-picture-container {
+	&.visible {
+		z-index: 1500;
+	}
+	&.hidden {
+		z-index: -1;
+	}
+}
+
+#root #SpeechRecognizerTester {
+	position: relative;
+	height: 100%;
+	overflow: hidden;
+	padding: 0;
+	background: none;
+
+	.section {
+		// a section lacks margins (which messes with space allocation) but may contain padding (as we are using border-box layout scheme which includes padding in space allocation)
+		box-sizing: border-box;
+		margin: 0;
+		padding: $spacing;
+		overflow: hidden;
+	}
+	//all 4 sections total up to 100% of page height.
+	.title-section {
+		height: 12.5%;
+		margin: 0;
+	}
+	.items-section {
+		position: relative;
+		height: 50%;
+		max-width: 100%;
+
+		ul {
+			list-style: none;
+			width: 100%;
+			min-height: 100%;
+			padding: 0;
+			margin: 0;
+			max-width: unset;
+			max-height: unset;
+			display: flex;
+			flex-flow: row;
+			justify-content: space-between;
+			align-content: space-around;
+			flex-wrap: wrap;
+			li {
+				width: 50%;
+				opacity: 0.8;
+				max-width: unset;
+				// margin: $spacing * 0.5 $spacing * 0.5;
+
+				padding: $spacing * 0.25;
+				// margin: $spacing 0;
+				&.matched {
+					opacity: 1;
+					.overlay {
+						background-color: var(--secondary);
+						// @extend .wave;
+					}
+				}
+				&.other {
+					opacity: 0.1;
+				}
+			}
+		}
+		.big-picture-container {
+			position: absolute;
+			top: 0;
+			left: 0;
+			padding: $spacing;
+		}
+	}
+
+	.results-section {
+		background-color: var(--transparent-white);
+		position: relative;
+		// margin: calc(2 * var(--spacing)) 0;
+		height: 25%;
+		font-size: 100%;
+		max-width: 100%;
+		margin: calc(var(--spacing));
+		margin-bottom: 0;
+	}
+
+	.feedback-section {
+		height: 12.5%;
+		// background-color: var(--transparent-white);
+		overflow: visible;
+		margin: 0 calc(var(--spacing));
+		// padding: 0;
+		padding: $spacing 0;
+		&.matched {
+			background-color: var(--secondary);
+		}
+		&.not-matched {
+			background-color: $transparent-black;
+		}
+	}
+}
+
+#root .phone.landscape #SpeechRecognizerTester {
+	.section.title-section {
+		height: 10%;
+		// p {
+		// 	font-size: 2rem;
+		// }
+	}
+	.items-section {
+		height: 40%;
+		li {
+			width: 25%;
+		}
+	}
+	.section.results-section {
+		height: 35%;
+	}
+	.section.feedback-section {
+		height: 15%;
+	}
+}
+
+#root .tablet.portrait #SpeechRecognizerTester {
+	.section.title-section {
+		height: 12.5%;
+
+		p {
+			font-size: 2rem;
+		}
+	}
+	.items-section {
+		height: 55%;
+		ul {
+			justify-content: space-around;
+			li {
+				width: 49%;
+			}
+		}
+	}
+	.section.results-section {
+		height: 25%;
+	}
+	.section.feedback-section {
+		height: 12.5%;
+	}
+}
+
+// #root .tablet.landscape #SpeechRecognizerTester,
+// #root .largeScreen #SpeechRecognizerTester {
+// 	position: relative;
+// 	.section.title-section {
+// 		height: 10%;
+// 		p {
+// 			font-size: 2rem;
+// 		}
+// 	}
+// 	.section.items-section {
+// 		min-height: 25%;
+// 		max-height: 60%;
+// 		height: auto;
+// 		overflow-y: auto;
+// 		ul {
+// 			height: 100%;
+// 			justify-content: space-evenly;
+// 			align-content: flex-end;
+// 			li {
+// 				width: 25%;
+// 			}
+// 		}
+// 	}
+// 	.section.results-section {
+// 		height: 18%;
+// 	}
+// 	.section.feedback-section {
+// 		height: 12%;
+// 	}
+// }
+
+#root .tablet.landscape,
+#root .large-screen.landscape,
+#root .xl-screen.landscape {
+	#SpeechRecognizerTester {
+		.section.title-section {
+			height: 12%;
+			p {
+				font-size: 2rem;
+			}
+		}
+		.items-section {
+			height: 40%;
+			li {
+				width: 25%;
+			}
+		}
+		.section.results-section {
+			height: 36%;
+		}
+		.section.feedback-section {
+			height: 12%;
+		}
+	}
+}

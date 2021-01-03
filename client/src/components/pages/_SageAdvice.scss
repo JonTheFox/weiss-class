@@ -1,0 +1,307 @@
+@import "../../styles/_variables";
+// @import "../../styles/animations/_animations.scss";
+@import "../../styles/_shapes";
+
+//general style rules for all screen sizes
+#root #sage-advice {
+	height: 100%;
+	min-height: auto;
+	width: 100%;
+	min-width: auto;
+	animation-duration: 50s;
+
+	.zone {
+		display: block;
+		margin: 0;
+		width: 100%;
+		position: relative;
+		&.character-zone {
+			height: 70%;
+			display: flex;
+			position: relative;
+			.sage-area {
+				height: 100%;
+				width: 50%;
+				margin: auto;
+				float: left;
+
+				.sage-container {
+					background: none;
+					padding: calc(2 * var(--spacing));
+				}
+
+				svg {
+					width: 100%;
+					height: 100%;
+				}
+			}
+
+			.speech-bubble {
+				// position: unset;
+				// top: var(--spacing) * 3;
+				padding: calc(0.5 * var(--spacing));
+				width: auto;
+
+				// p {
+				// 	margin: 0;
+				// 	padding: var(--spacing);
+				// }
+			}
+		}
+		&.go-back-zone {
+			// top: var(--spacing) * 1};
+			height: 16.5%;
+			justify-content: center;
+			display: flex;
+			// padding-top: var(--spacing);
+
+			.reload-btn {
+				margin: auto;
+				background: var(--transplanet);
+			}
+			// height: auto;
+			// position: absolute;
+			// display: flex;
+			// bottom: var(--spacing);
+			// left: 0;
+			// width: 100%;
+		}
+
+		&.controls-zone {
+			height: 13.5%;
+
+			.controls.btn-group {
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				margin: 0;
+				height: 100%;
+			}
+
+			.btn {
+				&.show {
+					background-color: var(--robe-base);
+				}
+				&.hide {
+					background-color: var(--robe-darker-1);
+				}
+			}
+		}
+	}
+}
+
+// phone
+#root .portrait #sage-advice {
+	.zone {
+		&.character-zone {
+			position: relative;
+			height: 65%;
+
+			.sage-area {
+				margin: auto;
+				margin-left: 2%;
+				// margin-left: var(--spacing);
+				top: calc(4 * var(--spacing));
+				height: 90%;
+				width: 50%;
+
+				position: relative;
+				padding: var(--spacing) calc(2 * var(--spacing));
+
+				padding-top: var(--spacing);
+				.sage-container {
+					padding: calc(2 * var(--spacing));
+				}
+			}
+			.speech-bubble {
+				right: 4%;
+				width: 45%;
+				top: 10%;
+			}
+		}
+		&.go-back-zone {
+			height: 20%;
+		}
+		&.controls-zone {
+			height: 15%;
+		}
+	}
+
+	.speech-bubble {
+		right: 5%;
+	}
+}
+
+#root .landscape #sage-advice {
+	.zone {
+		&.character-zone {
+			height: 65%;
+			.sage-area {
+				margin: auto;
+				margin-left: 12.5%;
+				height: 90%;
+				width: 33%;
+				// margin: calc( 2* var(--spacing) );
+				// left: calc( 4 * var(--spacing) );
+				top: calc(4 * var(--spacing));
+			}
+			.speech-bubble {
+				right: 12.5%;
+			}
+		}
+		&.go-back-zone {
+			height: 20%;
+		}
+		&.controls-zone {
+			height: 15%;
+		}
+	}
+}
+
+#root .tablet.portrait #sage-advice,
+#root .large-screen.portrait #sage-advice,
+#root .xl-screen.portrait #sage-advice {
+	// padding: calc(4 * var(--spacing)) calc(4 * var(--spacing));
+	.zone {
+		&.character-zone {
+			// height: 65%;
+			.sage-area {
+				// position: relative;
+				// height: 60%;
+				padding: calc(4 * var(--spacing));
+				// margin-left: var(--spacing);
+				// padding-top: var(--spacing) * 1};
+			}
+			.sage-area {
+				margin: auto;
+				margin-left: 5%;
+				height: 90%;
+				width: 45%;
+				// margin: calc( 2* var(--spacing) );
+				// left: calc( 4 * var(--spacing) );
+				top: calc(4 * var(--spacing));
+				.sage-container {
+					padding: calc(4 * var(--spacing));
+				}
+			}
+
+			.speech-bubble {
+				right: 5%;
+				width: 40%;
+			}
+
+			.text-container {
+				// position: relative;
+				width: 45%;
+				height: 100%;
+				font-size: 1.25rem;
+			}
+		}
+	}
+}
+
+#root .tablet,
+#root .large-screen,
+#root .xl-screen {
+	&.landscape #sage-advice {
+		.zone {
+			&.character-zone {
+				height: 65%;
+				.sage-area {
+					margin: auto;
+					margin-left: 12.5%;
+					height: 80%;
+					width: 40%;
+					// margin: calc( 2* var(--spacing) );
+					// left: calc( 4 * var(--spacing) );
+					top: calc(4 * var(--spacing));
+				}
+				.speech-bubble {
+					right: 12.5%;
+				}
+				.text-container {
+					// position: relative;
+					width: 40%;
+					height: 90%;
+					font-size: 1.5rem;
+				}
+			}
+			&.go-back-zone {
+				height: 20%;
+			}
+			&.controls-zone {
+				height: 15%;
+			}
+		}
+	}
+}
+
+// #root .tablet.landscape {
+// 	#sage-advice {
+// 		// float: left;
+// 		.sage-area {
+// 			height: 75%;
+// 			width: 50%;
+// 			margin: calc(2 * var(--spacing));
+// 			padding: calc(2 * var(--spacing));
+
+// 			left: calc(4 * var(--spacing));
+// 			top: calc(4 * var(--spacing));
+// 		}
+// 		.sage-container {
+// 			padding: calc(8 * var(--spacing));
+// 		}
+// 		// .text-container {
+// 		// 	// width: 100%;
+// 		// 	height: 100%;
+// 		// 	justify-content: space-evenly;
+// 		// }
+// 		.speech-bubble {
+// 			right: 15%;
+// 			top: 17.5%;
+// 			width: auto;
+// 		}
+// 	}
+// }
+
+// large-screen
+// #root .large-screen.portrait {
+// 	#sage-advice {
+// 	}
+// }
+// #root .large-screen.landscape #sage-advice {
+// 	.character-zone {
+// 		height: 70%;
+// 		.sage-area {
+// 			height: 75%;
+// 			width: 50%;
+// 			margin: calc(2 * var(--spacing));
+// 			padding: calc(2 * var(--spacing));
+
+// 			left: calc(4 * var(--spacing));
+// 			top: calc(4 * var(--spacing));
+// 			.sage-container {
+// 				padding: calc(4 * var(--spacing));
+// 			}
+// 		}
+// 	}
+// 	.controls-zone {
+// 		height: 30%;
+// 	}
+// }
+
+// .sage-container svg.sage-svg {
+// 	&:hover {
+// 		transform: scale(1.5);
+// 	}
+// 	.robe-darker-1,
+// 	.eye,
+// 	#right-eye,
+// 	#right-eye-brow,
+// 	#left-forearm,
+// 	rect {
+// 		&:hover {
+// 			transform: scale(2.2, 2.2);
+// 		}
+// 	}
+// }

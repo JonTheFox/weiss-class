@@ -1,0 +1,10 @@
+@import "../../styles/variables";
+
+#root .spinner-view {
+	animation-iteration-count: infinite;
+	animation-duration: 10s;
+	animation-timing-function: ease-in;
+	// animation-name: wave-2;
+	// background-size: 300% 200%;
+	//background: linear-gradient(45deg, $white, $secondary, $white);
+}

@@ -1,0 +1,34 @@
+// Partials
+// --------
+//As a convention, Sass files that are only meant to be imported, not compiled on their own, begin with _ (as in _code.scss).
+//These are called partials, and they tell Sass tools not to try to compile those files on their own.
+// Note: You can leave off the _ when importing a partial.
+
+$primary: var(--primary);
+$primary-color: var(--color-primary);
+$purple: rgb(148, 116, 204);
+$secondary: var(--secondary);
+$secondary-color: var(--color-secondary);
+$lightblue: rgb(68, 221, 238);
+$canvas: var(--color-canvas);
+$white: rgb(255, 255, 255);
+$transparent-white: var(--transparent-white);
+$black: rgb(0, 0, 0);
+$transparent-black: var(--transparent-black);
+$transparent: var(--transparent);
+
+// $spacing: var(--spacing);
+//has to be an excplicit value for mathematical operations in SASS files
+$spacing: 8px;
+
+$appbarHeightXs: 40px;
+$appbarHeightSm: 48px;
+$appbarHeightMd: 56px;
+$appbarHeightLg: 64px;
+$drawerWidth: 210px;
+$promptHeight: 50px;
+
+//durations
+$between-levels: 1s;
+$duration-enter: 0.4s;
+$duration-exit: 0.3s;

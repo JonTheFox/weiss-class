@@ -1,0 +1,104 @@
+@import "../../styles/_variables";
+
+#root .speech-recorder {
+	position: relative;
+	padding: $spacing * 2;
+	animation-iteration-count: infinite;
+	justify-content: space-between;
+	.text-section {
+		position: relative;
+		padding: 0;
+		font-size: 1.25rem;
+		// height: 50%;
+		height: 80%;
+		width: 100%;
+
+		.text-zone {
+			overflow-y: auto;
+			background-color: var(--white);
+			width: 100%;
+			max-height: 90%;
+			min-height: 20%;
+			height: auto;
+			font-size: inherit;
+			padding: $spacing * 2;
+			border: none;
+			border-radius: 2rem 2rem 0 0;
+
+			&:focus {
+				border: none;
+				outline-color: $primary;
+			}
+
+			&.he {
+				text-align: right;
+			}
+		}
+		.sentence-markers {
+			height: 10%;
+			// font-size: 150%;
+			// position: absolute;
+			bottom: 0;
+			left: 0;
+
+			border-radius: 0 0 2rem 2rem;
+			background-color: var(--transparent-white);
+			button:nth-child(1) {
+				border-radius: 0 0 0 2rem;
+			}
+			// button:last-child {
+			// 	border-radius: 0 0 2rem 0;
+			// }
+			.sentence-mark-btn {
+				// font-size: inherit;
+				color: var(--black);
+			}
+		}
+		.actions {
+			background-color: var(--canvas);
+			border-radius: 0;
+			.action {
+				a.action-link {
+					display: flex;
+				}
+				.email-btn {
+					fill: var(--secondary);
+				}
+			}
+		}
+	}
+	.record-btn {
+		position: absolute;
+		bottom: $spacing * 2;
+		right: $spacing * 2;
+		&.speaking {
+			background-color: var(--transparent-secondary);
+		}
+		&.error {
+			background-color: red;
+		}
+	}
+	.console-section {
+		font-size: 90%;
+		color: var(--black);
+		position: absolute;
+		// height: 10%;
+		width: 64.5%;
+		bottom: $spacing * 2;
+		left: $spacing * 2;
+		// background-color: var(--transparent-white);
+		.event-name {
+			padding: $spacing * 0.5 $spacing;
+			line-height: 2rem;
+			background-color: var(--white);
+			width: 100%;
+			// min-height: 40%;
+		}
+		.event-msg {
+			padding: $spacing * 0.5 $spacing;
+			background-color: var(--transparent-white);
+			width: 100%;
+			// min-height: 5%;
+		}
+	}
+}

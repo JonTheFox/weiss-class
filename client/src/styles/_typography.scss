@@ -1,0 +1,329 @@
+@import "/_variables";
+
+#root .bold {
+	font-weight: 600;
+}
+
+#root .nowrap {
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+.wrap-entire-lines {
+	white-space: pre-wrap; /* Since CSS 2.1 */
+	white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+	white-space: -pre-wrap; /* Opera 4-6 */
+	white-space: -o-pre-wrap; /* Opera 7 */
+	word-wrap: break-word; /* Internet Explorer 5.5+ */
+}
+
+#root .outlined-text {
+	-webkit-text-stroke: 0.2px black;
+	color: var(--color-primary);
+	text-shadow: -0.2px -0.2px 0 #000, 0.2px -0.2px 0 #000, -0.2px 0.2px 0 #000;
+}
+
+#root .text-with-stroke {
+	color: var(--black);
+	font-size: var(--font-size);
+	/* the above can be overridden*/
+	-webkit-text-stroke: calc(0.05 * var(--font-size)) var(--black);
+	text-shadow: calc(0.0425 * var(--font-size)) calc(0.0425 * var(--font-size))
+			0 var(--white),
+		calc(-0.0425 * var(--font-size)) calc(-0.0425 * var(--font-size)) 0
+			var(--white),
+		calc(0.0425 * var(--font-size)) calc(-0.0425 * var(--font-size)) 0
+			var(--white),
+		calc(-0.0425 * var(--font-size)) calc(0.0425 * var(--font-size)) 0
+			var(--white),
+		calc(0.0425 * var(--font-size)) calc(0.0425 * var(--font-size)) 0
+			var(--white);
+}
+
+//a nice one, used in slide-show
+#root .stroke--1-color,
+#root .stroke--1-color---children *,
+#root .stroke--children * {
+	--local-stroke-color: var(--stroke-color, lightgray);
+	--local-stroke-color--focus: var(--stroke-color--focus, black);
+	color: var(--color, white);
+
+	--local-color--focus: var(--color--focus, white);
+	--local-shadow-color: var(--shadow-color, rgba(0, 0, 0, 0.8));
+	--local-shadow-color--focus: var(--shadow-color--focus, lightblue);
+
+	--local-font-size: var(--font-size, 1rem);
+	// --text-stroke: var(--text-stroke, black);
+	// text-shadow: calc(var(--local-font-size) * 0.035)
+	// text-shadow: calc(var(--local-font-size) * 0.035) 0
+	// var(--local-shadow-color);
+
+	text-shadow: calc(var(--local-font-size) * 0.065)
+		calc(var(--local-font-size) * 0.07) 0 var(--local-shadow-color);
+	-webkit-text-stroke: calc(var(--local-font-size) * 0.01)
+		var(--local-stroke-color);
+
+	text-shadow: calc(var(--local-font-size) * 0.05)
+		calc(var(--local-font-size) * 0.05) 0 var(--local-shadow-color);
+	-webkit-text-stroke: calc(var(--local-font-size) * 0.01)
+		var(--local-stroke-color);
+
+	&:focus,
+	&::selection,
+	&:hover {
+		// background-color: var(--transparent-white);
+		// border-radius: calc(0.5 * var(--spacing));
+		// padding-left: var(--spacing);
+		// padding-left: calc(1 * var(--spacing));
+		color: var(--local-color--focus);
+		//fun electro style
+		// --local-font-size: var(--font-size, 1rem);
+		// text-shadow: calc(var(--local-font-size) * 0.005)
+		// 		calc(var(--local-font-size) * 0.005) 0
+		// 		var(--local-shadow-color--focus),
+		// 	0 0 0 var(--local-shadow-color--focus),
+		// 	calc(var(--local-font-size) * 0.005)
+		// 		calc(-0.002 * var(--local-font-size)) 0
+		// 		var(--local-shadow-color--focus),
+		// 	0 0 0 var(--local-shadow-color--focus),
+		// 	0 0 0 var(--local-shadow-color--focus);
+		// -webkit-text-stroke: calc(var(--local-font-size) * 0.05)
+		// var(--local-stroke-color--focus);
+
+		// text-shadow: calc(var(--local-font-size) * 0.065)
+		// 	calc(var(--local-font-size) * 0.065) 0
+		// 	var(--local-shadow-color--focus);
+
+		// text-shadow: calc(var(--local-font-size) * 0.065)
+		// 	calc(var(--local-font-size) * 0.065)
+		// 	calc(var(--local-font-size) * 0.065)
+		// 	calc(var(--local-font-size) * 0.065)
+		// 	var(--local-shadow-color--focus);
+
+		// -webkit-text-stroke: calc(var(--local-font-size) * 0.085)
+		// 	var(--local-stroke-color--focus);
+
+		text-shadow: calc(var(--local-font-size) * 0.045)
+			calc(var(--local-font-size) * 0.045) 0
+			var(--local-shadow-color--focus);
+		-webkit-text-stroke: calc(var(--local-font-size) * 0.03)
+			var(--local-stroke-color--focus);
+
+		//magic marker
+		// text-shadow: 1px 1px 0 var(--secondary),
+		// 	0.25px 0.5px 0 var(--secondary),
+		// 	0.5px 0.5px 0 var(--secondary),
+		// 	0.5px 0.25px 0 var(--secondary),
+		// 	1px 1px 0 var(--secondary);
+		// -webkit-text-stroke: 2px var(--secondary);
+
+		//hard black
+		// text-shadow: 1px 1px 0 var(--secondary),
+		// 	0.25px 0.5px 0 var(--secondary),
+		// 	0.5px 0.5px 0 var(--secondary),
+		// 	0.5px 0.25px 0 var(--secondary),
+		// 	1px 1px 0 var(--secondary);
+		// -webkit-text-stroke: 2px var(--black);
+	}
+}
+
+#root .weiss-logo--with-stroke,
+#root .text-stroke--strong {
+	//fun electro style
+	// background-color: var(--white);
+	border-radius: calc(0.5 * var(--spacing));
+	// padding-left: var(--spacing);
+	// padding-left: calc(1 * var(--spacing));
+	--local-color: var(--color, black);
+	--local-stroke-color: var(--stroke-color, black);
+
+	color: var(--local-color);
+	// --local-text-fill-color: var(--font-fill-color, violet);
+	--local-shadow-color: var(--shadow-color, violet);
+	--local-font-size: var(--font-size, 1rem);
+	// --text-stroke: var(--text-stroke, black);
+	text-shadow: calc(var(--local-font-size) * 0.045)
+			calc(var(--local-font-size) * 0.02) 0 var(--local-shadow-color),
+		calc(-0.0005 * var(--local-font-size))
+			calc(-0.0015 * var(--local-font-size)) 0 var(--local-shadow-color),
+		calc(var(--local-font-size) * 0.0015)
+			calc(-0.0015 * var(--local-font-size)) 0 var(--local-shadow-color),
+		calc(-0.0015 * var(--local-font-size))
+			calc(var(--local-font-size) * 0.0015) 0 var(--local-shadow-color),
+		calc(var(--local-font-size) * 0.015)
+			calc(var(--local-font-size) * 0.015) 0 var(--local-shadow-color);
+	-webkit-text-stroke: calc(var(--local-font-size) * 0.0002)
+		var(--local-stroke-color);
+}
+
+.stroke {
+	color: var(--color, white);
+	text-shadow: 2px 2px 4px var(--shadow-color, black);
+}
+
+.stroke--gentle {
+}
+
+#root .dynamic-stroke,
+#root .dynamic-stroke---children *,
+#root .black-and-blue--children * {
+	//fun electro style
+	// background-color: var(--white);
+	border-radius: calc(0.5 * var(--spacing));
+	// padding-left: var(--spacing);
+	// padding-left: calc(1 * var(--spacing));
+	--local-color: var(--color, black);
+	color: var(--local-color);
+	// --local-text-fill-color: var(--font-fill-color, violet);
+	--local-shadow-color: var(--shadow-color, violet);
+	--local-font-size: var(--font-size, 1rem);
+	// --text-stroke: var(--text-stroke, black);
+	text-shadow: calc(var(--local-font-size) * 0.045)
+			calc(var(--local-font-size) * 0.02) 0 var(--local-shadow-color),
+		calc(-0.005 * var(--local-font-size))
+			calc(-0.015 * var(--local-font-size)) 0 var(--local-shadow-color),
+		calc(var(--local-font-size) * 0.015)
+			calc(-0.015 * var(--local-font-size)) 0 var(--local-shadow-color),
+		calc(-0.015 * var(--local-font-size))
+			calc(var(--local-font-size) * 0.015) 0 var(--local-shadow-color),
+		calc(var(--local-font-size) * 0.015)
+			calc(var(--local-font-size) * 0.015) 0 var(--local-shadow-color);
+	-webkit-text-stroke: calc(var(--local-font-size) * 0.02) var(--local-color);
+}
+
+#root .scale-on-hover:hover {
+	transform: scale(1.2);
+}
+#root .scale-up--onhover:hover {
+	transform: scale(1.5);
+}
+#root .black-and-blue--on-focus,
+// #root .lyrics-page .main-page .song-info-section .song-title,
+//#root .lyrics-page .main-page .lyrics-section .lyrics .line 
+ {
+	&:not(*:hover) {
+		outline: none;
+	}
+
+	&:focus,
+	&::selection {
+		// background-color: var(--transparent-white);
+		// border-radius: calc(0.5 * var(--spacing));
+		// padding-left: var(--spacing);
+		// padding-left: calc(1 * var(--spacing));
+		color: var(--black);
+		//fun electro style
+		--local-font-size: var(--font-size, 1rem);
+		text-shadow: calc(var(--local-font-size) * 0.04)
+				calc(var(--local-font-size) * 0.04) 0 var(--secondary),
+			0 0 0 var(--secondary),
+			calc(var(--local-font-size) * 0.002)
+				calc(-0.002 * var(--local-font-size)) 0 var(--secondary),
+			0 0 0 var(--secondary), 0 0 0 var(--secondary);
+		-webkit-text-stroke: calc(var(--local-font-size) * 0.025) var(--black);
+
+		//magic marker
+		// text-shadow: 1px 1px 0 var(--secondary),
+		// 	0.25px 0.5px 0 var(--secondary),
+		// 	0.5px 0.5px 0 var(--secondary),
+		// 	0.5px 0.25px 0 var(--secondary),
+		// 	1px 1px 0 var(--secondary);
+		// -webkit-text-stroke: 2px var(--secondary);
+
+		//hard black
+		// text-shadow: 1px 1px 0 var(--secondary),
+		// 	0.25px 0.5px 0 var(--secondary),
+		// 	0.5px 0.5px 0 var(--secondary),
+		// 	0.5px 0.25px 0 var(--secondary),
+		// 	1px 1px 0 var(--secondary);
+		// -webkit-text-stroke: 2px var(--black);
+	}
+}
+
+#root .word--snobbish .letterOrWord {
+	color: var(--black);
+	//fun electro style
+	--local-font-size: var(--font-size, 3rem);
+	font-size: var(--local-font-size);
+	text-shadow: calc(var(--local-font-size) * 0.035)
+			calc(var(--local-font-size) * 0.035) 0 var(--black),
+		calc(-0.025 * var(--local-font-size))
+			calc(-0.025 * var(--local-font-size)) 0 var(--black),
+		calc(var(--local-font-size) * 0.025)
+			calc(-0.025 * var(--local-font-size)) 0 var(--black),
+		calc(-0.025 * var(--local-font-size))
+			calc(var(--local-font-size) * 0.0025) 0 var(--black),
+		calc(var(--local-font-size) * 0.01) calc(var(--local-font-size) * 0.01)
+			0 var(--white);
+	// -webkit-text-stroke: calc(var(--local-font-size) * 0.035) var(--black);
+}
+
+#root .lyrics-page .main-page .song-info-section .song-title:focus,
+#root .lyrics-page .main-page .song-info-section .artist-name:focus,
+#root .shadowy-text {
+	font-weight: 500;
+	&:not(*:hover) {
+		outline: none;
+	}
+
+	&:focus,
+	&::selection {
+		// background-color: var(--transparent-white);
+		// border-radius: calc(0.5 * var(--spacing));
+		// padding-left: var(--spacing);
+		// padding-left: calc(1 * var(--spacing));
+		color: var(--black);
+		//fun electro style
+		--local-font-size: var(--font-size, 1rem);
+		text-shadow: calc(var(--local-font-size) * 0.06)
+				calc(var(--local-font-size) * 0.06) 0 var(--secondary),
+			calc(-0.005 * var(--local-font-size))
+				calc(-0.005 * var(--local-font-size)) 0 var(--secondary),
+			calc(var(--local-font-size) * 0.005)
+				calc(-0.005 * var(--local-font-size)) 0 var(--secondary),
+			calc(-0.02 * var(--local-font-size))
+				calc(var(--local-font-size) * 0.02) 0 var(--secondary),
+			calc(var(--local-font-size) * 0.006)
+				calc(var(--local-font-size) * 0.006) 0 var(--secondary);
+		-webkit-text-stroke: calc(var(--local-font-size) * 0.035) var(--black);
+
+		//magic marker
+		// text-shadow: 1px 1px 0 var(--secondary),
+		// 	0.25px 0.5px 0 var(--secondary),
+		// 	0.5px 0.5px 0 var(--secondary),
+		// 	0.5px 0.25px 0 var(--secondary),
+		// 	1px 1px 0 var(--secondary);
+		// -webkit-text-stroke: 2px var(--secondary);
+
+		//hard black
+		// text-shadow: 1px 1px 0 var(--secondary),
+		// 	0.25px 0.5px 0 var(--secondary),
+		// 	0.5px 0.5px 0 var(--secondary),
+		// 	0.5px 0.25px 0 var(--secondary),
+		// 	1px 1px 0 var(--secondary);
+		// -webkit-text-stroke: 2px var(--black);
+	}
+}
+
+#root .custom-stroke,
+#root .custom-stroke svg * {
+	//inherits CSS variables set on the element or any of its parents:
+	--local-font-size: var(--font-size, 1.5rem);
+	--local-color: var(--color, pink);
+	--local-fill: var(--fill, rgba(255, 255, 255, 0.9));
+	--local-stroke: var(--stroke, rgba(255, 255, 255, 0.25));
+	--local-shadow-color: var(--shadow-color, rgba(0, 0, 0, 0.9));
+
+	font-size: var(--font-size);
+	color: var(--local-color);
+
+	text {
+		fill: var(--local-fill);
+		stroke: var(--local-stroke);
+	}
+
+	text-shadow: calc(var(--local-font-size) * 0.25)
+		calc(var(--local-font-size) * 0.2) 0 var(--local-shadow-color);
+	-webkit-text-stroke: calc(var(--local-font-size) * 1) var(--local-color);
+}

@@ -1,0 +1,172 @@
+#root {
+	.phone.portrait.mobile,
+	.phone.portrait:not(*.mobile),
+	.phone.landscape.mobile,
+	.phone.landscape:not(*.mobile),
+	.tablet.portrait.mobile,
+	.tablet.portrait:not(*.mobile),
+	.tablet.landscape.mobile,
+	.tablet.landscape:not(*.mobile),
+	.large-screen.portrait,
+	.large-screen.landscape,
+	.xl-screen.portrait,
+	.xl-screen.landscape {
+		.realtime-entrance {
+			background: white;
+			position: relative;
+			--stroke-color: white;
+			--font-size: 1rem;
+			font-size: 1rem;
+			--shadow-color: yellow;
+
+			// z-index: 1;
+			.background {
+				--gradient-color-1: var(--secondary);
+				--gradient-color-2: var(--white);
+				--gradient-color-3: var(--secondary);
+				opacity: 0.5;
+				z-index: 0;
+				&:before {
+					z-index: 10;
+				}
+			}
+
+			.section {
+				display: flex;
+				z-index: 1;
+				flex-direction: column;
+				position: relative;
+
+				&.section--header {
+					padding: var(--spacing);
+					height: 20%;
+					user-select: none;
+
+					h1 {
+						font-size: 0.9rem;
+						margin: auto;
+						// height: 35%;
+					}
+
+					& > div {
+						margin: auto;
+					}
+					h2 {
+						font-size: 1.5rem;
+						margin: auto;
+						text-align: center;
+						// height: 65%;
+					}
+				}
+
+				&.section--pie {
+					height: 67.5%;
+					width: 100%;
+					.PieChart {
+						svg {
+							overflow: visible;
+						}
+						text {
+							// fill: var(--white);
+							// stroke: var(--transparent-black);
+							stroke-width: 0.0075rem;
+							font-size: 0.35rem;
+							--font-size: 0.35rem;
+							--shadow-color: var(--black);
+							--color: var(--white);
+							--stroke-color: var(--white);
+						}
+					}
+				}
+
+				&.section--feedback {
+					height: 12.5%;
+					text-align: center;
+					padding: var(--spacing);
+
+					& > div {
+						//Pose element
+						height: 100%;
+						display: flex;
+						overflow: auto;
+					}
+
+					pre.server-msg--container {
+						// padding: var(--spacing);
+						transition: all 0.2s;
+						padding: calc(1 * var(--spacing));
+						border-radius: 0.1rem;
+						margin: auto;
+						z-index: 1;
+						font-family: inherit;
+						color: var(--black);
+						user-select: none;
+						height: auto;
+
+						&.isIdle {
+							// opacity: 0;
+						}
+						&.isConnecting,
+						&.isEnteringRoom {
+							color: var(--black);
+							background-color: var(--white);
+						}
+						&.isConnected,
+						&.isAlreadyConnected {
+							color: var(--black);
+							background-color: var(--green);
+						}
+						&.isDisconnected {
+							color: var(--black);
+							background-color: var(--red-1);
+						}
+						&.connectionFailed {
+							color: var(--yellow);
+							color: var(--black);
+							background-color: var(--yellow);
+						}
+					}
+				}
+			}
+
+			&.inactive {
+				svg {
+					user-select: none;
+					pointer-events: none;
+					// opacity: 0.5;
+					path {
+						// opacity: 0.8;
+					}
+				}
+			}
+
+			&.isConnected,
+			&.isAlreadyConnected {
+				.PieChart.inactive.animate-segment--1 {
+					svg {
+						path:not(*:nth-child(2)) {
+							*,
+							text,
+							title,
+							path {
+								opacity: 0;
+							}
+							opacity: 0;
+						}
+
+						path:nth-child(2) {
+							opacity: 1;
+
+							// animation-delay: 0s;
+							// animation-fill-mode: forwards;
+							// animation-timing-function: linear;
+						}
+					}
+				}
+			}
+		}
+		.realtime-classroom {
+			background-color: pink;
+		}
+	}
+}

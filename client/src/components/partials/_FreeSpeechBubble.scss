@@ -1,0 +1,19 @@
+#root .free-speech-bubble {
+	position: absolute;
+	// top: calc(3 * var(--spacing));
+	top: 0;
+	right: var(--spacing);
+
+	.p {
+		margin: var(--spacing);
+	}
+
+	transition: opacity 0.25s ease-in-out;
+
+	&.show-speech-bubble {
+	}
+	&.hide-speech-bubble {
+		opacity: 0;
+		// transform: scale(0) rotateY(180deg);
+	}
+}

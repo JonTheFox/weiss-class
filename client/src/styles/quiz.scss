@@ -1,0 +1,823 @@
+#root .behind {
+	z-index: -200;
+}
+
+#root .quiz {
+	height: 100%;
+	width: 100%;
+	max-width: 1000px;
+	padding: 0;
+	margin: auto;
+	display: flex;
+	justify-content: center; //x-axis (left and right)
+	align-content: space-between; // y-axis (up and down)
+	flex-wrap: wrap;
+	justify-items: flex-end;
+	overflow: hidden;
+
+	.progress-bar {
+		z-index: 1000;
+	}
+
+	--instruction--font-size: 1.25rem;
+
+	// z-index: 1;
+	&:after {
+		content: "";
+		position: absolute;
+		background-color: $white;
+		height: 100%;
+		width: 100%;
+		top: 0;
+		left: 0;
+		opacity: 0;
+		transition: opacity 1s;
+	}
+	&.white-out {
+		&:after {
+			opacity: 1;
+			z-index: 200;
+		}
+		&.half {
+			&:after {
+				opacity: 0.7;
+				z-index: 200;
+			}
+		}
+	}
+
+	.instruction-wrapper {
+		position: relative;
+		display: flex;
+		// height: calc(0.15 * var(--vh-full--minus-appbar));
+	}
+
+	.instruction {
+		font-size: var(--instruction--font-size);
+		height: auto;
+		margin: auto;
+		// max-width: 75%;
+		// margin-top: calc(2 * var(--spacing));
+		padding: 0 calc(1 * var(--spacing));
+		// background-color: var(--transparent-white);
+
+		user-select: none;
+		border-radius: calc(1 * var(--spacing));
+		// cursor: pointer;
+		line-height: 1.25;
+		text-align: center;
+		vertical-align: middle;
+		z-index: 1;
+		.letter {
+			overflow: hidden;
+			font-size: inherit;
+		}
+		div:not(.letter) {
+			//a SplitText word
+			// &:last-child {
+			// 	padding: #{$spacing * 0.5} #{$spacing * 2} #{$spacing * 0} #{$spacing *
+			// 		2};
+			// 	// background-color: $white;
+			// }
+		}
+
+		> div {
+			padding: 0 calc(1 * var(--spacing));
+			border-radius: calc(1 * var(--spacing));
+
+			&:last-of-type {
+				// background-color: var(--white);
+				display: block !important;
+
+				font-size: calc(1.2 * var(--instruction--font-size));
+
+				font-weight: bolder;
+
+				> div {
+					letter-spacing: calc(0.5 * var(--spacing));
+				}
+			}
+		}
+	}
+
+	.posed-list {
+		height: 100%;
+		width: 100%;
+		position: relative;
+		overflow: visible;
+		flex-direction: row;
+		//maxHeight: 82%;
+		list-style: none;
+		padding: 0;
+		display: flex;
+		flex-wrap: wrap;
+		justify-items: center;
+		justify-content: space-evenly; //X-axis(right/left of row)
+		align-items: center; //Y-axis (top/bottom of row)
+		align-content: center;
+		flex-basis: 100%;
+		margin: 0;
+	}
+
+	.answer-list {
+		width: 100%;
+		height: calc(0.68 * var(--vh-full--minus-appbar));
+		overflow: visible;
+		position: relative;
+		list-style: none;
+		margin: auto;
+		padding: #{$spacing * 1};
+		display: flex;
+		flex-wrap: wrap;
+		justify-items: center;
+		justify-content: space-evenly; //X-axis(right/left of row)
+		align-items: center; //Y-axis (top/bottom of row)
+		align-content: center;
+		.answer-item {
+			overflow: hidden;
+			cursor: pointer;
+			display: inline-flex;
+			min-height: 152px;
+
+			width: 46%;
+			max-width: 640px;
+			// height: auto;
+			height: 100%;
+			justify-items: center;
+			padding: var(--spacing) 0;
+
+			//&.answer-item--has-been-answered,
+			&.answer-item--is-correct-answer {
+				.image-card {
+					opacity: 1;
+					filter: grayscale(0);
+				}
+			}
+
+			&.active.answer-item--has-been-answered,
+			&.disabled.answer-item--has-been-answered {
+				.image-card {
+					opacity: 1;
+					filter: grayscale(0);
+					cursor: not-allowed;
+					// transform: scale(0.9);
+				}
+			}
+
+			&.disabled.answer-item--is-correct-answer {
+				filter: grayscale(0);
+			}
+
+			&.disabled {
+				.image-card {
+					filter: grayscale(0.75);
+					opacity: 0.6;
+					cursor: not-allowed;
+				}
+			}
+
+			&.active {
+				.image-card.active {
+					// opacity: 0.85;
+					//filter: grayscale(0.3);
+					&:hover {
+						// opacity: 1;
+						transform: scale(0.95);
+					}
+				}
+			}
+
+			.image-card {
+				height: 100%;
+				transition: all 0.15s;
+				// opacity:0.8;
+
+				.card--content {
+					padding-left: calc(2 * var(--spacing));
+				}
+			}
+			.card {
+				height: 100%;
+				.media {
+					height: 100%;
+				}
+			}
+		}
+	}
+}
+
+#root .phone.landscape:not(*.mobile) .quiz {
+	& .instruction {
+		// font-size: 26px;
+	}
+	& .answer-list {
+		font-size: 26px;
+		.answer-item {
+			min-height: 152px;
+		}
+		&.total--1,
+		&.total--2 {
+			height: 54.5%;
+			.answer-item {
+				// width: 44.5%;
+				height: auto;
+				padding: #{$spacing * 0.5} 0;
+			}
+		}
+		&.total--3 {
+			height: 52.5%;
+			.answer-item {
+				width: 31.5%;
+				padding: #{$spacing * 1} 0;
+			}
+		}
+		&.total--4 {
+			height: 48.5%;
+			.answer-item {
+				width: 23.5%;
+				padding: #{$spacing * 1} 0;
+			}
+		}
+	}
+}
+
+#root .phone.landscape.mobile .quiz {
+	// & .instruction {
+	// 	font-size: 26px;
+	// }
+	.prompt-section {
+		height: 15%;
+	}
+	.progress-bar {
+		padding: calc(1 * var(--spacing)) calc(4 * var(--spacing));
+		height: 5%;
+
+		// .RSPBprogressBar {
+		// 	height: calc(1 * var(--spacing));
+		// }
+	}
+	.instruction-wrapper {
+		height: 12.5%;
+	}
+
+	& .answer-list {
+		height: 57.5%;
+		font-size: 26px;
+		.answer-item {
+			min-height: 152px;
+		}
+		&.total--1,
+		&.total--2 {
+			height: 54.5%;
+			.answer-item {
+				width: 44.5%;
+				padding: #{$spacing * 0.5} 0;
+			}
+		}
+		&.total--3 {
+			height: 52.5%;
+			.answer-item {
+				width: 31.5%;
+				padding: #{$spacing * 1} 0;
+			}
+		}
+		&.total--4 {
+			height: 48.5%;
+			.answer-item {
+				width: 23.5%;
+				padding: #{$spacing * 1} 0;
+			}
+		}
+	}
+}
+
+#root .phone.portrait:not(*.mobile) .quiz {
+	--instruction--font-size: 1.75rem;
+	// & .instruction {
+	// 	font-size: 26px;
+	// }
+	.answer-list {
+		height: 68%;
+		.answer-item {
+			min-height: 152px;
+		}
+		&.total--1 {
+			.answer-item {
+				width: 100%;
+				height: 50%;
+				padding: #{$spacing * 1} #{$spacing * 4};
+			}
+		}
+		&.total--2 {
+			.answer-item {
+				width: 100%;
+				height: auto;
+				padding: #{$spacing * 1} #{$spacing * 4};
+			}
+		}
+		&.total--3 {
+			.answer-item {
+				width: 48.5%;
+				height: 40.5%;
+				padding: #{$spacing * 0.75} #{$spacing * 0.5};
+				&:last-child {
+					width: 100%;
+					height: 55.5%;
+					padding: #{$spacing * 0.75} #{$spacing * 1};
+				}
+			}
+		}
+		&.total--4 {
+			.answer-item {
+				width: 48.5%;
+				height: 40.5%;
+				padding: #{$spacing * 0.75} #{$spacing * 0.5};
+			}
+		}
+	}
+}
+
+#root .phone.portrait .quiz {
+	// & .instruction {
+	// 	font-size: 26px;
+	// }
+	.answer-list {
+		height: 68%;
+		.answer-item {
+			min-height: 152px;
+		}
+		&.total--1 {
+			.answer-item {
+				width: 100%;
+				height: 50%;
+				padding: #{$spacing * 1} #{$spacing * 4};
+			}
+		}
+		&.total--2 {
+			.answer-item {
+				width: 100%;
+				height: 50%;
+				padding: #{$spacing * 1} #{$spacing * 4};
+			}
+		}
+		&.total--3 {
+			.answer-item {
+				width: 48.5%;
+				height: 40.5%;
+				padding: #{$spacing * 0.75} #{$spacing * 0.5};
+				&:last-child {
+					width: 100%;
+					height: 55.5%;
+					padding: #{$spacing * 0.75} #{$spacing * 1};
+				}
+			}
+		}
+		&.total--4 {
+			.answer-item {
+				width: 48.5%;
+				height: 40.5%;
+				padding: #{$spacing * 0.75} #{$spacing * 0.5};
+			}
+		}
+	}
+}
+
+// #root .tablet.landscape:not(*.mobile),
+// #root .large-screen.landscape:not(*.mobile),
+// #root .xl-screen.landscape:not(*.mobile) {
+// 	.quiz {
+// 		max-width: 800px;
+// 		// & .instruction {
+// 		// 	font-size: 32px;
+// 		// }
+// 		--instruction--font-size: 2rem;
+// 		.answer-list {
+// 			font-size: 26px;
+// 			height: 65%;
+// 			&.total--1,
+// 			&.total--2 {
+// 				.answer-item {
+// 					width: 48.5%;
+// 					// height: 64.5%;
+// 					height: auto;
+// 					padding: #{$spacing * 2} 0;
+// 				}
+// 			}
+
+// 			&.total--3 {
+// 				.answer-item {
+// 					width: 48.5%;
+// 					height: 42.5%;
+// 					padding: #{$spacing * 1} #{$spacing * 1};
+// 				}
+// 			}
+// 			&.total--4 {
+// 				height: 70.5%;
+// 				.answer-item {
+// 					width: 48.5%;
+// 					height: 54.5%;
+// 					padding: #{$spacing * 1} #{$spacing * 0.5};
+// 				}
+// 			}
+// 		}
+// 	}
+// }
+
+// #root .tablet.landscape.mobile,
+// #root .tablet.landscape:not(*.mobile),
+// #root .large-screen.landscape:not(*.mobile),
+// #root .xl-screen.landscape:not(*.mobile) {
+// 	.quiz {
+// 		// & .instruction {
+// 		// 	font-size: 32px;
+// 		// }
+// 		.answer-list {
+// 			font-size: 26px;
+// 			// height: 80.5%;
+// 			&.total--1,
+// 			&.total--2 {
+// 				.answer-item {
+// 					width: 48.5%;
+// 					height: 64.5%;
+// 					padding: #{$spacing * 2} 0;
+// 				}
+// 			}
+// 			&.total--3 {
+// 				.answer-item {
+// 					width: 48.5%;
+// 					height: 42.5%;
+// 					padding: #{$spacing * 1} #{$spacing * 1};
+// 					&:last-child {
+// 						width: 100%;
+// 						height: 57.5%;
+// 						padding: #{$spacing * 1} #{$spacing * 2};
+// 					}
+// 				}
+// 			}
+// 			&.total--4 {
+// 				height: 70.5%;
+// 				.answer-item {
+// 					width: 48.5%;
+// 					height: 54.5%;
+// 					padding: #{$spacing * 1} #{$spacing * 0.5};
+// 				}
+// 			}
+// 		}
+// 	}
+// }
+
+#root .tablet.portrait:not(*.mobile) .quiz {
+	--instruction--font-size: 1.75rem;
+
+	.instruction {
+		font-size: var(--instruction--font-size);
+		// width: 50%;
+		// width: 70%;
+	}
+	.answer-list {
+		height: 75%;
+		.answer-item {
+			min-height: 152px;
+			.card {
+				height: 100%;
+				.media {
+					height: 100%;
+				}
+			}
+		}
+		&.total--1 {
+			.answer-item {
+				width: 100%;
+				height: auto;
+				padding: #{$spacing * 2} #{$spacing * 5};
+			}
+		}
+		&.total--2 {
+			.answer-item {
+				width: 100%;
+				// height: 50%;;
+				height: auto;
+				// max-height: 32.5vh;
+				padding: #{$spacing * 2} #{$spacing * 6};
+				.image-card {
+					max-height: 27.5vh;
+				}
+			}
+		}
+		// &.total--3 {
+		// 	.answer-item {
+		// 		width: 48.5%;
+		// 		height: 40.5%;
+		// 		padding: #{$spacing * 1} #{$spacing * 1};
+		// 		&:last-child {
+		// 			width: 100%;
+		// 			height: 55.5%;
+		// 			padding: #{$spacing * 2} #{$spacing * 2};
+		// 		}
+		// 	}
+		// }
+		//}
+		&.total--3 {
+			.answer-item {
+				width: 48.5%;
+				height: 42.5%;
+				padding: #{$spacing * 1} #{$spacing * 1};
+			}
+		}
+
+		&.total--4 {
+			height: 68%;
+			.answer-item {
+				width: 48.5%;
+				height: 42.5%;
+				padding: #{$spacing * 1} #{$spacing * 0.5};
+			}
+		}
+	}
+}
+
+#root .tablet.portrait .quiz {
+	--instruction--font-size: 1.75rem;
+
+	.instruction {
+		// font-size: var(--instruction--font-size);
+		// width: 50%;
+		// width: 70%;
+	}
+	.answer-list {
+		height: 75%;
+		.answer-item {
+			min-height: 152px;
+			.card {
+				height: 100%;
+				.media {
+					height: 100%;
+				}
+			}
+		}
+		&.total--1 {
+			.answer-item {
+				width: 100%;
+				height: 50%;
+				padding: #{$spacing * 2} #{$spacing * 5};
+			}
+		}
+		&.total--2 {
+			.answer-item {
+				width: 100%;
+				height: 50%;
+				max-height: 32.5vh;
+				padding: #{$spacing * 2} #{$spacing * 6};
+			}
+		}
+		// &.total--3 {
+		// 	.answer-item {
+		// 		width: 48.5%;
+		// 		height: 40.5%;
+		// 		padding: #{$spacing * 1} #{$spacing * 1};
+		// 		&:last-child {
+		// 			width: 100%;
+		// 			height: 55.5%;
+		// 			padding: #{$spacing * 2} #{$spacing * 2};
+		// 		}
+		// 	}
+		// }
+		//}
+		&.total--3 {
+			.answer-item {
+				width: 48.5%;
+				height: 42.5%;
+				padding: #{$spacing * 1} #{$spacing * 1};
+			}
+		}
+
+		&.total--4 {
+			height: 68%;
+			.answer-item {
+				width: 48.5%;
+				height: 42.5%;
+				padding: #{$spacing * 1} #{$spacing * 0.5};
+			}
+		}
+	}
+
+	.progress-bar {
+		padding: calc(2 * var(--spacing)) calc(4 * var(--spacing));
+		height: 7.5%;
+
+		// .RSPBprogressBar {
+		// 	height: calc(2 * var(--spacing));
+		// }
+	}
+	.instruction-wrapper {
+		height: 15%;
+	}
+
+	& .answer-list {
+		height: 70%;
+	}
+
+	.prompt-section {
+		height: 7.5%;
+	}
+}
+
+#root .tablet.landscape .quiz,
+#root .large-screen.landscape .quiz,
+#root .x-large-screen.landscape .quiz {
+	--instruction--font-size: 2rem;
+	max-width: calc(1280px + 2 * var(--spacing));
+	padding: calc(1 * var(--spacing));
+	// justify-content: space-between;
+	.total--4 {
+		.answer-item {
+			width: calc(40% - var(--spacing));
+			// height: 42.5%;
+			padding: calc(1 * var(--spacing));
+		}
+		.posed-list {
+			justify-content: center;
+		}
+	}
+
+	.instruction-wrapper {
+		position: relative;
+		display: flex;
+		height: calc(0.1 * var(--vh-full--minus-appbar));
+		margin: auto;
+		padding: calc(1 * var(--spacing));
+	}
+
+	.answer-list {
+		height: calc(0.7 * var(--vh-full--minus-appbar));
+		padding-left: 0;
+		padding-right: 0;
+		.answer-item {
+			height: auto;
+			max-width: 48%;
+		}
+
+		&.total--4 {
+			// height: 70.5%;
+			.answer-item {
+				width: 40%;
+				height: 54.5%;
+				padding: #{$spacing * 1} #{$spacing * 0.5};
+			}
+		}
+	}
+	.instruction {
+		// height: calc(0.1 * var(--vh-full--minus-appbar));
+		height: auto;
+		margin: auto;
+	}
+
+	.prompt {
+		margin: 0;
+		width: calc(100 * var(--vw-max--portrait));
+		// margin: auto;
+	}
+
+	.prompt-section {
+		height: 7.5%;
+	}
+	.progress-bar {
+		padding: calc(1 * var(--spacing)) calc(4 * var(--spacing));
+		height: 5%;
+
+		// .RSPBprogressBar {
+		// 	height: calc(1 * var(--spacing));
+		// }
+	}
+	.instruction-wrapper {
+		height: 17.5%;
+	}
+
+	& .answer-list {
+		height: 60%;
+	}
+
+	// & .instruction {
+	// 	font-size: 40px;
+	// }
+	// .answer-list {
+	// 	font-size: 26px;
+	// 	height: 70%;
+	// 	&.total--1,
+	// 	&.total--2 {
+	// 		.answer-item {
+	// 			width: 48.5%;
+	// 			height: 64.5%;
+	// 			padding: #{$spacing * 2} 0;
+	// 		}
+	// 	}
+	// 	&.total--3 {
+	// 		.answer-item {
+	// 			width: 48.5%;
+	// 			height: 42.5%;
+	// 			padding: #{$spacing * 1} #{$spacing * 1};
+	// 		}
+	// 	}
+
+	// }
+}
+
+#root .large-screen.portrait .quiz {
+	& .instruction {
+		// font-size: 36px;
+		width: 50%;
+	}
+	.answer-list {
+		height: 80%;
+		.answer-item {
+			min-height: 152px;
+		}
+		&.total--1 {
+			.answer-item {
+				width: 100%;
+				height: 50%;
+				padding: #{$spacing * 2} #{$spacing * 5};
+			}
+		}
+		&.total--2 {
+			.answer-item {
+				width: 100%;
+				height: 50%;
+				padding: #{$spacing * 1} #{$spacing * 6};
+			}
+		}
+		&.total--3 {
+			.answer-item {
+				width: 48.5%;
+				height: 40.5%;
+				padding: #{$spacing * 1} #{$spacing * 1};
+			}
+		}
+		&.total--4 {
+			height: 68%;
+			.answer-item {
+				width: 48.5%;
+				height: 42.5%;
+				padding: #{$spacing * 1} #{$spacing * 0.5};
+			}
+		}
+	}
+}
+
+#root .animation--flash * * {
+	animation-name: flash-bar-KF;
+}
+
+#root .quiz {
+	.RSPBprogressBar {
+		// animation-play-state: inherit;
+		margin: auto;
+		width: 100%;
+		height: calc(1 * var(--spacing));
+		.RSPBprogression {
+			// animation: flash 5s infinite;
+			// animation-delay: 5s;
+			// animation-fill-mode: forwards;
+
+			// background-size: 5% 8%;
+			background: linear-gradient(-75deg, var(--white), var(--secondary));
+
+			animation-duration: 6s;
+			animation-iteration-count: infinite;
+			animation-timing-function: ease;
+			// animation-play-state: inherit;
+			background-size: 200% 100%;
+
+			@keyframes flash-bar-KF {
+				0% {
+					background-position: 0% 0%;
+				}
+
+				25%,
+				100% {
+					background-position: -200% 0%;
+				}
+			}
+		}
+	}
+
+	// @keyframes flash {
+	// 	0%,
+	// 	90% {
+	// 		opacity: 1;
+	// 		transform: scaleY(1);
+	// 		background-position: 0% 200%;
+	// 	}
+
+	// 	95% {
+	// 		opacity: 0.5;
+	// 		transform: scaleY(1.25);
+	// 		background-position: 10% 200%;
+	// 	}
+
+	// 	100% {
+	// 		opacity: 1;
+	// 		transform: scaleY(1);
+	// 	}
+	// }
+}

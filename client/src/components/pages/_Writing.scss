@@ -1,0 +1,294 @@
+#root .Writing {
+	overflow: auto;
+	position: relative;
+	--writing--max-width: 800px;
+	.row {
+		width: 100%;
+		margin: auto;
+		display: flex;
+		justify-items: center;
+		justify-content: center;
+		align-content: center;
+		align-items: center;
+	}
+	.row--btns---main {
+		justify-content: space-between;
+		margin: calc(var(--spacing) * 2) 0;
+		.btn--main {
+			margin: 0;
+		}
+	}
+
+	.text-form {
+		// width: 100%;
+		// height: 100%;
+		margin: auto;
+		padding: calc(var(--spacing) * 2);
+		max-width: var(--writing--max-width);
+		display: flex;
+		.text-form-control {
+			// width: calc(100% - 8 * var(--spacing));
+			width: 100%;
+			margin: auto;
+		}
+	}
+
+	.taggedWords--section {
+		margin: auto;
+		width: 100%;
+		max-width: var(--writing--max-width);
+		// height: 100%;
+		min-height: calc(4 * var(--spacing));
+		padding: calc(4 * var(--spacing)) calc(2 * var(--spacing));
+
+		position: relative;
+	}
+
+	.taggedWords--container {
+		max-width: var(--writing--max-width);
+		margin: auto;
+		width: 100%;
+		// height: 100%;
+		padding: calc(3 * var(--spacing)) calc(2 * var(--spacing));
+		border-radius: calc(2 * var(--spacing));
+		--gradient-color-1: var(--white);
+		--gradient-color-2: var(--secondary-lighter-2);
+		--gradient-color-3: var(--secondary-darker-1);
+		--gradient-color-4: var(--white);
+		--font-size: calc(4 * var(--spacing));
+		font-size: var(--font-size);
+		font-family: inherit;
+		text-align: center;
+	}
+
+	.MuiInputBase-input {
+		padding: var(--spacing);
+		font-size: calc(2.5 * var(--spacing));
+	}
+
+	.letterOrWord {
+		// background-color: pink;
+		// // pointer-events: none;
+		// padding: var(--spacing);
+		// color: var(--white);
+	}
+	.tagged-word {
+		// padding: 0 calc(0.25 * var(--spacing));
+		// letter-spacing: calc(0.5 * var(--spacing));
+		border-radius: calc(0.5  * var(--spacing));
+		line-height: 1.5;
+		background-color: var(--transparent);
+		transition: background-color 0.2s ease-in-out;
+		cursor: grabbing;
+		&.selected {
+			background-color: var(--transparent-white);
+		}
+		&.word--snobbish {
+			//background-color: var(--yellow);
+		}
+	}
+	.word--snobbish,
+	.word--snobbish * {
+		color: var(--yellow);
+	}
+}
+
+.control--section {
+	display: flex;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	max-width: 100%;
+	justify-items: center;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+	flex-flow: column;
+}
+
+.control-btns {
+	display: flex;
+	width: 100%;
+	height: 50%;
+	overflow: auto;
+	max-width: 100%;
+	justify-items: center;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+	flex-flow: column;
+}
+
+.text-form .text-form-control {
+	button.aws-btn {
+		margin: calc(2 * var(--spacing));
+	}
+}
+
+.primary {
+	background-color: var(--primary);
+}
+.secondary {
+	background-color: var(--secondary);
+}
+
+.primary-darker-1 {
+	background-color: var(--primary-darker-1);
+}
+.primary-darker-2 {
+	background-color: var(--primary-darker-2);
+}
+.primary-darker-3 {
+	background-color: var(--primary-darker-3);
+}
+.primary-darker-4 {
+	background-color: var(--primary-darker-4);
+}
+.primary-darker-5 {
+	background-color: var(--primary-darker-5);
+}
+
+.primary-lighter-1 {
+	background-color: var(--primary-lighter-1);
+}
+.primary-lighter-2 {
+	background-color: var(--primary-lighter-2);
+}
+.primary-lighter-3 {
+	background-color: var(--primary-lighter-3);
+}
+.primary-lighter-4 {
+	background-color: var(--primary-lighter-4);
+}
+.primary-lighter-5 {
+	background-color: var(--primary-lighter-5);
+}
+
+.secondary-darker-1 {
+	background-color: var(--secondary-darker-1);
+}
+.secondary-darker-2 {
+	background-color: var(--secondary-darker-2);
+}
+.secondary-darker-3 {
+	background-color: var(--secondary-darker-3);
+}
+.secondary-darker-4 {
+	background-color: var(--secondary-darker-4);
+}
+.secondary-darker-5 {
+	background-color: var(--secondary-darker-5);
+}
+
+.secondary-lighter-1 {
+	background-color: var(--secondary-lighter-1);
+}
+.secondary-lighter-2 {
+	background-color: var(--secondary-lighter-2);
+}
+.secondary-lighter-3 {
+	background-color: var(--secondary-lighter-3);
+}
+.secondary-lighter-4 {
+	background-color: var(--secondary-lighter-4);
+}
+.secondary-lighter-5 {
+	background-color: var(--secondary-lighter-5);
+}
+
+#root {
+	.btns-shelf {
+		position: absolute;
+		bottom: 0;
+
+		height: calc(1.5 * var(--btn-height, 64px));
+		width: 100%;
+		.row {
+			height: 100%;
+		}
+	}
+	.frosted-container {
+		position: relative;
+		width: 100%;
+		max-width: var(--writing--max-width);
+		height: 100%;
+		padding: 0 calc(2 * var(--spacing));
+	}
+	.frosted {
+		height: 100%;
+		width: 100%;
+		background: inherit;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		position: relative;
+		overflow: hidden;
+		z-index: 1;
+		border-radius: calc(5 * var(--spacing)) calc(5 * var(--spacing))
+			calc(0.5 * var(--spacing)) calc(0.5 * var(--spacing));
+
+		display: flex;
+		justify-content: space-around;
+
+		button {
+			margin: auto 16px;
+			top: calc(-0.075 * var(--btn-height, 64px));
+		}
+	}
+	.frosted::after {
+		z-index: -1;
+		content: "";
+		position: absolute;
+		top: -10px;
+		bottom: -10px;
+		right: -10px;
+		left: -10px;
+		background: inherit;
+		box-shadow: inset 0 0 2000px var(--transparent-canvas);
+		filter: blur(10px);
+	}
+
+	// .blurred-box {
+	// 	position: relative;
+	// 	width: 250px;
+	// 	height: 350px;
+	// 	top: calc(50% - 175px);
+	// 	left: calc(50% - 125px);
+	// 	background: inherit;
+	// 	border-radius: 2px;
+	// 	overflow: hidden;
+	// }
+
+	// .blurred-box:after {
+	// 	content: "";
+	// 	width: 300px;
+	// 	height: 300px;
+	// 	background: inherit;
+	// 	position: absolute;
+	// 	left: -25px;
+	// 	leftposition
+	// right: 0;
+	// 	top: -25px;
+	// 	topposition
+	// bottom: 0;
+	// 	box-shadow: inset 0 0 0 200px rgba(255, 255, 255, 0.05);
+	// 	filter: blur(10px);
+	// }
+}
+
+#root .phone {
+	.row--btns---main {
+		.btn {
+			font-size: 1.1rem;
+			min-width: 3rem;
+		}
+	}
+
+	.taggedWords--container {
+		--font-size: 1.25rem;
+	}
+
+	.text-form-control {
+		width: 100%;
+	}
+}

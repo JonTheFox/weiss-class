@@ -1,0 +1,212 @@
+.gradient-sunset {
+	background: linear-gradient(15deg, var(--salmon), var(--yellow));
+}
+.gradient-sky {
+	background: linear-gradient(
+		25deg,
+		var(--secondary-lighter-3),
+		var(--white)
+	);
+}
+
+.gradient {
+	background: linear-gradient(
+		to left,
+		var(--color-canvas),
+		var(--color-white)
+	);
+}
+
+// #root .weiss-logo--gradient {
+// 	&.has-before:before,
+// 	&:not(*.has-before) {
+// 		background: var(
+// 			--gradient-color-1,
+// 			gray
+// 		); /* fallback for old browsers */
+
+// 		// --local-to: var(--to, left);
+
+// 		background-image: linear-gradient(
+// 			to bottom,
+// 			var(--gradient-color-1),
+// 			var(--gradient-color-2),
+// 			var(--gradient-color-3, black)
+// 		);
+// 		background-size: 100% 100%;
+// 		// animation-name: pulse-KF;
+// 		animation-duration: 10s;
+// 		animation-iteration-count: infinite;
+// 		animation-timing-function: linear;
+// 	}
+// }
+
+#root .dynamic-gradient--4-colors {
+	background: var(--gradient-color-1, gray); /* fallback for old browsers */
+
+	// --local-to: var(--to, left);
+
+	--local-color-1: var(--gradient-color-1, white);
+	--local-color-2: var(--gradient-color-2, yellow);
+	--local-color-3: var(--gradient-color-3, green);
+	--local-color-4: var(--gradient-color-4, purple);
+
+	background-image: linear-gradient(
+		to bottom,
+		var(--local-color-1),
+		var(--local-color-2),
+		var(--local-color-3),
+		var(--local-color-4)
+	);
+
+	// background: radial-gradient(
+	// 	circle at 25% 110%,
+	// 	#fdf497 0,
+	// 	#fdf497 5%,
+	// 	#fd5949 45%,
+	// 	#d6249f 60%,
+	// 	#285aeb 90%
+	// );
+}
+
+#root .dynamic-gradient--3-colors {
+	&.has-before:before,
+	&:not(*.has-before) {
+		background: var(
+			--gradient-color-1,
+			gray
+		); /* fallback for old browsers */
+
+		// --local-to: var(--to, left);
+
+		background-image: linear-gradient(
+			to bottom,
+			var(--gradient-color-1),
+			var(--gradient-color-2),
+			var(--gradient-color-3, black)
+		);
+		background-size: 100% 100%;
+		// animation-name: pulse-KF;
+		animation-duration: 10s;
+		animation-iteration-count: infinite;
+		animation-timing-function: linear;
+	}
+}
+
+@keyframes pulse-KF {
+	0%,
+	100% {
+		zoom: 1;
+	}
+	50% {
+		zoom: 2;
+	}
+}
+
+#root .gradient--2-colors {
+	--local-gradient-color-1: var(--gradient-color-1, skyblue);
+	--local-gradient-color-2: var(--gradient-color-2, purple);
+	background: linear-gradient(
+		75deg,
+		var(--local-gradient-color-1) 0%,
+		var(--local-gradient-color-2) 100%
+	);
+}
+
+#root .dynamic-gradient--2-colors {
+	&.has-before:before,
+	&:not(*.has-before) {
+		background: var(
+			--gradient-color-1,
+			gray
+		); /* fallback for old browsers */
+
+		// --local-to: var(--to, left);
+
+		background-image: linear-gradient(
+			to left,
+			var(--gradient-color-1),
+			var(--gradient-color-2),
+			var(--gradient-color-1, white)
+		);
+		background-size: 70% 25%;
+		background-position: 50% 70%;
+		animation-name: go-left-and-return-KF;
+		animation-duration: 10s;
+		animation-iteration-count: infinite;
+		animation-timing-function: linear;
+	}
+}
+
+@keyframes go-left-and-return-KF {
+	0% {
+		background-position: 0% 0%;
+	}
+	100% {
+		background-position: 400% -200%;
+	}
+}
+
+#root .gradient--primary-and-secondary {
+	--local-color-1: var(--gradient-color-1, #f093fb);
+	--local-color-2: var(--gradient-color-2, #f5576c);
+
+	background: linear-gradient(
+		135deg,
+		var(--local-color-1) 0%,
+		var(--local-color-2) 100%
+	);
+}
+
+#root .gradient-secondary {
+	background: var(--color-canvas); /* fallback for old browsers */
+	background: -webkit-linear-gradient(
+		to bottom,
+		var(--color-canvas),
+		var(--color-secondary)
+	);
+	background: linear-gradient(
+		to bottom,
+		var(--color-canvas),
+		var(--color-secondary)
+	);
+}
+#root .gradient-primary {
+	background: var(--color-canvas); /* fallback for old browsers */
+	background: -webkit-linear-gradient(
+		to right,
+		var(--color-canvas),
+		var(--color-primary)
+	);
+	background: linear-gradient(
+		to right,
+		var(--color-canvas),
+		var(--color-primary)
+	);
+}
+#root .bg-paper {
+	background: var(--color-white); /* fallback for old browsers */
+	background: -webkit-linear-gradient(
+		to left,
+		var(--color-canvas),
+		var(--color-white)
+	);
+	background: linear-gradient(
+		to left,
+		var(--color-canvas),
+		var(--color-white)
+	);
+}
+#root .bg-paper--to-bottom {
+	background: var(--color-white); /* fallback for old browsers */
+	background: -webkit-linear-gradient(
+		to bottom,
+		var(--color-canvas),
+		var(--color-white)
+	);
+	background: linear-gradient(
+		to bottom,
+		var(--color-canvas),
+		var(--color-white)
+	);
+}

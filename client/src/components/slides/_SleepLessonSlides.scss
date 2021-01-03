@@ -1,0 +1,475 @@
+#root .spectacle-deck {
+	top: var(--appbar-height);
+	height: calc(100% - var(--appbar-height));
+}
+
+#root .spectacle-deck .spectacle-slide {
+	.snob,
+	.snob-header {
+		color: var(--yellow);
+	}
+
+	.slide--heading---1 {
+		position: absolute;
+		top: 0;
+		left: 0;
+		padding: calc(1 * var(--spacing));
+		padding-left: calc(2 * var(--spacing));
+		font-size: 2rem;
+		background-color: var(--transparent-black, white);
+		// filter: brightness(100%);
+		border-radius: 0 calc(0.5 * var(--spacing)) calc(0.5 * var(--spacing)) 0;
+
+		transition: all 0.2s;
+
+		&:hover {
+			transform: scale(1.1);
+			cursor: pointer;
+		}
+	}
+	.slide--heading---2,
+	.slide--heading---3 {
+		position: absolute;
+		font-size: 2rem;
+		padding: 0 var(--spacing);
+		background-color: var(--transparent-white, white);
+
+		color: var(--black);
+
+		&.snob-header,
+		&.present-simple-subheader {
+			color: var(--yellow);
+		}
+
+		left: calc(2 * var(--spacing));
+
+		// left: 50%;
+		// transform: translateX(-50%);
+		// border-radius: calc(0.5 * var(--spacing));
+		border-radius: 0 calc(0.5 * var(--spacing)) calc(0.5 * var(--spacing)) 0;
+	}
+
+	.slide--heading---2 {
+		top: calc(10 * var(--spacing));
+	}
+
+	.slide--heading---3 {
+		top: calc(16 * var(--spacing));
+		font-size: 2.5rem;
+	}
+
+	.fragment {
+		color: white;
+		&.slide--heading---2 {
+			color: var(--green);
+		}
+	}
+
+	.fragment:not(*.slide--heading-3):not(*.subtitle) {
+		position: fixed;
+		color: black;
+		bottom: 0;
+		left: 0;
+
+		// width: 100%;
+		z-index: 1000;
+		// left: 50%;
+		// transform: translateX(-50%) !important;
+
+		padding: calc(2 * var(--spacing)) calc(1 * var(--spacing));
+		padding-bottom: calc(5 * var(--spacing));
+
+		p {
+			padding: var(--spacing) calc(2 * var(--spacing));
+			border-radius: 0 calc(0.5 * var(--spacing))
+				calc(0.5 * var(--spacing)) 0;
+		}
+	}
+
+	.title-sleep {
+		color: var(--canvas, white);
+	}
+
+	.title-emotions {
+		color: var(--red-1, white);
+	}
+
+	li {
+		background-color: rgba(0, 0, 0, 0.75);
+		color: white;
+		font-size: 2rem;
+	}
+
+	tr {
+		td,
+		th {
+			border: calc(0.5 * var(--spacing)) solid var(--canvas);
+			padding: 8px;
+
+			transition: all 0.2s;
+
+			&:hover {
+				transform: scale(1.05);
+				opacity: 1;
+			}
+
+			color: white;
+		}
+
+		.v1 {
+			//gold
+			background: linear-gradient(135deg, #c3cfe2 0%, var(--canvas) 100%);
+			opacity: 0.85;
+		}
+
+		.glossary--word,
+		.glossary--definition {
+			font-size: 1.5rem;
+		}
+
+		.vSnob {
+			//silver
+			background: linear-gradient(
+				135deg,
+				var(--yellow, black) 0%,
+				#f6d365 100%
+			);
+			opacity: 0.9;
+		}
+	}
+
+	.slide--example-text {
+		background-color: rgba(0, 0, 0, 0.75);
+		font-size: 2.5rem;
+		margin-left: var(--spacing);
+		color: var(--white);
+		text-align: left;
+	}
+}
+
+#root #react-impressjs {
+	background: var(--color-canvas); /* fallback for old browsers */
+	background: linear-gradient(to top, var(--white), var(--secondary));
+}
+#root .PresentSimpleDeck--slide,
+#root .Present-Simple--slide {
+	// background-size: 100% 200%;
+	// background-position: 100% 100%;
+
+	.slide--heading---1,
+	h6 {
+		position: absolute;
+		top: 0;
+		left: 0;
+		padding: calc(1 * var(--spacing));
+	}
+
+	h1 {
+		transition: all 0.4s ease-in-out;
+	}
+
+	canvas {
+		// height: var(--full-vh--minus-appbar, 100vh) !important;
+		height: 100%;
+		width: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+		padding: 0;
+		margin: 0;
+		z-index: 0;
+	}
+
+	#snowing {
+		background-color: orange;
+	}
+
+	.progress-verb {
+		z-index: 10000;
+	}
+
+	.snowy-text {
+	}
+
+	// &.weiss-logo.slide-step--0 {
+	// 	h1 {
+	// 		color: black;
+	// 	}
+	// }
+	// &.weiss-logo.slide-step--1 {
+	// 	h1 {
+	// 		color: black;
+	// 	}
+	// }
+	// &.weiss-logo.slide-step--2 {
+	// 	h1 {
+	// 		color: var(--secondary);
+	// 	}
+	// }
+
+	// .changing-color--secondary * {
+	// 	animation-name: changing-color-text-secondary-KF;
+	// 	animation-duration: 25s;
+	// 	animation-iteration-count: infinite;
+	// 	animation-timing-function: ease;
+	// }
+
+	.clear {
+		color: var(--secondary);
+	}
+	.nice {
+		color: var(--primary);
+	}
+	.ice,
+	.cool {
+		color: var(--secondary);
+	}
+	.love {
+		color: var(--red-1);
+	}
+
+	// .changing-color--primary h1 {
+	// 	//animation-name: changing-color-text-primary-KF;
+	// 	animation-duration: 5s;
+	// 	animation-iteration-slide--heading: infinite;
+	// 	animation-timing-function: ease;
+	// }
+
+	.changing-color--secondary {
+		// animation-name: changing-color-text-secondary-KF;
+
+		.clear {
+			animation-name: changing-color-subheading-1-KF;
+			animation-duration: 10s;
+			animation-iteration-count: infinite;
+			animation-timing-function: ease;
+		}
+		.ampersand {
+			animation-name: none;
+		}
+		.nice {
+			animation-name: changing-color-subheading-2-KF;
+			animation-duration: 10s;
+			animation-iteration-count: infinite;
+			animation-timing-function: ease;
+		}
+	}
+
+	.present-simple--intro {
+		background-color: orange;
+	}
+
+	.changing-color--progressive {
+		animation-name: changing-color-dynamic-KF;
+		animation-duration: 3s;
+		animation-iteration-count: infinite;
+		animation-timing-function: ease-out;
+		--color-1: brown;
+		--color-2: var(--green);
+		@keyframes changing-color-dynamic-KF {
+			// 20% {
+			// 	color: black;
+			// }
+
+			0%,
+			100% {
+				color: var(--color-1);
+			}
+			50% {
+				color: var(--color-2);
+			}
+
+			// 75% {
+			// 	color: yellow;
+			// }
+		}
+	}
+
+	// @keyframes changing-color-text-primary-KF {
+	// 	// 20% {
+	// 	// 	color: black;
+	// 	// }
+
+	// 	35% {
+	// 		color: var(--white);
+	// 	}
+	// 	40,
+	// 	50% {
+	// 		color: var(--secondary);
+	// 	}
+	// 	55%,
+	// 	65% {
+	// 		color: var(--primary);
+	// 	}
+	// 	70%,
+	// 	80% {
+	// 		color: var(--yellow);
+	// 	}
+	// 	85%,
+	// 	95% {
+	// 		color: var(--canvas);
+	// 	}
+	// }
+
+	@keyframes changing-color-subheading-1-KF {
+		// 20% {
+		// 	color: black;
+		// }
+
+		10%,
+		30% {
+			color: var(--secondary);
+		}
+		40%,
+		60% {
+			color: var(--primary);
+		}
+		70%,
+		90% {
+			color: var(--eye-base);
+		}
+		// 75% {
+		// 	color: yellow;
+		// }
+	}
+	@keyframes changing-color-subheading-2-KF {
+		// 20% {
+		// 	color: black;
+		// }
+
+		10%,
+		30% {
+			color: var(--primary);
+		}
+		40%,
+		60% {
+			color: var(--secondary);
+		}
+		70%,
+		90% {
+			color: var(--dark-pink);
+		}
+	}
+
+	// @keyframes changing-color-subheading-2-KF {
+	// 	// 20% {
+	// 	// 	color: black;
+	// 	// }
+
+	// 	35% {
+	// 		color: var(--white);
+	// 	}
+	// 	40,
+	// 	50% {
+	// 		color: var(--secondary);
+	// 	}
+	// 	55%,
+	// 	65% {
+	// 		color: var(--primary);
+	// 	}
+	// 	70%,
+	// 	80% {
+	// 		color: var(--yellow);
+	// 	}
+	// 	85%,
+	// 	95% {
+	// 		color: var(--canvas);
+	// 	}
+	// }
+
+	// @keyframes changing-color-text-primary-KF {
+	// 	10%,
+	// 	35% {
+	// 		color: lightgray;
+	// 	}
+	// 	40,
+	// 	100% {
+	// 		color: blue;
+	// 	}
+	// 	// 65%,
+	// 	// 85% {
+	// 	// 	color: var(--primary);
+	// 	// }
+	// }
+
+	@keyframes changing-color-text-secondary-KF {
+		// 20% {
+		// 	color: black;
+		// }
+		0%,
+		35% {
+			color: var(--secondary);
+		}
+		40,
+		50% {
+			color: var(--white);
+		}
+		55%,
+		65% {
+			color: var(--canvas);
+		}
+		70%,
+		80% {
+			color: var(--robe-darker-3);
+		}
+		85%,
+		95% {
+			color: var(--red-1);
+		}
+	}
+}
+
+#root {
+	.phone .present-simple-deck .spectacle-slide {
+		.slide--heading---1 {
+			font-size: 1.25rem;
+		}
+		.slide--heading---2,
+		.slide--heading---3 {
+			font-size: 1.75rem;
+		}
+		.slide--example-text {
+			font-size: 1.5rem;
+			margin-left: var(--spacing);
+		}
+	}
+	.tablet .present-simple-deck .spectacle-slide {
+		.slide--heading---1 {
+			font-size: 1.75rem;
+		}
+		.slide--heading---2,
+		.slide--heading---3 {
+			font-size: 2.25rem;
+		}
+		.slide--example-text {
+			font-size: 2rem;
+			margin-left: var(--spacing);
+		}
+	}
+	.large-screen .present-simple-deck .spectacle-slide {
+		.slide--heading---1 {
+			font-size: 1.75rem;
+		}
+		.slide--heading---2,
+		.slide--heading---3 {
+			font-size: 2.5rem;
+		}
+		.slide--example-text {
+			font-size: 2.5rem;
+			margin-left: var(--spacing);
+		}
+	}
+	.xl-screen .present-simple-deck .spectacle-slide {
+		.slide--heading---1 {
+			font-size: 1.75rem;
+		}
+		.slide--heading---2,
+		.slide--heading---3 {
+			font-size: 2.5rem;
+		}
+		.slide--example-text {
+			font-size: 2.5rem;
+			margin-left: var(--spacing);
+		}
+	}
+}

@@ -1,0 +1,115 @@
+#root .VideoPlayer {
+	// margin: 25% 0;
+	margin: 0;
+	position: relative;
+	transition: all 0.3s;
+	padding-top: 56.25%; /* 720 / 1280 = 0.5625 */
+
+	&.debugging {
+		pointer-events: all !important;
+		transform: none !important;
+		z-index: 200 !important;
+	}
+
+	&.react-player--no-interaction {
+		pointer-events: none;
+	}
+	&.react-player--full-height {
+		height: 100%;
+		width: 100%;
+	}
+	&:after {
+		transition: opacity 0.4s;
+		content: "";
+		z-index: 20;
+		height: 100%;
+		width: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+		background-color: var(--white);
+		user-select: none;
+		pointer-events: none;
+		background: white;
+
+		opacity: var(--video-player--opacity, 0);
+	}
+
+	&.video-player--faded,
+	&.react-player--playing.video-player--faded {
+		opacity: 0;
+		z-index: -100;
+		background: white;
+
+		&:after {
+			// z-index: 200;
+			opacity: 1;
+		}
+	}
+}
+
+#root .react-player {
+	position: absolute;
+	top: 0;
+	left: 0;
+
+	// &.react-player--full-height {
+	// 	height: 100%;
+	// 	width: 100%;
+	// }
+}
+
+#root .phone.mobile {
+	.react-player--scale-to-fit-viewport.VideoPlayer {
+		transform: scale(3);
+	}
+}
+
+#root .phone.landscape.mobile {
+	.react-player--scale-to-fit-viewport.VideoPlayer {
+		transform: scale(2);
+	}
+}
+
+#root .phone.portrait:not(*.mobile) {
+	.react-player--scale-to-fit-viewport.VideoPlayer {
+		transform: scale(3.25);
+	}
+}
+
+#root .phone.landscape:not(*.mobile) {
+	.react-player--scale-to-fit-viewport.VideoPlayer {
+		transform: scale(2);
+	}
+}
+
+#root .tablet.portrait.mobile {
+	.react-player--scale-to-fit-viewport.VideoPlayer {
+		transform: scale(2.5);
+	}
+}
+
+.tablet.portrait:not(*.mobile) {
+	.react-player--scale-to-fit-viewport.VideoPlayer {
+		transform: scale(3.2);
+	}
+}
+
+#root .tablet.landscape.mobile {
+	.react-player--scale-to-fit-viewport.VideoPlayer {
+		transform: scale(1.5);
+	}
+}
+
+.tablet.landscape:not(*.mobile) {
+	.VideoPlayer.react-player--scale-to-fit-viewport {
+		transform: scale(1.75);
+	}
+}
+
+.large-screen.landscape,
+.xl-screen.landscape {
+	.react-player--scale-to-fit-viewport.VideoPlayer {
+		transform: scale(1.25);
+	}
+}

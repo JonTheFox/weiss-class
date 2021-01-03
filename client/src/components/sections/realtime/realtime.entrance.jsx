@@ -1,0 +1,587 @@
+import React, {
+	useState,
+	useContext,
+	useEffect,
+	useCallback,
+	useRef,
+} from "react";
+import { AppContext } from "../../../contexts/AppContext.jsx";
+
+//import PropTypes from "prop-types";
+import clsx from "clsx";
+import * as io from "socket.io-client";
+// import SendIcon from "@material-ui/icons/Send";
+import posed, { PoseGroup } from "react-pose";
+// import { POSES, BASE_POSES } from "../../constants/poses.js";
+// import TextField from "@material-ui/core/TextField";
+// import IconButton from "@material-ui/core/IconButton";
+// import FlightTakeoff from "@material-ui/icons/FlightTakeoff";
+
+import DURATIONS from "../../../constants/durations.js";
+import View from "../../layout/View.jsx";
+import PieChart from "../../partials/PieChart.jsx";
+import "./_Realtime.scss";
+
+let animationFrame;
+let logg;
+let socketIOlogg;
+let loggError;
+let promiseKeeper;
+const label = "RTEntrance";
+let socket;
+let clientID;
+
+const PIE_ENTER_DURATION = DURATIONS.enter * 2;
+const CONNECTION_TIMEOUT_MS = 10 * 1000;
+
+const pieChartPoses = {
+	enter: {
+		opacity: 1,
+		// x: "0vw",
+		rotateZ: "0deg",
+		//delay: DURATIONS.enter * 4,
+		scale: 1,
+		transition: {
+			duration: PIE_ENTER_DURATION,
+			type: "spring",
+			damping: 200,
+			stiffness: 100,
+		},
+	},
+	exit: {
+		opacity: 0,
+		// x: "100vw",
+		rotateZ: "270deg",
+		scale: 0,
+		delay: 0,
+
+		transition: {
+			duration: DURATIONS.enter,
+			type: "spring",
+			delay: 0,
+		},
+	},
+};
+
+const PosedPieContainer = posed.div(pieChartPoses);
+
+const titlePoses = {
+	enter: {
+		opacity: 1,
+		x: "0vw",
+		scale: 1,
+		delay: DURATIONS.enter * 2,
+		// scale: 1,
+		transition: {
+			duration: DURATIONS.enter,
+			delay: 0,
+			type: "spring",
+			stiffness: 100,
+			mass: 0.25,
+		},
+	},
+	exit: {
+		opacity: 0,
+		x: "100vw",
+		scale: 0,
+		delay: 0,
+		transition: {
+			duration: DURATIONS.exit,
+			delay: 0,
+		},
+	},
+};
+
+const PosedTitle = posed.div(titlePoses);
+
+const feedbackPoses = {
+	enter: {
+		opacity: 1,
+		rotateY: "0deg",
+		// scale: 1,
+		// scale: 1,
+		transition: {
+			duration: DURATIONS.enter,
+		},
+	},
+	exit: {
+		opacity: 0,
+		delay: 0,
+		rotateY: "180deg",
+		// scale: 0,
+		transition: {
+			duration: DURATIONS.exit,
+			delay: 0,
+		},
+	},
+};
+
+const PosedFeedback = posed.div(feedbackPoses);
+
+const initialPieData = [
+	{
+		color: "var(--primary)",
+		title: "Student",
+		value: 50,
+	},
+	{
+		// color: "var(--primary)",
+		color: "var(--secondary)",
+		title: "Teacher",
+		value: 30,
+	},
+
+	{
+		color: "var(--canvas)",
+		title: "Platform",
+		value: 20,
+	},
+];
+
+const CONNECTION_STATES = {
+	IS_NOT_READY: "inactive",
+	IDLE: "isIdle",
+	CONNECTING: "isConnecting",
+	ENTERING_ROOM: "isEnteringRoom",
+	ALREADY_INSIDE_ROOM: "isAlreadyConnected",
+	ENTERED_ROOM: "isConnected",
+	CONNECTION_FAILED: "connectionFailed",
+	DISCONNECTED: "isDisconnected",
+};
+
+const CONNECTION_TIMEOUT_LABEL = "connectionTimeout";
+
+const RTEntrance = (props) => {
+	const [appUtils, appState, setAppState] = useContext(AppContext);
+
+	const { route } = props;
+	const { match, location, history } = route;
+	const { user } = appState;
+	const {
+		PromiseKeeper,
+		Logger,
+		getUniqueString,
+		CLIENT_ONLY,
+		navigateTo,
+		DEBUGGING,
+	} = appUtils;
+
+	const {
+		IS_NOT_READY,
+		IDLE,
+		CONNECTING,
+		ENTERING_ROOM,
+		ALREADY_INSIDE_ROOM,
+		ENTERED_ROOM,
+		CONNECTION_FAILED,
+		UNAUTHORIZED,
+		DISCONNECTED,
+	} = CONNECTION_STATES;
+
+	const [feedback, setFeedback] = useState("");
+	const [connectionStatus, setConnectionStatus] = useState(
+		CONNECTION_STATES.IS_NOT_READY
+	);
+	const [isPieActive, setIsPieActive] = useState(false);
+	const [showRooms, setShowRooms] = useState(false);
+	const [showPieChart, setShowPieChart] = useState(true);
+	const [pieReveal, setPieReveal] = useState(100);
+	const [pieData, setPieData] = useState(props.pieData || initialPieData);
+	const [piePaddingAngle, setPiePaddingAngle] = useState(2);
+
+	const refs = useRef({ viewRef: {}, connectionStatus });
+
+	const navigateToClassroom = useCallback((delay = 0) => {
+		logg("About to navigate to classroom");
+		promiseKeeper.stall(delay, "navigate to classroom").then(() => {
+			navigateTo(`${location.pathname}/classroom`, history);
+		});
+	});
+	const initSocketIO = (userType = "student") => {
+		try {
+			const { email, password } = user;
+
+			setConnectionStatus(CONNECTING);
+			socket = io("/classrooms");
+			appState.socketIO = { socket };
+
+			promiseKeeper
+				.stall(CONNECTION_TIMEOUT_MS, CONNECTION_TIMEOUT_LABEL)
+				.then(() => {
+					if (refs.current.connectionStatus === CONNECTING) {
+						setConnectionStatus(CONNECTION_FAILED);
+					}
+				})
+				.catch((reason) => {
+					logg(
+						"Timeout for connection attemp was cancelled. Reason: ",
+						reason
+					);
+				});
+
+			socket.on("connect", function(msg) {
+				//a SocketIO built-in event
+				const content = `User ${email} has entered realtime room.`;
+
+				setConnectionStatus(ENTERING_ROOM);
+				socketIOlogg(content);
+
+				logg("userType: ", userType);
+
+				socket.emit("client_sendsCredentials", {
+					user,
+					clientID,
+					userTypes: [userType],
+				});
+			});
+
+			socket.on("server_failedAuth", (serverMsg) => {
+				const { error } = serverMsg;
+				loggError(error);
+				setConnectionStatus(UNAUTHORIZED);
+				//TODO: inform user, return to idle state
+			});
+
+			socket.on("userIsAlreadyConnected", (serverMsg) => {
+				const { content, sender, id } = serverMsg;
+				setConnectionStatus(ALREADY_INSIDE_ROOM);
+			});
+
+			socket.on("server__clientAuthed", async (serverMsg) => {
+				try {
+					const {
+						first_name,
+						last_name,
+						email,
+						userType,
+						room,
+						//classrooms,
+					} = serverMsg;
+					let loggMsg = `The server has authenticated client ${first_name} ${last_name} ${email} as a ${userType}. `;
+					if (userType === "teacher" && room) {
+						socketIOlogg(loggMsg + "Teacher's classroom: ", room);
+					}
+					// socket.emit("client__requestsRooms");
+
+					socket.emit("client__requestsRooms", {
+						intent: { filter: null },
+					});
+
+					// else if (["student", "platform"].includes(userType)) {
+					// 	socketIOlogg(loggMsg + "Available rooms: ", classrooms);
+					// }
+					setConnectionStatus(ENTERED_ROOM);
+					// setAppState((state) => {
+					// 	const { realtime } = state;
+					// 	realtime.classrooms = classrooms;
+					// 	realtime.room = room;
+					// 	return { ...state, realtime };
+					// });
+
+					return true;
+				} catch (err) {
+					loggError(err.message);
+					debugger;
+					return null;
+				}
+			});
+
+			socket.on("server__providesRooms", async (serverMsg) => {
+				try {
+					const { classrooms } = serverMsg;
+
+					setAppState((state) => {
+						const { realtime } = state;
+						realtime.classrooms = classrooms;
+
+						return { ...state, realtime };
+					});
+
+					// setConnectionStatus(ENTERED_ROOM);
+					// setAppState((state) => {
+					// 	const { realtime } = state;
+					// 	realtime.classrooms = classrooms;
+					// 	realtime.room = room;
+					// 	return { ...state, realtime };
+					// });
+
+					return true;
+				} catch (err) {
+					loggError(err.message);
+					debugger;
+					return null;
+				}
+			});
+
+			socket.on("server__roomCreated", function(msg) {
+				const { classroom, classrooms } = msg;
+				socketIOlogg("New room created:", classroom);
+				setAppState((state) => {
+					const { realtime } = state;
+					realtime.classrooms = classrooms;
+
+					return { ...state, realtime };
+				});
+
+				// setConnectionStatus(DISCONNECTED);
+			});
+
+			socket.on("disconnect", function(msg) {
+				socketIOlogg("Disconnected from realtime room. \n", msg);
+				setConnectionStatus(DISCONNECTED);
+			});
+			socket.on("anotherUserJoined", function(serverMsg) {
+				const {
+					first_name,
+					last_name,
+					// email,
+					// userType,
+					// room,
+					// availableRooms
+				} = serverMsg;
+				socketIOlogg(
+					`User ${first_name} ${last_name} has joined the RTEntrance room`
+				);
+			});
+
+			socket.emit("dispatchToStudents", {
+				user,
+				action: {
+					type: "sayHi",
+					payload: { msg: "hi" },
+				},
+			});
+			const { realtime } = appState;
+			if (!realtime) throw new Error(`No realtime state...?`);
+			realtime.socket = socket;
+		} catch (err) {
+			loggError(err.message);
+		}
+	};
+
+	useEffect(() => {
+		const logger = new Logger({ label });
+		logg = logger.logg;
+		socketIOlogg = new Logger({
+			label: "socketIOlogg",
+			stylePreset: "orange",
+		}).logg;
+		loggError = logger.loggError;
+		promiseKeeper = new PromiseKeeper({ label });
+		clientID = getUniqueString();
+		if (!appState.realtime) {
+			loggError("No realtime state..?");
+		} else {
+			appState.realtime.clientID = clientID;
+		}
+
+		promiseKeeper.stall(PIE_ENTER_DURATION).then(() => {
+			setConnectionStatus(CONNECTION_STATES.IDLE);
+		});
+
+		return () => {
+			window.cancelAnimationFrame(animationFrame);
+			promiseKeeper.rejectAll();
+		};
+	}, []);
+
+	useEffect(() => {
+		refs.current.connectionStatus = connectionStatus;
+		let newFeedback = "";
+		switch (connectionStatus) {
+			case IS_NOT_READY:
+				// setFeedback("");
+				newFeedback = "";
+				setIsPieActive(false);
+				break;
+			case IDLE:
+				// setFeedback("");
+				newFeedback = "";
+				setIsPieActive(true);
+				break;
+			case CONNECTING:
+				setIsPieActive(false);
+				//setFeedback("Connecting..");
+				newFeedback = "Connecting..";
+				break;
+			case ENTERING_ROOM:
+				newFeedback = "Almost there..";
+				// setFeedback("Almost there..");
+				break;
+			case ALREADY_INSIDE_ROOM:
+				promiseKeeper.reject(
+					CONNECTION_TIMEOUT_LABEL,
+					"connection is active."
+				);
+				newFeedback = "We're already inside :) ";
+				promiseKeeper
+					.stall(DURATIONS.enter * 3, "hide pie chart")
+					.then(() => {
+						// setShowPieChart(false);
+
+						// animationFrame = window.requestAnimationFrame(() => {
+						navigateToClassroom();
+					});
+
+				// });
+				return;
+				break;
+			case ENTERED_ROOM:
+				newFeedback = "We're online! :D ";
+				promiseKeeper.reject(
+					CONNECTION_TIMEOUT_LABEL,
+					"connection established"
+				);
+				// animationFrame = window.requestAnimationFrame(() => {
+				// return navigateToClassroom();
+				// });
+				promiseKeeper
+					.stall(DURATIONS.enter * 1, "hide pie chart")
+					.then(() => {
+						setShowPieChart(false);
+						navigateToClassroom(DURATIONS.enter * 1);
+					});
+				return;
+				break;
+			case CONNECTION_FAILED:
+				// setFeedback(
+				// 	"Could not connect. \nPlease check your internet connection and try again."
+				// );
+				newFeedback =
+					"Could not connect. \nPlease check your internet connection and try again.";
+				setIsPieActive(true);
+				promiseKeeper.stall(12 * 1000).then(() => {
+					setConnectionStatus(IDLE);
+				});
+				break;
+			case UNAUTHORIZED:
+				newFeedback = "You are not authorized to enter :O ";
+				//todo: nav to login page
+				setIsPieActive(true);
+				promiseKeeper.stall(12 * 1000).then(() => {
+					setConnectionStatus(IDLE);
+				});
+				break;
+
+			case DISCONNECTED:
+				// setFeedback("...aaaand we're offline :P \nReconnecting...");
+				newFeedback = "Reconnecting...";
+				break;
+			default:
+				loggError("Unsupported connection status!");
+				break;
+		}
+		setFeedback(newFeedback);
+	}, [connectionStatus]);
+
+	return (
+		<View
+			className={clsx(
+				"realtime-entrance vh-max--portrait---minus-appbar",
+				connectionStatus
+			)}
+			animate={false}
+			fullsize={false}
+		>
+			<div
+				className={clsx(
+					"background",
+					connectionStatus === CONNECTION_STATES.CONNECTING
+						? "running"
+						: "paused"
+				)}
+			></div>
+
+			<div className={clsx("section section--header flex")}>
+				<PosedTitle pose={"enter"} initialPose="exit">
+					<h2>What kind of user are you?</h2>
+				</PosedTitle>
+			</div>
+			<div
+				className={clsx(
+					"section section--room-list",
+					showRooms && "showRooms"
+				)}
+			>
+				<div className={clsx("room-list")}></div>
+			</div>
+			<div className={clsx("section section--pie")}>
+				<PosedPieContainer
+					className={clsx(
+						"pie-container fullsize",
+						[ENTERED_ROOM, ALREADY_INSIDE_ROOM].includes(
+							connectionStatus
+						) && "pause-children"
+					)}
+					pose={showPieChart ? "enter" : "exit"}
+					initialPose="exit"
+				>
+					<PieChart
+						active={isPieActive}
+						reveal={pieReveal}
+						startReveal={pieReveal}
+						paddingAngle={piePaddingAngle}
+						className={"stroke--children"}
+						animateSelected={Boolean(
+							[
+								CONNECTING,
+								ENTERING_ROOM,
+								ENTERED_ROOM,
+								ALREADY_INSIDE_ROOM,
+							].includes(connectionStatus)
+						)}
+						showHoverAnimation={Boolean(
+							[IDLE].includes(connectionStatus)
+						)}
+						data={pieData}
+						onClick={({ chartData, sectionIndex, title }) => {
+							if (
+								[ENTERED_ROOM, ALREADY_INSIDE_ROOM].includes(
+									connectionStatus
+								)
+							) {
+								return;
+							}
+							if (!appState.user) {
+								loggError(
+									"Cannot connect to socket without being logged in. TODO: navigate to login page"
+								);
+								return;
+							}
+							logg(
+								"initiating socket.io",
+								sectionIndex,
+								chartData
+							);
+							logg("selected user type: " + title);
+							setAppState((state) => {
+								state.realtime.userTypes = [title];
+								return state;
+							});
+
+							initSocketIO(title);
+						}}
+					></PieChart>
+				</PosedPieContainer>
+			</div>
+			<div className={clsx("section section--feedback flex")}>
+				<PoseGroup>
+					{connectionStatus !== CONNECTION_STATES.IDLE && (
+						<PosedFeedback key="server-msg--container">
+							<pre
+								className={clsx(
+									"server-msg--container wrap-entire-lines",
+									connectionStatus
+								)}
+							>
+								{feedback}
+							</pre>
+						</PosedFeedback>
+					)}
+				</PoseGroup>
+			</div>
+		</View>
+	);
+};
+
+export default RTEntrance;
