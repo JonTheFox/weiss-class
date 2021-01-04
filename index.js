@@ -87,22 +87,32 @@ const sendHomepage = (req, res, next) => {
 		logg(`File ${HOMEPAGE_FILENAME} was successfully sent to client. `);
 	});
 };
-const clients = {};
+
+//graphql
+const { ApolloServer, gql } = require("apollo-server-express");
+
+// Construct a schema, using GraphQL schema language
+const typeDefs = gql`
+	type Query {
+		hello: String
+		slides: String
+	}
+`;
+
+// Provide resolver functions for your schema fields
+const resolvers = {
+	Query: {
+		hello: () => "Hello world!",
+		slides: () => "you asked for slides",
+	},
+};
+const server = new ApolloServer({ typeDefs, resolvers });
+server.applyMiddleware({ app });
+
 const INDEX_PAGE = path.join(BUILD_FOLDER, HOMEPAGE_FILENAME);
 app.get("/", sendHomepage);
 
 //allow access to the `build` folder (from which we'll serve "static" files, such as transpiled and minified JS, CSS and index.HTML, as well as manifest.json, app icons, fonts..)
-
-// Instruct Express to pass on any request made to the '/graphql' route
-// to the GraphQL instance.
-// app.use(
-// 	"/graphql",
-// 	expressGraphQL({
-// 		schema,
-// 		graphiql: true,
-// 	})
-// );
-
 app.use("/", express.static(BUILD_FOLDER));
 app.use("/static", express.static(BUILD_FOLDER));
 
@@ -112,6 +122,8 @@ const io = require("socket.io")(http);
 const supplementSocket = require("./server/socket/index.js");
 supplementSocket(io);
 
-http.listen(PORT, () => {
-	logg(`Express server is listening on port ${PORT}. `);
+http.listen({ port: process.env.PORT || PORT }, () => {
+	logg(
+		`Express server is listening on port ${PORT}. GraphQL endpoint: ${server.graphqlPath}`
+	);
 });
