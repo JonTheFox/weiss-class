@@ -19,11 +19,13 @@
   "dependencies": {
     "@egjs/flicking-plugins": "^3.2.0",
     "@egjs/react-flicking": "^3.2.2",
+    "apollo-server": "^2.19.1",
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "concurrently": "^4.0.1",
     "cors": "^2.8.4",
     "dotenv": "^8.2.0",
     "express": "^4.16.3",
+    "graphql": "^15.4.0",
     "helmet": "^3.21.2",
     "mongoose": "^5.6.8",
     "node-fetch": "^2.6.0",

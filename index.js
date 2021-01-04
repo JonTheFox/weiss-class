@@ -6,7 +6,7 @@ const helmet = require("helmet");
 const path = require("path");
 //const logger = require("morgan");
 // const cors = require("cors");
-const ServerLogger = require("./lib/logg-server.js");
+const ServerLogger = require("./server/lib/logg-server.js");
 const {
 	is,
 	our,
@@ -15,7 +15,7 @@ const {
 	sanitizeVarName,
 	getRandomUpTo,
 	getUniqueString,
-} = require("./lib/issy.js");
+} = require("./server/lib/issy.js");
 
 global.is = is;
 global.our = our;
@@ -45,7 +45,7 @@ const PORT = process.env.PORT || 5000;
 // 		: process.env.HOMEPAGE_URL;
 global.HOST = process.env.SERVER_URL;
 
-const authenticate = require("./api/auth.js"); // dependends on logger
+const authenticate = require("./server/api/auth.js"); // dependends on logger
 global.authenticate = authenticate;
 
 logg("global.HOST: ", global.HOST);
@@ -91,49 +91,25 @@ const clients = {};
 const INDEX_PAGE = path.join(BUILD_FOLDER, HOMEPAGE_FILENAME);
 app.get("/", sendHomepage);
 
-app.get("/app/*", (req, res, next) => {
-	//maybe switch to "^/$"
-
-	const subroutes = req.params[0]; //first
-	const clientIp = req.ip;
-	const sanitizedIp = sanitizeVarName(clientIp);
-	logg("sanitizedIp: ", sanitizedIp);
-	clients[sanitizedIp] = subroutes;
-	return sendHomepage(req, res, next);
-});
-
-app.get("/redirect/*", (req, res, next) => {
-	const currentSubroutes = req.params[0];
-	// logg("currentSubroutes: ", currentSubroutes);
-	// logg(`/redirect/${currentSubroutes}`);
-	const clientIp = req.ip;
-	// logg("ip in redirect: ", clientIp);
-
-	const answer = clients[clientIp] || null;
-	logg("clients: ", clients);
-	// logg("redirecting to : ", debugAnswer);
-	return res.send({
-		subroutes: answer,
-	});
-});
-
 //allow access to the `build` folder (from which we'll serve "static" files, such as transpiled and minified JS, CSS and index.HTML, as well as manifest.json, app icons, fonts..)
+
+// Instruct Express to pass on any request made to the '/graphql' route
+// to the GraphQL instance.
+// app.use(
+// 	"/graphql",
+// 	expressGraphQL({
+// 		schema,
+// 		graphiql: true,
+// 	})
+// );
+
 app.use("/", express.static(BUILD_FOLDER));
 app.use("/static", express.static(BUILD_FOLDER));
 
-// API
-// ======
-// routes have been moved to the administrator web site: Weiss-English-Admin
-// app.use("/api/animals", animalsApi);
-// app.use("/api/lyrics", lyricsApi);
-// app.use("/api/users", usersApi);
-// app.use("/api/images", imagesApi);
-// app.use("/api/ninjaCode", ninjaCodeApi);
-
 //mount a socket.io server (for real-time communication between the server and its clients) on top of the standard Express app
-var http = require("http").createServer(app);
-var io = require("socket.io")(http);
-const supplementSocket = require("./socket/index.js");
+const http = require("http").createServer(app);
+const io = require("socket.io")(http);
+const supplementSocket = require("./server/socket/index.js");
 supplementSocket(io);
 
 http.listen(PORT, () => {
