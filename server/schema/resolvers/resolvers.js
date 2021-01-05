@@ -1,7 +1,18 @@
-const slides = [
+const SLIDES = [
 	{
 		header: "Present Simple",
 		subheader: "Do / Does",
+	},
+];
+
+const ROOMS = [
+	{
+		name: "The Cloudy Horizon",
+		teachers: [{ first_name: "dorit" }],
+	},
+	{
+		name: "Misty Mountain",
+		teachers: [{ first_name: "elkana" }],
 	},
 ];
 
@@ -9,7 +20,8 @@ const slides = [
 // schema. This resolver retrieves books from the "books" array above.
 const resolvers = {
 	Query: {
-		slides: () => slides,
+		slides: () => SLIDES,
+		rooms: () => ROOMS,
 	},
 };
 

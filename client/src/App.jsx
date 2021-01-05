@@ -23,6 +23,17 @@ import { AppContextProvider } from "./contexts/AppContext.jsx";
 import { DeviceContextProvider } from "./contexts/DeviceContext.jsx";
 import theme from "./constants/theme.js";
 
+import {
+	RecoilRoot,
+	// atom,
+	// selector,
+	// useRecoilState,
+	// useRecoilValue,
+} from "recoil";
+// import { RecoilRoot } from "recoil/dist/recoil.production";
+
+import * as io from "socket.io-client";
+
 const client = new ApolloClient({
 	uri: "http://localhost:5000/graphql",
 	cache: new InMemoryCache(),
@@ -50,96 +61,108 @@ const LazyLogin = lazy(() =>
 );
 
 const baseRoute = "/";
-const slidesRoute = "present-simple/";
-//meaningless comment
 
 const App = (props) => {
 	return (
 		<ApolloProvider client={client}>
-			<ThemeProvider theme={theme}>
-				<AppContextProvider>
-					<DeviceContextProvider>
-						<Router>
-							<Route
-								render={(route) => (
-									<EntireView>
-										<ErrorBoundary>
-											<View
-												responsive={true}
-												animateChildren={true}
-												key="innerView"
-											>
-												<Suspense
-													key="main-suspense"
-													fallback={<WeissSpinner />}
+			<RecoilRoot>
+				<ThemeProvider theme={theme}>
+					<AppContextProvider>
+						<DeviceContextProvider>
+							<Router>
+								<Route
+									render={(route) => (
+										<EntireView>
+											<ErrorBoundary>
+												<View
+													responsive={true}
+													animateChildren={true}
+													key="innerView"
 												>
-													<Switch
-														location={
-															route.location
+													<Suspense
+														key="main-suspense"
+														fallback={
+															<WeissSpinner />
 														}
 													>
-														<Route
-															path={`${baseRoute}advice`}
+														<Switch
+															location={
+																route.location
+															}
 														>
-															<SageAdvice />
-														</Route>
+															<Route
+																path={`${baseRoute}advice`}
+															>
+																<SageAdvice />
+															</Route>
 
-														<Route
-															path={`${baseRoute}login`}
-															render={(route) => (
-																<LazyLogin
+															<Route
+																path={`${baseRoute}login`}
+																render={(
+																	route
+																) => (
+																	<LazyLogin
+																		route={
+																			route
+																		}
+																	/>
+																)}
+															/>
+
+															<Route
+																path={`${baseRoute}loading`}
+															>
+																<WeissSpinner
 																	route={
 																		route
 																	}
 																/>
-															)}
-														/>
+															</Route>
+															<Route
+																path={`${baseRoute}error`}
+															>
+																<ErrorBoundary
+																	debug={true}
+																	route={
+																		route
+																	}
+																/>
+															</Route>
 
-														<Route
-															path={`${baseRoute}loading`}
-														>
-															<WeissSpinner
-																route={route}
-															/>
-														</Route>
-														<Route
-															path={`${baseRoute}error`}
-														>
-															<ErrorBoundary
-																debug={true}
-																route={route}
-															/>
-														</Route>
+															<Route
+																path={`${baseRoute}classroom-select`}
+															>
+																<LazyRealtimeRoom
+																	route={
+																		route
+																	}
+																/>
+															</Route>
 
-														<Route
-															path={`${baseRoute}classroom-select`}
-														>
-															<LazyRealtimeRoom
-																route={route}
-															/>
-														</Route>
-
-														<Route
-															path={`${baseRoute}`}
-														>
-															<LogoScreen
-																route={route}
-															></LogoScreen>
-														</Route>
-														<Redirect
-															to={`${baseRoute}`}
-														></Redirect>
-													</Switch>
-												</Suspense>
-											</View>
-										</ErrorBoundary>
-									</EntireView>
-								)}
-							/>
-						</Router>
-					</DeviceContextProvider>
-				</AppContextProvider>
-			</ThemeProvider>
+															<Route
+																path={`${baseRoute}`}
+															>
+																<LogoScreen
+																	route={
+																		route
+																	}
+																></LogoScreen>
+															</Route>
+															<Redirect
+																to={`${baseRoute}`}
+															></Redirect>
+														</Switch>
+													</Suspense>
+												</View>
+											</ErrorBoundary>
+										</EntireView>
+									)}
+								/>
+							</Router>
+						</DeviceContextProvider>
+					</AppContextProvider>
+				</ThemeProvider>
+			</RecoilRoot>
 		</ApolloProvider>
 	);
 };

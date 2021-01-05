@@ -13,10 +13,6 @@ import ClassroomSelect from "./ClassroomSelect.page.jsx";
 
 import "./_Realtime.scss";
 
-import { useQuery, gql } from "@apollo/client";
-
-import { GetSlides } from "../../../gql/queries/queries.js";
-
 // let animationFrame;
 // let logg;
 // let loggError;
@@ -28,18 +24,11 @@ import { GetSlides } from "../../../gql/queries/queries.js";
 const SECTION_ROUTE = `classroom-select/`;
 
 const Realtime = (props) => {
-	const [appUtils, appState, setAppState] = useContext(AppContext);
-	const { user } = appState;
-	const { PromiseKeeper, Logger, getUniqueString, CLIENT_ONLY } = appUtils;
+	//const [appUtils, appState, setAppState] = useContext(AppContext);
+	// const { user } = appState;
+	// const { PromiseKeeper, Logger} = appUtils;
 
-	const refs = useRef({ viewRef: {} });
-
-	const { loading, error, data } = useQuery(GetSlides);
-
-	useEffect(() => {
-		const d = data;
-		debugger;
-	}, [data]);
+	//const refs = useRef({ viewRef: {} });
 
 	const { location, match } = props.route;
 

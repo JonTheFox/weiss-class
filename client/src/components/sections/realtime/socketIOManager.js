@@ -41,7 +41,7 @@ const initSocketIO = ({
 		socket = io("/classrooms");
 		appState.socketIO = { socket };
 		const WAIT_TILL_FAIL = 10 * 1000;
-		// const WAIT_TILL_FAIL = 20000;
+
 		promiseKeeper
 			.stall(WAIT_TILL_FAIL, CONNECTION_TIMEOUT_LABEL)
 			.then(() => {
