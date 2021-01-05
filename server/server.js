@@ -90,14 +90,6 @@ const sendHomepage = (req, res, next) => {
 
 //graphql
 const { ApolloServer } = require("apollo-server-express");
-
-// Provide resolver functions for your schema fields
-// const resolvers = {
-// 	Query: {
-// 		hello: () => "Hello world!",
-// 		slides: () => "you asked for slides",
-// 	},
-// };
 const typeDefs = require("./schema/typeDefs/typeDefs.js").typeDefs;
 const resolvers = require("./schema/resolvers/resolvers.js").resolvers;
 const server = new ApolloServer({ typeDefs, resolvers });

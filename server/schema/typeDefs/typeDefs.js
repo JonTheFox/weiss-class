@@ -9,11 +9,28 @@ const typeDefs = gql`
 		title: String
 		author: String
 	}
+	type Gif {
+		url: String!
+		title: String
+		author: String
+	}
+	type Video {
+		url: String!
+		title: String
+		author: String
+	}
 
 	type Slide {
+		id: ID
+		p1: String
+		p2: String
 		title: String
-		subtitle: String
+		header: String
+		subheader: String
+		paragraphs: [String]
 		img: Image
+		gif: Gif
+		video: Video
 	}
 
 	# The "Query" type is special: it lists all of the available queries that

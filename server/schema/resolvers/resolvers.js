@@ -1,7 +1,7 @@
 const slides = [
 	{
-		title: "Present Simple",
-		subtitle: "Do / Does",
+		header: "Present Simple",
+		subheader: "Do / Does",
 	},
 ];
 
