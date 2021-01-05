@@ -71,7 +71,7 @@ app.use(express.json());
 // parse the URL parameters of incoming HTTP/S (GET) requests
 app.use(express.urlencoded({ extended: false }));
 
-const BUILD_FOLDER = path.join(__dirname, "client", "build");
+const BUILD_FOLDER = path.join(__dirname, "../client", "build");
 
 // serve Homepage
 const HOMEPAGE_FILENAME = "index.html";
@@ -100,16 +100,17 @@ const typeDefs = gql`
 `;
 
 // Provide resolver functions for your schema fields
-const resolvers = {
-	Query: {
-		hello: () => "Hello world!",
-		slides: () => "you asked for slides",
-	},
-};
+// const resolvers = {
+// 	Query: {
+// 		hello: () => "Hello world!",
+// 		slides: () => "you asked for slides",
+// 	},
+// };
+const resolvers = require("./schema/resolvers/resolvers.js").resolvers;
 const server = new ApolloServer({ typeDefs, resolvers });
 server.applyMiddleware({ app });
 
-const INDEX_PAGE = path.join("./", BUILD_FOLDER, HOMEPAGE_FILENAME);
+const INDEX_PAGE = path.join(BUILD_FOLDER, HOMEPAGE_FILENAME);
 app.get("/", sendHomepage);
 
 //allow access to the `build` folder (from which we'll serve "static" files, such as transpiled and minified JS, CSS and index.HTML, as well as manifest.json, app icons, fonts..)
