@@ -3,10 +3,10 @@ const server = require("./server/server");
 // 	console.log("Listening");
 // });
 
-const PORT = 5000;
+// const PORT = process.env.PORT || 5000;
 
-server.listen({ port: process.env.PORT || PORT }, () => {
-	logg(
-		`Express server is listening on port ${PORT}. GraphQL endpoint: ${server.graphqlPath}`
-	);
-});
+// server.listen({ port: process.env.PORT || PORT }, () => {
+// 	logg(
+// 		`Express server is listening on port ${PORT}. GraphQL endpoint: ${server.graphqlPath}`
+// 	);
+// });

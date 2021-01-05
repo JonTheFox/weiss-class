@@ -38,12 +38,12 @@ global.logger = mainLogger;
 global.logg = logg;
 global.loggError = loggError;
 
+const PORT = process.env.PORT || 5000;
 // global.HOST =
 // 	process.env.NODE_ENV === "development"
 // 		? `http://localhost:${PORT}`
 // 		: process.env.HOMEPAGE_URL;
 global.HOST = process.env.SERVER_URL;
-global.SERVER_URL = process.env.SERVER_URL;
 
 const authenticate = require("./api/auth.js"); // dependends on logger
 global.authenticate = authenticate;
@@ -122,10 +122,10 @@ const io = require("socket.io")(http);
 const supplementSocket = require("./socket/index.js");
 supplementSocket(io);
 
-// http.listen({ port: process.env.PORT || PORT }, () => {
-// 	logg(
-// 		`Express server is listening on port ${PORT}. GraphQL endpoint: ${server.graphqlPath}`
-// 	);
-// });
+http.listen({ port: process.env.PORT || PORT }, () => {
+	logg(
+		`Express server is listening on port ${PORT}. GraphQL endpoint: ${server.graphqlPath}`
+	);
+});
 
 module.exports = http;
