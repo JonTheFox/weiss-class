@@ -118,62 +118,6 @@ const RTEntrance = (props) => {
 			});
 	});
 
-	const initSocketIO = (clientType = "student") => {
-		try {
-			const { email, password } = user;
-
-			setConnecting(true);
-			setFeedbackType("idle");
-			debugger;
-			// socket = io("/room");
-			promiseKeeper.stall(10 * 1000, "connection timeout").then(() => {
-				//if connected, this promise will not resolve and the callback will not execute
-				setConnectionStatus(CONNECTION_STATES.IDLE);
-				debugger;
-				setServerMsg(
-					"Could not connect for some reason. Please check your internet connection and try again."
-				);
-			});
-
-			socket.on("userConnectedHandled", (serverMsg) => {
-				const { content, sender, id } = serverMsg;
-				setConnectionStatus(CONNECTION_STATES.CONNECTED);
-				animationFrame = window.requestAnimationFrame(() => {
-					setServerMsg(content);
-				});
-			});
-
-			socket.on("userIsAlreadyConnected", (serverMsg) => {
-				const { content, sender, id } = serverMsg;
-
-				setServerMsg("We're already connected ;) ");
-				setConnectionStatus(CONNECTION_STATES.CONNECTED);
-			});
-
-			socket.on("connect", function(msg) {
-				const content = `User ${email} has connected to realtime room.`;
-				setConnectionStatus(CONNECTION_STATES.CONNECTING_FINAL_STAGE);
-				logg(content);
-
-				socket.emit("userConnected", {
-					content,
-					email,
-					password,
-					clientType: clientType.toLowerCase(),
-				});
-			});
-			socket.on("disconnect", function(msg) {
-				logg("Disconnected from realtime room. \n", msg);
-				setConnectionStatus(CONNECTION_STATES.DISCONNECTED);
-			});
-			socket.on("user joined", function(msg) {
-				logg("A user joined the RTEntrance room. \n", msg);
-			});
-		} catch (err) {
-			loggError(err.message);
-		}
-	};
-
 	useEffect(() => {
 		const logger = new Logger({ label });
 		logg = logger.logg;

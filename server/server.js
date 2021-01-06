@@ -50,12 +50,6 @@ global.authenticate = authenticate;
 
 logg("global.HOST: ", global.HOST);
 
-// const animalsApi = require("./api/animals.api.js");
-// const lyricsApi = require("./api/lyrics.api.js");
-// const usersApi = require("./api/users.api.js");
-// const imagesApi = require("./api/images.api.js");
-// const ninjaCodeApi = require("./api/ninjaCode.api.js");
-
 const app = express();
 
 app.use(helmet());

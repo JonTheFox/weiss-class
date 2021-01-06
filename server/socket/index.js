@@ -279,19 +279,6 @@ class Classroom {
 			title,
 			index,
 		} = this;
-		//TODO: create Teachers, Students and Platforms classes
-		// const teachersInfo = teachers.getInfo();
-		// const studentsInfo = students.getInfo();
-		// const platformsInfo = platforms.getInfo();
-		// return {
-		// 	teachers: teachersInfo,
-		// 	students: studentsInfo,
-		// 	platforms: platformsInfo,
-		// 	key,
-		// 	name,
-		// 	title,
-		// 	index,
-		// };
 
 		return {
 			teachers,
