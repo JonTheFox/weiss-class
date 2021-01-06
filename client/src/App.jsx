@@ -32,8 +32,6 @@ import {
 } from "recoil";
 // import { RecoilRoot } from "recoil/dist/recoil.production";
 
-import * as io from "socket.io-client";
-
 const client = new ApolloClient({
 	uri: "http://localhost:5000/graphql",
 	cache: new InMemoryCache(),

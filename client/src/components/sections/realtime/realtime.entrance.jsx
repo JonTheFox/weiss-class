@@ -9,7 +9,7 @@ import { AppContext } from "../../../contexts/AppContext.jsx";
 
 //import PropTypes from "prop-types";
 import clsx from "clsx";
-import * as io from "socket.io-client";
+
 // import SendIcon from "@material-ui/icons/Send";
 import posed, { PoseGroup } from "react-pose";
 // import { POSES, BASE_POSES } from "../../constants/poses.js";
@@ -22,13 +22,25 @@ import View from "../../layout/View.jsx";
 import PieChart from "../../partials/PieChart.jsx";
 import "./_Realtime.scss";
 
+import {
+	// RecoilRoot,
+	// atom,
+	// selector,
+	useRecoilState,
+	useRecoilValue,
+} from "recoil";
+import roomsState from "../../../store/rooms.atom.js";
+import socketState from "../../../store/socket.atom.js";
+import socketConnectionState from "../../../store/socketConnection.atom.js";
+import { CONNECTION_STATES } from "../../../store/CONNECTION_STATES.js";
+
 let animationFrame;
 let logg;
 let socketIOlogg;
 let loggError;
 let promiseKeeper;
 const label = "RTEntrance";
-let socket;
+
 let clientID;
 
 const PIE_ENTER_DURATION = DURATIONS.enter * 2;
@@ -138,17 +150,6 @@ const initialPieData = [
 	},
 ];
 
-const CONNECTION_STATES = {
-	IS_NOT_READY: "inactive",
-	IDLE: "isIdle",
-	CONNECTING: "isConnecting",
-	ENTERING_ROOM: "isEnteringRoom",
-	ALREADY_INSIDE_ROOM: "isAlreadyConnected",
-	ENTERED_ROOM: "isConnected",
-	CONNECTION_FAILED: "connectionFailed",
-	DISCONNECTED: "isDisconnected",
-};
-
 const CONNECTION_TIMEOUT_LABEL = "connectionTimeout";
 
 const RTEntrance = (props) => {
@@ -179,8 +180,8 @@ const RTEntrance = (props) => {
 	} = CONNECTION_STATES;
 
 	const [feedback, setFeedback] = useState("");
-	const [connectionStatus, setConnectionStatus] = useState(
-		CONNECTION_STATES.IS_NOT_READY
+	const [connectionStatus, setConnectionStatus] = useRecoilState(
+		socketConnectionState
 	);
 	const [isPieActive, setIsPieActive] = useState(false);
 	const [showRooms, setShowRooms] = useState(false);
@@ -278,6 +279,7 @@ const RTEntrance = (props) => {
 					.stall(DURATIONS.enter * 1, "hide pie chart")
 					.then(() => {
 						setShowPieChart(false);
+
 						navigateToClassroom(DURATIONS.enter * 1);
 					});
 				return;
@@ -312,6 +314,8 @@ const RTEntrance = (props) => {
 		}
 		setFeedback(newFeedback);
 	}, [connectionStatus]);
+
+	const rooms = useRecoilValue(roomsState);
 
 	return (
 		<View
@@ -397,6 +401,8 @@ const RTEntrance = (props) => {
 								state.realtime.userTypes = [title];
 								return state;
 							});
+
+							setConnectionStatus(CONNECTION_STATES.ENTERED_ROOM);
 
 							// initSocketIO(title);
 						}}

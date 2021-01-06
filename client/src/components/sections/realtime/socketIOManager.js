@@ -20,12 +20,7 @@ const {
 	DISCONNECTED,
 } = CONNECTION_STATES;
 
-const initSocketIO = ({
-	clientType = "student",
-	user = {},
-	appState = {},
-	setAppState,
-}) => {
+const initSocket = ({ clientType = "student", user = {}, socket }) => {
 	try {
 		const { email, password } = user;
 		if (!email || !password) {
@@ -34,12 +29,11 @@ const initSocketIO = ({
 			);
 		}
 
-		const { socketIO } = appState;
-		const { setConnectionStatus } = socketIO;
+		// const { setConnectionStatus } = socketIO;
 
-		setConnectionStatus(CONNECTING);
+		// setConnectionStatus(CONNECTING);
 		socket = io("/classrooms");
-		appState.socketIO = { socket };
+
 		const WAIT_TILL_FAIL = 10 * 1000;
 
 		promiseKeeper
@@ -100,4 +94,4 @@ const initSocketIO = ({
 	}
 };
 
-export { initSocketIO };
+export { initSocket };

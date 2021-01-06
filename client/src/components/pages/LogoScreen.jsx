@@ -11,6 +11,8 @@ import "./LogoScreen.scss";
 import View from "../layout/View.jsx";
 import VideoPlayer from "../partials/VideoPlayer.jsx";
 
+import Card from "../Card/Card.js";
+
 const BASE_ROUTE = "/";
 
 const resolveUrl = "https://soundcloud.com/ksmtk/chronemics";
@@ -88,6 +90,7 @@ const LogoScreen = (props) => {
 					}}
 				></VideoPlayer>
 			)}
+
 			<Link className={"link"} to={`${BASE_ROUTE}classroom-select`}>
 				<Button
 					className={"enter-btn"}
@@ -98,6 +101,7 @@ const LogoScreen = (props) => {
 					Enter
 				</Button>
 			</Link>
+
 			<h1 className={clsx("weiss-title unselectable")}>
 				<Link
 					className={"weiss-title--link"}

@@ -14,9 +14,6 @@ import usePromiseKeeper from "../../hooks/usePromiseKeeper.jsx";
 import View from "../../layout/View.jsx";
 
 import AppBar from "@material-ui/core/AppBar";
-import Button from "@material-ui/core/Button";
-import CameraIcon from "@material-ui/icons/PhotoCamera";
-import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -39,7 +36,10 @@ import {
 import roomsState from "../../../store/rooms.atom.js";
 import socketState from "../../../store/socket.atom.js";
 
-import { useQuery, gql } from "@apollo/client";
+import Card from "../../Card/Card.js";
+import Button from "../../Card/Card.js";
+
+import { useQuery } from "@apollo/client";
 import { GetRooms } from "../../../gql/queries/GetRooms";
 
 const scaleInPoses = {
@@ -79,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
   },
   cardMedia: {
-    paddingTop: "56.25%", // 16:9
+    paddingTop: "56.25%", // 16:9s
   },
   cardContent: {
     flexGrow: 1,
@@ -102,17 +102,11 @@ export default function ClassroomSelect(props) {
 
   const { loading, error, data } = useQuery(GetRooms);
   const [rooms, setRooms] = useRecoilState(roomsState);
-  const [socket, setSocket] = useRecoilState(socketState);
+  const socket = useRecoilValue(socketState);
 
   useEffect(() => {
     data && data.rooms && setRooms(data.rooms);
     logg("data: ", data);
-  }, [data]);
-
-  useEffect(() => {
-    return () => {
-      window.cancelAnimationFrame(animationFrame);
-    };
   }, []);
 
   useEffect(() => {
@@ -316,17 +310,15 @@ export default function ClassroomSelect(props) {
 
                       // if (!socket)
                       //   throw new Error(`No socket in app context?...`);
-                      const { clientID } = appState.realtime;
+                      // const { clientID } = appState.realtime;
 
-                      debugger;
-
-                      if (!clientID) {
-                        throw new Error(`No clientID...?`);
-                      }
+                      // if (!clientID) {
+                      //   throw new Error(`No clientID...?`);
+                      // }
 
                       socket.emit("client__createRoom", {
                         user: appState.user,
-                        clientID,
+                        // clientID,
                         intent: {
                           ...mockRoom,
                           //userTypes: realtime.userTypes,
@@ -360,6 +352,12 @@ export default function ClassroomSelect(props) {
             </div>
           </Container>
         </div>
+
+        <Card>hey </Card>
+        <Card>yo</Card>
+        <Button color="primary" round>
+          round
+        </Button>
 
         <Container className={classes.cardGrid} maxWidth="md">
           {/* End hero unit */}
