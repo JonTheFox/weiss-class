@@ -17,6 +17,8 @@ import AppBar from "@material-ui/core/AppBar";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
+import Button from "@material-ui/core/Button";
+
 // import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -36,8 +38,9 @@ import {
 import roomsState from "../../../store/rooms.atom.js";
 import socketState from "../../../store/socket.atom.js";
 
+import * as io from "socket.io-client";
+
 import Card from "../../Card/Card.js";
-import Button from "../../Card/Card.js";
 
 import { useQuery } from "@apollo/client";
 import { GetRooms } from "../../../gql/queries/GetRooms";
@@ -143,12 +146,14 @@ export default function ClassroomSelect(props) {
                       // const { socket } = realtime;
 
                       // initSocket(socket);
+
                       if (!socket)
                         throw new Error(`No socket in app context?...`);
                       const { clientID } = appState.realtime;
-                      if (!clientID) {
-                        throw new Error(`No clientID...?`);
-                      }
+
+                      // if (!clientID) {
+                      //   throw new Error(`No clientID...?`);
+                      // }
                       socket.emit("client__createRoom", {
                         user: appState.user,
                         // clientID,
@@ -156,6 +161,9 @@ export default function ClassroomSelect(props) {
                           ...mockRoom,
                           //userTypes: realtime.userTypes,
                         },
+                      });
+                      socket.on("client__createRoom", (msg) => {
+                        debugger;
                       });
                       socket.on("server_clientEnteredClassroom", function(msg) {
                         debugger;

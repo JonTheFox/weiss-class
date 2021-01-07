@@ -509,6 +509,12 @@ const supplementIO = function(io) {
 			io.emit(msg);
 		});
 
+		socket.on("yo", function() {
+			const msg = `User ${socket.id} disconnected.`;
+			logg("yo", msg);
+			io.emit(msg);
+		});
+
 		socket.on("clientSelectsRoom", function(payload) {
 			try {
 				assertValidCredentials(payload);

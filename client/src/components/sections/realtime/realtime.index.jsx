@@ -102,6 +102,7 @@ const Realtime = (props) => {
 			});
 
 			socket.on("connect", function(msg) {
+				debugger;
 				const content = `User ${email} has connected to realtime room.`;
 				// setConnectionStatus(
 				// 	CONNECTION_STATES.CONNECTING_FINAL_STAGE
@@ -121,7 +122,12 @@ const Realtime = (props) => {
 					// clientType: clientType.toLowerCase(),
 				});
 			});
-
+			socket.emit("yo", {
+				// content,
+				email,
+				password,
+				// clientType: clientType.toLowerCase(),
+			});
 			socket.on("yo", (msg) => {
 				debugger;
 			});
@@ -132,6 +138,7 @@ const Realtime = (props) => {
 			socket.on("user joined", function(msg) {
 				logg("A user joined the RTEntrance room. \n", msg);
 			});
+			return socket;
 		} catch (err) {
 			debugger;
 			loggError(err.message);
