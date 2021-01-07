@@ -70,11 +70,11 @@ const App = (props) => {
 							<Router>
 								<Route
 									render={(route) => (
-										<EntireView>
+										<EntireView animate="false">
 											<ErrorBoundary>
 												<View
 													responsive={true}
-													animateChildren={true}
+													animateChildren={false}
 													key="innerView"
 												>
 													<Suspense
