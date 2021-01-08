@@ -162,7 +162,10 @@ export default function ClassroomSelect(props) {
                           //userTypes: realtime.userTypes,
                         },
                       });
-                      socket.on("client__createRoom", (msg) => {
+                      socket.emit("2", {
+                        hey: "yo",
+                      });
+                      socket.on("3", (msg) => {
                         debugger;
                       });
                       socket.on("server_clientEnteredClassroom", function(msg) {

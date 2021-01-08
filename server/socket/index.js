@@ -33,7 +33,11 @@ const assertValidCredentials = (creds = {}) => {
 	return true;
 };
 
-const isClient = (user) => user instanceof ClassroomClient;
+const isClient = (user) => {
+	if (!is(user).anObject) return false;
+	const { first_name, last_name, email } = user;
+	return first_name && last_name && email;
+};
 
 class ClassroomClient {
 	clientID;
@@ -42,7 +46,14 @@ class ClassroomClient {
 	last_name;
 	roomKey;
 	constructor(config = {}) {
-		const { email, first_name, last_name, clientID, userTypes } = config;
+		const {
+			email,
+			first_name,
+			last_name,
+			clientID,
+			userTypes,
+			roomKey,
+		} = config;
 		if (!email || !first_name || !last_name)
 			throw new Error("Invalid user credentials");
 
@@ -57,6 +68,7 @@ class ClassroomClient {
 			last_name,
 			clientID,
 			userTypes: _userTypes,
+			roomKey,
 		});
 	}
 	getInfo = () => {
@@ -73,14 +85,14 @@ class Teacher extends ClassroomClient {
 class Student extends ClassroomClient {
 	constructor(config = {}) {
 		logg("student config: ", config);
-		super(config); //call the superclass's constructor
+		super(config);
 		this.role = "student";
 		this.clientType = "student";
 	}
 }
 class Platform extends ClassroomClient {
 	constructor(config = {}) {
-		super(config); //call the superclass's constructor
+		super(config);
 		this.role = "platform";
 		this.clientType = "platform";
 	}
@@ -89,13 +101,17 @@ class Platform extends ClassroomClient {
 class ClassroomClientList {
 	clients = [];
 	constructor(config = {}) {
-		const { clientType, clients = [] } = config;
+		const { clientType, clients = [], roomKey } = config;
 		if (!clientType) throw new Error(`No client type provided`);
 		this.clientType = clientType;
 		//passed clients are Plain ol' JS objects. convert them to dedicated type
-		this.clients = clients.map((basicClient) => {
+		this.clients = clients.map((basicClient, i) => {
+			if (i === 0) {
+				logg("basicClient:", basicClient);
+			}
 			return new ClassroomClient(basicClient);
 		});
+		this.roomKey = roomKey;
 	}
 	getInfo = () => {
 		const { clients } = this;
@@ -110,14 +126,23 @@ class ClassroomClientList {
 		});
 
 		return clientsInfo;
-		//y
 	};
-	addClient = (config = {}) => {
-		const { client } = config;
+	addClient = (client = {}) => {
+		const newClient = new ClassroomClient(client);
+		newClient.roomKey = this.roomKey;
+		logg("1111111 this.roomKey: ", this.roomKey);
+		logg("11111111111 this: ", this);
 		this.clients.push(new ClassroomClient(client));
 		logg("classroomClientList.clients: ", this.clients);
 	};
 }
+
+const createRoomKey = (str) => {
+	const result =
+		(str && sanitizeVarName(str).toLowerCase()) || `_${getUniqueString()}`;
+	logg("result: ", result);
+	return result;
+};
 
 class Classroom {
 	teachers;
@@ -126,6 +151,7 @@ class Classroom {
 	title;
 	name; //is set in constructor according to title. Serves as the SocketIO room identifier, so it must be unique. Also, must abide to variable name rules because it serves as a key of an object
 	index;
+	roomKey;
 
 	constructor(config = {}) {
 		const {
@@ -135,22 +161,8 @@ class Classroom {
 			title = "",
 			index = 1,
 			name = "",
-			roomKey = "",
 			userTypes,
 		} = config;
-
-		this.teachers = new ClassroomClientList({
-			clients: teachers,
-			clientType: "teacher",
-		});
-		this.students = new ClassroomClientList({
-			clients: students,
-			clientType: "student",
-		});
-		this.platforms = new ClassroomClientList({
-			clients: platforms,
-			clientType: "platform",
-		});
 
 		const roomNum = is(index).aNumber
 			? index
@@ -187,7 +199,6 @@ class Classroom {
 		};
 
 		let _title = title && is(title).aString && title;
-
 		const _name = sanitizeVarName(
 			name || _title || roomKey || getTeacherFullName(teachers[0])
 		);
@@ -202,11 +213,26 @@ class Classroom {
 			}
 		}
 		this.title = _title;
-		//room name must be unique (because it servers as the SocketIO room identifier)
 		this.name = _name;
-		this.roomKey =
-			(roomKey && sanitizeVarName(roomKey).toLowerCase()) ||
-			`${_name}_${getUniqueString()}`;
+		const roomKey = createRoomKey(_name);
+		this.roomKey = roomKey;
+		logg("roomKey: ", this.roomKey);
+
+		this.teachers = new ClassroomClientList({
+			clients: teachers,
+			clientType: "teacher",
+			roomKey,
+		});
+		this.students = new ClassroomClientList({
+			clients: students,
+			clientType: "student",
+			roomKey,
+		});
+		this.platforms = new ClassroomClientList({
+			clients: platforms,
+			clientType: "platform",
+			roomKey,
+		});
 	}
 
 	hasTeacher = ({ email } = {}) => {
@@ -245,7 +271,7 @@ class Classroom {
 	};
 
 	addClient = (client) => {
-		if (!isClient(client)) throw new Error(`Can't add invalid client`);
+		if (!isClient(client)) throw new Error(`Invalid client`);
 		const {
 			first_name,
 			last_name,
@@ -253,10 +279,14 @@ class Classroom {
 			userTypes = ["student"],
 			clientID,
 		} = client;
+
+		const newClient = new ClassroomClient(client);
+		newClient.roomKey = this.roomKey;
+
 		const addedTo = [];
 		//client may have more than one userType. For example, he can be both a platform and a user
 		userTypes.forEach((userType = "") => {
-			this[userType + "s"].addClient({ client });
+			this[userType + "s"].addClient(client);
 			addedTo.push(userType);
 		});
 		if (!addedTo.length)
@@ -265,6 +295,11 @@ class Classroom {
 			`Classroom "${this.getName()}": User ${first_name} ${last_name} (${email}) was added to the following list(s): ${addedTo.join(
 				", "
 			)}.`
+		);
+		logg(
+			`Classroom "${this.getName()}": User ${first_name} ${last_name} (${email}): ${
+				newClient.roomKey
+			}`
 		);
 		return addedTo;
 	};
@@ -299,6 +334,7 @@ class ClassroomManager {
 	classrooms = [];
 	addClassroom = (config = {}) => {
 		const existingRoomsKeys = this.getRoomsNames() || [];
+		logg("existingRoomsKeys: ", existingRoomsKeys);
 		const classroom = new Classroom({
 			existingRoomsKeys,
 			index: this.classrooms.length + 1,
@@ -482,6 +518,20 @@ const supplementIO = function(io) {
 					);
 				}
 
+				const roomKey = roomOfTeacher.roomKey;
+				logg("roomKey!!!!!!!: ", roomKey);
+
+				classroomsIO.to(roomKey).emit("2", {
+					...userWithoutPass,
+				});
+
+				socket.on("2", (msg) => {
+					logg(`2`);
+					classroomsIO.to(roomKey).emit("3", {
+						...userWithoutPass,
+					});
+				});
+
 				const roomName = roomOfTeacher.getName();
 
 				socket.emit("server__clientAuthed", {
@@ -489,8 +539,6 @@ const supplementIO = function(io) {
 					userType: "teacher",
 					room: roomOfTeacher,
 				});
-
-				const roomKey = roomOfTeacher.roomKey;
 
 				socket.join(roomKey);
 				classroomsIO.to(roomKey).emit("anotherUserJoined", {
@@ -512,7 +560,10 @@ const supplementIO = function(io) {
 		socket.on("yo", function() {
 			const msg = `User ${socket.id} disconnected.`;
 			logg("yo", msg);
-			io.emit(msg);
+			io.emit("yo", msg);
+			// socket.to(roomName).emit("yo", {
+			// 	user: getPublicUserData(user),
+			// });
 		});
 
 		socket.on("clientSelectsRoom", function(payload) {
@@ -524,7 +575,7 @@ const supplementIO = function(io) {
 					return socket.emit("classroomNotFound");
 				}
 
-				requestedRoom.addClient(new ClassroomClient({ ...payload }));
+				requestedRoom.addClient({ ...payload });
 				socket.join(roomName);
 				socket.emit("clientEnteredClassroom");
 				socket.to(roomName).emit("anotherUserJoined", {
@@ -546,26 +597,18 @@ const supplementIO = function(io) {
 						`user_createRoom was sent without an intent`
 					);
 				}
-				//make sure that a room with the same key does not already exist
-				const existingRoom = classroomsManager.getRoom(intent.roomKey);
-				if (existingRoom) {
-					return socket.emit("server__classroomAlreadyExists", {
-						classroom: existingRoom,
-					});
-				}
-
-				// const newClassroom = new Classroom();
-				// logg(
-				// 	"payload contains name: ",
-				// 	payload.intent.name
-				// );
-				// logg("intent: ", intent);
-				// logg("payload (should contain client: ", payload);
+				//make sure that a room with the same key does not already exist! current logic is off
+				// const existingRoom = classroomsManager.getRoom(intent.roomKey);
+				// if (existingRoom) {
+				// 	return socket.emit("server__classroomAlreadyExists", {
+				// 		classroom: existingRoom,
+				// 	});
+				// }
 
 				const newClassroom = classroomsManager.addClassroom(intent);
-				newClassroom.addClient(
-					new ClassroomClient({ ...user, ...intent, clientID })
-				);
+				logg("new classroom's key: ", newClassroom.roomKey);
+				newClassroom.addClient({ ...user, ...intent, clientID });
+
 				const classroomInfo = newClassroom.getInfo();
 				socket.join(classroomInfo.roomKey);
 				const classrooms = classroomsManager.getRoomsInfo();
@@ -630,6 +673,10 @@ const supplementIO = function(io) {
 
 		classroomsIO.emit("anotherUserConnected", {
 			content: "someone connected",
+		});
+
+		socket.on("userConnected", (msg) => {
+			return { content: "someone connected" };
 		});
 
 		socket.on("msg", function(msg) {

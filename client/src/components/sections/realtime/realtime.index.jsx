@@ -102,7 +102,6 @@ const Realtime = (props) => {
 			});
 
 			socket.on("connect", function(msg) {
-				debugger;
 				const content = `User ${email} has connected to realtime room.`;
 				// setConnectionStatus(
 				// 	CONNECTION_STATES.CONNECTING_FINAL_STAGE
