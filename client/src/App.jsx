@@ -48,7 +48,7 @@ const SageAdvice = lazy(() =>
 	)
 );
 
-const LazyRealtimeRoom = lazy(() =>
+const LazyRealtime = lazy(() =>
 	import(
 		/* webpackChunkName: "RealtimeRoom" */ "./components/sections/realtime/realtime.index.jsx"
 	)
@@ -128,9 +128,9 @@ const App = (props) => {
 															</Route>
 
 															<Route
-																path={`${baseRoute}classroom-select`}
+																path={`${baseRoute}rt`}
 															>
-																<LazyRealtimeRoom
+																<LazyRealtime
 																	route={
 																		route
 																	}

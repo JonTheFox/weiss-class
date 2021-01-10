@@ -34,6 +34,7 @@ import {
 	useSetRecoilState,
 } from "recoil";
 import roomsState from "../../../store/rooms.atom.js";
+import roomState from "../../../store/room.atom.js";
 import socketState from "../../../store/socket.atom.js";
 import socketConnectionState from "../../../store/socketConnection.atom.js";
 import { CONNECTION_STATES } from "../../../store/CONNECTION_STATES.js";
@@ -47,7 +48,7 @@ const label = "RealtimeIndex";
 // let socket;
 // let clientID;
 
-const SECTION_ROUTE = `classroom-select/`;
+const SECTION_ROUTE = `rt/`;
 
 const Realtime = (props) => {
 	const [appUtils, appState, setAppState] = useContext(AppContext);
@@ -62,6 +63,7 @@ const Realtime = (props) => {
 	const { loading, error, data } = useQuery(GetRooms);
 
 	const setRooms = useSetRecoilState(roomsState);
+	const setRoom = useSetRecoilState(roomState);
 	const setSocket = useSetRecoilState(socketState);
 
 	useEffect(() => {
@@ -114,22 +116,23 @@ const Realtime = (props) => {
 					password,
 					// clientType: clientType.toLowerCase(),
 				});
-				socket.emit("yo", {
-					// content,
-					email,
-					password,
-					// clientType: clientType.toLowerCase(),
-				});
 			});
-			socket.emit("yo", {
-				// content,
-				email,
-				password,
-				// clientType: clientType.toLowerCase(),
-			});
-			socket.on("yo", (msg) => {
+
+			socket.on("server__sendsSlideIndex", function(payload) {
+				const { currentSlideIndex } = payload;
+				const content = "Received slide: " + currentSlideIndex;
+				logg(payload);
 				debugger;
 			});
+
+			socket.on("server__sendsRooms", function(payload) {
+				const { rooms } = payload;
+				//todo : setRooms
+				const content = "Received rooms: ";
+				logg(content, rooms);
+				debugger;
+			});
+
 			socket.on("disconnect", function(msg) {
 				logg("Disconnected from realtime room. \n", msg);
 				// setConnectionStatus(CONNECTION_STATES.DISCONNECTED);
@@ -155,7 +158,7 @@ const Realtime = (props) => {
 		<Suspense fallback={<WeissSpinner />}>
 			<Switch location={location}>
 				<Route
-					path={`/${SECTION_ROUTE}classroom`}
+					path={`${match.path}rt/classroom-select`}
 					render={(route) => <ClassroomSelect />}
 				/>
 				<Route render={(route) => <RealtimeEntrance route={route} />} />

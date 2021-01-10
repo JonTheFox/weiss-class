@@ -73,7 +73,7 @@ const mainLinks = [
   { title: "Home", path: `${APP_ROUTE}animals/home`, Icon: Home },
   {
     title: "Classrooms",
-    path: `classroom-select`,
+    path: `rt`,
     Icon: Chat,
     adminOnly: false,
   },

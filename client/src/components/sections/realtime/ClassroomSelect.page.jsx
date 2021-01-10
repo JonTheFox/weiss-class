@@ -46,8 +46,18 @@ import { useQuery } from "@apollo/client";
 import { GetRooms } from "../../../gql/queries/GetRooms";
 
 const scaleInPoses = {
-  enter: { scale: 1, opacity: 1, transition: { duration: 6000 } },
-  exit: { scale: 0, opacity: 0, transition: { duration: 6000 } },
+  enter: {
+    scale: 1,
+    rotateZ: "0deg",
+    opacity: 1,
+    transition: { duration: 400 },
+  },
+  exit: {
+    scale: 0,
+    rotateZ: "12deg",
+    opacity: 0,
+    transition: { duration: 400 },
+  },
 };
 
 const ScaleIn = posed.div(scaleInPoses);
@@ -108,11 +118,6 @@ export default function ClassroomSelect(props) {
   const socket = useRecoilValue(socketState);
 
   useEffect(() => {
-    data && data.rooms && setRooms(data.rooms);
-    logg("data: ", data);
-  }, []);
-
-  useEffect(() => {
     const { classrooms } = appState.realtime;
     setItems(classrooms || []);
     logg("classrooms updated: ", classrooms);
@@ -121,18 +126,20 @@ export default function ClassroomSelect(props) {
   return (
     <View className={classes.root}>
       <main>
-        {/* Hero unit */}
         <div className={classes.heroContent}>
           <Container maxWidth="sm">
-            <Typography
-              component="h1"
-              variant="h5"
-              align="center"
-              color="textPrimary"
-              gutterBottom
-            >
-              Select a classroom
-            </Typography>
+            <ScaleIn initialPose="exit" pose="enter">
+              <Typography
+                component="h1"
+                variant="h5"
+                align="center"
+                color="textPrimary"
+                gutterBottom
+              >
+                Select a classroom
+              </Typography>
+            </ScaleIn>
+
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justify="center">
                 <Grid item>
@@ -162,12 +169,7 @@ export default function ClassroomSelect(props) {
                           //userTypes: realtime.userTypes,
                         },
                       });
-                      socket.emit("2", {
-                        hey: "yo",
-                      });
-                      socket.on("3", (msg) => {
-                        debugger;
-                      });
+
                       socket.on("server_clientEnteredClassroom", function(msg) {
                         debugger;
                         setItems((items) => [...items, msg.classroom]);
@@ -195,14 +197,7 @@ export default function ClassroomSelect(props) {
           </Container>
         </div>
 
-        <Card>hey </Card>
-        <Card>yo</Card>
-        <Button color="primary" round>
-          round
-        </Button>
-
         <Container className={classes.cardGrid} maxWidth="md">
-          {/* End hero unit */}
           <Grid container spacing={4}>
             {rooms &&
               rooms.map &&
@@ -216,27 +211,39 @@ export default function ClassroomSelect(props) {
                   roomKey,
                 } = classroom;
 
+                const numTeachers = teachers.length;
+                // const headerText =
+                //   numTeachers <= 1 ? "Teacher" : `${numTeachers} Teachers`;
+
+                const firstTeacher = teachers[0] || {};
+                const firstName = firstTeacher.first_name || "";
+                const lastName = firstTeacher.last_name || "";
+                const firstTeacherFullname = capitalizeFirstLetter(
+                  `${firstName} ${lastName}`
+                );
+
                 return (
                   <Grid item key={roomKey} xs={12} sm={6} md={4}>
                     <Card className={clsx(classes.card, "dynamic-shadow")}>
-                      <CardContent className={classes.cardContent}>
-                        <Typography
-                          gutterBottom
-                          className="readable"
-                          variant="h5"
-                          component="h2"
-                        >
-                          {capitalizeFirstLetter(title)?.replace(/_/gi, " ")}
-                        </Typography>
-                        <Typography>{title}</Typography>
-                      </CardContent>
                       <CardActions>
-                        <Button size="small" color="primary">
-                          View
-                        </Button>
-                        <Button size="small" color="primary">
-                          Edit
-                        </Button>
+                        <CardContent className={classes.cardContent}>
+                          <Typography
+                            gutterBottom
+                            className="readable"
+                            variant="h5"
+                            component="span"
+                          >
+                            {firstTeacherFullname}
+                          </Typography>
+                          <Typography
+                            gutterBottom
+                            className="readable"
+                            variant="span"
+                            component="span"
+                          >
+                            's Room
+                          </Typography>
+                        </CardContent>
                       </CardActions>
                     </Card>
                   </Grid>

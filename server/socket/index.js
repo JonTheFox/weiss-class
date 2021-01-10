@@ -423,6 +423,7 @@ const supplementIO = function(io) {
 	//client connection - step 1 - connect client socket to server socket
 	classroomsIO.on("connection", function(socket) {
 		logg(`A user has connected to "classroomsIO" namespace.`);
+		socket.emit("server__sendsSlide", { currentSlideIndex: 0 });
 
 		socket.on("client_sendsCredentials", async function(payload) {
 			try {
@@ -439,7 +440,7 @@ const supplementIO = function(io) {
 					);
 				if (!userTypes)
 					throw new Error(
-						`client_sendsCredentials: No uesr types provided`
+						`client_sendsCredentials: No user types provided`
 					);
 
 				assertValidCredentials({ ...user, clientID });
@@ -519,19 +520,6 @@ const supplementIO = function(io) {
 				}
 
 				const roomKey = roomOfTeacher.roomKey;
-				logg("roomKey!!!!!!!: ", roomKey);
-
-				classroomsIO.to(roomKey).emit("2", {
-					...userWithoutPass,
-				});
-
-				socket.on("2", (msg) => {
-					logg(`2`);
-					classroomsIO.to(roomKey).emit("3", {
-						...userWithoutPass,
-					});
-				});
-
 				const roomName = roomOfTeacher.getName();
 
 				socket.emit("server__clientAuthed", {
@@ -557,10 +545,10 @@ const supplementIO = function(io) {
 			io.emit(msg);
 		});
 
-		socket.on("yo", function() {
+		socket.on("teacher__setsSlideIndex", function({ index }) {
 			const msg = `User ${socket.id} disconnected.`;
 			logg("yo", msg);
-			io.emit("yo", msg);
+			socket.emit("yo", msg);
 			// socket.to(roomName).emit("yo", {
 			// 	user: getPublicUserData(user),
 			// });

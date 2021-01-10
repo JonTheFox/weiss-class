@@ -8,7 +8,13 @@ import {
 
 const recoilState = atom({
 	key: "roomState", // unique ID (with respect to other atoms/selectors)
-	default: [], // default, initial value
+	default: {
+		roomKey: "",
+		name: "",
+		students: [],
+		teachers: [],
+		platforms: [],
+	}, // default, initial value
 });
 
 export default recoilState;
