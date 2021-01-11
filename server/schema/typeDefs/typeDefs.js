@@ -38,23 +38,28 @@ const typeDefs = gql`
 		first_name: String
 		middle_name: String
 		last_name: String
+		img: Image
 		role: String
 		# ("teacher", "student" & "platform")
 	}
 
 	type Room {
 		id: ID
+		roomKey: ID
 		name: String
 		students: [EndUser]
 		teachers: [EndUser]
 		platforms: [EndUser]
+		img: Image
+		gif: Gif
+		video: Video
 	}
 
 	# The "Query" type is special: it lists all of the available queries that
-	# clients can execute, along with the return type for each. In this
-	# case, the "books" query returns an array of zero or more Books (defined above).
+	# clients can execute, along with the return type for each.
 	type Query {
 		slides: [Slide]
+		slide: [Slide]
 		rooms: [Room]
 	}
 `;

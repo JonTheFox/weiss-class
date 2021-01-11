@@ -20,8 +20,8 @@ const assertValidCredentials = (creds = {}) => {
 	const requiredCredentials = [
 		"email",
 		"password",
-		"first_name",
-		"last_name",
+		// "first_name",
+		// "last_name",
 		//"clientID",
 	];
 
@@ -423,25 +423,25 @@ const supplementIO = function(io) {
 	//client connection - step 1 - connect client socket to server socket
 	classroomsIO.on("connection", function(socket) {
 		logg(`A user has connected to "classroomsIO" namespace.`);
+
 		socket.emit("server__sendsSlide", { currentSlideIndex: 0 });
 
-		socket.on("client_sendsCredentials", async function(payload) {
+		socket.on("client__selectsRoom", ({ intent }) => {
+			logg("client__selectsRoom. roomKey: ", intent.roomKey);
+			//add user to the room
+		});
+
+		socket.on("client__providesCredentials", async function(payload) {
 			try {
-				if (!payload)
-					throw new Error(`client_sendsCredentials: No payload`);
+				logg("payloaddddddddddddd: ", payload);
+				if (!payload) throw new Error(`No payload`);
 				const { user, clientID, userTypes } = payload;
-				if (!user)
-					throw new Error(
-						`client_sendsCredentials: No user provided`
-					);
-				if (!clientID)
-					throw new Error(
-						`client_sendsCredentials: No clientID provided`
-					);
-				if (!userTypes)
-					throw new Error(
-						`client_sendsCredentials: No user types provided`
-					);
+				if (!user) throw new Error(`No user provided`);
+				// if (!clientID)
+				// 	throw new Error(
+				// 		`No clientID provided`
+				// 	);
+				if (!userTypes) throw new Error(`No user types provided`);
 
 				assertValidCredentials({ ...user, clientID });
 
@@ -509,10 +509,10 @@ const supplementIO = function(io) {
 					const newClassroom = classroomsManager.addClassroom({
 						teachers: [getPublicUserData(authenticatedUser)],
 					});
+					roomOfTeacher = newClassroom;
 					logg(
 						`There wasn't a dedicated room for Teacher ${authenticatedUser.first_name} ${authenticatedUser.last_name} so a new one was created: ${newClassroom.name}`
 					);
-					roomOfTeacher = newClassroom;
 				} else {
 					logg(
 						`Entering existing room of teacher ${authenticatedUser.first_name} ${authenticatedUser.last_name}: ${roomOfTeacher.name}`
@@ -535,8 +535,8 @@ const supplementIO = function(io) {
 
 				return true;
 			} catch (err) {
-				loggError("client_sendsCredentials(): ", err);
-				socket.emit("server_failedAuth", { error: err.message });
+				loggError("client__providesCredentials(): ", err);
+				return socket.emit("server_failedAuth", { error: err.message });
 			}
 		});
 		socket.on("disconnect", function() {

@@ -59,7 +59,6 @@ const scaleInPoses = {
     transition: { duration: 400 },
   },
 };
-
 const ScaleIn = posed.div(scaleInPoses);
 
 let animationFrame;
@@ -136,64 +135,9 @@ export default function ClassroomSelect(props) {
                 color="textPrimary"
                 gutterBottom
               >
-                Select a classroom
+                Join a class
               </Typography>
             </ScaleIn>
-
-            <div className={classes.heroButtons}>
-              <Grid container spacing={2} justify="center">
-                <Grid item>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={(ev) => {
-                      //TODO: open create-a-room modal
-                      // const { realtime } = appState;
-                      // if (!realtime) throw new Error(`No realtime state?...`);
-                      // const { socket } = realtime;
-
-                      // initSocket(socket);
-
-                      if (!socket)
-                        throw new Error(`No socket in app context?...`);
-                      const { clientID } = appState.realtime;
-
-                      // if (!clientID) {
-                      //   throw new Error(`No clientID...?`);
-                      // }
-                      socket.emit("client__createRoom", {
-                        user: appState.user,
-                        // clientID,
-                        intent: {
-                          ...mockRoom,
-                          //userTypes: realtime.userTypes,
-                        },
-                      });
-
-                      socket.on("server_clientEnteredClassroom", function(msg) {
-                        debugger;
-                        setItems((items) => [...items, msg.classroom]);
-                        logg("server_clientEnteredClassroom: ", msg);
-                      });
-                      socket.on("server__classroomAlreadyExists", function(
-                        msg
-                      ) {
-                        const { classroom } = msg;
-                        debugger;
-                        logg("server__classroomAlreadyExists: ", msg);
-                      });
-                    }}
-                  >
-                    Create a Room
-                  </Button>
-                </Grid>
-                <Grid item>
-                  <Button variant="outlined" color="primary">
-                    Do nothing
-                  </Button>
-                </Grid>
-              </Grid>
-            </div>
           </Container>
         </div>
 
@@ -206,15 +150,13 @@ export default function ClassroomSelect(props) {
                   teachers,
                   students,
                   platforms,
-                  title,
-                  name,
+                  title = "",
+                  name = "",
                   roomKey,
+                  img = {},
                 } = classroom;
 
                 const numTeachers = teachers.length;
-                // const headerText =
-                //   numTeachers <= 1 ? "Teacher" : `${numTeachers} Teachers`;
-
                 const firstTeacher = teachers[0] || {};
                 const firstName = firstTeacher.first_name || "";
                 const lastName = firstTeacher.last_name || "";
@@ -222,29 +164,45 @@ export default function ClassroomSelect(props) {
                   `${firstName} ${lastName}`
                 );
 
+                const bgImage = img?.url || firstTeacher?.img?.url || "";
+
                 return (
                   <Grid item key={roomKey} xs={12} sm={6} md={4}>
-                    <Card className={clsx(classes.card, "dynamic-shadow")}>
-                      <CardActions>
-                        <CardContent className={classes.cardContent}>
+                    <Card
+                      className={clsx(classes.card, "dynamic-shadow")}
+                      style={{
+                        background: `url(${bgImage})`,
+                      }}
+                      onClick={(ev) => {
+                        socket.emit("client__selectsRoom", {
+                          user: appState.user,
+                          // clientID,
+                          intent: {
+                            roomKey,
+                          },
+                        });
+                      }}
+                    >
+                      <CardContent className={classes.cardContent}>
+                        <CardActions>
                           <Typography
                             gutterBottom
                             className="readable"
                             variant="h5"
-                            component="span"
+                            component="h5"
                           >
                             {firstTeacherFullname}
                           </Typography>
                           <Typography
                             gutterBottom
                             className="readable"
-                            variant="span"
-                            component="span"
+                            variant="p"
+                            component="p"
                           >
-                            's Room
+                            {title || name}
                           </Typography>
-                        </CardContent>
-                      </CardActions>
+                        </CardActions>
+                      </CardContent>
                     </Card>
                   </Grid>
                 );

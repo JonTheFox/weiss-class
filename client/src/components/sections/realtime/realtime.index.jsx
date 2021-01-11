@@ -51,7 +51,7 @@ const label = "RealtimeIndex";
 const SECTION_ROUTE = `rt/`;
 
 const Realtime = (props) => {
-	const [appUtils, appState, setAppState] = useContext(AppContext);
+	const [appUtils, appState] = useContext(AppContext);
 	const { user } = appState;
 	const { PromiseKeeper, Logger, getUniqueString, CLIENT_ONLY } = appUtils;
 
@@ -72,7 +72,7 @@ const Realtime = (props) => {
 		}
 	}, [data]);
 
-	const initSocket = useCallback((clientType = "student") => {
+	const initSocket = useCallback(({ user, clientType = "student" }) => {
 		try {
 			const { email, password } = user;
 
@@ -116,6 +116,16 @@ const Realtime = (props) => {
 					password,
 					// clientType: clientType.toLowerCase(),
 				});
+
+				socket.emit("client__providesCredentials", {
+					user: {
+						email,
+						password,
+						role: user.role,
+					},
+					clientType: clientType.toLowerCase(),
+					userTypes: [USER_TYPE],
+				});
 			});
 
 			socket.on("server__sendsSlideIndex", function(payload) {
@@ -147,8 +157,13 @@ const Realtime = (props) => {
 		}
 	}, []);
 
+	const USER_TYPE = "student";
+
 	useEffect(() => {
-		const socket = initSocket({ user: appState.user, setAppState });
+		const socket = initSocket({
+			clientType: USER_TYPE,
+			user: appState.user,
+		});
 		setSocket(socket);
 	}, []);
 
