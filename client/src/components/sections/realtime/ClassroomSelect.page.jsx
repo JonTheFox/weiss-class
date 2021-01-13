@@ -185,7 +185,7 @@ export default function ClassroomSelect(props) {
                           loggError("socket is inactive");
                           return null;
                         }
-                        debugger;
+
                         const _clientId = refs.current?.client?.id ?? 0;
                         socket.emit("client__selectsRoom", {
                           clientId: _clientId,

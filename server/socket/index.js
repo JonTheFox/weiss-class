@@ -130,8 +130,6 @@ class ClassroomClientList {
 	addClient = (client = {}) => {
 		const newClient = new ClassroomClient(client);
 		newClient.roomKey = this.roomKey;
-		logg("1111111 this.roomKey: ", this.roomKey);
-		logg("11111111111 this: ", this);
 		this.clients.push(new ClassroomClient(client));
 		logg("classroomClientList.clients: ", this.clients);
 	};
@@ -345,6 +343,13 @@ class ClassroomManager {
 
 		return classroom;
 	};
+	addClient = (client) => {
+		if (!client) return null;
+		const classroomClient = new ClassroomClient(client);
+		this.clients.push(classroomClient);
+		logg("added client ", classroomClient);
+		return classroomClient;
+	};
 	get clients() {
 		return this.clients;
 	}
@@ -375,10 +380,10 @@ class ClassroomManager {
 
 	getClientById = (clientId) => {
 		const allClients = this.clients;
-		const foundClient = allClients.find(
-			(client) => client.clientId === clientId
-		);
-		logg("foundClient: ", foundClient);
+		const foundClient = allClients.find((client) => {
+			logg("client: ", client);
+			return client.clientId === clientId;
+		});
 		return foundClient || null;
 		// const clientTypes = ["students", "teachers", "platforms"];
 
@@ -480,6 +485,8 @@ const supplementIO = function(io) {
 						clientFound: false,
 					});
 
+					//client = classroomsManager.addClient()
+
 					// client = new ClassroomClient({ clientTypes });
 					// return socket.emit("re:client__selectsRoom", {
 					// 	userFound: false,
@@ -510,6 +517,7 @@ const supplementIO = function(io) {
 				const authenticatedUser = await authenticate(user);
 				const clientId = getUniqueString(12);
 				const userWithoutPass = getPublicUserData(authenticatedUser);
+				userWithoutPass.clientId = clientId;
 				const { first_name, last_name } = userWithoutPass;
 
 				//make sure that the userType is one of the accepted types (teacher, student, platform)
@@ -531,56 +539,54 @@ const supplementIO = function(io) {
 				const clientTypeMsg = `${userType} ${first_name +
 					" " +
 					last_name} is authenticated.`;
-				// logg(clientTypeMsg);
+				logg(clientTypeMsg);
 
-				if (["student", "platform"].includes(userType.toLowerCase())) {
-					const availableRooms = classroomsManager.getRooms();
-					logg("num of availableRooms: ", availableRooms.length);
+				classroomsManager.addClient(userWithoutPass);
 
-					const availableRoomsKeys = classroomsManager.getRoomsKeys();
-					logg("availableRoomsKeys: ", availableRoomsKeys);
+				const availableRooms = classroomsManager.getRooms();
+				logg("num of availableRooms: ", availableRooms.length);
+				const availableRoomsKeys = classroomsManager.getRoomsKeys();
+				logg("availableRoomsKeys: ", availableRoomsKeys);
 
-					logg(
-						`${userType} ${authenticatedUser.first_name} ${authenticatedUser.last_name} can try to enter one of the following rooms: `,
-						availableRoomsKeys
-					);
+				logg(
+					`${userType} ${authenticatedUser.first_name} ${authenticatedUser.last_name} can try to enter one of the following rooms: `,
+					availableRoomsKeys
+				);
 
-					return socket.emit("server__authedClient", {
-						userType,
-						userTypes,
-						classrooms: availableRooms,
-						clientId,
-					});
-				}
+				// 	return socket.emit("server__authedClient", {
+				// 		userType,
+				// 		userTypes,
+				// 		classrooms: availableRooms,
+				// 		clientId,
+				// 	});
+				// }
 
 				// client is a teacher
-				let roomOfTeacher = classroomsManager.getTeacherRoom(
-					authenticatedUser
-				);
-				if (!roomOfTeacher) {
-					//create a new room for the teacher
-					const newClassroom = classroomsManager.addClassroom({
-						teachers: [getPublicUserData(authenticatedUser)],
-					});
-					roomOfTeacher = newClassroom;
-					logg(
-						`There wasn't a dedicated room for Teacher ${authenticatedUser.first_name} ${authenticatedUser.last_name} so a new one was created: ${newClassroom.name}`
-					);
-				} else {
-					logg(
-						`Entering existing room of teacher ${authenticatedUser.first_name} ${authenticatedUser.last_name}: ${roomOfTeacher.name}`
-					);
-				}
+				// let roomOfTeacher = classroomsManager.getTeacherRoom(
+				// 	authenticatedUser
+				// );
+				// if (!roomOfTeacher) {
+				// 	//create a new room for the teacher
+				// 	const newClassroom = classroomsManager.addClassroom({
+				// 		teachers: [getPublicUserData(authenticatedUser)],
+				// 	});
+				// 	roomOfTeacher = newClassroom;
+				// 	logg(
+				// 		`There wasn't a dedicated room for Teacher ${authenticatedUser.first_name} ${authenticatedUser.last_name} so a new one was created: ${newClassroom.name}`
+				// 	);
+				// } else {
+				// 	logg(
+				// 		`Entering existing room of teacher ${authenticatedUser.first_name} ${authenticatedUser.last_name}: ${roomOfTeacher.name}`
+				// 	);
+				// }
 
-				const roomKey = roomOfTeacher.roomKey;
-				const roomName = roomOfTeacher.getName();
+				// const roomKey = roomOfTeacher.roomKey;
+				// const roomName = roomOfTeacher.getName();
 
-				//TODO: keep users's id somewhere
-
-				socket.emit("server__authedClient", {
+				return socket.emit("server__authedClient", {
 					user: userWithoutPass,
-					userType: "teacher",
-					room: roomOfTeacher,
+					userType,
+					classrooms: availableRooms,
 					clientId,
 				});
 
@@ -588,8 +594,6 @@ const supplementIO = function(io) {
 				// classroomsIO.to(roomKey).emit("anotherUserJoined", {
 				// 	...userWithoutPass,
 				// });
-
-				return true;
 			} catch (err) {
 				loggError("client__providesCredentials(): ", err);
 				return socket.emit("server_failedAuth", { error: err.message });

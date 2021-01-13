@@ -185,7 +185,6 @@ const Realtime = (props) => {
 				//todo : setRooms
 				const content = "Received rooms: ";
 				logg(content, rooms);
-				debugger;
 			});
 
 			socket.on("disconnect", function(msg) {
