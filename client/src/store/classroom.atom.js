@@ -7,7 +7,7 @@ import {
 } from "recoil";
 
 const recoilState = atom({
-	key: "roomsState",
+	key: "roomState",
 	default: [],
 });
 

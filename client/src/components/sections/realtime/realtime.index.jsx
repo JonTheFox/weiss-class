@@ -144,6 +144,7 @@ const Realtime = (props) => {
 				logg("Server authed client. Available rooms: ", classrooms);
 				logg("server__authedClient", clientId);
 				setClient((_client) => ({ ..._client, id: clientId }));
+				setRooms(classrooms);
 			});
 
 			socket.on("connect", function(msg) {
@@ -173,6 +174,10 @@ const Realtime = (props) => {
 				});
 			});
 
+			socket.on("server__admitsToRoom", ({ room }) => {
+				debugger;
+			});
+
 			socket.on("server__sendsSlideIndex", function(payload) {
 				const { currentSlideIndex } = payload;
 				const content = "Received slide: " + currentSlideIndex;
@@ -182,6 +187,7 @@ const Realtime = (props) => {
 
 			socket.on("server__sendsRooms", function(payload) {
 				const { rooms } = payload;
+				debugger;
 				//todo : setRooms
 				const content = "Received rooms: ";
 				logg(content, rooms);

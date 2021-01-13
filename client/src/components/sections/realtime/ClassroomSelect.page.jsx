@@ -34,10 +34,13 @@ import {
   // selector,
   useRecoilState,
   useRecoilValue,
+  useSetRecoilState,
 } from "recoil";
+
 import roomsState from "../../../store/rooms.atom.js";
 import socketState from "../../../store/socket.atom.js";
 import clientState from "../../../store/client.atom.js";
+import classroomState from "../../../store/classroom.atom.js";
 
 import * as io from "socket.io-client";
 
@@ -116,6 +119,7 @@ export default function ClassroomSelect(props) {
 
   const { loading, error, data } = useQuery(GetRooms);
   const [rooms, setRooms] = useRecoilState(roomsState);
+  const setClassroom = useSetRecoilState(classroomState);
   const socket = useRecoilValue(socketState);
   const client = useRecoilValue(clientState);
 
@@ -191,6 +195,7 @@ export default function ClassroomSelect(props) {
                           clientId: _clientId,
                           roomKey,
                         });
+                        setClassroom({ roomKey });
                       }}
                     >
                       <CardContent className={classes.cardContent}>
