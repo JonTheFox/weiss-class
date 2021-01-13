@@ -37,27 +37,36 @@ import roomsState from "../../../store/rooms.atom.js";
 import roomState from "../../../store/room.atom.js";
 import socketState from "../../../store/socket.atom.js";
 import userState from "../../../store/user.atom.js";
+import clientState from "../../../store/client.atom.js";
 import socketConnectionState from "../../../store/socketConnection.atom.js";
 import { CONNECTION_STATES } from "../../../store/CONNECTION_STATES.js";
 import * as io from "socket.io-client";
 import { localStorage } from "../../../lib/issy/index.js";
 
-// let animationFrame;
-// let logg;
-// let loggError;
-// let promiseKeeper;
 const label = "RealtimeIndex";
-// let socket;
-// let clientID;
-
 const SECTION_ROUTE = `rt/`;
-const LOCAL_STORAGE_KEY = "weissClass__user";
+const LOCAL_STORAGE_KEY = "weissClass";
+
+const _user = {
+	email: "Jonny-Weiss@protonmail.com",
+	first_name: "Jonathan",
+	last_name: "Weiss",
+	password: "Philo4ce1",
+	role: "admin",
+};
 
 const getUserFromLocalStorage = () => {
-	const user = localStorage.getObj(LOCAL_STORAGE_KEY);
-	debugger;
+	// localStorage.setObj(LOCAL_STORAGE_KEY, _user);
+	const user = localStorage.getObj(`${LOCAL_STORAGE_KEY}__user`);
 	return user;
 };
+const setUserInLocalStorage = () => {
+	localStorage.setObj(`${LOCAL_STORAGE_KEY}__user`, _user);
+	const user = localStorage.getObj(LOCAL_STORAGE_KEY);
+	return user;
+};
+
+let isSocketInitialized = false;
 
 const Realtime = (props) => {
 	const [appUtils] = useContext(AppContext);
@@ -75,32 +84,16 @@ const Realtime = (props) => {
 	const setSocket = useSetRecoilState(socketState);
 	const setUser = useSetRecoilState(userState);
 	const user = useRecoilValue(userState);
+	const [client, setClient] = useRecoilState(clientState);
 
-	const setUserInLocalStorage = (user, remember) => {
-		debugger;
+	const getClientIdFromLocalStorage = (clientId) => {
 		//pass null to logout
-		if (user === null) {
-			localStorage.setObj(LOCAL_STORAGE_KEY, null);
-		}
-		if (user && remember) {
-			localStorage.setObj(LOCAL_STORAGE_KEY, user);
-		}
+		localStorage.setObj(LOCAL_STORAGE_KEY + "__clientId", user);
 	};
 
 	useEffect(() => {
-		// setUserInLocalStorage(_user, "rememberMe");
 		const localStorageUser = getUserFromLocalStorage();
-
-		const _user = {
-			email: "Jonny-Weiss@protonmail.com",
-			first_name: "Jonathan",
-			last_name: "Weiss",
-			password: "Philo4ce1",
-			role: "admin",
-		};
-		debugger;
-		setUserInLocalStorage(_user);
-		setUser(_user);
+		setUser(localStorageUser);
 	}, []);
 
 	useEffect(() => {
@@ -147,18 +140,10 @@ const Realtime = (props) => {
 				debugger;
 			});
 
-			socket.on("server__authedClient", ({ classrooms, user }) => {
+			socket.on("server__authedClient", ({ classrooms, clientId }) => {
 				logg("Server authed client. Available rooms: ", classrooms);
-				debugger;
-				const userFromlocalStorage = getUserFromLocalStorage();
-				const mergedUser = { ...userFromlocalStorage, ...user };
-				setUserInLocalStorage(mergedUser, "rememberMe");
-				setUser(mergedUser);
-			});
-
-			socket.on("client__selectsRoom", (serverMsg) => {
-				const { content, sender, id } = serverMsg;
-				debugger;
+				logg("server__authedClient", clientId);
+				setClient((_client) => ({ ..._client, id: clientId }));
 			});
 
 			socket.on("connect", function(msg) {
@@ -184,7 +169,7 @@ const Realtime = (props) => {
 						role,
 					},
 					// clientType: clientType.toLowerCase(),
-					userTypes: ["student"],
+					clientTypes: client.userTypes,
 				});
 			});
 
@@ -219,11 +204,11 @@ const Realtime = (props) => {
 	}, []);
 
 	useEffect(() => {
-		if (!user) return;
+		if (!user || isSocketInitialized) return;
 		const socket = initSocket({
 			user,
 		});
-
+		isSocketInitialized = true;
 		setSocket(socket);
 	}, [user]);
 

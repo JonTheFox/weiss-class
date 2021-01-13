@@ -22,7 +22,7 @@ const assertValidCredentials = (creds = {}) => {
 		"password",
 		"first_name",
 		"last_name",
-		//"clientID",
+		//"clientId",
 	];
 
 	requiredCredentials.forEach((cred) => {
@@ -40,7 +40,7 @@ const isClient = (user) => {
 };
 
 class ClassroomClient {
-	clientID;
+	clientId;
 	email;
 	first_name;
 	last_name;
@@ -50,7 +50,7 @@ class ClassroomClient {
 			email,
 			first_name,
 			last_name,
-			clientID,
+			clientId,
 			userTypes,
 			roomKey,
 		} = config;
@@ -66,14 +66,14 @@ class ClassroomClient {
 			email,
 			first_name,
 			last_name,
-			clientID,
+			clientId,
 			userTypes: _userTypes,
 			roomKey,
 		});
 	}
 	getInfo = () => {
-		const { clientID, email, first_name, last_name, roomKey } = this;
-		return { clientID, email, first_name, last_name, roomKey };
+		const { clientId, email, first_name, last_name, roomKey } = this;
+		return { clientId, email, first_name, last_name, roomKey };
 	};
 }
 
@@ -277,7 +277,7 @@ class Classroom {
 			last_name,
 			email,
 			userTypes = ["student"],
-			clientID,
+			clientId,
 		} = client;
 
 		const newClient = new ClassroomClient(client);
@@ -332,6 +332,7 @@ class Classroom {
 
 class ClassroomManager {
 	classrooms = [];
+	clients = [];
 	addClassroom = (config = {}) => {
 		const existingRoomsKeys = this.getRoomsNames() || [];
 		logg("existingRoomsKeys: ", existingRoomsKeys);
@@ -341,8 +342,12 @@ class ClassroomManager {
 			...config,
 		});
 		this.classrooms.push(classroom);
+
 		return classroom;
 	};
+	get clients() {
+		return this.clients;
+	}
 	getRoom = (config = {}) => {
 		const { roomKey = "" } = config;
 		if (!roomKey) return null;
@@ -368,25 +373,29 @@ class ClassroomManager {
 		return roomsKeys;
 	};
 
-	getUserById = (userId) => {
-		let foundUser;
-		const clientTypes = ["students", "teachers", "platforms"];
+	getClientById = (clientId) => {
+		const allClients = this.clients;
+		const foundClient = allClients.find(
+			(client) => client.clientId === clientId
+		);
+		logg("foundClient: ", foundClient);
+		return foundClient || null;
+		// const clientTypes = ["students", "teachers", "platforms"];
 
-		const { classrooms } = this;
-		if (!classrooms) throw new Error(`no this.clssrooms??`);
-		for (let i = 0; i < classrooms.length; i++) {
-			if (foundUser) break;
-			const classroom = classrooms[i];
-			for (let i = 0; i < clientTypes; i++) {
-				if (foundUser) break;
-				const clients = classroom[clientTypes[i]];
-				foundUser = clients.find((client) => client.userId === userId);
-			}
-		}
-
-		logg("foundUser: ", foundUser);
-
-		return foundUser || null;
+		// const { classrooms } = this;
+		// logg("classrooms: ", classrooms);
+		// if (!classrooms) throw new Error(`no this.clssrooms??`);
+		// for (let i = 0; i < classrooms.length; i++) {
+		// 	if (foundClient) break;
+		// 	const classroom = classrooms[i];
+		// 	for (let i = 0; i < clientTypes; i++) {
+		// 		if (foundClient) break;
+		// 		const clients = classroom[clientTypes[i]];
+		// 		foundClient = clients.find(
+		// 			(client) => client.clientId === clientId
+		// 		);
+		// 	}
+		// }
 	};
 
 	get numClassrooms() {
@@ -448,36 +457,50 @@ const supplementIO = function(io) {
 
 		socket.emit("server__sendsSlide", { currentSlideIndex: 0 });
 
-		socket.on("client__selectsRoom", ({ userId, roomKey }) => {
-			logg("client__selectsRoom. roomKey: ", roomKey);
-			logg("client__selectsRoom. userId: ", userId);
+		socket.on(
+			"client__selectsRoom",
+			({ clientId, roomKey, clientTypes }) => {
+				logg("client__selectsRoom. roomKey: ", roomKey);
+				logg("client__selectsRoom. clientId: ", clientId);
+				logg("client__selectsRoom. clientTypes: ", clientTypes);
 
-			if (!userId || !roomKey) {
-				loggError("client__selectsRoom: Missing parameter arguments");
-				return null;
-			}
+				if (!clientId || !roomKey) {
+					loggError(
+						"client__selectsRoom: Missing parameter arguments"
+					);
+					return socket.emit("re:client__selectsRoom", {
+						badCredentials: true,
+					});
+				}
 
-			const user = classroomsManager.getUserById(userId);
-			if (!user) {
-				return socket.emit("re:client__selectsRoom", {
-					found: false,
+				let client = classroomsManager.getClientById(clientId);
+
+				if (!client) {
+					return socket.emit("re:client__selectsRoom", {
+						clientFound: false,
+					});
+
+					// client = new ClassroomClient({ clientTypes });
+					// return socket.emit("re:client__selectsRoom", {
+					// 	userFound: false,
+					// });
+				}
+				const userWithoutPass = getPublicUserData(client);
+				//add user to the room
+				socket.join(roomKey);
+				logg("socket joined room ", roomKey);
+				classroomsIO.to(roomKey).emit("server__anotherUserJoined", {
+					...userWithoutPass,
 				});
 			}
-			const userWithoutPass = getPublicUserData(user);
-			//add user to the room
-			socket.join(roomKey);
-			classroomsIO.to(roomKey).emit("server__anotherUserJoined", {
-				...userWithoutPass,
-			});
-		});
+		);
 
 		socket.on("client__providesCredentials", async function(payload) {
 			try {
 				if (!payload) throw new Error(`No payload`);
-				const { user, userTypes } = payload;
+				const { user } = payload;
+				let { userTypes } = payload;
 				if (!user) throw new Error(`No user provided`);
-
-				logg("user: ", user);
 				assertValidCredentials(user);
 
 				const { role } = user;
@@ -485,18 +508,14 @@ const supplementIO = function(io) {
 				user.roles = roles;
 
 				const authenticatedUser = await authenticate(user);
-				const userId = getUniqueString(12);
-				logg("userId: ", userId);
-				authenticatedUser.userId = userId;
-
+				const clientId = getUniqueString(12);
 				const userWithoutPass = getPublicUserData(authenticatedUser);
-				userWithoutPass.userId = userId;
 				const { first_name, last_name } = userWithoutPass;
 
 				//make sure that the userType is one of the accepted types (teacher, student, platform)
-				// if (!userTypes || !is(userTypes).anArray) {
-				// 	throw new Error(`No userTypes provided!`);
-				// }
+				if (!userTypes || !is(userTypes).anArray) {
+					userTypes = ["student"];
+				}
 				let userType;
 				const firstUserType = userTypes[0];
 				if (
@@ -504,16 +523,15 @@ const supplementIO = function(io) {
 					!is(firstUserType).aString ||
 					!USER_TYPES.includes(firstUserType.toLowerCase())
 				) {
-					throw new Error(`No userTypes!!!!!!!`);
 					userType = "student";
 				} else {
 					userType = firstUserType.toLowerCase();
 				}
 
-				const cliendTypeMsg = `${userType} ${first_name +
+				const clientTypeMsg = `${userType} ${first_name +
 					" " +
 					last_name} is authenticated.`;
-				// logg(cliendTypeMsg);
+				// logg(clientTypeMsg);
 
 				if (["student", "platform"].includes(userType.toLowerCase())) {
 					const availableRooms = classroomsManager.getRooms();
@@ -528,10 +546,10 @@ const supplementIO = function(io) {
 					);
 
 					return socket.emit("server__authedClient", {
-						user: userWithoutPass,
 						userType,
+						userTypes,
 						classrooms: availableRooms,
-						userId,
+						clientId,
 					});
 				}
 
@@ -563,7 +581,7 @@ const supplementIO = function(io) {
 					user: userWithoutPass,
 					userType: "teacher",
 					room: roomOfTeacher,
-					userId,
+					clientId,
 				});
 
 				// socket.join(roomKey);
@@ -617,7 +635,7 @@ const supplementIO = function(io) {
 		socket.on("client__createRoom", function(payload) {
 			try {
 				// validatePayload(payload);
-				const { user = {}, clientID, intent } = payload;
+				const { user = {}, clientId, intent } = payload;
 				if (!intent) {
 					throw new Error(
 						`user_createRoom was sent without an intent`
@@ -633,7 +651,7 @@ const supplementIO = function(io) {
 
 				const newClassroom = classroomsManager.addClassroom(intent);
 				logg("new classroom's key: ", newClassroom.roomKey);
-				newClassroom.addClient({ ...user, ...intent, clientID });
+				newClassroom.addClient({ ...user, ...intent, clientId });
 
 				const classroomInfo = newClassroom.getInfo();
 				socket.join(classroomInfo.roomKey);
@@ -665,7 +683,7 @@ const supplementIO = function(io) {
 		socket.on("client__requestsRooms", function(payload) {
 			try {
 				// validatePayload(payload);
-				const { user = {}, clientID, intent } = payload;
+				const { user = {}, clientId, intent } = payload;
 				// if (!intent) {
 				// 	throw new Error(
 				// 		`user_createRoom was sent without an intent`
@@ -686,7 +704,7 @@ const supplementIO = function(io) {
 		// socket.on("createClassroom", function(payload) {
 		// 	try {
 		// 		validatePayload(payload);
-		// 		const { user = {}, clientID, intent } = payload;
+		// 		const { user = {}, clientId, intent } = payload;
 		// 		if (classroomsManager[intent.classroomName]) {
 		// 			return socket.emit();
 		// 		}
