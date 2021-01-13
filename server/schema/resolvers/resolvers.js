@@ -18,8 +18,8 @@ const SLIDE = [
 
 const ROOMS = [
 	{
-		id: "0",
-		roomKey: 0,
+		id: "1",
+		roomKey: 1,
 		name: "The Cloudy Horizon",
 		title: "The Cloudy Horizon",
 
@@ -36,8 +36,8 @@ const ROOMS = [
 		},
 	},
 	{
-		id: "1",
-		roomKey: 1,
+		id: "2",
+		roomKey: 2,
 		name: "Misty Mountain",
 		title: "Misty Mountain",
 

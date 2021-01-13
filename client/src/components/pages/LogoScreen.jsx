@@ -48,7 +48,7 @@ const LogoScreen = (props) => {
 	const { route, showVideo = true } = props;
 	const { match } = route;
 	const [appUtils, appState] = useContext(AppContext);
-	const { navigateTo, request, Logger, PromiseKeeper, EMPTY_FUNC } = appUtils;
+	const { request, Logger, PromiseKeeper, EMPTY_FUNC } = appUtils;
 	const [video, setVideo] = useState(CLOUD_VIDEOS[0]);
 
 	const [isPlaying, setIsPlaying] = useState(false);
@@ -91,7 +91,7 @@ const LogoScreen = (props) => {
 				></VideoPlayer>
 			)}
 
-			<Link className={"link"} to={`${BASE_ROUTE}classroom-select`}>
+			<Link className={"link"} to={`${BASE_ROUTE}rt`}>
 				<Button
 					className={"enter-btn"}
 					variant="outlined"

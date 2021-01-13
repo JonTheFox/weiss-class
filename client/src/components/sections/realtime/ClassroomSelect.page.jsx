@@ -37,6 +37,7 @@ import {
 } from "recoil";
 import roomsState from "../../../store/rooms.atom.js";
 import socketState from "../../../store/socket.atom.js";
+import userState from "../../../store/user.atom.js";
 
 import * as io from "socket.io-client";
 
@@ -104,7 +105,7 @@ export default function ClassroomSelect(props) {
 
   const [appUtils, appState, setAppState] = useContext(AppContext);
 
-  const { capitalizeFirstLetter, pickRandomFrom } = appUtils;
+  const { capitalizeFirstLetter, pickRandomFrom, is } = appUtils;
   const { logg, loggError } = useLogg({ label });
   const promiseKeeper = usePromiseKeeper({ label });
 
@@ -115,6 +116,7 @@ export default function ClassroomSelect(props) {
   const { loading, error, data } = useQuery(GetRooms);
   const [rooms, setRooms] = useRecoilState(roomsState);
   const socket = useRecoilValue(socketState);
+  const user = useRecoilValue(userState);
 
   useEffect(() => {
     const { classrooms } = appState.realtime;
@@ -174,12 +176,15 @@ export default function ClassroomSelect(props) {
                         background: `url(${bgImage})`,
                       }}
                       onClick={(ev) => {
+                        debugger;
+                        if (is(socket).aString) {
+                          debugger;
+                          return null;
+                        }
                         socket.emit("client__selectsRoom", {
-                          user: appState.user,
-                          // clientID,
-                          intent: {
-                            roomKey,
-                          },
+                          // user: appState.user,
+                          userId: user?.id,
+                          roomKey,
                         });
                       }}
                     >

@@ -1447,10 +1447,10 @@ class LocalStorage {
 const localStorage = new LocalStorage();
 
 //create hash string
-const getUniqueString = () => {
+const getUniqueString = (numChars = 10) => {
     let rand = Math.random()
         .toString(36)
-        .slice(2, 10);
+        .slice(2, numChars);
     return "_" + rand;
 };
 

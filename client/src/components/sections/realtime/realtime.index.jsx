@@ -36,9 +36,11 @@ import {
 import roomsState from "../../../store/rooms.atom.js";
 import roomState from "../../../store/room.atom.js";
 import socketState from "../../../store/socket.atom.js";
+import userState from "../../../store/user.atom.js";
 import socketConnectionState from "../../../store/socketConnection.atom.js";
 import { CONNECTION_STATES } from "../../../store/CONNECTION_STATES.js";
 import * as io from "socket.io-client";
+import { localStorage } from "../../../lib/issy/index.js";
 
 // let animationFrame;
 // let logg;
@@ -49,10 +51,16 @@ const label = "RealtimeIndex";
 // let clientID;
 
 const SECTION_ROUTE = `rt/`;
+const LOCAL_STORAGE_KEY = "weissClass__user";
+
+const getUserFromLocalStorage = () => {
+	const user = localStorage.getObj(LOCAL_STORAGE_KEY);
+	debugger;
+	return user;
+};
 
 const Realtime = (props) => {
-	const [appUtils, appState] = useContext(AppContext);
-	const { user } = appState;
+	const [appUtils] = useContext(AppContext);
 	const { PromiseKeeper, Logger, getUniqueString, CLIENT_ONLY } = appUtils;
 
 	const { logg, loggError } = useLogg({ label });
@@ -65,6 +73,35 @@ const Realtime = (props) => {
 	const setRooms = useSetRecoilState(roomsState);
 	const setRoom = useSetRecoilState(roomState);
 	const setSocket = useSetRecoilState(socketState);
+	const setUser = useSetRecoilState(userState);
+	const user = useRecoilValue(userState);
+
+	const setUserInLocalStorage = (user, remember) => {
+		debugger;
+		//pass null to logout
+		if (user === null) {
+			localStorage.setObj(LOCAL_STORAGE_KEY, null);
+		}
+		if (user && remember) {
+			localStorage.setObj(LOCAL_STORAGE_KEY, user);
+		}
+	};
+
+	useEffect(() => {
+		// setUserInLocalStorage(_user, "rememberMe");
+		const localStorageUser = getUserFromLocalStorage();
+
+		const _user = {
+			email: "Jonny-Weiss@protonmail.com",
+			first_name: "Jonathan",
+			last_name: "Weiss",
+			password: "Philo4ce1",
+			role: "admin",
+		};
+		debugger;
+		setUserInLocalStorage(_user);
+		setUser(_user);
+	}, []);
 
 	useEffect(() => {
 		if (data?.rooms) {
@@ -72,9 +109,12 @@ const Realtime = (props) => {
 		}
 	}, [data]);
 
-	const initSocket = useCallback(({ user, clientType = "student" }) => {
+	const initSocket = useCallback(({ user }) => {
 		try {
-			const { email, password } = user;
+			if (!user) {
+				throw new Error(`no user provided`);
+			}
+			const { email, password, role, first_name, last_name } = user;
 
 			// setConnecting(true);
 			// setFeedbackType("idle");
@@ -103,6 +143,24 @@ const Realtime = (props) => {
 				// setConnectionStatus(CONNECTION_STATES.CONNECTED);
 			});
 
+			socket.on("re:client__selectsRoom", (payload) => {
+				debugger;
+			});
+
+			socket.on("server__authedClient", ({ classrooms, user }) => {
+				logg("Server authed client. Available rooms: ", classrooms);
+				debugger;
+				const userFromlocalStorage = getUserFromLocalStorage();
+				const mergedUser = { ...userFromlocalStorage, ...user };
+				setUserInLocalStorage(mergedUser, "rememberMe");
+				setUser(mergedUser);
+			});
+
+			socket.on("client__selectsRoom", (serverMsg) => {
+				const { content, sender, id } = serverMsg;
+				debugger;
+			});
+
 			socket.on("connect", function(msg) {
 				const content = `User ${email} has connected to realtime room.`;
 				// setConnectionStatus(
@@ -121,10 +179,12 @@ const Realtime = (props) => {
 					user: {
 						email,
 						password,
-						role: user.role,
+						first_name,
+						last_name,
+						role,
 					},
-					clientType: clientType.toLowerCase(),
-					userTypes: [USER_TYPE],
+					// clientType: clientType.toLowerCase(),
+					userTypes: ["student"],
 				});
 			});
 
@@ -150,6 +210,7 @@ const Realtime = (props) => {
 			socket.on("user joined", function(msg) {
 				logg("A user joined the RTEntrance room. \n", msg);
 			});
+
 			return socket;
 		} catch (err) {
 			debugger;
@@ -157,15 +218,14 @@ const Realtime = (props) => {
 		}
 	}, []);
 
-	const USER_TYPE = "student";
-
 	useEffect(() => {
+		if (!user) return;
 		const socket = initSocket({
-			clientType: USER_TYPE,
-			user: appState.user,
+			user,
 		});
+
 		setSocket(socket);
-	}, []);
+	}, [user]);
 
 	const { location, match } = props.route;
 
