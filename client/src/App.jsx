@@ -33,10 +33,10 @@ import {
 // import { RecoilRoot } from "recoil/dist/recoil.production";
 
 const client = new ApolloClient({
-	//uri: "http://localhost:5000/graphql",
-	uri: DEBUGGING
-		? "http://localhost:5000/graphql"
-		: "https://weiss-class.herokuapp.com",
+	uri: "http://localhost:5000/graphql",
+	// uri: DEBUGGING
+	// 	? "http://localhost:5000/graphql"
+	// 	: "https://weiss-class.herokuapp.com",
 	cache: new InMemoryCache(),
 
 	//by default, ApolloClient makes the assumption that our graphQL server is running on /graphql route
