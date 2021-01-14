@@ -12,6 +12,8 @@ const authenticate = require("../api/auth.js");
 const classroomLogger = logger.createSubLogger({ label, style: "orange" });
 const { logg, loggError } = classroomLogger;
 
+const MOCK_CLASSROOMS = require("../mockData/mockClassrooms.js");
+
 const USER_TYPES = ["student", "teacher", "platform"];
 
 const assertValidCredentials = (creds = {}) => {
@@ -466,15 +468,9 @@ class ClassroomManager {
 	};
 }
 const classroomsManager = new ClassroomManager();
-classroomsManager.addClassroom({
-	teachers: [
-		{
-			first_name: "Robert",
-			last_name: "Drake",
-			email: "iceman@marvel.com",
-			clientId: 777,
-		},
-	],
+
+const addedClassrooms = MOCK_CLASSROOMS.map((room) => {
+	return classroomsManager.addClassroom(room);
 });
 
 const getPublicUserData = (user) => {

@@ -103,10 +103,7 @@ const LogoScreen = (props) => {
 			</Link>
 
 			<h1 className={clsx("weiss-title unselectable")}>
-				<Link
-					className={"weiss-title--link"}
-					to={`${BASE_ROUTE}classroom-select`}
-				>
+				<Link className={"weiss-title--link"} to={`${BASE_ROUTE}rt`}>
 					Weiss
 				</Link>
 			</h1>
