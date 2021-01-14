@@ -49,6 +49,8 @@ import Card from "../../Card/Card.js";
 import { useQuery } from "@apollo/client";
 import { GetRooms } from "../../../gql/queries/GetRooms";
 
+import { useHistory } from "react-router-dom";
+
 const scaleInPoses = {
   enter: {
     scale: 1,
@@ -108,20 +110,19 @@ export default function ClassroomSelect(props) {
 
   const [appUtils, appState, setAppState] = useContext(AppContext);
 
-  const { capitalizeFirstLetter, pickRandomFrom, is } = appUtils;
+  const { capitalizeFirstLetter, pickRandomFrom, is, navigateTo } = appUtils;
   const { logg, loggError } = useLogg({ label });
   const promiseKeeper = usePromiseKeeper({ label });
 
   const classes = useStyles();
   const refs = useRef({ client: { id: 0 } });
 
-  const [collections, setCollections] = useState([]);
-
-  const { loading, error, data } = useQuery(GetRooms);
   const [rooms, setRooms] = useRecoilState(roomsState);
   const setClassroom = useSetRecoilState(classroomState);
   const socket = useRecoilValue(socketState);
   const client = useRecoilValue(clientState);
+
+  const history = useHistory();
 
   useEffect(() => {
     const { classrooms } = appState.realtime;
@@ -196,6 +197,13 @@ export default function ClassroomSelect(props) {
                           roomKey,
                         });
                         setClassroom({ roomKey });
+
+                        promiseKeeper
+                          .stall(1500, "navigate to classroom")
+                          .then(() => {
+                            //navigateTo(`/rt/classroom`, history);
+                            props.route.history.push("/rt/classroom");
+                          });
                       }}
                     >
                       <CardContent className={classes.cardContent}>

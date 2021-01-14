@@ -9,6 +9,7 @@ import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import { AppContext } from "../../../contexts/AppContext.jsx";
 import RealtimeEntrance from "./realtime.entrance.jsx";
 import RealtimeClassroom from "./realtime.classroom.jsx";
+import Classroom from "./Classroom/Classroom.js";
 import Card from "../../partials/Card.jsx";
 import WeissSpinner from "../../partials/WeissSpinner.jsx";
 //import PropTypes from "prop-types";
@@ -136,8 +137,15 @@ const Realtime = (props) => {
 				// setConnectionStatus(CONNECTION_STATES.CONNECTED);
 			});
 
-			socket.on("re:client__selectsRoom", (payload) => {
-				debugger;
+			socket.on("re:client__selectsRoom", ({ classroom }) => {
+				if (!classroom) {
+					loggError(
+						"client__selectsRoom: missing argument for classroom"
+					);
+					return;
+				}
+
+				setRoom(classroom);
 			});
 
 			socket.on("server__authedClient", ({ classrooms, clientId }) => {
@@ -224,7 +232,11 @@ const Realtime = (props) => {
 			<Switch location={location}>
 				<Route
 					path={`${match.path}rt/classroom-select`}
-					render={(route) => <ClassroomSelect />}
+					render={(route) => <ClassroomSelect route={route} />}
+				/>
+				<Route
+					path={`${match.path}rt/classroom`}
+					render={(route) => <Classroom route={route} />}
 				/>
 				<Route render={(route) => <RealtimeEntrance route={route} />} />
 			</Switch>
