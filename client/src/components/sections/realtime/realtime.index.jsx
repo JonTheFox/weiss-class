@@ -81,7 +81,7 @@ const Realtime = (props) => {
 	const { loading, error, data } = useQuery(GetRooms);
 
 	const setRooms = useSetRecoilState(roomsState);
-	const setRoom = useSetRecoilState(roomState);
+	const [room, setRoom] = useRecoilState(roomState);
 	const setSocket = useSetRecoilState(socketState);
 	const setUser = useSetRecoilState(userState);
 	const user = useRecoilValue(userState);
@@ -149,8 +149,8 @@ const Realtime = (props) => {
 			});
 
 			socket.on("server__authedClient", ({ classrooms, clientId }) => {
-				logg("Server authed client. Available rooms: ", classrooms);
 				logg("server__authedClient", clientId);
+
 				setClient((_client) => ({ ..._client, id: clientId }));
 				setRooms(classrooms);
 			});

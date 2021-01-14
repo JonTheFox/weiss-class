@@ -47,6 +47,7 @@ class ClassroomClient {
 	first_name;
 	last_name;
 	roomKey;
+	img = {};
 	constructor(config = {}) {
 		const {
 			email,
@@ -55,6 +56,7 @@ class ClassroomClient {
 			clientId,
 			userTypes,
 			roomKey,
+			img,
 		} = config;
 		if (!email || !first_name || !last_name)
 			throw new Error("Invalid user credentials");
@@ -71,6 +73,7 @@ class ClassroomClient {
 			clientId,
 			userTypes: _userTypes,
 			roomKey,
+			img,
 		});
 	}
 	getInfo = () => {
@@ -170,6 +173,7 @@ class Classroom {
 	name; //is set in constructor according to title. Serves as the SocketIO room identifier, so it must be unique. Also, must abide to variable name rules because it serves as a key of an object
 	index;
 	roomKey;
+	img;
 
 	constructor(config = {}) {
 		const {
@@ -180,6 +184,7 @@ class Classroom {
 			index = 1,
 			name = "",
 			userTypes,
+			img = {},
 		} = config;
 
 		const roomNum = is(index).aNumber
@@ -232,6 +237,7 @@ class Classroom {
 		}
 		this.title = _title;
 		this.name = _name;
+		this.img = img;
 		const roomKey = createRoomKey(_name);
 		this.roomKey = roomKey;
 
@@ -351,12 +357,12 @@ class ClassroomManager {
 	clients = [];
 	addClassroom = (config = {}) => {
 		const existingRoomsKeys = this.getRoomsNames() || [];
-		logg("existingRoomsKeys: ", existingRoomsKeys);
 		const classroom = new Classroom({
 			existingRoomsKeys,
 			index: this.classrooms.length + 1,
 			...config,
 		});
+
 		this.classrooms.push(classroom);
 
 		return classroom;
@@ -469,7 +475,7 @@ class ClassroomManager {
 }
 const classroomsManager = new ClassroomManager();
 
-const addedClassrooms = MOCK_CLASSROOMS.map((room) => {
+MOCK_CLASSROOMS.map((room) => {
 	return classroomsManager.addClassroom(room);
 });
 
@@ -492,8 +498,6 @@ const supplementIO = function(io) {
 		socket.on(
 			"client__selectsRoom",
 			({ clientId, roomKey, clientTypes }) => {
-				logg("client__selectsRoom. roomKey: ", roomKey);
-				logg("client__selectsRoom. clientId: ", clientId);
 				logg("client__selectsRoom. clientTypes: ", clientTypes);
 
 				if (!clientId || !roomKey) {
@@ -583,41 +587,12 @@ const supplementIO = function(io) {
 				classroomsManager.addClient(userWithoutPass);
 
 				const availableRooms = classroomsManager.getRooms();
+
 				const availableRoomsKeys = classroomsManager.getRoomsKeys();
 				logg(
 					`${userType} ${authenticatedUser.first_name} ${authenticatedUser.last_name} can try to enter one of the following rooms: `,
 					availableRoomsKeys
 				);
-
-				// 	return socket.emit("server__authedClient", {
-				// 		userType,
-				// 		userTypes,
-				// 		classrooms: availableRooms,
-				// 		clientId,
-				// 	});
-				// }
-
-				// client is a teacher
-				// let roomOfTeacher = classroomsManager.getTeacherRoom(
-				// 	authenticatedUser
-				// );
-				// if (!roomOfTeacher) {
-				// 	//create a new room for the teacher
-				// 	const newClassroom = classroomsManager.addClassroom({
-				// 		teachers: [getPublicUserData(authenticatedUser)],
-				// 	});
-				// 	roomOfTeacher = newClassroom;
-				// 	logg(
-				// 		`There wasn't a dedicated room for Teacher ${authenticatedUser.first_name} ${authenticatedUser.last_name} so a new one was created: ${newClassroom.name}`
-				// 	);
-				// } else {
-				// 	logg(
-				// 		`Entering existing room of teacher ${authenticatedUser.first_name} ${authenticatedUser.last_name}: ${roomOfTeacher.name}`
-				// 	);
-				// }
-
-				// const roomKey = roomOfTeacher.roomKey;
-				// const roomName = roomOfTeacher.getName();
 
 				return socket.emit("server__authedClient", {
 					user: userWithoutPass,

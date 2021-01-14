@@ -169,7 +169,7 @@ export default function ClassroomSelect(props) {
                 } = classroom;
 
                 const numTeachers = teachers.length;
-                const firstTeacher = teachers[0] || {};
+                const firstTeacher = teachers?.clients?.[0] || {};
                 const firstName = firstTeacher.first_name || "";
                 const lastName = firstTeacher.last_name || "";
                 const firstTeacherFullname = capitalizeFirstLetter(
@@ -201,8 +201,7 @@ export default function ClassroomSelect(props) {
                         promiseKeeper
                           .stall(1500, "navigate to classroom")
                           .then(() => {
-                            //navigateTo(`/rt/classroom`, history);
-                            props.route.history.push("/rt/classroom");
+                            navigateTo(`/rt/classroom`, history);
                           });
                       }}
                     >
