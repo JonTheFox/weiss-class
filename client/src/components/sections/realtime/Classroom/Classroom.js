@@ -12,7 +12,7 @@ import WeissSpinner from "../../../partials/WeissSpinner.jsx";
 // import clsx from "clsx";
 import View from "../../../layout/View.jsx";
 
-//import "./_Realtime.scss";
+import "./_classroom.scss";
 
 import useLogg from "../../../hooks/useLogg.jsx";
 import usePromiseKeeper from "../../../hooks/usePromiseKeeper.jsx";
@@ -38,11 +38,24 @@ import { CONNECTION_STATES } from "../../../../store/CONNECTION_STATES.js";
 import * as io from "socket.io-client";
 import { localStorage } from "../../../../lib/issy/index.js";
 
-const label = "RealtimeClassroom";
+const label = "Classroom";
 //const SECTION_ROUTE = `rt/classroom`;
 const LOCAL_STORAGE_KEY = "weissClass";
 
-const Realtime = (props) => {
+const ClientsContainer = ({ clientType }) => {
+	const clientsType = `${clientType}s`;
+	return (
+		<div className={`clients__container ${clientsType}`}>
+			<h2 className={`classroom__header ${clientsType}`}>
+				{`${clientsType}`}
+			</h2>
+		</div>
+	);
+};
+
+const clientTypes = ["student", "teacher", "platform"];
+
+const Classroom = (props) => {
 	const [appUtils] = useContext(AppContext);
 	const { PromiseKeeper, Logger, getUniqueString, CLIENT_ONLY } = appUtils;
 
@@ -54,11 +67,32 @@ const Realtime = (props) => {
 	const { loading, error, data } = useQuery(GetRooms);
 
 	const user = useRecoilValue(userState);
-	const [client, setClient] = useRecoilState(clientState);
+	// const client = useRecoilValue(clientState);
+	const room = useRecoilValue(roomState);
 
 	const { location, match } = props.route;
 
-	return <div>Classroom</div>;
+	const bgImage =
+		room?.img?.url || room?.teachers?.clients?.[0]?.img?.url || "";
+
+	return (
+		<View
+			className={"classroom"}
+			style={{
+				background: `url(${bgImage})`,
+				backgroundRepeat: "no-repeat",
+				backgroundSize: "Contain",
+			}}
+		>
+			{clientTypes.map((clientType, i, clientTypes) => {
+				return (
+					<ClientsContainer
+						clientType={clientType}
+					></ClientsContainer>
+				);
+			})}
+		</View>
+	);
 };
 
-export default Realtime;
+export default Classroom;
