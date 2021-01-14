@@ -88,7 +88,6 @@ class Teacher extends ClassroomClient {
 }
 class Student extends ClassroomClient {
 	constructor(config = {}) {
-		logg("student config: ", config);
 		super(config);
 		this.role = "student";
 		this.clientType = "student";
@@ -110,9 +109,6 @@ class ClassroomClientList {
 		this.clientType = clientType;
 		//passed clients are Plain ol' JS objects. convert them to dedicated type
 		this.clients = clients.map((basicClient, i) => {
-			if (i === 0) {
-				logg("basicClient:", basicClient);
-			}
 			return new ClassroomClient(basicClient);
 		});
 		this.roomKey = roomKey;
@@ -124,26 +120,43 @@ class ClassroomClientList {
 				const clientInfo = client.getInfo();
 				return clientInfo;
 			} else {
-				loggError("client: ", client);
+				loggError("NO client.getInfo()");
 			}
 			return {};
 		});
 
 		return clientsInfo;
 	};
+	getClientsNames = () => {
+		const { clients } = this;
+		const clientsNames = clients.map((client) => {
+			if (client.getFullName) {
+				const clientFullname = client.getFullName();
+				return clientFullname;
+			} else {
+				loggError("NO client.getFullName()");
+			}
+			return {};
+		});
+
+		const concatenatedNames = clientsNames.join(", ");
+		return concatenatedNames;
+	};
 	addClient = (client = {}) => {
 		const newClient = new ClassroomClient(client);
 		newClient.roomKey = this.roomKey;
 		this.clients.push(new ClassroomClient(client));
-		logg("classroomClientList.clients: ", this.clients);
+		logg(
+			"classroomClientList.getClientsNames: ",
+			this.clients.getClientsNames()
+		);
 	};
 }
 
 const createRoomKey = (str) => {
 	const result = str
-		? sanitizeVarName(str).toLowerCase()
+		? `_${sanitizeVarName(str).toLowerCase()}${getUniqueString(8)}`
 		: `_${getUniqueString(10)}`;
-	logg("result: ", result);
 	return result;
 };
 
@@ -235,7 +248,6 @@ class Classroom {
 			clientType: "platform",
 			roomKey,
 		});
-		logg("platforms: ", this.platforms);
 	}
 
 	hasTeacher = ({ email } = {}) => {
@@ -268,7 +280,6 @@ class Classroom {
 
 			return indeedHasTeacher;
 		} catch (err) {
-			// loggError(err.message);
 			loggError(err);
 		}
 	};
@@ -465,7 +476,6 @@ classroomsManager.addClassroom({
 		},
 	],
 });
-logg("classroomManager ", classroomsManager.classrooms);
 
 const getPublicUserData = (user) => {
 	// assertValidCredentials(user);
@@ -520,7 +530,6 @@ const supplementIO = function(io) {
 				);
 
 				const classroom = classroomsManager.getRoomByKey(roomKey);
-				logg("classroom: ", classroom);
 
 				socket.emit("re:client__selectsRoom", {
 					classroom,
@@ -578,10 +587,7 @@ const supplementIO = function(io) {
 				classroomsManager.addClient(userWithoutPass);
 
 				const availableRooms = classroomsManager.getRooms();
-				logg("num of availableRooms: ", availableRooms.length);
 				const availableRoomsKeys = classroomsManager.getRoomsKeys();
-				logg("availableRoomsKeys: ", availableRoomsKeys);
-
 				logg(
 					`${userType} ${authenticatedUser.first_name} ${authenticatedUser.last_name} can try to enter one of the following rooms: `,
 					availableRoomsKeys
@@ -641,7 +647,6 @@ const supplementIO = function(io) {
 
 		socket.on("teacher__setsSlideIndex", function({ index }) {
 			const msg = `User ${socket.id} disconnected.`;
-			logg("yo", msg);
 			socket.emit("yo", msg);
 			// socket.to(roomName).emit("yo", {
 			// 	user: getPublicUserData(user),
