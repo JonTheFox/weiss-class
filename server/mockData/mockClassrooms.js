@@ -6,7 +6,10 @@ const classrooms = [
 				last_name: "Drake",
 				email: "iceman@marvel.com",
 				clientId: 777,
-				img: { url: "https://images.app.goo.gl/FhpMgUjW2ZgdgxSo6" },
+				img: {
+					url:
+						"https://images.unsplash.com/photo-1474710820418-dd5406ee35d5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwzMTI2M3wwfDF8c2VhcmNofDF8fGljZSUyMG1hbnxlbnwwfDB8fA&ixlib=rb-1.2.1&q=80&w=1080",
+				},
 			},
 		],
 	},
@@ -17,7 +20,10 @@ const classrooms = [
 				last_name: "Parker",
 				email: "spiderman@marvel.com",
 				clientId: 360,
-				img: { url: "https://images.app.goo.gl/yhzY2Mk4Hdb9N7Vk6" },
+				img: {
+					url:
+						"https://images.unsplash.com/photo-1521714161819-15534968fc5f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwzMTI2M3wwfDF8c2VhcmNofDF8fHNwaWRlcm1hbnxlbnwwfDB8fA&ixlib=rb-1.2.1&q=80&w=1080",
+				},
 			},
 		],
 	},
