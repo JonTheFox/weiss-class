@@ -35,8 +35,8 @@ const classrooms = [
 
 		teachers: [
 			{
-				first_name: "Angelina",
-				last_name: "Jolie",
+				first_name: "Sam",
+				last_name: "Willbrew",
 				email: "angiemarvel.com",
 				clientId: 1,
 			},

@@ -168,13 +168,28 @@ export default function ClassroomSelect(props) {
                   img = {},
                 } = classroom;
 
+                const getTeacherFullName = (teacher = {}) => {
+                  if (!teacher) return null;
+                  const { first_name = "", last_name = "" } = teacher;
+                  if (!first_name && !last_name) return null;
+                  //capitalize first letters
+                  const _first_name =
+                    first_name[0].toUpperCase() + first_name.slice(1);
+                  const _last_name =
+                    last_name &&
+                    last_name[0] &&
+                    last_name[0].toUpperCase() + last_name.slice(1);
+                  return `${_first_name} ${_last_name}`;
+                };
+
                 const numTeachers = teachers.length;
                 const firstTeacher = teachers?.clients?.[0] || {};
-                const firstName = firstTeacher.first_name || "";
-                const lastName = firstTeacher.last_name || "";
-                const firstTeacherFullname = capitalizeFirstLetter(
-                  `${firstName} ${lastName}`
-                );
+                // const firstName = firstTeacher.first_name || "";
+                // const lastName = firstTeacher.last_name || "";
+                // const firstTeacherFullname = capitalizeFirstLetter(
+                //   `${firstName} ${lastName}`
+                // );
+                const firstTeacherFullname = getTeacherFullName(firstTeacher);
 
                 const bgImage = img?.url || firstTeacher?.img?.url || "";
 
