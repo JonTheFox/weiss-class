@@ -42,26 +42,30 @@ const label = "Classroom";
 //const SECTION_ROUTE = `rt/classroom`;
 const LOCAL_STORAGE_KEY = "weissClass";
 
-const ClientsContainer = ({ clientsType, room }) => {
-	if (clientsTypes === "teachers") {
-		return;
+const clientsTypes = ["teachers", "students", "platforms"];
+
+const ClientsContainer = ({ clientsType, room, bgImage }) => {
+	if (clientsType === "teachers") {
+		return (
+			<div
+				className={`clients__container ${clientsType}`}
+				style={{
+					background: `url(${bgImage})`,
+					backgroundRepeat: "no-repeat",
+					backgroundSize: "cover",
+				}}
+			>
+				<h2 className={`classroom__header`}>{`${clientsType}`}</h2>
+			</div>
+		);
 	}
 
-	debugger;
-
 	return (
-		<div className={`clients__container ${clientsType}`}>
-			{clientsTypes === "teachers" ? (
-				<h2 className={`classroom__header`}>{`${"yo"}`}</h2>
-			) : (
-				<h2 className={`classroom__header`}>{`${clientsType}`}</h2>
-			)}
-			}
+		<div className={`clients__container ${clientsType} `}>
+			<h2 className={`classroom__header`}>{`${clientsType}`}</h2>
 		</div>
 	);
 };
-
-const clientsTypes = ["teachers", "students", "platforms"];
 
 const Classroom = (props) => {
 	const [appUtils] = useContext(AppContext);
@@ -84,19 +88,13 @@ const Classroom = (props) => {
 		room?.img?.url || room?.teachers?.clients?.[0]?.img?.url || "";
 
 	return (
-		<View
-			className={"classroom"}
-			style={{
-				background: `url(${bgImage})`,
-				backgroundRepeat: "no-repeat",
-				backgroundSize: "Contain",
-			}}
-		>
-			{clientsTypes.map((clientType, i, clientsTypes) => {
+		<View className={"classroom"}>
+			{clientsTypes.map((clientsType, i, clientsTypes) => {
 				return (
 					<ClientsContainer
-						clientsType={clientsTypes}
+						clientsType={clientsType}
 						room={room}
+						bgImage={bgImage}
 					></ClientsContainer>
 				);
 			})}

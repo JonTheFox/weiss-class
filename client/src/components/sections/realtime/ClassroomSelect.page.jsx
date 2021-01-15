@@ -213,11 +213,7 @@ export default function ClassroomSelect(props) {
                         });
                         setClassroom({ roomKey });
 
-                        promiseKeeper
-                          .stall(1500, "navigate to classroom")
-                          .then(() => {
-                            navigateTo(`/rt/classroom`, history);
-                          });
+                        navigateTo(`/rt/classroom`, history);
                       }}
                     >
                       <CardContent className={classes.cardContent}>
