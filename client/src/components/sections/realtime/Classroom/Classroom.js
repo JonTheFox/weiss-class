@@ -42,18 +42,26 @@ const label = "Classroom";
 //const SECTION_ROUTE = `rt/classroom`;
 const LOCAL_STORAGE_KEY = "weissClass";
 
-const ClientsContainer = ({ clientType }) => {
-	const clientsType = `${clientType}s`;
+const ClientsContainer = ({ clientsType, room }) => {
+	if (clientsTypes === "teachers") {
+		return;
+	}
+
+	debugger;
+
 	return (
 		<div className={`clients__container ${clientsType}`}>
-			<h2 className={`classroom__header ${clientsType}`}>
-				{`${clientsType}`}
-			</h2>
+			{clientsTypes === "teachers" ? (
+				<h2 className={`classroom__header`}>{`${"yo"}`}</h2>
+			) : (
+				<h2 className={`classroom__header`}>{`${clientsType}`}</h2>
+			)}
+			}
 		</div>
 	);
 };
 
-const clientTypes = ["student", "teacher", "platform"];
+const clientsTypes = ["teachers", "students", "platforms"];
 
 const Classroom = (props) => {
 	const [appUtils] = useContext(AppContext);
@@ -84,10 +92,11 @@ const Classroom = (props) => {
 				backgroundSize: "Contain",
 			}}
 		>
-			{clientTypes.map((clientType, i, clientTypes) => {
+			{clientsTypes.map((clientType, i, clientsTypes) => {
 				return (
 					<ClientsContainer
-						clientType={clientType}
+						clientsType={clientsTypes}
+						room={room}
 					></ClientsContainer>
 				);
 			})}
