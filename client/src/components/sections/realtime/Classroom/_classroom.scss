@@ -7,8 +7,8 @@
 .clients__container {
 	// background-color: var(--primary);
 	display: flex;
-	min-height: calc(33.33 * var(--vh, vh));
-	max-height: calc(100 * var(--vh, vh));
+	min-height: calc(33.33 * var(--vh));
+	max-height: calc(100 * var(--vh));
 }
 
 .teachers {
