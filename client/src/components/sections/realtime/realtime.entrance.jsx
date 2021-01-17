@@ -221,6 +221,7 @@ const RTEntrance = (props) => {
 
 		return () => {
 			window.cancelAnimationFrame(animationFrame);
+			debugger;
 			promiseKeeper.rejectAll();
 		};
 	}, []);
@@ -248,6 +249,7 @@ const RTEntrance = (props) => {
 				newFeedback = "Almost there..";
 				// setFeedback("Almost there..");
 				break;
+
 			case ALREADY_INSIDE_ROOM:
 				promiseKeeper.reject(
 					CONNECTION_TIMEOUT_LABEL,
@@ -272,6 +274,7 @@ const RTEntrance = (props) => {
 					CONNECTION_TIMEOUT_LABEL,
 					"connection established"
 				);
+				debugger;
 				// animationFrame = window.requestAnimationFrame(() => {
 				// return navigateToClassroom();
 				// });
@@ -279,10 +282,10 @@ const RTEntrance = (props) => {
 					.stall(DURATIONS.enter * 1, "hide pie chart")
 					.then(() => {
 						setShowPieChart(false);
-
 						navigateToClassroom(DURATIONS.enter * 1);
 					});
 				return;
+
 				break;
 			case CONNECTION_FAILED:
 				// setFeedback(
@@ -385,12 +388,12 @@ const RTEntrance = (props) => {
 							) {
 								return;
 							}
-							if (!appState.user) {
-								loggError(
-									"Cannot connect to socket without being logged in. TODO: navigate to login page"
-								);
-								return;
-							}
+							// if (!appState.user) {
+							// 	loggError(
+							// 		"Cannot connect to socket without being logged in. TODO: navigate to login page"
+							// 	);
+							// 	return;
+							// }
 							logg(
 								"initiating socket.io",
 								sectionIndex,
@@ -402,9 +405,10 @@ const RTEntrance = (props) => {
 								return state;
 							});
 
-							setConnectionStatus(CONNECTION_STATES.ENTERED_ROOM);
+							setShowPieChart(false);
+							navigateToClassroom(DURATIONS.enter * 1);
 
-							// initSocketIO(title);
+							// setConnectionStatus(CONNECTION_STATES.ENTERED_ROOM);
 						}}
 					></PieChart>
 				</PosedPieContainer>

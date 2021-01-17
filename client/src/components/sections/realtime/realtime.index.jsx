@@ -48,20 +48,20 @@ const label = "RealtimeIndex";
 const SECTION_ROUTE = `rt/`;
 const LOCAL_STORAGE_KEY = "weissClass";
 
-const _user = {
-	email: "Jonny-Weiss@protonmail.com",
-	first_name: "Jonathan",
-	last_name: "Weiss",
-	password: "Philo4ce1",
-	role: "admin",
-};
+// const _user = {
+// 	email: "Jonny-Weiss@protonmail.com",
+// 	first_name: "Jonathan",
+// 	last_name: "Weiss",
+// 	password: "Philo4ce1",
+// 	role: "admin",
+// };
 
 const getUserFromLocalStorage = () => {
 	// localStorage.setObj(LOCAL_STORAGE_KEY, _user);
 	const user = localStorage.getObj(`${LOCAL_STORAGE_KEY}__user`);
 	return user;
 };
-const setUserInLocalStorage = () => {
+const setUserInLocalStorage = (_user) => {
 	localStorage.setObj(`${LOCAL_STORAGE_KEY}__user`, _user);
 	const user = localStorage.getObj(LOCAL_STORAGE_KEY);
 	return user;
@@ -106,6 +106,7 @@ const Realtime = (props) => {
 	const initSocket = useCallback(({ user }) => {
 		try {
 			if (!user) {
+				logg(`no user in initsocket(): `, user);
 				throw new Error(`no user provided`);
 			}
 			const { email, password, role, first_name, last_name } = user;
@@ -114,6 +115,7 @@ const Realtime = (props) => {
 			// setFeedbackType("idle");
 
 			const socket = io("/classrooms");
+
 			promiseKeeper.stall(10 * 1000, "connection timeout").then(() => {
 				//if connected, this promise will not resolve and the callback will not execute
 				// setConnectionStatus(CONNECTION_STATES.IDLE);
@@ -211,8 +213,8 @@ const Realtime = (props) => {
 
 			return socket;
 		} catch (err) {
-			debugger;
 			loggError(err.message);
+			console.error(`error in initsocket(): `, err);
 		}
 	}, []);
 
