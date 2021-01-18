@@ -32,6 +32,8 @@ import {
 import roomsState from "../../../store/rooms.atom.js";
 import socketState from "../../../store/socket.atom.js";
 import socketConnectionState from "../../../store/socketConnection.atom.js";
+import clientTypeState from "../../../store/clientType.atom.js";
+
 import { CONNECTION_STATES } from "../../../store/CONNECTION_STATES.js";
 
 let animationFrame;
@@ -190,6 +192,8 @@ const RTEntrance = (props) => {
 	const [pieData, setPieData] = useState(props.pieData || initialPieData);
 	const [piePaddingAngle, setPiePaddingAngle] = useState(2);
 
+	const [clientType, setClientType] = useRecoilState(clientTypeState);
+
 	const refs = useRef({ viewRef: {}, connectionStatus });
 
 	const navigateToClassroom = useCallback((delay = 0) => {
@@ -221,7 +225,7 @@ const RTEntrance = (props) => {
 
 		return () => {
 			window.cancelAnimationFrame(animationFrame);
-			debugger;
+
 			promiseKeeper.rejectAll();
 		};
 	}, []);
@@ -406,6 +410,7 @@ const RTEntrance = (props) => {
 							});
 
 							setShowPieChart(false);
+							setClientType(title?.toLowerCase());
 							navigateToClassroom(DURATIONS.enter * 1);
 
 							// setConnectionStatus(CONNECTION_STATES.ENTERED_ROOM);

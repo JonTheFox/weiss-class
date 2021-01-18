@@ -22,3 +22,7 @@
 		// animation-timing-function: linear;
 	}
 }
+
+#root .below-appbar {
+	top: var(--appbar-height);
+}

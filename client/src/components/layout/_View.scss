@@ -2,6 +2,8 @@
 	// height: auto;
 	margin: auto;
 	overflow: hidden;
+	height: 100%;
+
 	--view-bg-color: unset;
 	&.transition-target {
 		will-change: transform;

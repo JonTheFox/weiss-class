@@ -166,14 +166,17 @@ const createRoomKey = (str) => {
 };
 
 class Classroom {
+	roomKey;
+	index;
+	name;
+	title;
 	teachers;
 	students;
 	platforms;
-	title;
-	name; //is set in constructor according to title. Serves as the SocketIO room identifier, so it must be unique. Also, must abide to variable name rules because it serves as a key of an object
-	index;
-	roomKey;
+	slides = [];
 	img;
+	video;
+	gif;
 
 	constructor(config = {}) {
 		const {
@@ -185,6 +188,9 @@ class Classroom {
 			name = "",
 			userTypes,
 			img = {},
+			video = {},
+			gif = {},
+			slides = [],
 		} = config;
 
 		const roomNum = is(index).aNumber
@@ -237,6 +243,7 @@ class Classroom {
 		}
 		this.title = _title;
 		this.name = _name;
+		this.slides = slides;
 		this.img = img;
 		const roomKey = createRoomKey(_name);
 		this.roomKey = roomKey;
@@ -493,8 +500,6 @@ const supplementIO = function(io) {
 	classroomsIO.on("connection", function(socket) {
 		logg(`A user has connected to "classroomsIO" namespace.`);
 
-		socket.emit("server__sendsSlide", { currentSlideIndex: 0 });
-
 		socket.on(
 			"client__selectsRoom",
 			({ clientId, roomKey, clientTypes }) => {
@@ -664,7 +669,6 @@ const supplementIO = function(io) {
 				// }
 
 				const newClassroom = classroomsManager.addClassroom(intent);
-				logg("new classroom's key: ", newClassroom.roomKey);
 				newClassroom.addClient({ ...user, ...intent, clientId });
 
 				const classroomInfo = newClassroom.getInfo();

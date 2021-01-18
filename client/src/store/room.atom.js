@@ -1,20 +1,23 @@
 import {
 	atom,
 	//selector,
-	// useRecoilState,
-	//useRecoilValue,
-	// RecoilRoot,
 } from "recoil";
 
 const recoilState = atom({
-	key: "roomState", // unique ID (with respect to other atoms/selectors)
+	key: "roomState",
 	default: {
 		roomKey: "",
 		name: "",
+		title: "",
+		slides: [],
+		img: {},
+		video: {},
+		gif: {},
 		students: [],
 		teachers: [],
 		platforms: [],
-	}, // default, initial value
+		currentSlideIndex: 0,
+	},
 });
 
 export default recoilState;

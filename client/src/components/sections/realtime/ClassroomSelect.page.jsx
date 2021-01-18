@@ -27,6 +27,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Link from "@material-ui/core/Link";
 import posed, { PoseGroup } from "react-pose";
+// import ProductCard from "../../MaterialKit/components/ProductCard/index.js";
 
 import {
   // RecoilRoot,
@@ -80,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
   },
   heroContent: {
-    backgroundColor: theme.palette.background.paper,
+    //backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(8, 0, 6),
     fontSize: "1.5rem",
   },
@@ -203,6 +204,7 @@ export default function ClassroomSelect(props) {
                       onClick={(ev) => {
                         if (is(socket).aString) {
                           loggError("socket is inactive");
+                          debugger;
                           return null;
                         }
 

@@ -27,7 +27,6 @@ import { GetSlides } from "../../../gql/queries/GetSlides";
 import { GetRooms } from "../../../gql/queries/GetRooms";
 
 import {
-	// RecoilRoot,
 	// atom,
 	// selector,
 	useRecoilState,
@@ -39,14 +38,16 @@ import roomState from "../../../store/room.atom.js";
 import socketState from "../../../store/socket.atom.js";
 import userState from "../../../store/user.atom.js";
 import clientState from "../../../store/client.atom.js";
+import lessonState from "../../../store/lesson.atom.js";
 import socketConnectionState from "../../../store/socketConnection.atom.js";
 import { CONNECTION_STATES } from "../../../store/CONNECTION_STATES.js";
 import * as io from "socket.io-client";
 import { localStorage } from "../../../lib/issy/index.js";
 
+import LOCAL_STORAGE_KEY from "../realtime/localStorageKey.js";
+
 const label = "RealtimeIndex";
 const SECTION_ROUTE = `rt/`;
-const LOCAL_STORAGE_KEY = "weissClass";
 
 // const _user = {
 // 	email: "Jonny-Weiss@protonmail.com",
@@ -84,8 +85,10 @@ const Realtime = (props) => {
 	const [room, setRoom] = useRecoilState(roomState);
 	const setSocket = useSetRecoilState(socketState);
 	const setUser = useSetRecoilState(userState);
+	const setLesson = useSetRecoilState(lessonState);
 	const user = useRecoilValue(userState);
 	const [client, setClient] = useRecoilState(clientState);
+	const { slides } = useRecoilValue(lessonState);
 
 	const getClientIdFromLocalStorage = (clientId) => {
 		//pass null to logout
@@ -100,8 +103,13 @@ const Realtime = (props) => {
 	useEffect(() => {
 		if (data?.rooms) {
 			setRooms(data.rooms);
+			logg("rooms: ", data.rooms);
 		}
 	}, [data]);
+
+	useEffect(() => {
+		logg("slides:", slides);
+	}, [slides]);
 
 	const initSocket = useCallback(({ user }) => {
 		try {
@@ -116,13 +124,13 @@ const Realtime = (props) => {
 
 			const socket = io("/classrooms");
 
-			promiseKeeper.stall(10 * 1000, "connection timeout").then(() => {
-				//if connected, this promise will not resolve and the callback will not execute
-				// setConnectionStatus(CONNECTION_STATES.IDLE);
-				// setServerMsg(
-				// 	"Could not connect for some reason. Please check your internet connection and try again."
-				// );
-			});
+			// promiseKeeper.stall(10 * 1000, "connection timeout").then(() => {
+			// 	//if connected, this promise will not resolve and the callback will not execute
+			// 	// setConnectionStatus(CONNECTION_STATES.IDLE);
+			// 	// setServerMsg(
+			// 	// 	"Could not connect for some reason. Please check your internet connection and try again."
+			// 	// );
+			// });
 
 			socket.on("userConnectedHandled", (serverMsg) => {
 				const { content, sender, id } = serverMsg;
@@ -139,7 +147,7 @@ const Realtime = (props) => {
 				// setConnectionStatus(CONNECTION_STATES.CONNECTED);
 			});
 
-			socket.on("re:client__selectsRoom", ({ classroom }) => {
+			socket.on("re:client__selectsRoom", ({ classroom, lesson }) => {
 				if (!classroom) {
 					loggError(
 						"client__selectsRoom: missing argument for classroom"
@@ -230,19 +238,23 @@ const Realtime = (props) => {
 	const { location, match } = props.route;
 
 	return (
-		<Suspense fallback={<WeissSpinner />}>
-			<Switch location={location}>
-				<Route
-					path={`${match.path}rt/classroom-select`}
-					render={(route) => <ClassroomSelect route={route} />}
-				/>
-				<Route
-					path={`${match.path}rt/classroom`}
-					render={(route) => <Classroom route={route} />}
-				/>
-				<Route render={(route) => <RealtimeEntrance route={route} />} />
-			</Switch>
-		</Suspense>
+		<div className="view gradient gradient__silver vh-max--portrait--minus-appbar">
+			<Suspense fallback={<WeissSpinner />}>
+				<Switch location={location}>
+					<Route
+						path={`${match.path}rt/classroom-select`}
+						render={(route) => <ClassroomSelect route={route} />}
+					/>
+					<Route
+						path={`${match.path}rt/classroom`}
+						render={(route) => <Classroom route={route} />}
+					/>
+					<Route
+						render={(route) => <RealtimeEntrance route={route} />}
+					/>
+				</Switch>
+			</Suspense>
+		</div>
 	);
 };
 

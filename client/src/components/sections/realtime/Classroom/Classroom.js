@@ -33,39 +33,17 @@ import roomState from "../../../../store/room.atom.js";
 import socketState from "../../../../store/socket.atom.js";
 import userState from "../../../../store/user.atom.js";
 import clientState from "../../../../store/client.atom.js";
+import currentSlideState from "../../../../store/slide.selector.js";
+
 import socketConnectionState from "../../../../store/socketConnection.atom.js";
 import { CONNECTION_STATES } from "../../../../store/CONNECTION_STATES.js";
 import * as io from "socket.io-client";
 import { localStorage } from "../../../../lib/issy/index.js";
+import Slide from "../Slide/Slide.js";
+import LOCAL_STORAGE_KEY from "../localStorageKey.js";
+import clientsTypes from "../clientsTypes.js";
 
 const label = "Classroom";
-//const SECTION_ROUTE = `rt/classroom`;
-const LOCAL_STORAGE_KEY = "weissClass";
-
-const clientsTypes = ["teachers", "students", "platforms"];
-
-const ClientsContainer = ({ clientsType, room, bgImage }) => {
-	if (clientsType === "teachers") {
-		return (
-			<div
-				className={`clients__container ${clientsType}`}
-				style={{
-					background: `url(${bgImage})`,
-					backgroundRepeat: "no-repeat",
-					backgroundSize: "cover",
-				}}
-			>
-				<h2 className={`classroom__header`}>{`${clientsType}`}</h2>
-			</div>
-		);
-	}
-
-	return (
-		<div className={`clients__container ${clientsType} `}>
-			<h2 className={`classroom__header`}>{`${clientsType}`}</h2>
-		</div>
-	);
-};
 
 const Classroom = (props) => {
 	const [appUtils] = useContext(AppContext);
@@ -79,25 +57,22 @@ const Classroom = (props) => {
 	const { loading, error, data } = useQuery(GetRooms);
 
 	const user = useRecoilValue(userState);
+	const currentSlide = useRecoilValue(currentSlideState);
 	// const client = useRecoilValue(clientState);
 	const room = useRecoilValue(roomState);
-
-	const { location, match } = props.route;
 
 	const bgImage =
 		room?.img?.url || room?.teachers?.clients?.[0]?.img?.url || "";
 
 	return (
 		<View className={"classroom"}>
-			{clientsTypes.map((clientsType, i, clientsTypes) => {
-				return (
-					<ClientsContainer
-						clientsType={clientsType}
-						room={room}
-						bgImage={bgImage}
-					></ClientsContainer>
-				);
-			})}
+			{currentSlide ? (
+				<Slide slide={currentSlide}></Slide>
+			) : (
+				clientsTypes.map((clientsType, i, clientsTypes) => {
+					return "No current slide";
+				})
+			)}
 		</View>
 	);
 };

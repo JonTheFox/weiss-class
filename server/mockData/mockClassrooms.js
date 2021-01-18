@@ -1,5 +1,15 @@
+const PRESENT_SIMPLE_SLIDES = [
+	{
+		header: "Present Simple",
+		subheader: "Do / Does",
+		currentStepIndex: 0,
+	},
+];
+
 const classrooms = [
 	{
+		slides: PRESENT_SIMPLE_SLIDES,
+		currentSlideIndex: 0,
 		teachers: [
 			{
 				first_name: "Robert",
