@@ -154,7 +154,6 @@ const Realtime = (props) => {
 					);
 					return;
 				}
-
 				setRoom(classroom);
 			});
 

@@ -6,6 +6,7 @@ import React, {
 	useCallback,
 } from "react";
 import { AppContext } from "../../../../contexts/AppContext.jsx";
+import { DeviceContext } from "../../../../contexts/DeviceContext.jsx";
 import Card from "../../../partials/Card.jsx";
 import WeissSpinner from "../../../partials/WeissSpinner.jsx";
 //import PropTypes from "prop-types";
@@ -43,6 +44,12 @@ import Slide from "../Slide/Slide.js";
 import LOCAL_STORAGE_KEY from "../localStorageKey.js";
 import clientsTypes from "../clientsTypes.js";
 
+import SwipeableViews from "react-swipeable-views";
+import { virtualize } from "react-swipeable-views-utils";
+import Swiper from "../../../partials/Swiper.jsx";
+
+const VirtualizeSwipeableViews = virtualize(SwipeableViews);
+
 const label = "Classroom";
 
 const Classroom = (props) => {
@@ -58,21 +65,55 @@ const Classroom = (props) => {
 
 	const user = useRecoilValue(userState);
 	const currentSlide = useRecoilValue(currentSlideState);
+
 	// const client = useRecoilValue(clientState);
 	const room = useRecoilValue(roomState);
+
+	const { slides, currentSlideIndex } = room;
 
 	const bgImage =
 		room?.img?.url || room?.teachers?.clients?.[0]?.img?.url || "";
 
+	const mapSlide = useCallback((refs, goToStep, slide) => {
+		return <Slide slide={slide}></Slide>;
+	}, []);
+
+	const handleChangeSlideIndex = useCallback((slideIndex) => {
+		logg("handleChangeSlideIndex ", slideIndex);
+	}, []);
+
 	return (
 		<View className={"classroom"}>
-			{currentSlide ? (
-				<Slide slide={currentSlide}></Slide>
-			) : (
-				clientsTypes.map((clientsType, i, clientsTypes) => {
-					return "No current slide";
-				})
-			)}
+			<Swiper
+				sharedRefs={refs}
+				className={
+					"x-fast transition--opaque animation animation-delay--3"
+				}
+				items={slides || []}
+				mapItem={mapSlide.bind(
+					null,
+					refs,
+					refs.current.swiper_goToStep
+				)}
+				onItemsLoaded={(a, b) => {
+					logg("onItemsLoaded: ", a, b);
+				}}
+				noFullscreen={true}
+				size={DeviceContext.screenSize}
+				justifyContent="space-between"
+				//onChange={handleViewedItemChange}
+				onChangeIndex={handleChangeSlideIndex}
+				onSwitching={(index, type) => {
+					logg("on switching ", index, type);
+				}}
+			></Swiper>
+
+			<SwipeableViews>
+				{slides &&
+					slides.map((slide) => {
+						return <Slide slide={slide}></Slide>;
+					})}
+			</SwipeableViews>
 		</View>
 	);
 };

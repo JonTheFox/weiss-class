@@ -1,8 +1,27 @@
 const PRESENT_SIMPLE_SLIDES = [
 	{
 		header: "Present Simple",
+
+		p: [
+			"When we talk about general truths, we use Present Simple.",
+			"For example: ",
+			"You study very well.",
+			"I go to school every day.",
+			"We wash our car once a week.",
+		],
+		//backgroundImage: ,
+	},
+	{
+		header: "Present Simple",
 		subheader: "Do / Does",
-		currentStepIndex: 0,
+		p: [
+			"When the subject is he/she/it, we add s/es/ies to the end of the verb.",
+			"For example: ",
+			"She studies very well.",
+			"He goes to school every day.",
+			"It helps us.",
+		],
+		//backgroundImage: ,
 	},
 ];
 
