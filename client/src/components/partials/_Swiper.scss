@@ -21,9 +21,12 @@
 	}
 	.views {
 		width: 100%;
-		height: auto;
+		height: 100%;
 		&.imageSlider {
 			min-height: 255px;
+		}
+		.react-swipeable-view-container {
+			height: 100%;
 		}
 	}
 	.header {

@@ -3,7 +3,7 @@ import React, {
 	useContext,
 	useEffect,
 	useRef,
-	useCallback
+	useCallback,
 } from "react";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@material-ui/styles";
@@ -29,19 +29,19 @@ const titlePoses = {
 	visible: {
 		transition: { duration: DURATIONS.enter },
 		scale: 1,
-		delay: 0
+		delay: 0,
 	},
 	pressable: true,
 	init: { scale: 1 },
 	press: {
 		scale: 0.8,
-		duration: DURATIONS.exit * 0.25
+		duration: DURATIONS.exit * 0.25,
 	},
 	hidden: {
 		delay: 0,
 		scale: 1,
-		transition: { duration: DURATIONS.exit }
-	}
+		transition: { duration: DURATIONS.exit },
+	},
 };
 
 //promiseLabel;
@@ -56,11 +56,11 @@ const label = "Swiper";
 //defaults
 const MAX_STEPS_FOR_DOTS = {
 	small: 5,
-	normal: 5
+	normal: 5,
 };
 const MAX_STEPS_FOR_LINEAR = {
 	small: 10,
-	normal: 10
+	normal: 10,
 };
 
 const EMPTY_FUNC = () => {};
@@ -87,7 +87,7 @@ const Swiper = React.forwardRef((props, ref) => {
 		onLastClick = EMPTY_FUNC,
 		onBackClick = EMPTY_FUNC,
 		onFirstClick = EMPTY_FUNC,
-		showHeader
+		showHeader,
 	} = props;
 
 	const size = ["normal", "small", "medium"].includes(props.size)
@@ -120,7 +120,7 @@ const Swiper = React.forwardRef((props, ref) => {
 		removePressHandlers,
 		synthVoice,
 		loadImage,
-		scrollTo
+		scrollTo,
 	} = appUtils;
 	promiseKeeper = promiseKeeper || new PromiseKeeper({ label });
 
@@ -138,7 +138,7 @@ const Swiper = React.forwardRef((props, ref) => {
 
 	const toggleFullScreenMode = () => {
 		animationFrame = window.requestAnimationFrame(() => {
-			setIsFullScreenMode(prev => !prev);
+			setIsFullScreenMode((prev) => !prev);
 		});
 	};
 
@@ -179,7 +179,7 @@ const Swiper = React.forwardRef((props, ref) => {
 	// 	});
 	// };
 
-	const handleStepChange = newStep => {
+	const handleStepChange = (newStep) => {
 		//callback invoked by the SwipableViews component itself, and also by hitting the navigation btns
 		const _items =
 			props.items && props.items.length
@@ -192,7 +192,7 @@ const Swiper = React.forwardRef((props, ref) => {
 			props.onChangeIndex({
 				step: newStep,
 				items: _items,
-				item: _items[newStep]
+				item: _items[newStep],
 			});
 			return;
 		}
@@ -201,7 +201,7 @@ const Swiper = React.forwardRef((props, ref) => {
 			props.onChange({
 				step: newStep,
 				items: _items,
-				item: _items[newStep]
+				item: _items[newStep],
 			});
 			return;
 		}
@@ -257,7 +257,7 @@ const Swiper = React.forwardRef((props, ref) => {
 		handleStepChange(0);
 	};
 
-	const goToStep = useCallback(stepNum => {
+	const goToStep = useCallback((stepNum) => {
 		if (
 			(stepNum >= 0 && stepNum <= sharedRefs.current.swiper_numItems) ||
 			props.items.length
@@ -268,7 +268,7 @@ const Swiper = React.forwardRef((props, ref) => {
 	});
 
 	const setDimensionVars = useCallback(
-		ev => {
+		(ev) => {
 			const swiperRef = sharedRefs?.current?.swiper?.ref;
 			if (!swiperRef) return null;
 			const swipableViewsRef = swiperRef.querySelector(
@@ -304,7 +304,7 @@ const Swiper = React.forwardRef((props, ref) => {
 			swiper_numItems,
 			swiper_activeStep,
 			swiper_viewedItem,
-			swiper_goToStep
+			swiper_goToStep,
 		} = sharedRefs.current;
 
 		swiper_numItems = items.length || 0;
@@ -314,7 +314,7 @@ const Swiper = React.forwardRef((props, ref) => {
 
 		const {
 			prev = { key: props.prevKey || "arrowLeft" },
-			next = { key: props.nextKey || "arrowRight" }
+			next = { key: props.nextKey || "arrowRight" },
 		} = navigationKeys;
 
 		promiseKeeper
@@ -327,7 +327,7 @@ const Swiper = React.forwardRef((props, ref) => {
 				// 	// ev.preventDefault();
 				// });
 			})
-			.catch(reason => {
+			.catch((reason) => {
 				loggError(reason);
 			});
 
@@ -349,13 +349,12 @@ const Swiper = React.forwardRef((props, ref) => {
 		sharedRefs.current.swiper_activeStep = activeStep;
 		sharedRefs.current.swiper_viewedItem = items[activeStep];
 		sharedRefs.current.swiper_goToStep = goToStep;
-		logg("activeStep: ", activeStep, "viewedItem: ", viewedItem);
 	}, [activeStep]);
 
 	useEffect(() => {
 		sharedRefs.current.swiper_numItems = items ? items.length : 0;
 		sharedRefs.current.items = items || [];
-		bufferLoad(items, setLoadedItems).then(loadedItems => {
+		bufferLoad(items, setLoadedItems).then((loadedItems) => {
 			setLoadedItems(loadedItems);
 		});
 	}, [items]);
@@ -383,7 +382,7 @@ const Swiper = React.forwardRef((props, ref) => {
 				justifyContent && justifyContent,
 				isFullScreenMode && "fullscreen-mode"
 			)}
-			ref={refoosh => {
+			ref={(refoosh) => {
 				if (refoosh) {
 					sharedRefs.current.swiper.ref = refoosh;
 				}
@@ -400,7 +399,7 @@ const Swiper = React.forwardRef((props, ref) => {
 				onSwitching={onSwitching}
 				resistance={resistance}
 				enableMouseEvents
-				ref={ref => {
+				ref={(ref) => {
 					if (ref) {
 						sharedRefs.current.swiper.swipableViews.ref = ref;
 					}
@@ -529,7 +528,7 @@ Swiper.propTypes = {
 	onFirstClick: PropTypes.func,
 	resistance: PropTypes.bool,
 	nextKey: PropTypes.string,
-	prevKey: PropTypes.string
+	prevKey: PropTypes.string,
 	//index: PropTypes.number
 };
 

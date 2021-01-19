@@ -86,9 +86,7 @@ const Classroom = (props) => {
 		<View className={"classroom"}>
 			<Swiper
 				sharedRefs={refs}
-				className={
-					"x-fast transition--opaque animation animation-delay--3"
-				}
+				index={1}
 				items={slides || []}
 				mapItem={mapSlide.bind(
 					null,
@@ -103,17 +101,8 @@ const Classroom = (props) => {
 				justifyContent="space-between"
 				//onChange={handleViewedItemChange}
 				onChangeIndex={handleChangeSlideIndex}
-				onSwitching={(index, type) => {
-					logg("on switching ", index, type);
-				}}
+				onSwitching={(index, type) => {}}
 			></Swiper>
-
-			<SwipeableViews>
-				{slides &&
-					slides.map((slide) => {
-						return <Slide slide={slide}></Slide>;
-					})}
-			</SwipeableViews>
 		</View>
 	);
 };

@@ -5,10 +5,10 @@ import React, {
 	Suspense,
 	useCallback,
 } from "react";
-import Card from "../../../partials/Card.jsx";
+import Heading from "../../../partials/Heading/Heading.js";
+import Text from "../../../partials/Text/Text.js";
 //import PropTypes from "prop-types";
 // import clsx from "clsx";
-import View from "../../../layout/View.jsx";
 
 import useLogg from "../../../hooks/useLogg.jsx";
 import usePromiseKeeper from "../../../hooks/usePromiseKeeper.jsx";
@@ -26,19 +26,20 @@ const Slide = ({ slide = {} }) => {
 	// const [appUtils] = useContext(AppContext);
 	// const { PromiseKeeper, Logger } = appUtils;
 
-	const { header = "", subheader = "", p = [""], bgImage = "" } = slide;
+	const { heading = "", subheading = "", p = [""], bgImage = "" } = slide;
+
 	// const { logg, loggError } = useLogg({ label });
 	// const promiseKeeper = usePromiseKeeper({ label });
 
 	return (
 		<StyledSlide
-			style={{ backgroundImage: bgImage }}
+			style={{ backgroundImage: `url(${bgImage})` }}
 			className={"Slide Slide--base1"}
 		>
-			<h1>{header}</h1>
-			<h2>{subheader}</h2>
+			<Heading>{heading}</Heading>
+			<Heading h="2">{subheading}</Heading>
 			{p.map((paragraph) => {
-				return <p>{paragraph}</p>;
+				return <Text>{paragraph}</Text>;
 			})}
 		</StyledSlide>
 	);
