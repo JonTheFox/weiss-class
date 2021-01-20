@@ -22,14 +22,10 @@ import View from "../../layout/View.jsx";
 import PieChart from "../../partials/PieChart.jsx";
 import "./_Realtime.scss";
 
-import {
-	// RecoilRoot,
-	// atom,
-	// selector,
-	useRecoilState,
-	useRecoilValue,
-} from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import roomsState from "../../../store/rooms.atom.js";
+import userState from "../../../store/user.atom.js";
+// import refsState from "../../../store/refs.atom.js";
 import socketState from "../../../store/socket.atom.js";
 import socketConnectionState from "../../../store/socketConnection.atom.js";
 import clientState from "../../../store/client.atom.js";
@@ -155,11 +151,9 @@ const initialPieData = [
 const CONNECTION_TIMEOUT_LABEL = "connectionTimeout";
 
 const RTEntrance = (props) => {
-	const [appUtils, appState, setAppState] = useContext(AppContext);
-
 	const { route } = props;
 	const { match, location, history } = route;
-	const { user } = appState;
+	const [appUtils, appState, setAppState] = useContext(AppContext);
 	const {
 		PromiseKeeper,
 		Logger,
@@ -181,6 +175,8 @@ const RTEntrance = (props) => {
 		DISCONNECTED,
 	} = CONNECTION_STATES;
 
+	const user = useRecoilValue(userState);
+
 	const [feedback, setFeedback] = useState("");
 	const [connectionStatus, setConnectionStatus] = useRecoilState(
 		socketConnectionState
@@ -194,7 +190,7 @@ const RTEntrance = (props) => {
 
 	const [client, setClient] = useRecoilState(clientState);
 
-	const refs = useRef({ viewRef: {}, connectionStatus });
+	// const refs = useRecoilValue(refsState);
 
 	const navigateToClassroomSelect = useCallback((delay = 0) => {
 		logg("About to navigate to classroom");
@@ -231,7 +227,7 @@ const RTEntrance = (props) => {
 	}, []);
 
 	useEffect(() => {
-		refs.current.connectionStatus = connectionStatus;
+		// refs.current.connectionStatus = connectionStatus;
 		let newFeedback = "";
 		switch (connectionStatus) {
 			case IS_NOT_READY:
@@ -392,9 +388,10 @@ const RTEntrance = (props) => {
 							) {
 								return;
 							}
-							if (!appState.user) {
+
+							if (!user) {
 								loggError(
-									"Cannot connect to socket without being logged in. TODO: navigate to login page"
+									"Cannot connect to socket without being logged in."
 								);
 								return navigateTo("./login", history);
 							}
@@ -405,12 +402,6 @@ const RTEntrance = (props) => {
 								..._client,
 								type,
 							}));
-
-							//legacy (using Context API)
-							setAppState((state) => {
-								state.realtime.userTypes = [title];
-								return state;
-							});
 
 							setShowPieChart(false);
 

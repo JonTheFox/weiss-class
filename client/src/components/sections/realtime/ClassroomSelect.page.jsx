@@ -42,6 +42,7 @@ import roomsState from "../../../store/rooms.atom.js";
 import socketState from "../../../store/socket.atom.js";
 import clientState from "../../../store/client.atom.js";
 import classroomState from "../../../store/classroom.atom.js";
+import refsState from "../../../store/refs.atom.js";
 
 import * as io from "socket.io-client";
 
@@ -116,7 +117,7 @@ export default function ClassroomSelect(props) {
   const promiseKeeper = usePromiseKeeper({ label });
 
   const classes = useStyles();
-  const refs = useRef({ client: { id: 0, type: "" } });
+  const refs = useRecoilValue(refsState);
 
   const [rooms, setRooms] = useRecoilState(roomsState);
   const setClassroom = useSetRecoilState(classroomState);
@@ -124,17 +125,6 @@ export default function ClassroomSelect(props) {
   const client = useRecoilValue(clientState);
 
   const history = useHistory();
-
-  useEffect(() => {
-    const { classrooms } = appState.realtime;
-    setItems(classrooms || []);
-    logg("classrooms updated: ", classrooms);
-  }, [appState]);
-
-  useEffect(() => {
-    refs.current.client = client;
-    debugger;
-  }, [client]);
 
   return (
     <View className={classes.root}>
@@ -209,14 +199,12 @@ export default function ClassroomSelect(props) {
                           return null;
                         }
 
-                        const _clientId = refs.current?.client?.id ?? 0;
-                        const _clientType = refs.current?.client?.type ?? "";
+                        const { id, type } = client;
 
-                        debugger;
                         socket.emit("client__selectsRoom", {
-                          clientId: _clientId,
                           roomKey,
-                          clientType: _clientType,
+                          clientId: client.id,
+                          clientType: client.type,
                         });
 
                         setClassroom({ roomKey });

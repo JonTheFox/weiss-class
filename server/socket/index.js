@@ -54,24 +54,18 @@ class ClassroomClient {
 			first_name,
 			last_name,
 			clientId,
-			userTypes,
+			userType,
 			roomKey,
 			img,
 		} = config;
 		if (!email || !first_name || !last_name)
 			throw new Error("Invalid user credentials");
-
-		const _userTypes =
-			userTypes &&
-			userTypes.length &&
-			userTypes.map((userType) => userType.toLowerCase());
-
 		Object.assign(this, {
 			email,
 			first_name,
 			last_name,
 			clientId,
-			userTypes: _userTypes,
+			userType,
 			roomKey,
 			img,
 		});
@@ -414,6 +408,8 @@ class ClassroomManager {
 		const foundClient = allClients.find((client) => {
 			return client.clientId === clientId;
 		});
+		logg("foundClient: ", foundClient);
+		logg("allClients: ", allClients);
 		return foundClient || null;
 		// const clientTypes = ["students", "teachers", "platforms"];
 
@@ -503,7 +499,7 @@ const supplementIO = function(io) {
 		socket.on(
 			"client__selectsRoom",
 			({ clientId, roomKey, clientType = "" }) => {
-				logg("client__selectsRoom. clientTypes: ", clientType);
+				logg("client__selectsRoom. clientType: ", clientType);
 
 				if (!clientId || !roomKey) {
 					loggError(
@@ -515,6 +511,8 @@ const supplementIO = function(io) {
 				}
 
 				const client = classroomsManager.getClientById(clientId);
+
+				logg("client: ", client);
 
 				if (!client) {
 					return socket.emit("re:client__selectsRoom", {
@@ -535,6 +533,8 @@ const supplementIO = function(io) {
 				);
 
 				const classroom = classroomsManager.getRoomByKey(roomKey);
+
+				logg("classroom: ", classroom);
 
 				socket.emit("re:client__selectsRoom", {
 					classroom,
@@ -564,6 +564,7 @@ const supplementIO = function(io) {
 
 				const authenticatedUser = await authenticate(user);
 				const userWithoutPass = getPublicUserData(authenticatedUser);
+
 				const { first_name, last_name } = userWithoutPass;
 
 				const clientId = getUniqueString(12);
@@ -579,7 +580,7 @@ const supplementIO = function(io) {
 					last_name} is authenticated.`;
 				logg(clientTypeMsg);
 
-				classroomsManager.addClient(userWithoutPass);
+				classroomsManager.addClient({ ...userWithoutPass, clientId });
 
 				const availableRooms = classroomsManager.getRooms();
 

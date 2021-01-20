@@ -39,6 +39,7 @@ import socketState from "../../../store/socket.atom.js";
 import userState from "../../../store/user.atom.js";
 import clientState from "../../../store/client.atom.js";
 import lessonState from "../../../store/lesson.atom.js";
+import refsState from "../../../store/refs.atom.js";
 import socketConnectionState from "../../../store/socketConnection.atom.js";
 import { CONNECTION_STATES } from "../../../store/CONNECTION_STATES.js";
 import * as io from "socket.io-client";
@@ -80,19 +81,18 @@ const Realtime = (props) => {
 		setUser(localStorageUser);
 		const localStorageClient = localStorage.getObj(CLIENT_STORAGE_KEY);
 		setClient(localStorageClient);
-		debugger;
 	}, []);
 
 	useEffect(() => {
 		localStorage.setObj(CLIENT_STORAGE_KEY, client);
-		const _client = localStorage.getObj(CLIENT_STORAGE_KEY);
-		logg("client: ", _client);
+		refs.current.client = client;
+		logg("client: ", client);
 	}, [client]);
 
 	useEffect(() => {
 		localStorage.setObj(USER_STORAGE_KEY, user);
-		const _user = localStorage.getObj(USER_STORAGE_KEY);
-		logg("user: ", _user);
+		refs.current.user = user;
+		logg("user: ", user);
 	}, [user]);
 
 	useEffect(() => {
@@ -145,7 +145,7 @@ const Realtime = (props) => {
 			socket.on("re:client__selectsRoom", ({ classroom, lesson }) => {
 				if (!classroom) {
 					loggError(
-						"client__selectsRoom: missing argument for classroom"
+						"client__selectsRoom: Did not receive a classroom"
 					);
 					return;
 				}
@@ -154,8 +154,6 @@ const Realtime = (props) => {
 
 			socket.on("server__authedClient", ({ classrooms, client }) => {
 				logg("server__authedClient", client);
-
-				debugger;
 
 				setClient((_client) => ({ ..._client, id: client.id }));
 				setRooms(classrooms);
@@ -224,7 +222,7 @@ const Realtime = (props) => {
 
 	useEffect(() => {
 		try {
-			if (!user) return;
+			if (isSocketInitialized || !user) return;
 			const socket = initSocket({
 				user,
 			});
