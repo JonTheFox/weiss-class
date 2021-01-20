@@ -116,7 +116,7 @@ export default function ClassroomSelect(props) {
   const promiseKeeper = usePromiseKeeper({ label });
 
   const classes = useStyles();
-  const refs = useRef({ client: { id: 0 } });
+  const refs = useRef({ client: { id: 0, type: "" } });
 
   const [rooms, setRooms] = useRecoilState(roomsState);
   const setClassroom = useSetRecoilState(classroomState);
@@ -133,6 +133,7 @@ export default function ClassroomSelect(props) {
 
   useEffect(() => {
     refs.current.client = client;
+    debugger;
   }, [client]);
 
   return (
@@ -209,10 +210,15 @@ export default function ClassroomSelect(props) {
                         }
 
                         const _clientId = refs.current?.client?.id ?? 0;
+                        const _clientType = refs.current?.client?.type ?? "";
+
+                        debugger;
                         socket.emit("client__selectsRoom", {
                           clientId: _clientId,
                           roomKey,
+                          clientType: _clientType,
                         });
+
                         setClassroom({ roomKey });
 
                         navigateTo(`/rt/classroom`, history);

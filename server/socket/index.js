@@ -502,8 +502,8 @@ const supplementIO = function(io) {
 
 		socket.on(
 			"client__selectsRoom",
-			({ clientId, roomKey, clientTypes }) => {
-				logg("client__selectsRoom. clientTypes: ", clientTypes);
+			({ clientId, roomKey, clientType = "" }) => {
+				logg("client__selectsRoom. clientTypes: ", clientType);
 
 				if (!clientId || !roomKey) {
 					loggError(
@@ -514,7 +514,7 @@ const supplementIO = function(io) {
 					});
 				}
 
-				let client = classroomsManager.getClientById(clientId);
+				const client = classroomsManager.getClientById(clientId);
 
 				if (!client) {
 					return socket.emit("re:client__selectsRoom", {
@@ -550,41 +550,31 @@ const supplementIO = function(io) {
 			}
 		);
 
-		socket.on("client__providesCredentials", async function(payload) {
+		socket.on("client__providesCredentials", async function({
+			user,
+			clientType = "",
+		}) {
 			try {
-				if (!payload) throw new Error(`No payload`);
-				const { user } = payload;
-				let { userTypes } = payload;
+				if (!clientType) throw new Error(`No clientType provided`);
 				if (!user) throw new Error(`No user provided`);
 				assertValidCredentials(user);
-
 				const { role } = user;
 				const roles = user.roles || (role && [role]) || ["user"];
 				user.roles = roles;
 
 				const authenticatedUser = await authenticate(user);
-				const clientId = getUniqueString(12);
 				const userWithoutPass = getPublicUserData(authenticatedUser);
-				userWithoutPass.clientId = clientId;
 				const { first_name, last_name } = userWithoutPass;
 
-				//make sure that the userType is one of the accepted types (teacher, student, platform)
-				if (!userTypes || !is(userTypes).anArray) {
-					userTypes = ["student"];
-				}
-				let userType;
-				const firstUserType = userTypes[0];
-				if (
-					!firstUserType ||
-					!is(firstUserType).aString ||
-					!USER_TYPES.includes(firstUserType.toLowerCase())
-				) {
-					userType = "student";
-				} else {
-					userType = firstUserType.toLowerCase();
-				}
+				const clientId = getUniqueString(12);
+				clientType = clientType.toLowerCase();
+				//make sure that the clientType is one of the accepted types (teacher, student, platform
+				clientType =
+					clientType && USER_TYPES.includes(clientType)
+						? clientType
+						: "student";
 
-				const clientTypeMsg = `${userType} ${first_name +
+				const clientTypeMsg = `${clientType} ${first_name +
 					" " +
 					last_name} is authenticated.`;
 				logg(clientTypeMsg);
@@ -595,15 +585,14 @@ const supplementIO = function(io) {
 
 				const availableRoomsKeys = classroomsManager.getRoomsKeys();
 				logg(
-					`${userType} ${authenticatedUser.first_name} ${authenticatedUser.last_name} can try to enter one of the following rooms: `,
+					`${clientType} ${authenticatedUser.first_name} ${authenticatedUser.last_name} can try to enter one of the following rooms: `,
 					availableRoomsKeys
 				);
 
 				return socket.emit("server__authedClient", {
 					user: userWithoutPass,
-					userType,
+					client: { id: clientId, type: clientType },
 					classrooms: availableRooms,
-					clientId,
 				});
 
 				// socket.join(roomKey);

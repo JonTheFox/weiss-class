@@ -49,26 +49,10 @@ import LOCAL_STORAGE_KEY from "../realtime/localStorageKey.js";
 const label = "RealtimeIndex";
 const SECTION_ROUTE = `rt/`;
 
-// const _user = {
-// 	email: "Jonny-Weiss@protonmail.com",
-// 	first_name: "Jonathan",
-// 	last_name: "Weiss",
-// 	password: "Philo4ce1",
-// 	role: "admin",
-// };
-
-const getUserFromLocalStorage = () => {
-	// localStorage.setObj(LOCAL_STORAGE_KEY, _user);
-	const user = localStorage.getObj(`${LOCAL_STORAGE_KEY}__user`);
-	return user;
-};
-const setUserInLocalStorage = (_user) => {
-	localStorage.setObj(`${LOCAL_STORAGE_KEY}__user`, _user);
-	const user = localStorage.getObj(LOCAL_STORAGE_KEY);
-	return user;
-};
-
 let isSocketInitialized = false;
+
+const CLIENT_STORAGE_KEY = `${LOCAL_STORAGE_KEY}__client`;
+const USER_STORAGE_KEY = `${LOCAL_STORAGE_KEY}__user`;
 
 const Realtime = (props) => {
 	const [appUtils] = useContext(AppContext);
@@ -90,15 +74,26 @@ const Realtime = (props) => {
 	const [client, setClient] = useRecoilState(clientState);
 	const { slides } = useRecoilValue(lessonState);
 
-	const getClientIdFromLocalStorage = (clientId) => {
-		//pass null to logout
-		localStorage.setObj(LOCAL_STORAGE_KEY + "__clientId", user);
-	};
+	useEffect(() => {
+		if (user) return;
+		const localStorageUser = localStorage.getObj(USER_STORAGE_KEY);
+		setUser(localStorageUser);
+		const localStorageClient = localStorage.getObj(CLIENT_STORAGE_KEY);
+		setClient(localStorageClient);
+		debugger;
+	}, []);
 
 	useEffect(() => {
-		const localStorageUser = getUserFromLocalStorage();
-		setUser(localStorageUser);
-	}, []);
+		localStorage.setObj(CLIENT_STORAGE_KEY, client);
+		const _client = localStorage.getObj(CLIENT_STORAGE_KEY);
+		logg("client: ", _client);
+	}, [client]);
+
+	useEffect(() => {
+		localStorage.setObj(USER_STORAGE_KEY, user);
+		const _user = localStorage.getObj(USER_STORAGE_KEY);
+		logg("user: ", _user);
+	}, [user]);
 
 	useEffect(() => {
 		if (data?.rooms) {
@@ -157,10 +152,12 @@ const Realtime = (props) => {
 				setRoom(classroom);
 			});
 
-			socket.on("server__authedClient", ({ classrooms, clientId }) => {
-				logg("server__authedClient", clientId);
+			socket.on("server__authedClient", ({ classrooms, client }) => {
+				logg("server__authedClient", client);
 
-				setClient((_client) => ({ ..._client, id: clientId }));
+				debugger;
+
+				setClient((_client) => ({ ..._client, id: client.id }));
 				setRooms(classrooms);
 			});
 
@@ -187,7 +184,7 @@ const Realtime = (props) => {
 						role,
 					},
 					// clientType: clientType.toLowerCase(),
-					clientTypes: client.userTypes,
+					clientType: client.type,
 				});
 			});
 
@@ -226,12 +223,17 @@ const Realtime = (props) => {
 	}, []);
 
 	useEffect(() => {
-		if (!user || isSocketInitialized) return;
-		const socket = initSocket({
-			user,
-		});
-		isSocketInitialized = true;
-		setSocket(socket);
+		try {
+			if (!user) return;
+			const socket = initSocket({
+				user,
+			});
+			isSocketInitialized = true;
+			setSocket(socket);
+			console.log("passed without an error!!!!");
+		} catch (err) {
+			console.log(err);
+		}
 	}, [user]);
 
 	const { location, match } = props.route;

@@ -32,7 +32,7 @@ import {
 import roomsState from "../../../store/rooms.atom.js";
 import socketState from "../../../store/socket.atom.js";
 import socketConnectionState from "../../../store/socketConnection.atom.js";
-import clientTypeState from "../../../store/clientType.atom.js";
+import clientState from "../../../store/client.atom.js";
 
 import { CONNECTION_STATES } from "../../../store/CONNECTION_STATES.js";
 
@@ -192,11 +192,11 @@ const RTEntrance = (props) => {
 	const [pieData, setPieData] = useState(props.pieData || initialPieData);
 	const [piePaddingAngle, setPiePaddingAngle] = useState(2);
 
-	const [clientType, setClientType] = useRecoilState(clientTypeState);
+	const [client, setClient] = useRecoilState(clientState);
 
 	const refs = useRef({ viewRef: {}, connectionStatus });
 
-	const navigateToClassroom = useCallback((delay = 0) => {
+	const navigateToClassroomSelect = useCallback((delay = 0) => {
 		logg("About to navigate to classroom");
 		promiseKeeper.stall(delay, "navigate to classroom").then(() => {
 			navigateTo(`/rt/classroom-select`, history);
@@ -266,7 +266,7 @@ const RTEntrance = (props) => {
 						// setShowPieChart(false);
 
 						// animationFrame = window.requestAnimationFrame(() => {
-						navigateToClassroom();
+						navigateToClassroomSelect();
 					});
 
 				// });
@@ -280,13 +280,13 @@ const RTEntrance = (props) => {
 				);
 				debugger;
 				// animationFrame = window.requestAnimationFrame(() => {
-				// return navigateToClassroom();
+				// return navigateToClassroomSelect();
 				// });
 				promiseKeeper
 					.stall(DURATIONS.enter * 1, "hide pie chart")
 					.then(() => {
 						setShowPieChart(false);
-						navigateToClassroom(DURATIONS.enter * 1);
+						navigateToClassroomSelect(DURATIONS.enter * 1);
 					});
 				return;
 
@@ -392,26 +392,29 @@ const RTEntrance = (props) => {
 							) {
 								return;
 							}
-							// if (!appState.user) {
-							// 	loggError(
-							// 		"Cannot connect to socket without being logged in. TODO: navigate to login page"
-							// 	);
-							// 	return;
-							// }
-							logg(
-								"initiating socket.io",
-								sectionIndex,
-								chartData
-							);
-							logg("selected user type: " + title);
+							if (!appState.user) {
+								loggError(
+									"Cannot connect to socket without being logged in. TODO: navigate to login page"
+								);
+								return navigateTo("./login", history);
+							}
+
+							const type = title?.toLowerCase() ?? "";
+
+							setClient((_client) => ({
+								..._client,
+								type,
+							}));
+
+							//legacy (using Context API)
 							setAppState((state) => {
 								state.realtime.userTypes = [title];
 								return state;
 							});
 
 							setShowPieChart(false);
-							setClientType(title?.toLowerCase());
-							navigateToClassroom(DURATIONS.enter * 1);
+
+							navigateToClassroomSelect(DURATIONS.enter * 1);
 
 							// setConnectionStatus(CONNECTION_STATES.ENTERED_ROOM);
 						}}

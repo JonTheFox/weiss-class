@@ -165,6 +165,7 @@ const getUserFromLocalStorage = () => {
         const { first_name, last_name, email } = user;
         const userSansPassword = { first_name, last_name, email };
         logg("User from LocalStorage: ", userSansPassword);
+        debugger;
     } else {
         logg("No user saved in LocalStorage.");
     }

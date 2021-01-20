@@ -18,6 +18,15 @@ import ENDPOINTS from "../../AJAX/ajax-endpoints.js";
 
 import { AppContext } from "../../contexts/AppContext.jsx";
 
+import {
+	// atom,
+	// selector,
+	// useRecoilState,
+	// useRecoilValue,
+	useSetRecoilState,
+} from "recoil";
+import userState from "../../store/user.atom.js";
+
 function Copyright() {
 	return (
 		<Typography variant="body2" color="textSecondary" align="center">
@@ -71,6 +80,8 @@ export default function SignIn(props) {
 		//PromiseKeeper,
 	} = appUtil;
 
+	const setUser = useSetRecoilState(userState);
+
 	const submitForm = useCallback(async (ev) => {
 		ev.preventDefault();
 		try {
@@ -79,15 +90,14 @@ export default function SignIn(props) {
 			const password = formData.get("password");
 			const rememberMe = formData.get("remember");
 			const _end = ENDPOINTS;
-			debugger;
 
 			const ajaxResult = await request(
 				"POST",
 				ENDPOINTS.users.POST.login.path,
 				{ email, password }
 			);
-			debugger;
 			const { error, wrongCredentials, loggedIn, user } = ajaxResult;
+			debugger;
 			if (error) throw new Error(error);
 			if (wrongCredentials) {
 				throw new Error(
@@ -105,10 +115,11 @@ export default function SignIn(props) {
 				first_name,
 				last_name,
 			};
-			appState.setUser(loggedInUser, rememberMe);
+			// appState.setUser(loggedInUser, rememberMe);
+			setUser(loggedInUser);
 			logg(`logged in ${role ? role : ""} user ${email} `);
 			animationFrame = window.requestAnimationFrame(() => {
-				navigateTo("/", history);
+				navigateTo("/rt", history);
 			});
 		} catch (err) {
 			loggError(err.message);

@@ -63,6 +63,15 @@ import { withRouter } from "react-router";
 
 import { AppContext } from "../../contexts/AppContext.jsx";
 import { DeviceContext } from "../../contexts/DeviceContext.jsx";
+import userState from "../../store/user.atom.js";
+
+import {
+  // atom,
+  // selector,
+  useRecoilState,
+  useRecoilValue,
+  useSetRecoilState,
+} from "recoil";
 
 import "./_Appbar.scss";
 
@@ -260,14 +269,14 @@ const ResponsiveDrawer = (props) => {
 
   const sharedRefs = useRef(props.sharedRefs?.current || {});
 
-  const { user } = appState;
-
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
   const mediaContext = useContext(DeviceContext);
   const [visible, setVisible] = useState(true);
   const classes = useStyles(mediaContext);
+
+  const [user, setUser] = useRecoilState(userState);
 
   const appBarSearchables = Object.assign({}, mainLinks, secondaryLinks);
 
@@ -310,7 +319,8 @@ const ResponsiveDrawer = (props) => {
         switch (menuitem) {
           case "logout":
             // handleLinkClick("/login");
-            appState.setUser(null);
+            // appState.setUser(null);
+            setUser(null);
             break;
         }
       });

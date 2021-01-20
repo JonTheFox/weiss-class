@@ -5,7 +5,7 @@ import {
 
 const recoilState = atom({
 	key: "client",
-	default: { id: "", types: ["student"] },
+	default: { id: "", type: "student" },
 });
 
 export default recoilState;

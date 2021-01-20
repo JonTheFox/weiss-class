@@ -42,7 +42,7 @@ import { CONNECTION_STATES } from "../../../../store/CONNECTION_STATES.js";
 import * as io from "socket.io-client";
 import { localStorage } from "../../../../lib/issy/index.js";
 import Slide from "../Slide/Slide.js";
-import LOCAL_STORAGE_KEY from "../localStorageKey.js";
+
 import clientsTypes from "../clientsTypes.js";
 
 import Swiper from "../../../partials/Swiper.jsx";

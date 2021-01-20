@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from "react";
+import React, { Suspense, lazy, useEffect } from "react";
 import {
 	Route,
 	BrowserRouter as Router,
@@ -29,11 +29,12 @@ import {
 	// selector,
 	// useRecoilState,
 	// useRecoilValue,
+	//useSetRecoilState,
 } from "recoil";
 // import { RecoilRoot } from "recoil/dist/recoil.production";
 
 const client = new ApolloClient({
-	uri: "http://localhost:5000/graphql",
+	// uri: "http://localhost:5000/graphql",
 	// uri: DEBUGGING
 	// 	? "http://localhost:5000/graphql"
 	// 	: "https://weiss-class.herokuapp.com",
