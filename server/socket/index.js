@@ -353,7 +353,7 @@ class Classroom {
 	};
 }
 
-class ClassroomManager {
+class ClassroomsManager {
 	classrooms = [];
 	clients = [];
 	addClassroom = (config = {}) => {
@@ -470,11 +470,15 @@ class ClassroomManager {
 
 	getRoomByKey = (roomKey) => {
 		const { classrooms } = this;
-		const desiredRoom = classrooms.find((room) => room.roomKey === roomKey);
+		const desiredRoom = classrooms.find((room) => {
+			logg("room.key: ", room.key);
+			logg(`equals ${roomKey} === ${roomKey === room.key}`);
+			return room.roomKey === roomKey;
+		});
 		return desiredRoom;
 	};
 }
-const classroomsManager = new ClassroomManager();
+const classroomsManager = new ClassroomsManager();
 
 MOCK_CLASSROOMS.map((room) => {
 	return classroomsManager.addClassroom(room);
@@ -522,6 +526,7 @@ const supplementIO = function(io) {
 					// 	userFound: false,
 					// });
 				}
+
 				const userWithoutPass = getPublicUserData(client);
 				socket.join(roomKey);
 				logg(
@@ -601,6 +606,44 @@ const supplementIO = function(io) {
 		});
 		socket.on("disconnect", function() {
 			const msg = `User ${socket.id} disconnected.`;
+			logg(msg);
+			io.emit(msg);
+		});
+
+		socket.on("client__raisesHand", function({ clientId, roomKey }) {
+			const client = classroomsManager.getClientById(clientId);
+			if (!client) {
+				loggError(`A hand was raided by an unspecified client`);
+				return null;
+			}
+			const clientFullname = client.getFullName();
+
+			if (!roomKey) {
+				loggError(
+					`client ${clientFullname} raised hand... but in an unspecified room.`
+				);
+				return null;
+			}
+			const room = classroomsManager.getRoomByKey(roomKey);
+			if (!room) {
+				loggError(
+					`client ${clientFullname} raised hand... but in an unrecognized room.`
+				);
+				return null;
+			}
+
+			const { teachers = [] } = room;
+			if (!teachers || !teachers.length) {
+				loggError(
+					`client ${client.getFullName()} raised hand... but in an unrecognized room.`
+				);
+				return null;
+			}
+			teachers.map((teacher, i) => {
+				const { clientId } = teacher;
+				//emit to teacher
+			});
+			const msg = `${client.getFullName()}client__raisesHand.`;
 			logg(msg);
 			io.emit(msg);
 		});

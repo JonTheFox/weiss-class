@@ -7,7 +7,7 @@ import React, {
 	useCallback,
 } from "react";
 
-// import useLogg from "../../../hooks/useLogg.jsx";
+import useLogg from "../../hooks/useLogg.jsx";
 // import usePromiseKeeper from "../../../hooks/usePromiseKeeper.jsx";
 import SpeedDial from "@material-ui/lab/SpeedDial";
 import Backdrop from "@material-ui/core/Backdrop";
@@ -18,12 +18,35 @@ import SaveIcon from "@material-ui/icons/Save";
 import PrintIcon from "@material-ui/icons/Print";
 import ShareIcon from "@material-ui/icons/Share";
 import FavoriteIcon from "@material-ui/icons/Favorite";
+import PanToolIcon from "@material-ui/icons/PanTool";
 
-const actions = [
-	{ icon: <FileCopyIcon />, name: "Copy" },
-	{ icon: <SaveIcon />, name: "Save" },
-	{ icon: <PrintIcon />, name: "Print" },
-	{ icon: <ShareIcon />, name: "Share" },
+import {
+	// atom,
+	// selector,
+	useRecoilState,
+	useRecoilValue,
+	useSetRecoilState,
+} from "recoil";
+import socketState from "../../../store/socket.atom.js";
+import clientState from "../../../store/client.atom.js";
+import classroomState from "../../../store/classroom.atom.js";
+
+const CLIENT_ACTIONS = [
+	//{ icon: <FileCopyIcon />, name: "Copy" },
+	{
+		icon: <PanToolIcon />,
+		name: "Raise Hand",
+		callback: ({ socket, client, classroom }) => {
+			debugger;
+			socket.emit("client__raisesHand", {
+				clientId: client.id,
+				roomKey: classroom.roomKey,
+			});
+		},
+	},
+	//{ icon: <SaveIcon />, name: "Save" },
+	//{ icon: <PrintIcon />, name: "Print" },
+	//{ icon: <ShareIcon />, name: "Share" },
 	{ icon: <FavoriteIcon />, name: "Like" },
 ];
 
@@ -32,11 +55,15 @@ const Text = ({ children = "" }) => {
 	// const [appUtils] = useContext(AppContext);
 	// const { PromiseKeeper, Logger } = appUtils;
 
-	// const { logg, loggError } = useLogg({ label });
+	const { logg, loggError } = useLogg({ label });
 	// const promiseKeeper = usePromiseKeeper({ label });
 
 	const [isBackdropVisible, setIsBackgroundVisible] = useState(false);
 	const [isSpeedDialOpen, setIsSpeedDialOpen] = useState(false);
+
+	const socket = useRecoilValue(socketState);
+	const client = useRecoilValue(clientState);
+	const classroom = useRecoilValue(classroomState);
 
 	const handleVisibility = () => {
 		setIsBackgroundVisible((prevHidden) => !prevHidden);
@@ -48,6 +75,17 @@ const Text = ({ children = "" }) => {
 
 	const handleSpeedDialClose = () => {
 		setIsSpeedDialOpen(false);
+	};
+
+	const handleActionSelect = (action = {}) => {
+		if (!action) {
+			loggError(
+				"handleActionSelect was called without an action. Returning."
+			);
+			return null;
+		}
+		action.callback && action.callback({ socket, client, classroom });
+		handleSpeedDialClose();
 	};
 
 	return (
@@ -66,13 +104,13 @@ const Text = ({ children = "" }) => {
 					right: "calc( 2 * var(--spacing))",
 				}}
 			>
-				{actions.map((action) => (
+				{CLIENT_ACTIONS.map((action, actionIndex) => (
 					<SpeedDialAction
 						key={action.name}
 						icon={action.icon}
 						tooltipTitle={action.name}
 						tooltipOpen
-						onClick={handleSpeedDialClose}
+						onClick={() => handleActionSelect(action)}
 					/>
 				))}
 			</SpeedDial>
