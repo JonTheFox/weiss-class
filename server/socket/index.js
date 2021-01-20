@@ -408,8 +408,6 @@ class ClassroomManager {
 		const foundClient = allClients.find((client) => {
 			return client.clientId === clientId;
 		});
-		logg("foundClient: ", foundClient);
-		logg("allClients: ", allClients);
 		return foundClient || null;
 		// const clientTypes = ["students", "teachers", "platforms"];
 
@@ -512,8 +510,6 @@ const supplementIO = function(io) {
 
 				const client = classroomsManager.getClientById(clientId);
 
-				logg("client: ", client);
-
 				if (!client) {
 					return socket.emit("re:client__selectsRoom", {
 						isClienFound: false,
@@ -533,8 +529,6 @@ const supplementIO = function(io) {
 				);
 
 				const classroom = classroomsManager.getRoomByKey(roomKey);
-
-				logg("classroom: ", classroom);
 
 				socket.emit("re:client__selectsRoom", {
 					classroom,

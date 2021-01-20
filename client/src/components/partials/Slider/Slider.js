@@ -31,6 +31,7 @@ const Slider = ({ children, slides }) => {
         slidingDuration: 250,
         slidingDelay: 0,
         shouldAutoplay: false,
+        shouldSlideOnArrowKeypress: true,
         shouldDisplayButtons: true,
         //autoplayDuration: 5000,
         height: "calc(100 * var(--vh) - var(--appbar-height))",
