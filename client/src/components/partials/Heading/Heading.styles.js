@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const Heading1 = styled.h1`
+	margin: 0;
 	.letter {
 		font-size: 2.5rem;
 		text-align: center;
@@ -9,8 +10,9 @@ export const Heading1 = styled.h1`
 `;
 
 export const Heading2 = styled.h2`
+	margin: 0;
 	.letter {
-		font-size: 2.25rem;
+		font-size: 1.5rem;
 		text-align: center;
 		user-select: none;
 	}

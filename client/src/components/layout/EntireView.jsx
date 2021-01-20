@@ -57,14 +57,12 @@ const EntireView = (props) => {
 				//right click handler
 				ev.preventDefault();
 				const { target } = ev;
-
 				if (!target) {
 					return;
 				}
-				debugger;
 				const readableElem = climbFrom(target).upTo({
 					className: "readable",
-					maxIterations: 3,
+					maxIterations: 6,
 				});
 				if (!readableElem) {
 					ev.stopPropagation();

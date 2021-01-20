@@ -1,6 +1,11 @@
 import React from "react";
 // JSX
-import HeroSlider, { Slide, Nav, OverlayContainer } from "hero-slider";
+import HeroSlider, {
+  Slide as PresentationSlide,
+  Nav,
+  OverlayContainer,
+} from "hero-slider";
+import LessonSlide from "../../sections/realtime/Slide/Slide.js";
 
 // Images
 const parkUrl =
@@ -24,11 +29,11 @@ const Slider = ({ children, slides }) => {
       }}
       settings={{
         slidingDuration: 250,
-        slidingDelay: 100,
-        shouldAutoplay: true,
+        slidingDelay: 0,
+        shouldAutoplay: false,
         shouldDisplayButtons: true,
-        autoplayDuration: 5000,
-        height: "100vh",
+        //autoplayDuration: 5000,
+        height: "calc(100 * var(--vh) - var(--appbar-height))",
       }}
     >
       <OverlayContainer></OverlayContainer>
@@ -37,13 +42,14 @@ const Slider = ({ children, slides }) => {
         slides.map((slide, i) => {
           const { bgImage, heading, subheading, p } = slide;
           return (
-            <Slide
+            <PresentationSlide
               background={{
                 backgroundImage: bgImage,
                 backgroundAttachment: "fixed",
               }}
-              slide={slide}
-            ></Slide>
+            >
+              <LessonSlide slide={slide}></LessonSlide>
+            </PresentationSlide>
           );
         })}
 

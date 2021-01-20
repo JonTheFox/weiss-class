@@ -19,6 +19,7 @@ import slidesState from "../../../../store/slides.atom.js";
 
 // import { localStorage } from "../../../../lib/issy/index.js";
 import StyledSlide from "./Slide.styles.js";
+import CenteredContainer from "../../../partials/CenteredContainer/CenteredContainer.js";
 
 const label = "Slide";
 
@@ -32,17 +33,21 @@ const Slide = ({ slide = {} }) => {
 	// const promiseKeeper = usePromiseKeeper({ label });
 
 	return (
-		<StyledSlide
-			style={{ backgroundImage: `url(${bgImage})` }}
-			className={"Slide Slide--base1"}
-		>
-			<Heading centered={true}>{heading}</Heading>
-			<Heading h="2">{subheading}</Heading>
-			{p.map((paragraph) => {
-				return <Text>{paragraph}</Text>;
-			})}
+		<StyledSlide className={"Slide Slide--base1"}>
+			<CenteredContainer>
+				<Heading>{heading}</Heading>
+				<Heading h="2">{subheading}</Heading>
+			</CenteredContainer>
 		</StyledSlide>
 	);
 };
 
 export default Slide;
+
+/*
+
+{p.map((paragraph) => {
+					return <Text>{paragraph}</Text>;
+				})}
+
+*/
