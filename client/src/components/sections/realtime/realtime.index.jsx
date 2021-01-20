@@ -114,7 +114,7 @@ const Realtime = (props) => {
 	const initSocket = useCallback(({ user }) => {
 		try {
 			if (!user) {
-				logg(`no user in initsocket(): `, user);
+				console.log(`no user in initsocket(): `, user);
 				throw new Error(`no user provided`);
 			}
 			const { email, password, role, first_name, last_name } = user;

@@ -48,6 +48,7 @@ import clientsTypes from "../clientsTypes.js";
 import Swiper from "../../../partials/Swiper.jsx";
 
 import SpeedDial from "../../../partials/SpeedDial/SpeedDial.js";
+import Slider from "../../../partials/Slider/Slider.js";
 
 const label = "Classroom";
 
@@ -80,7 +81,17 @@ const Classroom = (props) => {
 
 	return (
 		<View className={"classroom"}>
-			<Swiper
+			<SpeedDial></SpeedDial>
+			<Slider slides={slides}></Slider>
+		</View>
+	);
+};
+
+export default Classroom;
+
+/*
+
+<Swiper
 				sharedRefs={refs}
 				index={1}
 				items={slides || []}
@@ -100,9 +111,4 @@ const Classroom = (props) => {
 				onSwitching={(index, type) => {}}
 			></Swiper>
 
-			<SpeedDial></SpeedDial>
-		</View>
-	);
-};
-
-export default Classroom;
+*/

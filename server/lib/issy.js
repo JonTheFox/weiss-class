@@ -84,21 +84,21 @@ var issy = (function() {
         }
     }
 
-    const our = arg => {
+    const our = (arg) => {
         return new Validator(arg);
         // For use within an if statement
         // 1. if(our(users).is.anArray) users.push(newUser);
         // 2. const wrongType = our(users).is.not.anArray; users.push(newUser);
     };
 
-    const is = arg => {
+    const is = (arg) => {
         return new Validator(arg);
         // For use within a ternary operator
         // const wrongType = is(users).anArray() ? false : true;
         // if(wrongType) throw new Error('Invalid "user" parameter');
     };
 
-    const isNot = arg => {
+    const isNot = (arg) => {
         return new Validator(arg, "negate");
         // For use within a ternary operator
         // const wrongType = is(users).anArray() ? false : true;
@@ -150,7 +150,7 @@ const getRandomColor = (alpha = "1") => {
     const rgb = [
         getRandomUpTo(255, 2),
         getRandomUpTo(255, 2),
-        getRandomUpTo(255, 3)
+        getRandomUpTo(255, 3),
     ];
     alpha =
         alpha || alpha === 0
@@ -162,7 +162,7 @@ const getRandomColor = (alpha = "1") => {
 };
 
 var timing = (function() {
-    const _isTimeout = str =>
+    const _isTimeout = (str) =>
         str &&
         str.length &&
         ["timeout", "timeouts"].includes(str.toLowerCase());
@@ -226,7 +226,7 @@ var timing = (function() {
                 id,
                 ms,
                 label,
-                numTimesSet: 0
+                numTimesSet: 0,
             };
 
             let existingIndex;
@@ -265,7 +265,7 @@ var timing = (function() {
         //public API
         stall = (ms = 50, label = `timeout${timeoutIndex}`) => {
             const stallPromise = this.withRC(
-                new Promise(resolve => {
+                new Promise((resolve) => {
                     //resolve in provided ms
                     const timeoutId = setTimeout(resolve, ms);
                     this._addOrUpdate("timeout", timeoutId, ms, label);
@@ -337,7 +337,7 @@ var timing = (function() {
                         return true;
                     default:
                         //label provided
-                        timerElement = batch.filter(element => {
+                        timerElement = batch.filter((element) => {
                             return element.label === label;
                         })[0];
                         if (!timerElement) {
@@ -394,7 +394,7 @@ var timing = (function() {
             const {
                 noRejection = false, //ignore rejections to continue normal execution flow. Useful!
                 resolveOnError = false,
-                rejectOnResolve = false
+                rejectOnResolve = false,
             } = config;
 
             let _ultimateResolve, _ultimateReject;
@@ -411,10 +411,10 @@ var timing = (function() {
             ultimatePromise.i = promiseIndex;
 
             //enhance the original Promise with custom resolve/reject callbacks, that communicate completion (either resolve or reject) back to to the wrapping (ultimate) Promise
-            originalPromise.then(resolvedValue => {
+            originalPromise.then((resolvedValue) => {
                 ultimatePromise.originalPromise.result = {
                     resolved: true,
-                    resolvedValue: resolvedValue
+                    resolvedValue: resolvedValue,
                 };
                 if (rejectOnResolve) {
                     ultimatePromise.rejectedOnResolve = true;
@@ -424,14 +424,14 @@ var timing = (function() {
                 return _ultimateResolve(resolvedValue);
             });
 
-            originalPromise.catch(err => {
+            originalPromise.catch((err) => {
                 const reason = (err && err.error) || err || "";
                 const reasonString = is(reason).anObject
                     ? JSON.stringify(reason)
                     : reason;
                 ultimatePromise.originalPromise.result = {
                     rejected: true,
-                    reason
+                    reason,
                 };
 
                 logMsg +=
@@ -634,12 +634,12 @@ const getLastXItems = (arr = [], x = 6) => {
     return arr.slice(minusX);
 };
 
-const toTime = dateString => {
+const toTime = (dateString) => {
     const sliced = dateString.slice(-8, dateString.length - 3);
     return sliced;
 };
 
-const getFormattedTime = date => {
+const getFormattedTime = (date) => {
     // logg("typeof dateObj === " + Object.prototype.toString.call(dateObj));
     let dateObj;
     if (our(date).is.aDate) {
@@ -704,7 +704,7 @@ const ScrollControl = {
         window.ontouchmove = preventDefault; // mobile
         document.onkeydown = preventDefaultForScrollKeys;
         logg("ScrollControl: Scrolling is now DISabled.");
-    }
+    },
 };
 
 const copyToClipboard = (text, printMsg = true) => {
@@ -712,7 +712,7 @@ const copyToClipboard = (text, printMsg = true) => {
     navigator.clipboard
         .writeText(text)
         .then(() => printMsg && logg(`copyToClipboard(): Copied "${text}"`))
-        .catch(err => {
+        .catch((err) => {
             loggError(
                 "copyToClipboard(): Error: could NOT copy the following text: ",
                 text,
@@ -722,7 +722,7 @@ const copyToClipboard = (text, printMsg = true) => {
         });
 };
 
-const isInViewport = elem => {
+const isInViewport = (elem) => {
     const rect = elem.getBoundingClientRect();
     const isIn =
         rect.top >= 0 &&
@@ -760,7 +760,7 @@ const scrollTo = (domRef, config = {}) => {
         }
         domRef.scrollIntoView({
             block: config.block || "end",
-            behavior: (config.block && config.block.behavior) || "smooth"
+            behavior: (config.block && config.block.behavior) || "smooth",
         });
     } catch (err) {
         loggError(`scrollTo(${domRef}): `, err.message);
@@ -803,7 +803,7 @@ const pollyfills = {
         window.requestAnimationFrame = requestFunction;
         window.cancelAnimationFrame = vendorCancel;
         return true;
-    }
+    },
 };
 
 const shimme = (functionName = "requestAnimationFrame") => {
@@ -822,7 +822,7 @@ const loadImage = (url = "", domElement) => {
         const image = new Image(0, 0); //invisible (still forces to load the image)
         image.style.opacity = 0; //just to be extra sure
         //image.classList.add("hidden");
-        image.onload = ev => {
+        image.onload = (ev) => {
             if (!image.decode) {
                 //older versions of FireFox don't support decode()
                 logg(
@@ -862,7 +862,7 @@ const navigateTo = (path, history = []) => {
     const completePath = removeDoubleSlashes(path);
     logg(`Navigating to: ${completePath}`);
     history.push({
-        pathname: completePath
+        pathname: completePath,
         //state: { linkedScreen: completePath }
     });
 };
@@ -870,7 +870,7 @@ const navigateTo = (path, history = []) => {
 var pwa = (() => {
     const addToHomescreen = () => {
         let deferredPrompt;
-        window.addEventListener("beforeinstallprompt", e => {
+        window.addEventListener("beforeinstallprompt", (e) => {
             logg("addToHomescreen(): beforeinstallprompt event");
             // Prevent Chrome 67 and earlier from automatically showing the prompt
             e.preventDefault();
@@ -882,7 +882,7 @@ var pwa = (() => {
             addToHomescreen.classList.add("snackbar-in");
             addToHomescreenBtn.addEventListener(
                 "click",
-                ev => {
+                (ev) => {
                     //ev.preventDefault();
                     ev.stopPropagation();
                     //handle the event here
@@ -891,7 +891,7 @@ var pwa = (() => {
 
                     deferredPrompt.prompt();
                     // Wait for the user to respond to the prompt
-                    deferredPrompt.userChoice.then(choiceResult => {
+                    deferredPrompt.userChoice.then((choiceResult) => {
                         console("this === ", this);
                         this.classList.remove("snackbar-in");
                         addToHomescreen.classList.remove("snackbar-in");
@@ -910,7 +910,7 @@ var pwa = (() => {
         });
     };
     return {
-        addToHomescreen
+        addToHomescreen,
     };
 })(); //pwaUtils self-executing Closure
 
@@ -991,7 +991,7 @@ const handlePress = (
         keyCode = "",
         charCode = "",
         on = "keyup",
-        preventDefault = false
+        preventDefault = false,
     },
     callback
 ) => {
@@ -1004,7 +1004,7 @@ const handlePress = (
     //add the provided callback to the store
     //e.g. : {keyup: {{enter:  fn}, {KeyDown: fn2}}}
     keyEventHandlers[on][key] = callback;
-    document.body["on" + on] = ev => {
+    document.body["on" + on] = (ev) => {
         if (preventDefault) ev.preventDefault();
         const handlers = keyEventHandlers[on];
 
@@ -1016,7 +1016,7 @@ const handlePress = (
                     on,
                     key: ev.key,
                     keyCode: ev.keyCode,
-                    charCode: ev.charCode
+                    charCode: ev.charCode,
                 });
             }
         }
@@ -1090,7 +1090,7 @@ const IssyLoop = (function() {
             //save a reference to the array argument for later use by looper.do()
             this.array = array;
         }
-        do = callback => {
+        do = (callback) => {
             if (!callback) return null;
             const _arr = this.array;
             _arr.forEach((item, i) => {
@@ -1098,7 +1098,7 @@ const IssyLoop = (function() {
             });
         };
     }
-    const convertToArray = collection => {
+    const convertToArray = (collection) => {
         if (our(collection).is.anArray) return collection;
         let asArray;
         try {
@@ -1110,7 +1110,7 @@ const IssyLoop = (function() {
         if (!asArray) return null;
         return asArray;
     };
-    const goOver = arr => {
+    const goOver = (arr) => {
         //accepting only Array and Array-like objects (such as NodeList)
         let _arr = convertToArray(arr);
         return new Looper(_arr ? _arr : []);
@@ -1162,19 +1162,21 @@ class DomClimberError {
 class DOMClimber {
     constructor(domElem) {
         if (!domElem || !(domElem instanceof HTMLElement))
-            return new DomClimberError({ missingParam: "domElem" });
+            logg(`missingParam: "domElem" `);
         this.offsetElem = domElem;
+        debugger;
     }
     upTo = (config = {}) => {
+        debugger;
         if (!config || !is(config).anObject) {
             return new DomClimberError({
-                missingParam: "config (first parameter)"
+                missingParam: "config (first parameter)",
             });
         }
         const { attr, className = "" } = config;
         if (!className && (!attr || !is(attr).anObject)) {
             return new DomClimberError({
-                missingParam: "any config value (attr, className.."
+                missingParam: "any config value (attr, className..",
             });
         }
 
@@ -1231,7 +1233,7 @@ class DOMClimber {
     };
 }
 
-const climbFrom = domElem => {
+const climbFrom = (domElem) => {
     if (!domElem || !(domElem instanceof HTMLElement))
         return new DomClimberError({ missingParam: "domElem" });
     return new DOMClimber(domElem);
@@ -1245,7 +1247,7 @@ const alignElements = ({
     extraPadding = 0,
     push = "down",
     multiplier = 1,
-    ofElement = "moving"
+    ofElement = "moving",
 }) => {
     if (!targetElem || !movingElem) return null;
     let _target;
@@ -1349,9 +1351,9 @@ const request = async (method = "GET", uri = "", payload = {}, config = {}) => {
                       method,
                       headers: {
                           Accept: "application/json",
-                          "Content-Type": "application/json"
+                          "Content-Type": "application/json",
                       },
-                      body: JSON.stringify(payload)
+                      body: JSON.stringify(payload),
                   });
         if (!res || res.status === 404) {
             throw new Error(`404: URI ${uri} was not found`);
@@ -1377,7 +1379,7 @@ const request = async (method = "GET", uri = "", payload = {}, config = {}) => {
     } catch (err) {
         const ajaxResult = {
             error: err.message,
-            response: parsedResponse
+            response: parsedResponse,
         };
         logg(ajaxResult);
         const throwOnError = config.throwOnError || false;
@@ -1410,9 +1412,9 @@ const postJSON = async (uri = "", payload = {}) => {
         method: "POST",
         headers: {
             Accept: "application/json",
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
         },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
     });
     handleBadResponse(res, uri);
     const data = await res.json();
@@ -1431,7 +1433,7 @@ const asyncForEach = async (array, callback) => {
     }
 };
 
-const sanitizeVarName = name => {
+const sanitizeVarName = (name) => {
     //create a name that is JS-safe (i.e. starts with a letter or an underscore, and then has only alphanumeric or underscore characters)
     if (!name) throw new Error(`no variable name provided`);
     const onlyCharsAndDigits = name.replace(/[^a-zA-Z\d]+/g, "_");
@@ -1478,5 +1480,5 @@ module.exports = {
     climbFrom,
     emptyFunc,
     asyncForEach,
-    sanitizeVarName
+    sanitizeVarName,
 };
