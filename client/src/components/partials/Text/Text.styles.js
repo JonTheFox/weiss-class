@@ -41,6 +41,8 @@ export default styled.div`
 	}
 
 	p {
+		display: inline;
+		line-height: 2;
 		font-size: 1rem;
 		font-family: Nunito;
 		background-color: rgba(0, 0, 0, 0.8);

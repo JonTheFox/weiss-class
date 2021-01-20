@@ -36,7 +36,7 @@ const Slide = ({ slide = {} }) => {
 			style={{ backgroundImage: `url(${bgImage})` }}
 			className={"Slide Slide--base1"}
 		>
-			<Heading>{heading}</Heading>
+			<Heading centered={true}>{heading}</Heading>
 			<Heading h="2">{subheading}</Heading>
 			{p.map((paragraph) => {
 				return <Text>{paragraph}</Text>;

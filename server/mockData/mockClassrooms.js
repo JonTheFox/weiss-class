@@ -1,7 +1,7 @@
 const PRESENT_SIMPLE_SLIDES = [
 	{
 		heading: "Present Simple",
-		subheading: "Do / Does",
+		subheading: "Life, in general.",
 		p: [
 			"When we talk about general truths, we use Present Simple.",
 			"For example: ",
@@ -14,7 +14,7 @@ const PRESENT_SIMPLE_SLIDES = [
 	},
 	{
 		heading: "Present Simple",
-		subheading: "Do / Does",
+		subheading: "He / She / It",
 		p: [
 			"When the subject is he/she/it, we add s/es/ies to the end of the verb.",
 			"For example: ",
@@ -22,7 +22,8 @@ const PRESENT_SIMPLE_SLIDES = [
 			"He goes to school every day.",
 			"It helps us.",
 		],
-		//backgroundImage: ,
+		bgImage:
+			"https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
 	},
 ];
 

@@ -24,6 +24,7 @@
         "react-gif-player": "^0.4.2",
         "react-inlinesvg": "^1.1.6",
         "react-minimal-pie-chart": "^6.0.1",
+        "react-parallax": "^3.1.2",
         "react-player": "^1.15.3",
         "react-pose": "^4.0.8",
         "react-pose-text": "^3.1.0",

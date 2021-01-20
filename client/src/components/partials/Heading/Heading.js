@@ -12,7 +12,10 @@ import DURATIONS from "../../../constants/durations.js";
 import SplitText from "react-pose-text";
 import { POSES } from "../../../constants/poses.js";
 import useLogg from "../../../components/hooks/useLogg.jsx";
-import "./Heading.styles.js";
+import {
+	Heading1 as StyledHeading1,
+	Heading2 as StyledHeading2,
+} from "./Heading.styles.js";
 
 let animationFrame;
 let logg;
@@ -94,32 +97,40 @@ const CHAR_POSES = {
 	},
 };
 
-const Header = React.forwardRef(({ h = "1", children }, ref) => {
-	// const [appUtils] = useContext(AppContext);
-	// const { Logger, PromiseKeeper } = appUtils;
+const Header = React.forwardRef(
+	({ h = "1", centered = false, children }, ref) => {
+		// const [appUtils] = useContext(AppContext);
+		// const { Logger, PromiseKeeper } = appUtils;
 
-	const { logg, loggError } = useLogg({ label });
+		const { logg, loggError } = useLogg({ label });
 
-	const onTitleClick = useCallback((ev) => {
-		logg("title clicked");
-	}, []);
+		const onTitleClick = useCallback((ev) => {
+			logg("title clicked");
+		}, []);
 
-	return (
-		<Container
-			maxWidth="sm"
-			className={`heading heading_${h} stroke readable`}
-			onClick={onTitleClick}
-		>
-			<SplitText
-				charPoses={CHAR_POSES}
-				wordPoses={POSES.word__draggable}
-				className={`letter stroke cursor--grab`}
+		const StyledHeading = h == "1" ? StyledHeading1 : StyledHeading2;
+
+		return (
+			<Container
+				maxWidth="sm"
+				className={`heading heading_${h} stroke readable ${
+					centered ? "centered" : ""
+				}`}
+				onClick={onTitleClick}
 			>
-				{children}
-			</SplitText>
-		</Container>
-	);
-});
+				<StyledHeading>
+					<SplitText
+						charPoses={CHAR_POSES}
+						wordPoses={POSES.word__draggable}
+						className={`letter stroke cursor--grab`}
+					>
+						{children}
+					</SplitText>
+				</StyledHeading>
+			</Container>
+		);
+	}
+);
 
 Header.propTypes = {
 	text: PropTypes.string,

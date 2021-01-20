@@ -1,11 +1,17 @@
 import styled from "styled-components";
 
-export default styled.h1`
-	.heading {
-		.letter {
-			font-size: 2.5rem;
-			text-align: center;
-		}
+export const Heading1 = styled.h1`
+	.letter {
+		font-size: 2.5rem;
+		text-align: center;
+		user-select: none;
 	}
-	background: orange;
+`;
+
+export const Heading2 = styled.h2`
+	.letter {
+		font-size: 2.25rem;
+		text-align: center;
+		user-select: none;
+	}
 `;

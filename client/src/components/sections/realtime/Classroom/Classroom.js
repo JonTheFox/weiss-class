@@ -1,6 +1,7 @@
 import React, {
 	useContext,
 	useEffect,
+	useState,
 	useRef,
 	Suspense,
 	useCallback,
@@ -44,11 +45,9 @@ import Slide from "../Slide/Slide.js";
 import LOCAL_STORAGE_KEY from "../localStorageKey.js";
 import clientsTypes from "../clientsTypes.js";
 
-import SwipeableViews from "react-swipeable-views";
-import { virtualize } from "react-swipeable-views-utils";
 import Swiper from "../../../partials/Swiper.jsx";
 
-const VirtualizeSwipeableViews = virtualize(SwipeableViews);
+import SpeedDial from "../../../partials/SpeedDial/SpeedDial.js";
 
 const label = "Classroom";
 
@@ -61,11 +60,8 @@ const Classroom = (props) => {
 
 	const refs = useRef({ viewRef: {} });
 
-	const { loading, error, data } = useQuery(GetRooms);
-
 	const user = useRecoilValue(userState);
 	const currentSlide = useRecoilValue(currentSlideState);
-
 	// const client = useRecoilValue(clientState);
 	const room = useRecoilValue(roomState);
 
@@ -103,6 +99,8 @@ const Classroom = (props) => {
 				onChangeIndex={handleChangeSlideIndex}
 				onSwitching={(index, type) => {}}
 			></Swiper>
+
+			<SpeedDial></SpeedDial>
 		</View>
 	);
 };
