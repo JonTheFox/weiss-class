@@ -5,13 +5,10 @@ import HeroSlider, {
   Nav,
   OverlayContainer,
 } from "hero-slider";
-import LessonSlide from "../../sections/realtime/Slide/Slide.js";
+import HeadingsOnly from "../../sections/realtime/Slide/Slide.js";
+import Text1 from "../../sections/realtime/Slide/Slide.js";
 
-// Images
-const parkUrl =
-  "https://images.unsplash.com/photo-1508060698845-34709bc12e1c?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjMxMjYzfQ";
-const studiesUrl =
-  "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjMxMjYzfQ";
+const SLIDE_TEMPLATES = { HeadingsOnly, Text1 };
 
 const Slider = ({ children, slides }) => {
   return (
@@ -41,7 +38,13 @@ const Slider = ({ children, slides }) => {
 
       {slides &&
         slides.map((slide, i) => {
-          const { bgImage, heading, subheading, p } = slide;
+          const { bgImage, heading, subheading, p, templateName } = slide;
+
+          const LessonSlide =
+            SLIDE_TEMPLATES[templateName] || SLIDE_TEMPLATES["Text1"];
+
+          debugger;
+
           return (
             <PresentationSlide
               background={{

@@ -499,8 +499,6 @@ const supplementIO = function(io) {
 		socket.on(
 			"client__selectsRoom",
 			({ clientId, roomKey, clientType = "" }) => {
-				logg("client__selectsRoom. clientType: ", clientType);
-
 				if (!clientId || !roomKey) {
 					loggError(
 						"client__selectsRoom: Missing parameter arguments"
