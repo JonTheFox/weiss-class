@@ -44,6 +44,7 @@ const PORT = process.env.PORT || 5000;
 // 		? `http://localhost:${PORT}`
 // 		: process.env.HOMEPAGE_URL;
 global.HOST = process.env.SERVER_URL;
+global.USER_SERVER_URL = process.env.USER_SERVER_URL;
 
 const authenticate = require("./api/auth.js"); // dependends on logger
 global.authenticate = authenticate;

@@ -55,7 +55,12 @@ const authenticateUser = async (credentials) => {
 		return authedUser;
 	}
 
-	logg("HOST: ", HOST);
+	cosnole.log(
+		"HOST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!: ",
+		HOST
+	);
+
+	USER_SERVER_URL;
 
 	const ajaxResult = await request(
 		"POST",
