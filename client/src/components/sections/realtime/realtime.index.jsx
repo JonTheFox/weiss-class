@@ -102,10 +102,6 @@ const Realtime = (props) => {
 	// 	}
 	// }, [data]);
 
-	useEffect(() => {
-		logg("slides:", slides);
-	}, [slides]);
-
 	const initSocket = useCallback(({ user }) => {
 		try {
 			if (!user) {
@@ -140,6 +136,14 @@ const Realtime = (props) => {
 
 				// setServerMsg("We're already connected ;) ");
 				// setConnectionStatus(CONNECTION_STATES.CONNECTED);
+			});
+
+			socket.on("server__failedAuth", ({ error }) => {
+				debugger;
+				// setConnectionStatus(CONNECTION_STATES.CONNECTED);
+				// animationFrame = window.requestAnimationFrame(() => {
+				// 	setServerMsg(content);
+				// });
 			});
 
 			socket.on("re:client__selectsRoom", ({ classroom, lesson }) => {

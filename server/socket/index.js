@@ -553,12 +553,15 @@ const supplementIO = function(io) {
 				if (!clientType) throw new Error(`No clientType provided`);
 				if (!user) throw new Error(`No user provided`);
 				assertValidCredentials(user);
+				console.log("AFTER assert valid credentials");
 				const { role } = user;
 				const roles = user.roles || (role && [role]) || ["user"];
 				user.roles = roles;
 
 				const authenticatedUser = await authenticate(user);
+				console.log("AFTER await authenticate");
 				const userWithoutPass = getPublicUserData(authenticatedUser);
+				console.log("AFTER get public user data");
 
 				const { first_name, last_name } = userWithoutPass;
 
@@ -577,7 +580,10 @@ const supplementIO = function(io) {
 
 				classroomsManager.addClient({ ...userWithoutPass, clientId });
 
+				console.log("AFTER addClient()");
+
 				const availableRooms = classroomsManager.getRooms();
+				console.log("AFTER getRooms()");
 
 				const availableRoomsKeys = classroomsManager.getRoomsKeys();
 				logg(
@@ -595,9 +601,9 @@ const supplementIO = function(io) {
 				// classroomsIO.to(roomKey).emit("anotherUserJoined", {
 				// 	...userWithoutPass,
 				// });
-			} catch (err) {
-				loggError("client__providesCredentials(): ", err);
-				return socket.emit("server_failedAuth", { error: err.message });
+			} catch (error) {
+				console.log("client__providesCredentials() ERROR: ", error);
+				return socket.emit("server__failedAuth", { error });
 			}
 		});
 		socket.on("disconnect", function() {
@@ -651,13 +657,7 @@ const supplementIO = function(io) {
 			io.emit(msg);
 		});
 
-		socket.on("teacher__setsSlideIndex", function({ index }) {
-			const msg = `User ${socket.id} disconnected.`;
-			socket.emit("yo", msg);
-			// socket.to(roomName).emit("yo", {
-			// 	user: getPublicUserData(user),
-			// });
-		});
+		socket.on("teacher__setsSlideIndex", function({ index }) {});
 
 		socket.on("clientSelectsRoom", function({ user, intent }) {
 			try {
@@ -670,7 +670,6 @@ const supplementIO = function(io) {
 
 				requestedRoom.addClient({ ...user });
 				socket.join(roomName);
-				socket.emit("clientEnteredClassroom");
 				socket.to(roomName).emit("anotherUserJoined", {
 					user: getPublicUserData(user),
 				});
@@ -722,7 +721,6 @@ const supplementIO = function(io) {
 				return;
 			} catch (err) {
 				const errMsg = err.message;
-
 				loggError(err);
 				socket.emit("clientAuthFailed", { err: errMsg });
 			}
