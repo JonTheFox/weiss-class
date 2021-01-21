@@ -471,9 +471,12 @@ class ClassroomsManager {
 	getRoomByKey = (roomKey) => {
 		const { classrooms } = this;
 		const desiredRoom = classrooms.find((room) => {
-			logg("room.key: ", room.key);
-			logg(`equals ${roomKey} === ${roomKey === room.key}`);
-			return room.roomKey === roomKey;
+			logg("room.roomKey: ", room.roomKey);
+			logg(
+				`${room.roomKey} equals ${roomKey} --> ${roomKey ===
+					room.roomKey}`
+			);
+			return roomKey === room.roomKey;
 		});
 		return desiredRoom;
 	};
@@ -624,7 +627,9 @@ const supplementIO = function(io) {
 				);
 				return null;
 			}
+
 			const room = classroomsManager.getRoomByKey(roomKey);
+
 			if (!room) {
 				loggError(
 					`client ${clientFullname} raised hand... but in an unrecognized room.`
@@ -632,7 +637,8 @@ const supplementIO = function(io) {
 				return null;
 			}
 
-			const { teachers = [] } = room;
+			const teachers = room && room.teachers && room.teachers.clients;
+
 			if (!teachers || !teachers.length) {
 				loggError(
 					`client ${client.getFullName()} raised hand... but in an unrecognized room.`

@@ -37,7 +37,6 @@ const CLIENT_ACTIONS = [
 		icon: <PanToolIcon />,
 		name: "Raise Hand",
 		callback: ({ socket, client, classroom }) => {
-			debugger;
 			socket.emit("client__raisesHand", {
 				clientId: client.id,
 				roomKey: classroom.roomKey,
