@@ -608,7 +608,11 @@ const supplementIO = function(io) {
 			io.emit(msg);
 		});
 
-		socket.on("client__sendsAction", function({ clientId, roomKey }) {
+		socket.on("client__sendsAction", function({
+			clientId,
+			roomKey,
+			actionName,
+		}) {
 			const client = classroomsManager.getClientById(clientId);
 			if (!client) {
 				loggError(`A reaction was received from an unspecified client`);
@@ -627,7 +631,7 @@ const supplementIO = function(io) {
 
 			if (!room) {
 				loggError(
-					`client ${clientFullname} raised hand... but in an unrecognized room.`
+					`client ${clientFullname} sent and action... but in an unrecognized room.`
 				);
 				return null;
 			}
@@ -644,7 +648,7 @@ const supplementIO = function(io) {
 				const { clientId } = teacher;
 				//emit to teacher
 			});
-			const msg = `${client.getFullName()}: client__sendsAction.`;
+			const msg = `${client.getFullName()}: client__sendsAction: ${actionName}`;
 			logg(msg);
 			io.emit(msg);
 		});
