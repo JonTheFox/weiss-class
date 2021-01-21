@@ -18,9 +18,6 @@ import "./_classroom.scss";
 
 import useLogg from "../../../hooks/useLogg.jsx";
 import usePromiseKeeper from "../../../hooks/usePromiseKeeper.jsx";
-import { useQuery, gql } from "@apollo/client";
-import { GetSlides } from "../../../../gql/queries/GetSlides";
-import { GetRooms } from "../../../../gql/queries/GetRooms";
 
 import {
 	// RecoilRoot,

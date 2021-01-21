@@ -43,8 +43,6 @@ const Slider = ({ children, slides }) => {
           const LessonSlide =
             SLIDE_TEMPLATES[templateName] || SLIDE_TEMPLATES["Text1"];
 
-          debugger;
-
           return (
             <PresentationSlide
               background={{

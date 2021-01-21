@@ -64,7 +64,7 @@ const Realtime = (props) => {
 
 	const refs = useRef({ viewRef: {} });
 
-	const { loading, error, data } = useQuery(GetRooms);
+	// const { loading, error, data } = useQuery(GetRooms);
 
 	const setRooms = useSetRecoilState(roomsState);
 	const [room, setRoom] = useRecoilState(roomState);
@@ -95,12 +95,12 @@ const Realtime = (props) => {
 		logg("user: ", user);
 	}, [user]);
 
-	useEffect(() => {
-		if (data?.rooms) {
-			setRooms(data.rooms);
-			logg("rooms: ", data.rooms);
-		}
-	}, [data]);
+	// useEffect(() => {
+	// 	if (data?.rooms) {
+	// 		setRooms(data.rooms);
+	// 		logg("rooms: ", data.rooms);
+	// 	}
+	// }, [data]);
 
 	useEffect(() => {
 		logg("slides:", slides);

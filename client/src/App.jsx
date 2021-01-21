@@ -16,7 +16,6 @@ import WeissSpinner from "./components/partials/WeissSpinner.jsx";
 import "./index.scss";
 
 //The Apollo client is what is interacting with our GraphQL server on the backend. It's what is making requests for data and storing it locally when the data comes back. It doesn't know/care that we working with React.
-
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client"; //the glue layer between the ApolloClient and the React app. It's a React component, similar to the Redux provider
 
 import { AppContextProvider } from "./contexts/AppContext.jsx";
@@ -36,8 +35,9 @@ import {
 const client = new ApolloClient({
 	// uri: "http://localhost:5000/graphql",
 	// uri: DEBUGGING
-	// 	? "http://localhost:5000/graphql"
-	// 	: "https://weiss-class.herokuapp.com",
+	// 	? "http://localhost:5000/graphql" :
+	uri: "https://weiss-class.herokuapp.com/graphql",
+
 	cache: new InMemoryCache(),
 
 	//by default, ApolloClient makes the assumption that our graphQL server is running on /graphql route
