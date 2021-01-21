@@ -83,7 +83,13 @@ const Text = ({ children = "" }) => {
 			);
 			return null;
 		}
-		action.callback && action.callback({ socket, client, classroom });
+
+		socket.emit(`client__sendsAction`, {
+			clientId: client.id,
+			roomKey: classroom.roomKey,
+			actionName: action.name,
+		});
+
 		handleSpeedDialClose();
 	};
 

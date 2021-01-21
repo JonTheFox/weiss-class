@@ -471,11 +471,6 @@ class ClassroomsManager {
 	getRoomByKey = (roomKey) => {
 		const { classrooms } = this;
 		const desiredRoom = classrooms.find((room) => {
-			logg("room.roomKey: ", room.roomKey);
-			logg(
-				`${room.roomKey} equals ${roomKey} --> ${roomKey ===
-					room.roomKey}`
-			);
 			return roomKey === room.roomKey;
 		});
 		return desiredRoom;
@@ -613,17 +608,17 @@ const supplementIO = function(io) {
 			io.emit(msg);
 		});
 
-		socket.on("client__raisesHand", function({ clientId, roomKey }) {
+		socket.on("client__sendsAction", function({ clientId, roomKey }) {
 			const client = classroomsManager.getClientById(clientId);
 			if (!client) {
-				loggError(`A hand was raided by an unspecified client`);
+				loggError(`A reaction was received from an unspecified client`);
 				return null;
 			}
 			const clientFullname = client.getFullName();
 
 			if (!roomKey) {
 				loggError(
-					`client ${clientFullname} raised hand... but in an unspecified room.`
+					`client ${clientFullname} sent an action... but in an unspecified room.`
 				);
 				return null;
 			}
@@ -649,7 +644,7 @@ const supplementIO = function(io) {
 				const { clientId } = teacher;
 				//emit to teacher
 			});
-			const msg = `${client.getFullName()}client__raisesHand.`;
+			const msg = `${client.getFullName()}: client__sendsAction.`;
 			logg(msg);
 			io.emit(msg);
 		});
