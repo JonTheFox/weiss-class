@@ -1,6 +1,6 @@
 const { logger, is, request } = global;
 const { logg, loggError } = logger.createSubLogger({ label: "auth" });
-const { authenticatedUsers, HOST } = global;
+const { authenticatedUsers, USER_SERVER_URL } = global;
 
 // logg("host:", HOST);
 
@@ -55,16 +55,14 @@ const authenticateUser = async (credentials) => {
 		return authedUser;
 	}
 
-	cosnole.log(
-		"HOST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!: ",
-		HOST
+	console.log(
+		"USER_SERVER_URL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!: ",
+		USER_SERVER_URL
 	);
-
-	USER_SERVER_URL;
 
 	const ajaxResult = await request(
 		"POST",
-		`${HOST}/api/users/authenticate`,
+		`${USER_SERVER_URL}/api/users/authenticate`,
 		credentials
 	);
 
