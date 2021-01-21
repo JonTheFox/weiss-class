@@ -56,7 +56,7 @@ const authenticateUser = async (credentials) => {
 	}
 
 	console.log(
-		"USER_SERVER_URL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!: ",
+		"USER_SERVER_URL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!: ",
 		USER_SERVER_URL
 	);
 
