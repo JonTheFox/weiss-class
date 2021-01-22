@@ -5,10 +5,10 @@ import HeroSlider, {
   Nav,
   OverlayContainer,
 } from "hero-slider";
-import HeadingsOnly from "../../sections/realtime/Slide/Slide.js";
-import Text1 from "../../sections/realtime/Slide/Slide.js";
+import CenteredHeadings from "../../sections/realtime/SlideTemplates/CenteredHeadings.js";
+import Text1 from "../../sections/realtime/SlideTemplates/Text1.js";
 
-const SLIDE_TEMPLATES = { HeadingsOnly, Text1 };
+const SLIDE_TEMPLATES = { CenteredHeadings, Text1 };
 
 const Slider = ({ children, slides }) => {
   return (
@@ -16,10 +16,12 @@ const Slider = ({ children, slides }) => {
       slidingAnimation="left_to_right"
       orientation="horizontal"
       initialSlide={1}
-      onBeforeChange={(previousSlide, nextSlide) =>
-        console.log("onBeforeChange", previousSlide, nextSlide)
-      }
-      onChange={(nextSlide) => console.log("onChange", nextSlide)}
+      onBeforeChange={(previousSlide, nextSlide) => {
+        //console.log("onBeforeChange", previousSlide, nextSlide)
+      }}
+      onChange={(nextSlide) => {
+        console.log("onChange", nextSlide);
+      }}
       onAfterChange={(nextSlide) => console.log("onAfterChange", nextSlide)}
       style={{
         backgroundColor: "rgba(0, 0, 0, 0.33)",
@@ -38,13 +40,15 @@ const Slider = ({ children, slides }) => {
 
       {slides &&
         slides.map((slide, i) => {
-          const { bgImage, heading, subheading, p, templateName } = slide;
+          const { bgImage, id, templateName } = slide;
 
           const LessonSlide =
-            SLIDE_TEMPLATES[templateName] || SLIDE_TEMPLATES["Text1"];
+            SLIDE_TEMPLATES[templateName] ||
+            SLIDE_TEMPLATES["CenteredHeadings"];
 
           return (
             <PresentationSlide
+              key={id}
               background={{
                 backgroundImage: bgImage,
                 backgroundAttachment: "fixed",

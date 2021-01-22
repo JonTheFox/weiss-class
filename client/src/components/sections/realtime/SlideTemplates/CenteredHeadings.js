@@ -6,55 +6,50 @@ import React, {
 	useCallback,
 } from "react";
 import Heading from "../../../partials/Heading/Heading.js";
+import View from "../../../layout/View.jsx";
+import Page from "../Page/Page.js";
 import Text from "../../../partials/Text/Text.js";
 //import PropTypes from "prop-types";
 // import clsx from "clsx";
 
-import useLogg from "../../../hooks/useLogg.jsx";
-import usePromiseKeeper from "../../../hooks/usePromiseKeeper.jsx";
-
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-
-import slidesState from "../../../../store/slides.atom.js";
+// import useLogg from "../../../hooks/useLogg.jsx";
+// import usePromiseKeeper from "../../../hooks/usePromiseKeeper.jsx";
 
 // import { localStorage } from "../../../../lib/issy/index.js";
 import StyledSlide from "./Slide.styles.js";
 import CenteredContainer from "../../../partials/CenteredContainer/CenteredContainer.js";
 
-const label = "Slide";
+const label = "CenteredHeadings";
 
-const Slide = ({ slide = {} }) => {
+const CenteredHeadings = ({ slide = {} }) => {
 	// const [appUtils] = useContext(AppContext);
 	// const { PromiseKeeper, Logger } = appUtils;
 
-	const {
-		heading = "",
-		subheading = "",
-		p = [""],
-		bgImage = "",
-		marquee = "",
-		subMarquee = "",
-	} = slide;
+	const { heading = "", subheading = "", p = [""], bgImage = "" } = slide;
 
 	// const { logg, loggError } = useLogg({ label });
 	// const promiseKeeper = usePromiseKeeper({ label });
-
 	return (
 		<StyledSlide className={"Slide Slide--base1"}>
-			<CenteredContainer>
-				<Heading>{heading}</Heading>
-				<Heading h="2">{subheading}</Heading>
-			</CenteredContainer>
+			<Page>
+				<CenteredContainer>
+					<Heading>{heading}</Heading>
+					<Heading h="2">{subheading}</Heading>
+				</CenteredContainer>
+			</Page>
+			<Page>
+				{p.map((paragraph) => {
+					return <Text>{paragraph}</Text>;
+				})}
+			</Page>
 		</StyledSlide>
 	);
 };
 
-export default Slide;
+export default CenteredHeadings;
 
 /*
 
-{p.map((paragraph) => {
-					return <Text>{paragraph}</Text>;
-				})}
+
 
 */

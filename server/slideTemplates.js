@@ -1,5 +1,5 @@
 const slideTemplates = {
-	HeadingsOnly: "HeadingsOnly",
+	CenteredHeadings: "CenteredHeadings",
 	Text1: "Text1",
 };
 

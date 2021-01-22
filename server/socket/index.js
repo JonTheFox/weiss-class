@@ -553,15 +553,14 @@ const supplementIO = function(io) {
 				if (!clientType) throw new Error(`No clientType provided`);
 				if (!user) throw new Error(`No user provided`);
 				assertValidCredentials(user);
-				console.log("AFTER assert valid credentials");
+
 				const { role } = user;
 				const roles = user.roles || (role && [role]) || ["user"];
 				user.roles = roles;
 
 				const authenticatedUser = await authenticate(user);
-				console.log("AFTER await authenticate");
+
 				const userWithoutPass = getPublicUserData(authenticatedUser);
-				console.log("AFTER get public user data");
 
 				const { first_name, last_name } = userWithoutPass;
 
@@ -580,10 +579,7 @@ const supplementIO = function(io) {
 
 				classroomsManager.addClient({ ...userWithoutPass, clientId });
 
-				console.log("AFTER addClient()");
-
 				const availableRooms = classroomsManager.getRooms();
-				console.log("AFTER getRooms()");
 
 				const availableRoomsKeys = classroomsManager.getRoomsKeys();
 				logg(
@@ -602,7 +598,7 @@ const supplementIO = function(io) {
 				// 	...userWithoutPass,
 				// });
 			} catch (error) {
-				console.log("client__providesCredentials() ERROR: ", error);
+				loggError("client__providesCredentials() ERROR: ", error);
 				return socket.emit("server__failedAuth", { error });
 			}
 		});

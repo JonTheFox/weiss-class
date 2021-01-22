@@ -11,7 +11,7 @@ import React, {
 import StyledText from "./Text.styles.js";
 
 const label = "Text";
-const Text = ({ children = "" }) => {
+const Text = (props) => {
 	// const [appUtils] = useContext(AppContext);
 	// const { PromiseKeeper, Logger } = appUtils;
 
@@ -19,8 +19,8 @@ const Text = ({ children = "" }) => {
 	// const promiseKeeper = usePromiseKeeper({ label });
 
 	return (
-		<StyledText className={"Text"}>
-			<p>{children}</p>
+		<StyledText className={"Text"} {...props}>
+			<p>{props.children}</p>
 		</StyledText>
 	);
 };

@@ -33,16 +33,11 @@ import socketState from "../../../../store/socket.atom.js";
 import userState from "../../../../store/user.atom.js";
 import clientState from "../../../../store/client.atom.js";
 import currentSlideState from "../../../../store/slide.selector.js";
-
-import socketConnectionState from "../../../../store/socketConnection.atom.js";
-import { CONNECTION_STATES } from "../../../../store/CONNECTION_STATES.js";
 import * as io from "socket.io-client";
-import { localStorage } from "../../../../lib/issy/index.js";
-import Slide from "../Slide/Slide.js";
 
 import clientsTypes from "../clientsTypes.js";
 
-import Swiper from "../../../partials/Swiper.jsx";
+// import Swiper from "../../../partials/Swiper.jsx";
 
 import SpeedDial from "../../../partials/SpeedDial/SpeedDial.js";
 import Slider from "../../../partials/Slider/Slider.js";
@@ -68,17 +63,17 @@ const Classroom = (props) => {
 	const bgImage =
 		room?.img?.url || room?.teachers?.clients?.[0]?.img?.url || "";
 
-	const mapSlide = useCallback((refs, goToStep, slide) => {
-		return <Slide slide={slide}></Slide>;
-	}, []);
+	// const mapSlide = useCallback((refs, goToStep, slide) => {
+	// 	return <Slide slide={slide}></Slide>;
+	// }, []);
 
-	const handleChangeSlideIndex = useCallback((slideIndex) => {
-		logg("handleChangeSlideIndex ", slideIndex);
-	}, []);
+	// const handleChangeSlideIndex = useCallback((slideIndex) => {
+	// 	logg("handleChangeSlideIndex ", slideIndex);
+	// }, []);
 
 	return (
 		<View className={"classroom"}>
-			<Slider slides={slides}></Slider>
+			<Slider index={2} slides={slides}></Slider>
 			<SpeedDial></SpeedDial>
 		</View>
 	);

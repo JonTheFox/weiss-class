@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export default styled.div`
+	overflow-y: auto;
 	height: 100%;
 	margin: 0 1em;
 	padding: calc(var(--spacing) * 1) calc(var(--spacing) * 2);

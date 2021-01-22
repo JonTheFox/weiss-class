@@ -2,21 +2,12 @@ const TEMPLATES = require("../slideTemplates.js");
 
 const PRESENT_SIMPLE_SLIDES = [
 	{
+		id: 1,
+		templateName: TEMPLATES.HeadingsOnly,
 		heading: "Present Simple",
 		subheading: "Life, in general.",
 		marquee: "",
 		subMarquee: "",
-		templateName: TEMPLATES.HeadingsOnly,
-		p: [],
-		bgImage:
-			"https://images.unsplash.com/photo-1508060698845-34709bc12e1c?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
-	},
-	{
-		heading: "Present Simple",
-		subheading: "He / She / It",
-		marquee: "Present Simple",
-		subMarquee: "",
-		templateName: TEMPLATES.Text1,
 		p: [
 			"When we talk about general truths, we use Present Simple.",
 			"For example: ",
@@ -29,6 +20,17 @@ const PRESENT_SIMPLE_SLIDES = [
 			"He goes to school every day.",
 			"It helps us.",
 		],
+		bgImage:
+			"https://images.unsplash.com/photo-1508060698845-34709bc12e1c?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
+	},
+	{
+		id: 2,
+		templateName: TEMPLATES.Text1,
+		//heading: "Present Simple",
+		//subheading: "He / She / It",
+		marquee: "Present Simple",
+		subMarquee: "Examples",
+		p: ["You study very well.", "I go to school every day."],
 		bgImage:
 			"https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
 	},

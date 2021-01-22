@@ -55,11 +55,6 @@ const authenticateUser = async (credentials) => {
 		return authedUser;
 	}
 
-	console.log(
-		"USER_SERVER_URL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!: ",
-		USER_SERVER_URL
-	);
-
 	const ajaxResult = await request(
 		"POST",
 		`${USER_SERVER_URL}/api/users/authenticate`,
