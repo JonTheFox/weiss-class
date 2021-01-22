@@ -29,6 +29,12 @@ import Link from "@material-ui/core/Link";
 import posed, { PoseGroup } from "react-pose";
 // import ProductCard from "../../MaterialKit/components/ProductCard/index.js";
 
+// import "react-id-swiper/lib/styles/css/swiper.css";
+import "swiper/swiper.scss";
+import Swiper from "react-id-swiper";
+// import Text from "../../partials/Text/Text.js";
+import Heading from "../../partials/Heading/Heading.js";
+
 import {
   // RecoilRoot,
   // atom,
@@ -132,15 +138,7 @@ export default function ClassroomSelect(props) {
         <div className={classes.heroContent}>
           <Container maxWidth="sm">
             <ScaleIn initialPose="exit" pose="enter">
-              <Typography
-                component="h1"
-                variant="h5"
-                align="center"
-                color="textPrimary"
-                gutterBottom
-              >
-                Join a class
-              </Typography>
+              <Heading h="2"> Join a class</Heading>
             </ScaleIn>
           </Container>
         </div>
@@ -184,6 +182,15 @@ export default function ClassroomSelect(props) {
                 const firstTeacherFullname = getTeacherFullName(firstTeacher);
 
                 const bgImage = img?.url || firstTeacher?.img?.url || "";
+
+                // return (
+                //   <Swiper>
+                //     <div
+                //       class="swiper-slide"
+                //       style={{ backgroundImage: bgImage }}
+                //     ></div>
+                //   </Swiper>
+                // );
 
                 return (
                   <Grid item key={roomKey} xs={12} sm={6} md={4}>

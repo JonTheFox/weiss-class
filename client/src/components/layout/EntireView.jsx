@@ -17,8 +17,6 @@ const label = "EntireView";
 
 */
 
-const APPBAR_HEIGHT = "48px";
-
 const EntireView = (props) => {
 	const [UTILS, appState] = useContext(AppContext);
 	// const { isAppbarVisible } = appState;

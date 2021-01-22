@@ -36,6 +36,10 @@ export default styled.div`
 		text-shadow: 1px 1px 2px var(--shadow-color, #000);
 	}
 
+	.text__shadow___cloudy {
+		text-shadow: 2px 2px 12px var(--shadow-color, black);
+	}
+
 	.bottom {
 		bottom: 0;
 	}
