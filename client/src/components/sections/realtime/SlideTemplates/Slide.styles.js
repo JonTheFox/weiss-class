@@ -4,7 +4,7 @@ export default styled.div`
 	overflow-y: auto;
 	height: 100%;
 	margin: 0 1em;
-	padding: calc(var(--spacing) * 1) calc(var(--spacing) * 2);
+	padding: calc(var(--spacing) * 2) calc(var(--spacing) * 2);
 	background-position-x: center;
 	background-position-y: center;
 
@@ -29,6 +29,7 @@ export default styled.div`
 
 	p {
 		font-size: 1.25rem;
-		font-family: Nunito;
+		font-family: inherit;
+
 	}
 `;

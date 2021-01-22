@@ -40,11 +40,10 @@ const Slide = ({ slide = {} }) => {
 		<StyledSlide className={"Slide Slide--base1"}>
 			<Heading>{marquee}</Heading>
 			<Heading h="2">{subheading}</Heading>
-			<Page>
-				{p.map((paragraph) => {
-					return <Text>{paragraph}</Text>;
-				})}
-			</Page>
+
+			{p.map((paragraph) => {
+				return <Text>{paragraph}</Text>;
+			})}
 		</StyledSlide>
 	);
 };
