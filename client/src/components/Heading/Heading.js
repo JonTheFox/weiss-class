@@ -8,10 +8,10 @@ import React, {
 
 import PropTypes from "prop-types";
 import Container from "@material-ui/core/Container";
-import DURATIONS from "../../../constants/durations.js";
+import DURATIONS from "../../constants/durations.js";
 import SplitText from "react-pose-text";
-import { POSES } from "../../../constants/poses.js";
-import useLogg from "../../../components/hooks/useLogg.jsx";
+import { POSES } from "../../constants/poses.js";
+import useLogg from "../../hooks/useLogg.jsx";
 import {
 	Heading1 as StyledHeading1,
 	Heading2 as StyledHeading2,

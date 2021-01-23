@@ -27,9 +27,9 @@ import {
 	useRecoilValue,
 	useSetRecoilState,
 } from "recoil";
-import socketState from "../../../store/socket.atom.js";
-import clientState from "../../../store/client.atom.js";
-import classroomState from "../../../store/classroom.atom.js";
+import socketState from "../../store/socket.atom.js";
+import clientState from "../../store/client.atom.js";
+import classroomState from "../../store/classroom.atom.js";
 
 const CLIENT_ACTIONS = [
 	//{ icon: <FileCopyIcon />, name: "Copy" },

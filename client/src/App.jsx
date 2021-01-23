@@ -7,11 +7,11 @@ import {
 } from "react-router-dom";
 import { ThemeProvider } from "@material-ui/styles";
 
-import LogoScreen from "./components/pages/LogoScreen.jsx";
+import LogoScreen from "./pages/LogoScreen/LogoScreen.jsx";
 import View from "./components/layout/View.jsx";
 import EntireView from "./components/layout/EntireView.jsx";
-import ErrorBoundary from "./components/pages/ErrorBoundary.jsx";
-import WeissSpinner from "./components/partials/WeissSpinner.jsx";
+import ErrorBoundary from "./pages/ErrorPage/ErrorPage.jsx";
+import WeissSpinner from "./components/WeissSpinner/WeissSpinner.jsx";
 
 import "./index.scss";
 
@@ -48,25 +48,19 @@ const client = new ApolloClient({
 
 const SageAdvice = lazy(() =>
 	import(
-		/* webpackPrefetch: true, webpackChunkName: "SageAdvice" */ "./components/pages/SageAdvice.jsx"
+		/* webpackPrefetch: true, webpackChunkName: "SageAdvice" */ "./pages/SageAdvice/SageAdvice.jsx"
 	)
 );
 
 const LazyRealtime = lazy(() =>
 	import(
-		/* webpackChunkName: "RealtimeRoom" */ "./components/realtime.index.jsx"
+		/* webpackChunkName: "RealtimeManager" */ "./components/RealtimeManager/RealtimeManager.jsx"
 	)
 );
 
 const LazyLogin = lazy(() =>
-	import(/* webpackChunkName: "Login" */ "./components/pages/Login.jsx")
+	import(/* webpackChunkName: "Login" */ "./pages/Login/Login.jsx")
 );
-
-// const LazyTestPage = lazy(() =>
-// 	import(
-// 		 webpackChunkName: "Testpage"  "./components/pages/TestPage/TestPage.jsx"
-// 	)
-// );
 
 const baseRoute = "/";
 

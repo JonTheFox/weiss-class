@@ -6,8 +6,8 @@ import React, {
 	//useCallback,
 } from "react";
 import { AppContext } from "../../contexts/AppContext.jsx";
-import useLogg from "../hooks/useLogg.jsx";
-import usePromiseKeeper from "../hooks/usePromiseKeeper.jsx";
+import useLogg from "../../hooks/useLogg.jsx";
+import usePromiseKeeper from "../../hooks/usePromiseKeeper.jsx";
 
 import PropTypes from "prop-types";
 import clsx from "clsx";

@@ -5,28 +5,23 @@ import React, {
 	useRef,
 	Suspense,
 	useCallback,
+	Fragment,
 } from "react";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
-import { AppContext } from "../../../contexts/AppContext.jsx";
-import RealtimeEntrance from "./realtime.entrance.jsx";
-import RealtimeClassroom from "./realtime.classroom.jsx";
-import Classroom from "./Classroom/Classroom.js";
-import Card from "../../partials/Card.jsx";
-import WeissSpinner from "../../partials/WeissSpinner.jsx";
+import { AppContext } from "../../contexts/AppContext.jsx";
+import ClientTypeSelect from "../../pages/ClientTypeSelect/Realtime.entrance.jsx";
+import Classroom from "../Classroom/Classroom.js";
+import Card from "../Card/Card.jsx";
+import WeissSpinner from "../WeissSpinner/WeissSpinner.jsx";
 //import PropTypes from "prop-types";
 // import clsx from "clsx";
-import View from "../../layout/View.jsx";
-
-import ClassroomSelect from "./ClassroomSelect.page.jsx";
-
-import "./_Realtime.scss";
-
+import View from "../layout/View.jsx";
+import ClassroomSelect from "../../pages/ClassroomSelect/ClassroomSelect.page.jsx";
 import useLogg from "../../hooks/useLogg.jsx";
 import usePromiseKeeper from "../../hooks/usePromiseKeeper.jsx";
 import { useQuery, gql } from "@apollo/client";
-import { GetSlides } from "../../../gql/queries/GetSlides";
-import { GetRooms } from "../../../gql/queries/GetRooms";
-
+import { GetSlides } from "../../gql/queries/GetSlides";
+import { GetRooms } from "../../gql/queries/GetRooms";
 import {
 	// atom,
 	// selector,
@@ -34,23 +29,21 @@ import {
 	useRecoilValue,
 	useSetRecoilState,
 } from "recoil";
-import roomsState from "../../../store/rooms.atom.js";
-import roomState from "../../../store/room.atom.js";
-import socketState from "../../../store/socket.atom.js";
-import userState from "../../../store/user.atom.js";
-import clientState from "../../../store/client.atom.js";
-import lessonState from "../../../store/lesson.atom.js";
-import refsState from "../../../store/refs.atom.js";
-import socketConnectionState from "../../../store/socketConnection.atom.js";
-import { CONNECTION_STATES } from "../../../store/CONNECTION_STATES.js";
+import roomsState from "../../store/rooms.atom.js";
+import roomState from "../../store/room.atom.js";
+import socketState from "../../store/socket.atom.js";
+import userState from "../../store/user.atom.js";
+import clientState from "../../store/client.atom.js";
+import lessonState from "../../store/lesson.atom.js";
+import refsState from "../../store/refs.atom.js";
+import socketConnectionState from "../../store/socketConnection.atom.js";
+import { CONNECTION_STATES } from "../../store/CONNECTION_STATES.js";
 import * as io from "socket.io-client";
-import { localStorage } from "../../../lib/issy/index.js";
-
-import VideoPlayer from "../../partials/VideoPlayer.jsx";
-
-import LOCAL_STORAGE_KEY from "../realtime/localStorageKey.js";
-
+import { localStorage } from "../../lib/issy/index.js";
+import VideoPlayer from "../VideoPlayer/VideoPlayer.jsx";
+import LOCAL_STORAGE_KEY from "../../constants/localStorageKey.js";
 import { ParallaxProvider } from "react-scroll-parallax";
+import "./_RealtimeManager.scss";
 
 const CLOUD_VIDEOS = [
 	// {
@@ -267,9 +260,8 @@ const Realtime = (props) => {
 	}, [user]);
 
 	const { location, match } = props.route;
-
 	return (
-		<ParallaxProvider>
+		<Fragment>
 			<VideoPlayer
 				style={{ position: "absolute", zIndex: -1 }}
 				controls={false}
@@ -297,11 +289,11 @@ const Realtime = (props) => {
 						render={(route) => <Classroom route={route} />}
 					/>
 					<Route
-						render={(route) => <RealtimeEntrance route={route} />}
+						render={(route) => <ClientTypeSelect route={route} />}
 					/>
 				</Switch>
 			</Suspense>
-		</ParallaxProvider>
+		</Fragment>
 	);
 };
 

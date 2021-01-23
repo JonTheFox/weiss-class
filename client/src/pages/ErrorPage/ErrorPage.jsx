@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 
-import View from "../layout/View.jsx";
+import View from "../../components/layout/View.jsx";
 import Logger from "../../lib/logg.js";
-import SageAdvice from "./SageAdvice.jsx";
+import SageAdvice from "../SageAdvice/SageAdvice.jsx";
 
 const label = "ErrorBoundary";
 const { loggError } = new Logger({ label });

@@ -5,9 +5,9 @@ import HeroSlider, {
   Nav,
   OverlayContainer,
 } from "hero-slider";
-import CenteredHeadings from "../../sections/realtime/SlideTemplates/CenteredHeadings.js";
-import Text1 from "../../sections/realtime/SlideTemplates/Text1.js";
-import Slide from "../../sections/realtime/SlideTemplates/Slide.js";
+import Slide from "../SlidePageTemplates/Slide.js";
+import CenteredHeadings from "../SlidePageTemplates/CenteredHeadings.js";
+import Text1 from "../SlidePageTemplates/Text1.js";
 
 const SLIDE_TEMPLATES = { CenteredHeadings, Text1 };
 

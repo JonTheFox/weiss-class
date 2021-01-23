@@ -5,32 +5,20 @@ import React, {
 	useCallback,
 	useRef,
 } from "react";
-import { AppContext } from "../../../contexts/AppContext.jsx";
-
-//import PropTypes from "prop-types";
+import { AppContext } from "../../contexts/AppContext.jsx";
 import clsx from "clsx";
-
-// import SendIcon from "@material-ui/icons/Send";
 import posed, { PoseGroup } from "react-pose";
-// import { POSES, BASE_POSES } from "../../constants/poses.js";
-// import TextField from "@material-ui/core/TextField";
-// import IconButton from "@material-ui/core/IconButton";
-// import FlightTakeoff from "@material-ui/icons/FlightTakeoff";
-
-import DURATIONS from "../../../constants/durations.js";
-import View from "../../layout/View.jsx";
-import PieChart from "../../partials/PieChart.jsx";
-import "./_Realtime.scss";
-
+import DURATIONS from "../../constants/durations.js";
+import View from "../../components/layout/View.jsx";
+import PieChart from "../../components/PieChart/PieChart.jsx";
 import { useRecoilState, useRecoilValue } from "recoil";
-import roomsState from "../../../store/rooms.atom.js";
-import userState from "../../../store/user.atom.js";
-// import refsState from "../../../store/refs.atom.js";
-import socketState from "../../../store/socket.atom.js";
-import socketConnectionState from "../../../store/socketConnection.atom.js";
-import clientState from "../../../store/client.atom.js";
-
-import { CONNECTION_STATES } from "../../../store/CONNECTION_STATES.js";
+import roomsState from "../../store/rooms.atom.js";
+import userState from "../../store/user.atom.js";
+import socketState from "../../store/socket.atom.js";
+import socketConnectionState from "../../store/socketConnection.atom.js";
+import clientState from "../../store/client.atom.js";
+import { CONNECTION_STATES } from "../../store/CONNECTION_STATES.js";
+import "./Realtime.entrance.jsx";
 
 let animationFrame;
 let logg;

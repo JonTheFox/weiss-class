@@ -1,8 +1,8 @@
 import React from "react";
 import StyledPage from "./Page.styles.js";
-import CenteredHeadings from "../CenteredHeadings.js";
-import BottomThirdCaption from "../BottomThirdCaption.js";
-import Text1 from "../Text1.js";
+import CenteredHeadings from "../SlidePageTemplates/CenteredHeadings.js";
+import BottomThirdCaption from "../SlidePageTemplates/BottomThirdCaption.js";
+import Text1 from "../SlidePageTemplates/Text1.js";
 
 const PAGE_TEMPLATES = { CenteredHeadings, Text1, BottomThirdCaption };
 

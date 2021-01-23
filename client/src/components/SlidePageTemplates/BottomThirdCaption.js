@@ -5,10 +5,11 @@ import React, {
 	Suspense,
 	useCallback,
 } from "react";
-import Heading from "../../../partials/Heading/Heading.js";
-import View from "../../../layout/View.jsx";
-import Page from "../Page/Page.js";
-import Text from "../../../partials/Text/Text.js";
+import CenteredContainer from "../CenteredContainer/CenteredContainer.js";
+import Heading from "../Heading/Heading.js";
+import View from "../layout/View.jsx";
+import Page from "./Page.js";
+import Text from "../Text/Text.js";
 //import PropTypes from "prop-types";
 // import clsx from "clsx";
 
@@ -17,7 +18,6 @@ import Text from "../../../partials/Text/Text.js";
 
 // import { localStorage } from "../../../../lib/issy/index.js";
 import StyledSlide from "./Slide.styles.js";
-import CenteredContainer from "../../../partials/CenteredContainer/CenteredContainer.js";
 
 const label = "BottomThirdCaption";
 

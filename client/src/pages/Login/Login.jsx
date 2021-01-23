@@ -12,12 +12,11 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import View from "../layout/View.jsx";
+import View from "../../components/layout/View.jsx";
 // import clsx from "clsx";
 import ENDPOINTS from "../../AJAX/ajax-endpoints.js";
 
 import { AppContext } from "../../contexts/AppContext.jsx";
-
 import {
 	// atom,
 	// selector,

@@ -5,20 +5,17 @@ import React, {
 	Suspense,
 	useCallback,
 } from "react";
-import Heading from "../../../partials/Heading/Heading.js";
-import View from "../../../layout/View.jsx";
+import Heading from "../Heading/Heading.js";
+import View from "../../components/layout/View.jsx";
 import Page from "./Page.js";
-import Text from "../../../partials/Text/Text.js";
+import Text from "../Text/Text.js";
 //import PropTypes from "prop-types";
 // import clsx from "clsx";
-
 // import useLogg from "../../../hooks/useLogg.jsx";
 // import usePromiseKeeper from "../../../hooks/usePromiseKeeper.jsx";
-
 // import { localStorage } from "../../../../lib/issy/index.js";
 import StyledContainer from "./Slide.styles.js";
-import CenteredContainer from "../../../partials/CenteredContainer/CenteredContainer.js";
-
+import CenteredContainer from "../CenteredContainer/CenteredContainer.js";
 const label = "Slide";
 
 const Slide = (props) => {

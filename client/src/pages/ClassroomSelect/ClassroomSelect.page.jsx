@@ -6,14 +6,15 @@ import React, {
   useEffect,
   useCallback,
 } from "react";
-import { AppContext } from "../../../contexts/AppContext.jsx";
+import { AppContext } from "../../contexts/AppContext.jsx";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import useLogg from "../../hooks/useLogg.jsx";
 import usePromiseKeeper from "../../hooks/usePromiseKeeper.jsx";
-import View from "../../layout/View.jsx";
+import View from "../../components/layout/View.jsx";
 
 import AppBar from "@material-ui/core/AppBar";
+import Card from "../../components/Card/Card.js";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -29,7 +30,7 @@ import Link from "@material-ui/core/Link";
 import posed, { PoseGroup } from "react-pose";
 
 // import Text from "../../partials/Text/Text.js";
-import Heading from "../../partials/Heading/Heading.js";
+import Heading from "../../components/Heading/Heading.js";
 
 import {
   // RecoilRoot,
@@ -40,13 +41,12 @@ import {
   useSetRecoilState,
 } from "recoil";
 
-import roomsState from "../../../store/rooms.atom.js";
-import socketState from "../../../store/socket.atom.js";
-import clientState from "../../../store/client.atom.js";
-import classroomState from "../../../store/classroom.atom.js";
-import refsState from "../../../store/refs.atom.js";
+import roomsState from "../../store/rooms.atom.js";
+import socketState from "../../store/socket.atom.js";
+import clientState from "../../store/client.atom.js";
+import classroomState from "../../store/classroom.atom.js";
+import refsState from "../../store/refs.atom.js";
 import * as io from "socket.io-client";
-import Card from "../../Card/Card.js";
 import { useHistory } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 

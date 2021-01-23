@@ -4,7 +4,7 @@ import React, {
 	useCallback,
 	useEffect,
 	forwardRef,
-	useRef
+	useRef,
 } from "react";
 
 import PropTypes from "prop-types";
@@ -18,7 +18,7 @@ import Color from "color";
 import DURATIONS from "../../constants/durations.js";
 import { AppContext } from "../../contexts/AppContext.jsx";
 import { DeviceContext } from "../../contexts/DeviceContext.jsx";
-import FreeSpeechBubble from "../partials/FreeSpeechBubble.jsx";
+import FreeSpeechBubble from "../../components/FreeSpeechBubble/FreeSpeechBubble.jsx";
 import "./_SageAdvice.scss";
 
 const sagePath = "/characters/OldSageToRight.svg";
@@ -38,7 +38,7 @@ const Sage = forwardRef((props, ref) => (
 		cacheRequests={true}
 		description="Sage Weiss"
 		loader={() => <span>...</span>}
-		onError={error => {
+		onError={(error) => {
 			logg(error.message);
 		}}
 		onLoad={(src, hasCache) =>
@@ -53,20 +53,20 @@ const pressablePoses = {
 		opacity: 1,
 		scale: 1,
 		x: "0%",
-		transition: { duration: 400 }
+		transition: { duration: 400 },
 	},
 	hidden: {
 		// skew: "55deg",
 		opacity: 0,
 
-		transition: { duration: 250 }
+		transition: { duration: 250 },
 	},
 	left: {
 		x: "-200%",
-		transition: { duration: DURATIONS.enter }
+		transition: { duration: DURATIONS.enter },
 	},
 	pressable: true,
-	press: { scale: 0.7, damping: 200 }
+	press: { scale: 0.7, damping: 200 },
 };
 
 // const PosedSageWithRef = posed(Sage)(pressablePoses);
@@ -114,7 +114,7 @@ const sageColors = [
 		label: "body",
 		darken: { base: "#f3ccc2ff" }, //instead of changing it to a random color
 		darker: 3,
-		lighter: 3
+		lighter: 3,
 		// fixed: true
 	}),
 	new ColorSet({ label: "robe", darker: 3, lighter: 3 }),
@@ -125,7 +125,7 @@ const sageColors = [
 		darker: 3,
 		lighter: 3,
 		transparent: 1,
-		darken: { base: "rgba(255, 255, 255, 1)" }
+		darken: { base: "rgba(255, 255, 255, 1)" },
 	}),
 
 	//rgb(148, 116, 204) primary-base
@@ -134,7 +134,7 @@ const sageColors = [
 		darken: { base: "#f3ccc2ff" },
 		lighter: 3,
 		darker: 3,
-		fixed: true
+		fixed: true,
 	}),
 	// new ColorSet({
 	// 	label: "body",
@@ -145,38 +145,38 @@ const sageColors = [
 		label: "secondary",
 		darken: { base: "rgb(68, 221, 238)" },
 		lighter: 3,
-		darker: 3
+		darker: 3,
 	}),
 	new ColorSet({
 		label: "red",
 		darken: { base: "#e80909" },
 		darker: 3,
-		lighter: 3
+		lighter: 3,
 	}),
 	new ColorSet({
 		label: "yellow",
 		darken: { base: "rgb(255, 255, 170)" },
 		darker: 3,
-		lighter: 3
+		lighter: 3,
 	}),
 	new ColorSet({
 		label: "green",
 		darken: { base: "#d6ffa6" },
 		darker: 3,
-		lighter: 3
+		lighter: 3,
 	}),
 	new ColorSet({
 		label: "dark-pink",
 		darken: { base: "rgb(238, 170, 255)" },
 		darker: 3,
-		lighter: 3
+		lighter: 3,
 	}),
 	new ColorSet({
 		label: "salmon",
 		darken: { base: "rgb(255, 204, 204)" },
 		darker: 3,
-		lighter: 3
-	})
+		lighter: 3,
+	}),
 ];
 
 const attachStyleSheet = () => {
@@ -198,7 +198,7 @@ const createCSSRuleString = (config = {}) => {
 		selector = ".color-1-base",
 		propertyName = "fill",
 		propertyValue = "var(--color-1-base)",
-		important = false
+		important = false,
 	} = config;
 	if (!selector || !propertyValue || !propertyValue) return null;
 	let cssRule = `${selector} {${propertyName}: ${propertyValue} ${
@@ -208,7 +208,7 @@ const createCSSRuleString = (config = {}) => {
 	return cssRule;
 };
 
-const SageAdvice = props => {
+const SageAdvice = (props) => {
 	const [appUtils] = useContext(AppContext);
 	const responsiveData = useContext(DeviceContext);
 	const {
@@ -218,7 +218,7 @@ const SageAdvice = props => {
 		getRandomColor,
 		getRandomUpTo,
 		PromiseKeeper,
-		poseGroup
+		poseGroup,
 	} = appUtils;
 	logg = logg || new Logger({ label }).logg;
 	promiseKeeper = promiseKeeper || new PromiseKeeper({ label });
@@ -269,7 +269,7 @@ const SageAdvice = props => {
 						selector,
 						propertyName,
 						propertyValue,
-						important
+						important,
 					});
 					colorRules.push(shadeRule);
 					styleSheet.insertRule(shadeRule);
@@ -281,7 +281,7 @@ const SageAdvice = props => {
 							selector,
 							propertyName,
 							propertyValue,
-							important
+							important,
 						});
 						colorRules.push(shadeRule);
 						styleSheet.insertRule(shadeRule);
@@ -295,7 +295,7 @@ const SageAdvice = props => {
 		logg("Added the following style rules: ", cssRules);
 	});
 
-	const changeColors = useCallback(ev => {
+	const changeColors = useCallback((ev) => {
 		//change ALL colors
 		const newColors = [];
 		for (let i = 1; i < NUM_COLORS_USED + 1; i++) {
@@ -399,7 +399,7 @@ const SageAdvice = props => {
 		alignElements({
 			targetElem: mouthRef,
 			movingElem: speechBubbleRef,
-			top: appbarHeight - 0.66 * speechBubbleRef.current.clientHeight
+			top: appbarHeight - 0.66 * speechBubbleRef.current.clientHeight,
 		});
 	};
 
@@ -561,7 +561,7 @@ const SageAdvice = props => {
 										DURATIONS["betweenLevels"],
 										"whiteOut-after-color-change",
 										{
-											resolveOnError: true
+											resolveOnError: true,
 										}
 									)
 									.then(() => {
@@ -647,7 +647,7 @@ const SageAdvice = props => {
 					variant="contained"
 					color="primary"
 					size="large"
-					onClick={ev => window.location.reload()}
+					onClick={(ev) => window.location.reload()}
 				>
 					Rock on
 				</Button>
@@ -667,7 +667,7 @@ const SageAdvice = props => {
 							showBubble ? "hide" : "show"
 						)}
 						disabled={!showSage}
-						onClick={ev => setShowBubble(prev => !prev)}
+						onClick={(ev) => setShowBubble((prev) => !prev)}
 					>
 						{showBubble ? "Hide bubble" : "Show bubble"}
 					</Button>
@@ -680,7 +680,7 @@ const SageAdvice = props => {
 							showMagicField ? "hide" : "show"
 						)}
 						disabled={!showSage}
-						onClick={ev => setShowMagicField(prev => !prev)}
+						onClick={(ev) => setShowMagicField((prev) => !prev)}
 					>
 						{showMagicField
 							? "Hide magic field"
@@ -694,7 +694,7 @@ const SageAdvice = props => {
 							"btn readable",
 							showSage ? "hide" : "show"
 						)}
-						onClick={ev => setShowSage(prev => !prev)}
+						onClick={(ev) => setShowSage((prev) => !prev)}
 					>
 						{showSage ? "Hide Sage" : "Show Sage"}
 					</Button>
@@ -706,7 +706,7 @@ const SageAdvice = props => {
 							"btn readable",
 							showSpeechBubble ? "hide" : "show"
 						)}
-						onClick={ev => setShowSpeechBubble(prev => !prev)}
+						onClick={(ev) => setShowSpeechBubble((prev) => !prev)}
 					>
 						{showSpeechBubble
 							? "Hide speech bubble"
@@ -720,7 +720,7 @@ const SageAdvice = props => {
 
 SageAdvice.propTypes = {
 	next: PropTypes.func,
-	user: PropTypes.object
+	user: PropTypes.object,
 };
 
 export default SageAdvice;

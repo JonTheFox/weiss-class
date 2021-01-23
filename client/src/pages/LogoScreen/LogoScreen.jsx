@@ -1,17 +1,12 @@
 import React, { useState, useContext, useEffect } from "react";
 import { AppContext } from "../../contexts/AppContext.jsx";
 import clsx from "clsx";
-
 import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
-// import { useTheme } from "@material-ui/styles";
-// import { makeStyles } from "@material-ui/styles";
+import View from "../../components/layout/View.jsx";
+import VideoPlayer from "../../components/VideoPlayer/VideoPlayer.jsx";
+import Card from "../../components/Card/Card.js";
 import "./LogoScreen.scss";
-// import clsx from "clsx";
-import View from "../layout/View.jsx";
-import VideoPlayer from "../partials/VideoPlayer.jsx";
-
-import Card from "../Card/Card.js";
 
 const BASE_ROUTE = "/";
 
