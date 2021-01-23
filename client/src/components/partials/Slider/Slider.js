@@ -7,6 +7,7 @@ import HeroSlider, {
 } from "hero-slider";
 import CenteredHeadings from "../../sections/realtime/SlideTemplates/CenteredHeadings.js";
 import Text1 from "../../sections/realtime/SlideTemplates/Text1.js";
+import Slide from "../../sections/realtime/SlideTemplates/Slide.js";
 
 const SLIDE_TEMPLATES = { CenteredHeadings, Text1 };
 
@@ -40,23 +41,11 @@ const Slider = ({ children, slides }) => {
 
       {slides &&
         slides.map((slide, i) => {
-          const { bgImage, id, templateName } = slide;
+          const { pages, id } = slide;
 
-          const LessonSlide =
-            SLIDE_TEMPLATES[templateName] ||
-            SLIDE_TEMPLATES["CenteredHeadings"];
+          debugger;
 
-          return (
-            <PresentationSlide
-              key={id}
-              background={{
-                backgroundImage: bgImage,
-                backgroundAttachment: "fixed",
-              }}
-            >
-              <LessonSlide slide={slide}></LessonSlide>
-            </PresentationSlide>
-          );
+          return <Slide {...slide}></Slide>;
         })}
 
       <Nav />
@@ -65,3 +54,8 @@ const Slider = ({ children, slides }) => {
 };
 
 export default Slider;
+
+/*background={{
+                backgroundImage: bgImage,
+                backgroundAttachment: "fixed",
+              }}*/

@@ -3,11 +3,19 @@ import styled from "styled-components";
 export default styled.div`
 	margin: 0 1em;
 	padding: 0.25em 1em;
-	background-position-x: center;
-	background-position-y: center;
 
 	margin: auto;
 	background-size: cover;
+
+	&.bottom-third-text {
+		position: absolute;
+		color: #000;
+		bottom: 0;
+		left: 0;
+		z-index: 1000;
+		padding: calc(2 * var(--spacing)) calc(1 * var(--spacing));
+		padding-bottom: calc(5 * var(--spacing));
+	}
 
 	.letter {
 		user-select: none;

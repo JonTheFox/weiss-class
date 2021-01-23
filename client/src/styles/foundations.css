@@ -161,7 +161,6 @@ body {
 }
 
 #root {
-	position: fixed; /* to avoid overflow on mobile, caused by the address bar*/
 	height: calc(100 * var(--vh));
 	width: 100%;
 	/*overflow: auto;*/

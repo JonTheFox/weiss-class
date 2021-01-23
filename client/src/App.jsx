@@ -54,13 +54,19 @@ const SageAdvice = lazy(() =>
 
 const LazyRealtime = lazy(() =>
 	import(
-		/* webpackChunkName: "RealtimeRoom" */ "./components/sections/realtime/realtime.index.jsx"
+		/* webpackChunkName: "RealtimeRoom" */ "./components/realtime.index.jsx"
 	)
 );
 
 const LazyLogin = lazy(() =>
 	import(/* webpackChunkName: "Login" */ "./components/pages/Login.jsx")
 );
+
+// const LazyTestPage = lazy(() =>
+// 	import(
+// 		 webpackChunkName: "Testpage"  "./components/pages/TestPage/TestPage.jsx"
+// 	)
+// );
 
 const baseRoute = "/";
 

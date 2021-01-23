@@ -27,8 +27,7 @@ const View = React.forwardRef((props, ref) => {
 	} = props;
 
 	const containerClasses = clsx(
-		"view",
-		responsive && "view--responsive",
+		responsive ? "view--responsive" : "view",
 		!responsive && fullsize && "fullsize",
 		animate && "transition-target",
 		animateChildren && "transition-container",
