@@ -4,9 +4,15 @@ export default styled.div`
 	overflow-y: auto;
 	height: 100%;
 	margin: 0 1em;
-	padding: calc(var(--spacing) * 2) calc(var(--spacing) * 2);
+	// padding: calc(var(--spacing) * 2) 0;
 	background-position-x: center;
 	background-position-y: center;
+
+	.slide-container {
+		
+	padding: var(--spacing) 0;
+	}
+
 
 	margin: auto;
 	background-size: cover;

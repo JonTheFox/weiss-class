@@ -27,11 +27,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Link from "@material-ui/core/Link";
 import posed, { PoseGroup } from "react-pose";
-// import ProductCard from "../../MaterialKit/components/ProductCard/index.js";
 
-// import "react-id-swiper/lib/styles/css/swiper.css";
-import "swiper/swiper.scss";
-import Swiper from "react-id-swiper";
 // import Text from "../../partials/Text/Text.js";
 import Heading from "../../partials/Heading/Heading.js";
 
@@ -49,15 +45,10 @@ import socketState from "../../../store/socket.atom.js";
 import clientState from "../../../store/client.atom.js";
 import classroomState from "../../../store/classroom.atom.js";
 import refsState from "../../../store/refs.atom.js";
-
 import * as io from "socket.io-client";
-
 import Card from "../../Card/Card.js";
-
-import { useQuery } from "@apollo/client";
-import { GetRooms } from "../../../gql/queries/GetRooms";
-
 import { useHistory } from "react-router-dom";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 const scaleInPoses = {
   enter: {
@@ -78,11 +69,9 @@ const ScaleIn = posed.div(scaleInPoses);
 let animationFrame;
 const label = "ClassroomSelect";
 
-const mockRoom = { title: "Jonny's" };
-
 const useStyles = makeStyles((theme) => ({
   root: {
-    overflow: "auto !important",
+    overflow: "auto",
   },
   icon: {
     marginRight: theme.spacing(2),
@@ -112,10 +101,26 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ClassroomSelect(props) {
-  //todo: take items from context
-  const [items, setItems] = useState([]);
+const SWIPER_PARAMS = {
+  effect: "coverflow",
+  grabCursor: true,
+  centeredSlides: true,
+  slidesPerView: "auto",
+  coverflowEffect: {
+    rotate: 50,
+    stretch: 0,
+    depth: 100,
+    modifier: 1,
+    slideShadows: true,
+  },
+  pagination: {
+    el: ".swiper-pagination",
+    clickable: true,
+    dynamicBullets: true,
+  },
+};
 
+export default function ClassroomSelect(props) {
   const [appUtils, appState, setAppState] = useContext(AppContext);
 
   const { capitalizeFirstLetter, pickRandomFrom, is, navigateTo } = appUtils;
@@ -193,54 +198,52 @@ export default function ClassroomSelect(props) {
                 // );
 
                 return (
-                  <Grid item key={roomKey} xs={12} sm={6} md={4}>
-                    <Card
-                      className={clsx(classes.card, "dynamic-shadow")}
-                      style={{
-                        background: `url(${bgImage})`,
-                      }}
-                      onClick={(ev) => {
-                        if (is(socket).aString) {
-                          loggError("socket is inactive");
-                          debugger;
-                          return null;
-                        }
+                  <Card
+                    className={clsx(classes.card, "dynamic-shadow")}
+                    style={{
+                      background: `url(${bgImage})`,
+                    }}
+                    onClick={(ev) => {
+                      if (is(socket).aString) {
+                        loggError("socket is inactive");
+                        debugger;
+                        return null;
+                      }
 
-                        const { id, type } = client;
+                      const { id, type } = client;
 
-                        socket.emit("client__selectsRoom", {
-                          roomKey,
-                          clientId: client.id,
-                          clientType: client.type,
-                        });
+                      socket.emit("client__selectsRoom", {
+                        roomKey,
+                        clientId: client.id,
+                        clientType: client.type,
+                      });
 
-                        setClassroom({ roomKey });
+                      setClassroom({ roomKey });
 
-                        navigateTo(`/rt/classroom`, history);
-                      }}
-                    >
-                      <CardContent className={classes.cardContent}>
-                        <CardActions>
-                          <Typography
-                            gutterBottom
-                            className="readable"
-                            variant="h5"
-                            component="h5"
-                          >
-                            {firstTeacherFullname}
-                          </Typography>
-                          <Typography
-                            gutterBottom
-                            className="readable"
-                            variant="p"
-                            component="p"
-                          >
-                            {title || name}
-                          </Typography>
-                        </CardActions>
-                      </CardContent>
-                    </Card>
-                  </Grid>
+                      navigateTo(`/rt/classroom`, history);
+                    }}
+                  >
+                    <CardContent className={classes.cardContent}>
+                      <CardActions>
+                        <Typography
+                          gutterBottom
+                          className="readable"
+                          variant="h5"
+                          component="h5"
+                        >
+                          {firstTeacherFullname}
+                        </Typography>
+                        <Typography
+                          gutterBottom
+                          className="readable"
+                          variant="p"
+                          component="p"
+                        >
+                          {title || name}
+                        </Typography>
+                      </CardActions>
+                    </CardContent>
+                  </Card>
                 );
               })}
           </Grid>

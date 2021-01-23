@@ -204,6 +204,7 @@ const VideoPlayer = React.forwardRef((props, ref) => {
 				faded && "video-player--faded"
 			)}
 			ref={ref}
+			{...props}
 		>
 			<ReactPlayer
 				className={clsx("react-player")}

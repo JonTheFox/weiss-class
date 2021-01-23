@@ -30,7 +30,9 @@ const CenteredHeadings = ({ slide = {} }) => {
 	// const { logg, loggError } = useLogg({ label });
 	// const promiseKeeper = usePromiseKeeper({ label });
 	return (
-		<StyledSlide className={"Slide Slide--base1"}>
+		<StyledSlide
+			className={"Slide Slide--centered-headings style={{padding:0}}"}
+		>
 			<Page>
 				<CenteredContainer>
 					<Heading>{heading}</Heading>

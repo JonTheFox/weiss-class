@@ -39,7 +39,7 @@
         "recoil": "^0.1.2",
         "spectacle": "^5.0.1",
         "styled-components": "^5.2.1",
-        "swiper": "^6.4.7",
+        "swiper": "^6.4.8",
         "typeface-roboto": "0.0.54"
     },
     "scripts": {
