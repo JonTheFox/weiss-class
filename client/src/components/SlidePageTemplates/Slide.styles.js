@@ -8,12 +8,7 @@ export default styled.div`
 	background-position-x: center;
 	background-position-y: center;
 
-	.Page--centered-headings {
-		height: auto;
-		width: 100%;
-		overflow: visible;
-	}
-
+	
 	padding:0;
 
 	margin: auto;

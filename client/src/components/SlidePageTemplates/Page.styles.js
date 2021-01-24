@@ -5,7 +5,14 @@ export default styled.section`
 	position: relative;
 	padding: calc(2 * var(--spacing)) 0;
 
-	&.Page--centered-headings {
+	.Page--centered-headings {
+		height: auto;
+		width: 100%;
+	}
+
+	.Page--centered-headings,
+	.Page--bottom-third-caption,
+	.Page--text1 {
 		overflow: visible;
 	}
 `;
