@@ -11,6 +11,7 @@ export const Heading1 = styled.h1`
 
 export const Heading2 = styled.h2`
 	margin: 0;
+	margin-bottom: calc(4 * var(--spacing));
 	.letter {
 		font-size: 1.5rem;
 		text-align: center;

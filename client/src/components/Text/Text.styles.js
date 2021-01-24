@@ -55,10 +55,9 @@ export default styled.div`
 	p {
 		display: inline;
 		line-height: 2;
-		font-size: 1rem;
+		font-size: 1.2rem;
 		font-family: Nunito;
 		background-color: rgba(0, 0, 0, 0.8);
-		//margin-left: var(--spacing);
 		color: var(--white);
 		text-align: left;
 		padding: calc(0.75 * var(--spacing));
