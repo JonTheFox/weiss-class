@@ -8,11 +8,12 @@ export default styled.div`
 	background-position-x: center;
 	background-position-y: center;
 
-	.slide-container {
-		
-	padding: var(--spacing) 0;
+	.Page--centered-headings {
+		height: auto;
+		width: 100%;
 	}
 
+	padding:0;
 
 	margin: auto;
 	background-size: cover;

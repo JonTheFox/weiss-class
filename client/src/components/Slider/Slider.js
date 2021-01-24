@@ -43,9 +43,18 @@ const Slider = ({ children, slides }) => {
         slides.map((slide, i) => {
           const { pages, id } = slide;
 
-          debugger;
+          const bgImage = slide.bgImage || pages?.[0]?.bgImage || "";
 
-          return <Slide {...slide}></Slide>;
+          return (
+            <PresentationSlide
+              background={{
+                backgroundImage: bgImage,
+                backgroundAttachment: "fixed",
+              }}
+            >
+              <Slide {...slide}></Slide>
+            </PresentationSlide>
+          );
         })}
 
       <Nav />

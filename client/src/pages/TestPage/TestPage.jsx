@@ -30,7 +30,6 @@ const bgImage =
 // const musicPath = "/music/bensound-goinghigher.mp3";
 
 const TestPage = (props) => {
-	//return "yo";
 	return (
 		<Parallax className="custom-class" y={[-20, 20]} tagOuter="figure">
 			<img src={bgImage} />

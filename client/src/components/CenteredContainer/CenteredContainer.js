@@ -12,9 +12,10 @@ import React, {
 import StyledCenteredContainer from "./CenteredContainer.styles.js";
 
 const label = "CenteredContainer";
+
 const CenteredContainer = ({ children = "" }) => {
 	return (
-		<StyledCenteredContainer className={`${label} centered`} style={{}}>
+		<StyledCenteredContainer className={`${label} centered`}>
 			{children}
 		</StyledCenteredContainer>
 	);

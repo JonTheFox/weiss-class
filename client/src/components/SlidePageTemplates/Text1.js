@@ -13,7 +13,7 @@ import StyledSlide from "./Slide.styles.js";
 
 const label = "Slide";
 
-const Slide = ({ slide = {} }) => {
+const Slide = (props) => {
 	// const [appUtils] = useContext(AppContext);
 	// const { PromiseKeeper, Logger } = appUtils;
 
@@ -24,13 +24,13 @@ const Slide = ({ slide = {} }) => {
 		bgImage = "",
 		marquee = "",
 		subMarquee = "",
-	} = slide;
+	} = props;
 
 	// const { logg, loggError } = useLogg({ label });
 	// const promiseKeeper = usePromiseKeeper({ label });
 
 	return (
-		<StyledSlide className={"Slide Slide--base1"}>
+		<StyledSlide className={"Page Page--text1"}>
 			<Heading>{marquee}</Heading>
 			<Heading h="2">{subheading}</Heading>
 

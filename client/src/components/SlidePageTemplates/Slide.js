@@ -24,16 +24,11 @@ const Slide = (props) => {
 
 	const { pages = [], templateName = "" } = props;
 
-	debugger;
-
 	// const { logg, loggError } = useLogg({ label });
 	// const promiseKeeper = usePromiseKeeper({ label });
 
 	return (
-		<StyledContainer
-			className={"Slide Slide--centered-headings"}
-			style={{ padding: 0 }}
-		>
+		<StyledContainer className={"Slide"} style={{ padding: 0 }}>
 			{pages &&
 				pages.map((page, i) => {
 					// const {
@@ -49,7 +44,6 @@ const Slide = (props) => {
 					// 	SLIDE_TEMPLATES[templateName] ||
 					// 	SLIDE_TEMPLATES["CenteredHeadings"];
 
-					debugger;
 					return <Page {...page}></Page>;
 				})}
 		</StyledContainer>

@@ -17,49 +17,27 @@ import Text from "../Text/Text.js";
 // import usePromiseKeeper from "../../../hooks/usePromiseKeeper.jsx";
 
 // import { localStorage } from "../../../../lib/issy/index.js";
-import StyledSlide from "./Slide.styles.js";
+import StyledPage from "./Page.styles.js";
 
 const label = "BottomThirdCaption";
 
-const insideStyles = {
-	background: "white",
-	padding: 20,
-	position: "absolute",
-	top: "50%",
-	left: "50%",
-	transform: "translate(-50%,-50%)",
-};
-const image1 =
-	"https://images.unsplash.com/photo-1498092651296-641e88c3b057?auto=format&fit=crop&w=1778&q=60&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D";
-
-const BottomThirdCaption = ({ slide = {} }) => {
+const BottomThirdCaption = (props) => {
 	// const [appUtils] = useContext(AppContext);
 	// const { PromiseKeeper, Logger } = appUtils;
 
-	const { heading = "", subheading = "", p = [""], bgImage = "" } = slide;
+	const { heading = "", subheading = "", p = [""], bgImage = "" } = props;
 
 	// const { logg, loggError } = useLogg({ label });
 	// const promiseKeeper = usePromiseKeeper({ label });
 
 	return (
-		<StyledSlide
-			className={"Slide Slide--centered-headings"}
+		<StyledPage
+			className={"Page Page--centered-headings"}
 			style={{ padding: 0 }}
 		>
-			<Page>
-				<CenteredContainer>
-					<Heading>{heading}</Heading>
-					<Heading h="2">{subheading}</Heading>
-				</CenteredContainer>
-			</Page>
-			{p && (
-				<Page>
-					{p.map((paragraph) => {
-						return <Text>{paragraph}</Text>;
-					})}
-				</Page>
-			)}
-		</StyledSlide>
+			<Heading>{heading}</Heading>
+			<Heading h="2">{subheading}</Heading>
+		</StyledPage>
 	);
 };
 
@@ -70,3 +48,11 @@ export default BottomThirdCaption;
 
 
 */
+
+/*{p && (
+				<Page>
+					{p.map((paragraph) => {
+						return <Text>{paragraph}</Text>;
+					})}
+				</Page>
+			)}*/
