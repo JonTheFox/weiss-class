@@ -44,7 +44,7 @@ const Slide = (props) => {
 					// 	SLIDE_TEMPLATES[templateName] ||
 					// 	SLIDE_TEMPLATES["CenteredHeadings"];
 
-					return <Page {...page}></Page>;
+					return <Page className="Page" {...page}></Page>;
 				})}
 		</StyledContainer>
 	);

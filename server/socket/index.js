@@ -494,7 +494,7 @@ const supplementIO = function(io) {
 	const classroomsIO = io.of("/classrooms");
 	//client connection - step 1 - connect client socket to server socket
 	classroomsIO.on("connection", function(socket) {
-		logg(`A user has connected to "classroomsIO" namespace.`);
+		logg(`A user has connected to "classrooms" namespace.`);
 
 		socket.on(
 			"client__selectsRoom",

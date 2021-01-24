@@ -11,6 +11,7 @@ export default styled.div`
 	.Page--centered-headings {
 		height: auto;
 		width: 100%;
+		overflow: visible;
 	}
 
 	padding:0;

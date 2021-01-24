@@ -113,12 +113,13 @@ const Header = React.forwardRef(
 		return (
 			<Container
 				maxWidth="sm"
-				className={`heading heading_${h} stroke readable ${
+				className={`heading heading-${h} stroke readable ${
 					centered ? "centered" : ""
 				}`}
+				style={{ overflow: "visible" }}
 				onClick={onTitleClick}
 			>
-				<StyledHeading>
+				<StyledHeading style={{ overflow: "visible" }}>
 					<SplitText
 						charPoses={CHAR_POSES}
 						wordPoses={POSES.word__draggable}

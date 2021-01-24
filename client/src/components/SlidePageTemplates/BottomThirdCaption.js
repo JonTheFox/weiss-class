@@ -31,10 +31,7 @@ const BottomThirdCaption = (props) => {
 	// const promiseKeeper = usePromiseKeeper({ label });
 
 	return (
-		<StyledPage
-			className={"Page Page--centered-headings"}
-			style={{ padding: 0 }}
-		>
+		<StyledPage className={"Page Page--centered-headings"}>
 			<Heading>{heading}</Heading>
 			<Heading h="2">{subheading}</Heading>
 		</StyledPage>

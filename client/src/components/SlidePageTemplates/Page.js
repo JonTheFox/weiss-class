@@ -13,7 +13,7 @@ const Page = (props) => {
 		PAGE_TEMPLATES[templateName] || PAGE_TEMPLATES["CenteredHeadings"];
 
 	return (
-		<StyledPage className={"Page"}>
+		<StyledPage className={"Page-container"}>
 			<LessonSlide {...props} />
 		</StyledPage>
 	);

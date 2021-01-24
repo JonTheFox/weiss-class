@@ -29,10 +29,7 @@ const CenteredHeadings = (props) => {
 	// const promiseKeeper = usePromiseKeeper({ label });
 
 	return (
-		<StyledPage
-			className={"Page--centered-headings centered"}
-			style={{ padding: 0 }}
-		>
+		<StyledPage className={"Page--centered-headings centered"}>
 			<Heading>{heading}</Heading>
 			<Heading h="2">{subheading}</Heading>
 		</StyledPage>
