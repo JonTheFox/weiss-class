@@ -6,10 +6,12 @@ import {
 } from "recoil";
 
 const recoilState = selector({
-	key: "lessonState",
+	key: "lessonStateSelector",
 	default: {},
 	get: ({ get }) => {
 		const { slides = [], currentSlideIndex = 0 } = get(roomState);
+
+		debugger;
 
 		if (!slides) return [];
 		return slides;

@@ -67,7 +67,7 @@ const Classroom = (props) => {
 
 	return (
 		<View className={"classroom"}>
-			<Slider index={2} slides={slides}></Slider>
+			<Slider slideIndex={2} slides={slides}></Slider>
 			<SpeedDial></SpeedDial>
 		</View>
 	);

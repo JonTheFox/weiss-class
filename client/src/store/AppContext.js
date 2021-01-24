@@ -10,8 +10,8 @@ import POSES from "../constants/poses.js";
 import MEDIA_QUERIES from "../constants/mediaQueries.js";
 import BACKGROUND_CLASSES from "../constants/backgroundClasses.js";
 
-import { SynthVoice, fallback } from "../utils/SynthVoice.js";
-import SpeechRecognizer from "../utils/SpeechRecognizer.js";
+import { SynthVoice, fallback } from "../lib/SynthVoice/index.js";
+import SpeechRecognizer from "../lib/SpeechRecognizer/index.js";
 import {
     // shimme,
     PromiseKeeper,
@@ -40,9 +40,8 @@ import {
     setDomProperty,
     // getDomProperty,
     copyToClipboard,
-} from "../utils/issy.js";
-import Logger from "../utils/logg.js";
-import animals from "../items/animals-items.js";
+} from "../lib/issy/index.js";
+import Logger from "../lib/logg.js";
 
 const { logg, loggError } = new Logger({ label: "AppContext" });
 
@@ -122,7 +121,6 @@ const UTILS = {
     SplitText,
     tween,
     interpolate,
-    animals,
     request,
     climbFrom,
     scrollTo,
