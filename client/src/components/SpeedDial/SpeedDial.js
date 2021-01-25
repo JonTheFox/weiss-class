@@ -15,6 +15,7 @@ import SpeedDialIcon from "@material-ui/lab/SpeedDialIcon";
 import SpeedDialAction from "@material-ui/lab/SpeedDialAction";
 import FileCopyIcon from "@material-ui/icons/FileCopyOutlined";
 import SaveIcon from "@material-ui/icons/Save";
+import HelpIcon from "@material-ui/icons/Help";
 import PrintIcon from "@material-ui/icons/Print";
 import ShareIcon from "@material-ui/icons/Share";
 import FavoriteIcon from "@material-ui/icons/Favorite";
@@ -41,6 +42,7 @@ const CLIENT_ACTIONS = [
 	//{ icon: <PrintIcon />, name: "Print" },
 	//{ icon: <ShareIcon />, name: "Share" },
 	{ icon: <FavoriteIcon />, name: "Like" },
+	{ icon: <HelpIcon />, name: "Help!" },
 ];
 
 const label = "Text";

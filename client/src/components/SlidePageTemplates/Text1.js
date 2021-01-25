@@ -35,7 +35,7 @@ const Slide = (props) => {
 			<Heading h="2">{subheading}</Heading>
 
 			{p.map((paragraph) => {
-				return <Text>{paragraph}</Text>;
+				return <Text readable={true}>{paragraph}</Text>;
 			})}
 		</StyledSlide>
 	);

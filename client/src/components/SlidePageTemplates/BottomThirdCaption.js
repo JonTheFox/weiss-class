@@ -18,6 +18,7 @@ import Text from "../Text/Text.js";
 
 // import { localStorage } from "../../../../lib/issy/index.js";
 import StyledPage from "./Page.styles.js";
+import Subtitle from "../Subtitle/Subtitle.js";
 
 const label = "BottomThirdCaption";
 
@@ -32,19 +33,16 @@ const BottomThirdCaption = (props) => {
 
 	return (
 		<StyledPage className={"Page Page--bottom-third-caption"}>
-			<Heading>{heading}</Heading>
-			<Heading h="2">{subheading}</Heading>
+			<Heading variant="marquee">{heading}</Heading>
+			<Heading h="2" variant="sub-marquee">
+				{subheading}
+			</Heading>
+			<Subtitle paragraphs={p} />
 		</StyledPage>
 	);
 };
 
 export default BottomThirdCaption;
-
-/*
-
-
-
-*/
 
 /*{p && (
 				<Page>

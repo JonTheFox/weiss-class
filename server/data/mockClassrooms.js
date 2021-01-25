@@ -1,65 +1,8 @@
 const TEMPLATES = require("../slideTemplates.js");
 
-const PRESENT_SIMPLE_SLIDES = [
-	{
-		id: 1,
-		pages: [
-			{
-				templateName: TEMPLATES.CenteredHeadings,
-				heading: "Present Simple",
-				subheading: "Life, in general.",
-				marquee: "",
-				subMarquee: "",
-				p: [
-					"When we talk about general truths, we use Present Simple.",
-					"For example: ",
-					"You study very well.",
-					"I go to school every day.",
-					"We wash our car once a week.",
-					"When the subject is he/she/it, we add s/es/ies to the end of the verb.",
-					"For example: ",
-					"She studies very well.",
-					"He goes to school every day.",
-					"It helps us.",
-				],
-				bgImage:
-					"https://images.unsplash.com/photo-1508060698845-34709bc12e1c?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
-			},
-		],
-	},
-	{
-		id: 2,
-		pages: [
-			{
-				templateName: TEMPLATES.Text1,
-				//heading: "Present Simple",
-				//subheading: "He / She / It",
-				marquee: "Present Simple",
-				subMarquee: "Examples",
-				p: ["You study very well.", "I go to school every day."],
-				bgImage:
-					"https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
-			},
-		],
-	},
-	{
-		id: 3,
-		pages: [
-			{
-				templateName: TEMPLATES.BottomThirdCaption,
-				heading: "Present Simple",
-				subheading: "Examples.",
-				p: ["You study very well."],
-				bgImage:
-					"https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
-			},
-		],
-	},
-];
-
 const classrooms = [
 	{
-		slides: PRESENT_SIMPLE_SLIDES,
+		slides: TEMPLATES,
 		currentSlideIndex: 0,
 		teachers: [
 			{

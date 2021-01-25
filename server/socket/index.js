@@ -12,7 +12,7 @@ const authenticate = require("../api/auth.js");
 const classroomLogger = logger.createSubLogger({ label, style: "orange" });
 const { logg, loggError } = classroomLogger;
 
-const MOCK_CLASSROOMS = require("../mockData/mockClassrooms.js");
+const CLASSROOMS = require("../data/classrooms/allClassrooms.js");
 
 const USER_TYPES = ["student", "teacher", "platform"];
 
@@ -478,7 +478,7 @@ class ClassroomsManager {
 }
 const classroomsManager = new ClassroomsManager();
 
-MOCK_CLASSROOMS.map((room) => {
+CLASSROOMS.map((room) => {
 	return classroomsManager.addClassroom(room);
 });
 

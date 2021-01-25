@@ -30,7 +30,7 @@ const CenteredHeadings = (props) => {
 
 	return (
 		<StyledPage className={"Page--centered-headings centered"}>
-			<Heading>{heading}</Heading>
+			<Heading h="1">{heading}</Heading>
 			<Heading h="2">{subheading}</Heading>
 		</StyledPage>
 	);

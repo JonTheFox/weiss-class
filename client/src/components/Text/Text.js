@@ -9,9 +9,13 @@ import React, {
 import StyledText from "./Text.styles.js";
 
 const Text = (props) => {
+	const { children, readable = false } = props;
 	return (
-		<StyledText className={"Text-Container"} {...props}>
-			<p className="text">{props.children}</p>
+		<StyledText
+			className={`Text-Container ${readable ? "readable" : ""}`}
+			{...props}
+		>
+			<p className="text">{children}</p>
 		</StyledText>
 	);
 };

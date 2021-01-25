@@ -97,8 +97,13 @@ const CHAR_POSES = {
 	},
 };
 
+const HEADER_VARIANTS = ["h1", "h2", "marquee", "sub-marquee"];
+
 const Header = React.forwardRef(
-	({ h = "1", centered = false, children }, ref) => {
+	(
+		{ h = "1", centered = false, variant = HEADER_VARIANTS[0], children },
+		ref
+	) => {
 		// const [appUtils] = useContext(AppContext);
 		// const { Logger, PromiseKeeper } = appUtils;
 
@@ -113,13 +118,16 @@ const Header = React.forwardRef(
 		return (
 			<Container
 				maxWidth="sm"
-				className={`heading heading-${h} stroke readable ${
+				className={`heading heading-${h} ${variant} stroke readable ${
 					centered ? "centered" : ""
 				}`}
 				style={{ overflow: "visible" }}
 				onClick={onTitleClick}
 			>
-				<StyledHeading style={{ overflow: "visible" }}>
+				<StyledHeading
+					className={`heading heading-${h} h${h}`}
+					style={{ overflow: "visible" }}
+				>
 					<SplitText
 						charPoses={CHAR_POSES}
 						wordPoses={POSES.word__draggable}

@@ -9,12 +9,12 @@ const PAGE_TEMPLATES = { CenteredHeadings, Text1, BottomThirdCaption };
 const label = "Page";
 const Page = (props) => {
 	const { templateName = "" } = props;
-	const LessonSlide =
+	const LessonPage =
 		PAGE_TEMPLATES[templateName] || PAGE_TEMPLATES["CenteredHeadings"];
 
 	return (
 		<StyledPage className={"Page-container"}>
-			<LessonSlide {...props} />
+			<LessonPage {...props} />
 		</StyledPage>
 	);
 };
