@@ -8,8 +8,8 @@ const UseCaseExample1 = {
 		{
 			templateName: BottomThirdCaption,
 			heading: "Present Simple",
-			subheading: "Examples",
-			p: ["You study very well."],
+			subheading: "Facts",
+			p: ["I am a student. I study law at Stanford University."],
 		},
 	],
 };

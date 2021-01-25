@@ -31,6 +31,7 @@ export default styled.div`
 
 		margin-top: 0;
 		margin-bottom: calc(2 * var(--spacing));
+		margin-left:0;
 
 		.letter {
 			font-size: 1.25rem;
