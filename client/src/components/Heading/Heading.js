@@ -16,6 +16,7 @@ import {
 	Heading1 as StyledHeading1,
 	Heading2 as StyledHeading2,
 } from "./Heading.styles.js";
+import clsx from "clsx";
 
 let animationFrame;
 let logg;
@@ -99,9 +100,19 @@ const CHAR_POSES = {
 
 const HEADER_VARIANTS = ["h1", "h2", "marquee", "sub-marquee"];
 
+const SHADOW_VARIANTS = ["none", "dark"];
+const TEXT_LOOKS = ["cloudy", "flat"];
+
 const Header = React.forwardRef(
 	(
-		{ h = "1", centered = false, variant = HEADER_VARIANTS[0], children },
+		{
+			h = "1",
+			centered = false,
+			variant = HEADER_VARIANTS[0],
+			shadow = SHADOW_VARIANTS[0],
+			textLook = TEXT_LOOKS[0],
+			children,
+		},
 		ref
 	) => {
 		// const [appUtils] = useContext(AppContext);
@@ -118,20 +129,19 @@ const Header = React.forwardRef(
 		return (
 			<Container
 				maxWidth="sm"
-				className={`heading heading-${h} ${variant} stroke readable ${
+				className={`heading-container ${variant} stroke readable ${
 					centered ? "centered" : ""
 				}`}
 				style={{ overflow: "visible" }}
 				onClick={onTitleClick}
 			>
 				<StyledHeading
-					className={`heading heading-${h} h${h}`}
-					style={{ overflow: "visible" }}
+					className={`heading heading-${h} h${h} shadow--${shadow} textLook--${textLook}`}
 				>
 					<SplitText
 						charPoses={CHAR_POSES}
 						wordPoses={POSES.word__draggable}
-						className={`letter stroke cursor--grab`}
+						className={`letter cursor--grab`}
 					>
 						{children}
 					</SplitText>

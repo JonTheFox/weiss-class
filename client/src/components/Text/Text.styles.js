@@ -2,20 +2,11 @@ import styled from "styled-components";
 
 export default styled.div`
 	margin: 0 1em;
-	padding: 0.25em 1em;
-
+	margin: 0.5rem auto;
+	padding: 0;
+	overflow-wrap: anywhere;
 	margin: auto;
 	background-size: cover;
-
-	&.bottom-third-text {
-		position: absolute;
-		color: #000;
-		bottom: 0;
-		left: 0;
-		z-index: 1000;
-		padding: calc(2 * var(--spacing)) calc(1 * var(--spacing));
-		padding-bottom: calc(5 * var(--spacing));
-	}
 
 	.letter {
 		user-select: none;
@@ -40,7 +31,7 @@ export default styled.div`
 		text-shadow: 2px 2px 4px var(--shadow-color, black);
 	}
 
-	.text__shadow___black {
+	.text__shadow___dark {
 		text-shadow: 1px 1px 2px var(--shadow-color, #000);
 	}
 
@@ -52,14 +43,38 @@ export default styled.div`
 		bottom: 0;
 	}
 
-	p {
+	.text {
 		display: inline;
 		line-height: 2;
 		font-size: 1.2rem;
 		font-family: Nunito;
-		background-color: rgba(0, 0, 0, 0.8);
-		color: var(--white);
 		text-align: left;
 		padding: calc(0.75 * var(--spacing));
+
+		&.glass {
+			&:hover {
+				color: black;
+				border-radius: 8px;
+				padding: 20px;
+				background: linear-gradient(
+					75deg,
+					var(--secondary-lighter-2) 0%,
+					var(--primary-lighter-2) 100%
+				);
+				border: none;
+				color: white;
+				-webkit-backdrop-filter: blur(20px);
+				backdrop-filter: blur(20px);
+			}
+		}
+
+		&.cloudy {
+			color: var(--white);
+			background-color: rgba(0, 0, 0, 0.8);
+			&:hover {
+				color: black;
+				background-color: rgba(0, 0, 0, 0.95);
+			}
+		}
 	}
 `;

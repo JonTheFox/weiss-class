@@ -1,9 +1,14 @@
 import styled from "styled-components";
 
-export default styled.section`
+export default styled.div`
 	min-height: 100%;
 	position: relative;
-	padding: calc(2 * var(--spacing)) 0;
+	padding: 0;
+
+	.Page {
+		padding: calc(2 * var(--spacing)) 0;
+		position: static;
+	}
 
 	.Page--centered-headings {
 		height: auto;
@@ -17,20 +22,18 @@ export default styled.section`
 	}
 
 	.marquee {
+		text-align: left;
 		width: auto;
-		position: absolute;
 		top: 0;
 		left: 0;
-		padding: calc(1 * var(--spacing));
-		padding-left: calc(2 * var(--spacing));
+		padding: var(--spacing);
+		padding-left: 0;
 
-		background-color: #fff;
-		background-color: var(--transparent-black, #fff);
-		border-radius: 0 calc(0.5 * var(--spacing)) calc(0.5 * var(--spacing)) 0;
-		transition: all 0.2s;
+		margin-top: 0;
+		margin-bottom: calc(2 * var(--spacing));
 
 		.letter {
-			font-size: 1.75rem;
+			font-size: 1.25rem;
 			margin: 0;
 			font-family: Nunito;
 			font-weight: bold;
@@ -38,21 +41,30 @@ export default styled.section`
 			text-transform: uppercase;
 			color: var(--white);
 			line-height: 1;
+		}
+
+		.heading {
+			display: inline;
+			padding: 0 calc(var(--spacing) * 2);
+			margin-top: 0;
 		}
 	}
 
 	.sub-marquee {
-		position: absolute;
-		font-size: 2rem;
+		font-size: 1rem;
+		text-align: left;
+		margin: 0;
+		margin-top: calc(2.5 * var(--spacing));
 		padding: 0 var(--spacing);
-		background-color: #fff;
-		background-color: var(--transparent-black, #fff);
-		color: var(--green);
-		left: calc(2 * var(--spacing));
-		border-radius: 0 calc(0.5 * var(--spacing)) calc(0.5 * var(--spacing)) 0;
+		padding-left: calc(2 * var(--spacing));
+		width: auto;
+		margin: 0;
+		line-height: 1;
+
+
 
 		.letter {
-			font-size: 1.75rem;
+			font-size: 1.25rem;
 			margin: 0;
 			font-family: Nunito;
 			font-weight: bold;
@@ -61,48 +73,17 @@ export default styled.section`
 			color: var(--white);
 			line-height: 1;
 		}
-
-		h2 {
+		.heading {
 			margin: 0;
-			margin-bottom: calc(4 * var(--spacing));
-			margin-top: 1rem;
-		}
-	}
+			display: inline;
+			padding: 0 calc(var(--spacing) * 2);
+			
 
-	&.Page--bottom-third-caption {
-		position: static;
-		.sub-marquee {
-			top: 4rem;
-			width: auto;
-			margin: 0;
-			line-height: 1;
-			padding: calc(0.5 * var(--spacing)) var(--spacing);
-
-			.heading {
-				margin: 0;
-				font-size: 1.75rem;
-			}
-
-			.letter {
-				font-size: 1.75rem;
-				margin: 0;
-				font-family: Nunito;
-				font-weight: bold;
-
-				text-transform: uppercase;
-				color: var(--white);
-				line-height: 1;
-
-				text-shadow: none;
-			}
-		}
-
-		.marquee {
-			margin: 0.5rem auto;
-		}
-
-		.Text-Container {
-			padding: 3.25rem calc(2 * var(--spacing));
+}
+			// margin-bottom: calc(4 * var(--spacing));
+			// margin-top: 1rem;
+			line-height: 0.5;
+			text-align: left;
 		}
 	}
 `;

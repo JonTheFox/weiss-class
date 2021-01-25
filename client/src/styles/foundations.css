@@ -459,3 +459,51 @@ body {
 #root * .fixed {
 	position: fixed;
 }
+
+.glass {
+	color: darkgray;
+	border-radius: 8px;
+	padding: 20px;
+	background: rgba(255, 255, 255, 0.2);
+	border: solid 1px rgba(255, 255, 255, 0.3);
+	backgroud-clip: padding-box;
+	-webkit-backdrop-filter: blur(10px);
+	backdrop-filter: blur(10px);
+	-webkit-transition: all 0.3;
+	transition: all 0.3;
+}
+
+.glass:hover {
+	color: black;
+	border-radius: 8px;
+	padding: 20px;
+	background: linear-gradient(
+		75deg,
+		var(--secondary-lighter-2) 0%,
+		var(--primary-lighter-2) 100%
+	);
+	border: none;
+	color: white;
+	-webkit-backdrop-filter: blur(20px);
+	backdrop-filter: blur(20px);
+}
+
+.shadow--dark {
+	background-color: var(--transparent-black, #fff);
+	border-radius: 0 calc(0.5 * var(--spacing)) calc(0.5 * var(--spacing)) 0;
+}
+.textLook--cloudy,
+.cloudy {
+	color: white;
+	color: var(--color, white);
+	text-shadow: 2px 2px 4px var(--shadow-color, black);
+}
+
+.textLook--flat,
+.flat {
+	text-shadow: none;
+	-webkit-text-stroke: unset;
+	font-weight: bold;
+	zoom: 1;
+	text-transform: uppercase;
+}

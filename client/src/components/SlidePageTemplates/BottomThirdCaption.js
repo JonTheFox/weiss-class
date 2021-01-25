@@ -31,12 +31,29 @@ const BottomThirdCaption = (props) => {
 	// const { logg, loggError } = useLogg({ label });
 	// const promiseKeeper = usePromiseKeeper({ label });
 
+	// const renderTexts = () => {
+	// 	if (!p || !p.length) return null;
+	// 	return p.map((paragraph) => {
+	// 		return <Text pClassName="">{paragraph}</Text>;
+	// 	});
+	// };
+
 	return (
 		<StyledPage className={"Page Page--bottom-third-caption"}>
-			<Heading variant="marquee">{heading}</Heading>
-			<Heading h="2" variant="sub-marquee">
-				{subheading}
-			</Heading>
+			<div className="Headings-Container">
+				<Heading variant="marquee" shadow="dark" textLook="flat">
+					{heading}
+				</Heading>
+				<Heading
+					h="2"
+					variant="sub-marquee"
+					textLook="flat"
+					shadow="dark"
+				>
+					{subheading}
+				</Heading>
+			</div>
+
 			<Subtitle paragraphs={p} />
 		</StyledPage>
 	);

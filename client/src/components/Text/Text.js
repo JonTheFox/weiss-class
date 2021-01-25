@@ -9,13 +9,18 @@ import React, {
 import StyledText from "./Text.styles.js";
 
 const Text = (props) => {
-	const { children, readable = false } = props;
+	const {
+		children,
+		pClassName = "",
+		readable = false,
+		variant = "cloudy",
+	} = props;
 	return (
 		<StyledText
 			className={`Text-Container ${readable ? "readable" : ""}`}
 			{...props}
 		>
-			<p className="text">{children}</p>
+			<p className={`text ${variant} ${pClassName}`}>{children}</p>
 		</StyledText>
 	);
 };
