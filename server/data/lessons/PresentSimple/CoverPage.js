@@ -1,4 +1,4 @@
-const { CenteredHeadings, Text1 } = require("../../slideTemplates.js");
+const { CenteredHeadings, ListMain } = require("../../slideTemplates.js");
 
 const CoverPage = {
 	id: 1,
@@ -11,14 +11,12 @@ const CoverPage = {
 			subheading: "Life, in general.",
 		},
 		{
-			templateName: Text1,
+			templateName: ListMain,
 			p: [
-				"When we talk about general truths, we use Present Simple.",
-				"For example: ",
-				"You study very well.",
-				"I go to school every day.",
-				"We wash our car once a week.",
+				"When we talk about general truths  we use Present Simple. ",
+				"Specifically, we use Present Simple when we talk about a... ",
 			],
+			bullets: ["Fact", "Routine", "Hobby"],
 		},
 	],
 };

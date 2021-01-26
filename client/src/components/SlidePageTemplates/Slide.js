@@ -22,7 +22,7 @@ const Slide = (props) => {
 	// const [appUtils] = useContext(AppContext);
 	// const { PromiseKeeper, Logger } = appUtils;
 
-	const { pages = [], templateName = "" } = props;
+	const { pages = [], templateName = "", pageProps = [] } = props;
 
 	// const { logg, loggError } = useLogg({ label });
 	// const promiseKeeper = usePromiseKeeper({ label });
@@ -44,7 +44,9 @@ const Slide = (props) => {
 					// 	SLIDE_TEMPLATES[templateName] ||
 					// 	SLIDE_TEMPLATES["CenteredHeadings"];
 
-					return <Page className="Page" {...page}></Page>;
+					return (
+						<Page className="Page" {...page} {...pageProps}></Page>
+					);
 				})}
 		</StyledContainer>
 	);

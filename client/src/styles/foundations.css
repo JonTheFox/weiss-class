@@ -506,4 +506,8 @@ body {
 	font-weight: bold;
 	zoom: 1;
 	text-transform: uppercase;
+
+	&:hover {
+		transform: scale(1.15);
+	}
 }

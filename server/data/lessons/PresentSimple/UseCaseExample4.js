@@ -4,7 +4,7 @@ const imageSet = require("./presentSimpleImages.js").alarm_clock;
 
 const imageSize = "regular";
 
-const UseCaseExample3 = {
+const UseCaseExample4 = {
 	id: 6,
 	bgImage: imageSet[imageSize],
 	pages: [
@@ -17,4 +17,4 @@ const UseCaseExample3 = {
 	],
 };
 
-module.exports = UseCaseExample3;
+module.exports = UseCaseExample4;

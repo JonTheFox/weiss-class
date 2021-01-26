@@ -64,7 +64,6 @@ const Classroom = (props) => {
 	// const handleChangeSlideIndex = useCallback((slideIndex) => {
 	// 	logg("handleChangeSlideIndex ", slideIndex);
 	// }, []);
-
 	return (
 		<View className={"classroom"}>
 			<Slider slideIndex={2} slides={slides}></Slider>
