@@ -20,6 +20,7 @@ import PrintIcon from "@material-ui/icons/Print";
 import ShareIcon from "@material-ui/icons/Share";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import PanToolIcon from "@material-ui/icons/PanTool";
+import "./SpeedDial.scss";
 
 import {
 	// atom,
@@ -118,7 +119,7 @@ const Text = ({ children = "" }) => {
 			<Backdrop
 				open={isSpeedDialOpen}
 				style={{
-					zIndex: 1,
+					zIndex: 1000,
 				}}
 			/>
 		</React.Fragment>

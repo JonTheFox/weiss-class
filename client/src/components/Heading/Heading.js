@@ -23,7 +23,6 @@ let logg;
 let loggError;
 let promiseKeeper;
 const label = "Header";
-
 const CHAR_POSES = {
 	exit: {
 		opacity: 0,

@@ -50,6 +50,11 @@ export default styled.div`
 		font-family: Nunito;
 		text-align: left;
 		padding: calc(0.75 * var(--spacing));
+		transform: all 0.2s;
+
+		&:hover {
+			transform: scale(1.2) !important;
+		}
 
 		&.glass {
 			&:hover {
@@ -65,15 +70,18 @@ export default styled.div`
 				color: white;
 				-webkit-backdrop-filter: blur(20px);
 				backdrop-filter: blur(20px);
+				transform: scale(1.2);
 			}
 		}
 
 		&.cloudy {
 			color: var(--white);
+			transition: all 0.2s;
 			background-color: rgba(0, 0, 0, 0.8);
 			&:hover {
-				color: black;
+				// color: black;
 				background-color: rgba(0, 0, 0, 0.95);
+				transform: scale(1.2);
 			}
 		}
 	}
