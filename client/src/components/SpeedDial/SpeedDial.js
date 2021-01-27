@@ -76,6 +76,8 @@ const Text = ({ children = "" }) => {
 			return null;
 		}
 
+		if (selectedAction) return;
+
 		socket.emit(`client__sendsAction`, {
 			clientId: client.id,
 			roomKey: classroom.roomKey,
