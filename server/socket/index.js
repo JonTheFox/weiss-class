@@ -491,6 +491,13 @@ const getPublicUserData = (user) => {
 	return { first_name, last_name, email };
 };
 
+const findClient = ({ email, clients }) => {
+	if (!clients || !clients.length) return null;
+	return clients.find((client) => {
+		return client.email === email;
+	});
+};
+
 const supplementIO = function(io) {
 	//create a SocketIO namespace for interactive Classrooms
 	const classroomsIO = io.of("/classrooms");
@@ -564,9 +571,21 @@ const supplementIO = function(io) {
 
 				const userWithoutPass = getPublicUserData(authenticatedUser);
 
-				const { first_name, last_name } = userWithoutPass;
+				const { first_name, last_name, email } = userWithoutPass;
 
-				const clientId = getUniqueString(12);
+				const existingClient = findClient({
+					email,
+					clients: classroomsManager.clients,
+				});
+
+				logg("existingClient: ", existingClient);
+
+				// classroomsManager.disconnectClient(existingClient);
+
+				//todo:  disconnect other sockets that use the same email
+				const clientId = existingClient
+					? existingClient.clientId
+					: getUniqueString(12);
 				clientType = clientType.toLowerCase();
 				//make sure that the clientType is one of the accepted types (teacher, student, platform
 				clientType =
@@ -628,6 +647,8 @@ const supplementIO = function(io) {
 				);
 				return null;
 			}
+
+			logg("classroomsManager.clients:", classroomsManager.clients);
 
 			const room = classroomsManager.getRoomByKey(roomKey);
 

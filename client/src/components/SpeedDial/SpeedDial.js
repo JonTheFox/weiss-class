@@ -56,6 +56,12 @@ const Text = ({ children = "" }) => {
 		setIsSpeedDialOpen(false);
 	};
 
+	useEffect(() => {
+		if (!isSpeedDialOpen) {
+			setSelectedAction(null);
+		}
+	}, [isSpeedDialOpen]);
+
 	const handleActionSelect = (action = {}) => {
 		if (!action) {
 			loggError(
@@ -74,7 +80,6 @@ const Text = ({ children = "" }) => {
 		const prom = promiseKeeper.stall(2.25 * 1000).andThen((promise) => {
 			setSelectedAction(null);
 		});
-
 		prom.catch((err) => {
 			setSelectedAction(null);
 		});
