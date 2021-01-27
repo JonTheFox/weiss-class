@@ -25,7 +25,13 @@ import clientState from "../../store/client.atom.js";
 import classroomState from "../../store/classroom.atom.js";
 import CLIENT_ACTIONS from "./clientActions.js";
 import clsx from "clsx";
+import { Howl, Howler } from "howler";
 import "./SpeedDial.scss";
+
+const sound = new Howl({
+	src: ["/sfx/app_alert_tone_024.mp3"],
+	volume: 0.5,
+});
 
 const label = "Text";
 const Text = ({ children = "" }) => {
@@ -77,6 +83,7 @@ const Text = ({ children = "" }) => {
 		});
 
 		setSelectedAction(action);
+		const playedSound = sound.play();
 		const prom = promiseKeeper.stall(2.25 * 1000).andThen((promise) => {
 			setSelectedAction(null);
 		});
