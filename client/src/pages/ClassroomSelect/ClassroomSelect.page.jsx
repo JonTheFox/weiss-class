@@ -32,6 +32,8 @@ import posed, { PoseGroup } from "react-pose";
 // import Text from "../../partials/Text/Text.js";
 import Heading from "../../components/Heading/Heading.js";
 
+import Carousel from "../../components/Carousel/Carousel.js";
+
 import {
   // RecoilRoot,
   // atom,
@@ -50,6 +52,7 @@ import refsState from "../../store/refs.atom.js";
 import * as io from "socket.io-client";
 import { useHistory } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
+import FancyCard from "../../components/FancyCard/FancyCard.jsx";
 
 import { mainClickSound } from "../../constants/sounds.js";
 
@@ -142,6 +145,41 @@ export default function ClassroomSelect(props) {
 
   const isSoundOn = useRecoilValue(isSoundOnState);
 
+  const roomsInfo = rooms.map((room) => {
+    return {
+      ...room,
+      subtitle: room.subject || room.subtitle || "",
+      image: room?.image?.url,
+    };
+  });
+
+  const onRoomSelect = (room) => {
+    if (is(socket).aString) {
+      loggError("socket is inactive");
+      debugger;
+      return null;
+    }
+
+    isSoundOn && mainClickSound.play();
+
+    const { id, type } = client;
+    const roomKey = room.roomKey;
+
+    socket.emit("client__selectsRoom", {
+      roomKey,
+      clientId: client.id,
+      clientType: client.type,
+    });
+
+    setClassroom({ roomKey });
+
+    navigateTo(`/rt/classroom`, history);
+  };
+
+  const renderCarousel = () => {
+    return <Carousel onItemSelect={onRoomSelect} items={roomsInfo} />;
+  };
+
   return (
     <View className={classes.root}>
       <main>
@@ -154,7 +192,22 @@ export default function ClassroomSelect(props) {
         </div>
 
         <Container className={classes.cardGrid} maxWidth="md">
-          <Grid container spacing={4}>
+          {renderCarousel()}
+        </Container>
+      </main>
+    </View>
+  );
+}
+
+ClassroomSelect.propTypes = {
+  rounds: PropTypes.object,
+  onCorrect: PropTypes.func,
+};
+
+/*
+
+
+<Grid container spacing={4}>
             {rooms &&
               rooms.map &&
               rooms.map((classroom, i, _items) => {
@@ -202,6 +255,8 @@ export default function ClassroomSelect(props) {
                 //   </Swiper>
                 // );
 
+                return <FancyCard />;
+
                 return (
                   <Card
                     className={clsx(classes.card, "dynamic-shadow")}
@@ -215,10 +270,7 @@ export default function ClassroomSelect(props) {
                         return null;
                       }
 
-                      if (isSoundOn) {
-                        debugger;
-                        mainClickSound.play();
-                      }
+                      isSoundOn && mainClickSound.play();
 
                       const { id, type } = client;
 
@@ -257,13 +309,4 @@ export default function ClassroomSelect(props) {
                 );
               })}
           </Grid>
-        </Container>
-      </main>
-    </View>
-  );
-}
-
-ClassroomSelect.propTypes = {
-  rounds: PropTypes.object,
-  onCorrect: PropTypes.func,
-};
+*/

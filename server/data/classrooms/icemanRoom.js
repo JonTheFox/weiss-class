@@ -1,8 +1,13 @@
 const PRESENT_SIMPLE_SLIDES = require("../lessons/PresentSimple/PresentSimple.index.js");
 
+const IMAGE_URL = "https://www.pngarts.com/files/2/Iceman-PNG-Image.png";
+
 const classroom = {
 	slides: PRESENT_SIMPLE_SLIDES,
-	currentSlideIndex: 0,
+	image: { url: IMAGE_URL },
+	subject: "Present Simple",
+	title: "Iceman's Class",
+	subtitle: "Keepin' it cool.",
 	teachers: [
 		{
 			first_name: "Robert",
@@ -16,5 +21,6 @@ const classroom = {
 		},
 	],
 };
+//i.pinimg.com/originals/b5/7c/d0/b57cd02190373f498e397cecbcbbdd03.jpg
 
-module.exports = classroom;
+https: module.exports = classroom;

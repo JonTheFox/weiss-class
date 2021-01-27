@@ -163,16 +163,16 @@ const createRoomKey = (str) => {
 
 class Classroom {
 	roomKey;
-	index;
+	index = 0;
 	name;
-	title;
+	title = "";
 	teachers;
 	students;
 	platforms;
 	slides = [];
-	img;
-	video;
-	gif;
+	img = {};
+	video = {};
+	gif = {};
 
 	constructor(config = {}) {
 		const {
@@ -180,7 +180,7 @@ class Classroom {
 			students,
 			platforms,
 			title = "",
-			index = 1,
+			index = 0,
 			name = "",
 			userTypes,
 			img = {},
@@ -188,6 +188,8 @@ class Classroom {
 			gif = {},
 			slides = [],
 		} = config;
+
+		Object.assign(this, config);
 
 		const roomNum = is(index).aNumber
 			? index
@@ -557,6 +559,8 @@ const supplementIO = function(io) {
 		socket.on("client__providesCredentials", async function({
 			user,
 			clientType = "",
+			clientId,
+			roomKey,
 		}) {
 			try {
 				if (!clientType) throw new Error(`No clientType provided`);
@@ -569,6 +573,10 @@ const supplementIO = function(io) {
 
 				const authenticatedUser = await authenticate(user);
 
+				//check if user is already logged in
+
+				const existingClientRoomKey = roomKey;
+
 				const userWithoutPass = getPublicUserData(authenticatedUser);
 
 				const { first_name, last_name, email } = userWithoutPass;
@@ -577,12 +585,12 @@ const supplementIO = function(io) {
 					email,
 					clients: classroomsManager.clients,
 				});
+				//todo:  disconnect other sockets that use the same email
 
 				logg("existingClient: ", existingClient);
 
 				// classroomsManager.disconnectClient(existingClient);
 
-				//todo:  disconnect other sockets that use the same email
 				const clientId = existingClient
 					? existingClient.clientId
 					: getUniqueString(12);
