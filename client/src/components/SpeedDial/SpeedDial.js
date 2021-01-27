@@ -23,15 +23,13 @@ import {
 import socketState from "../../store/socket.atom.js";
 import clientState from "../../store/client.atom.js";
 import classroomState from "../../store/classroom.atom.js";
+import isSoundOnState from "../../store/isSoundOn.selector.js";
 import CLIENT_ACTIONS from "./clientActions.js";
 import clsx from "clsx";
 import { Howl, Howler } from "howler";
 import "./SpeedDial.scss";
 
-const sound = new Howl({
-	src: ["/sfx/app_alert_tone_024.mp3"],
-	volume: 0.5,
-});
+import { attentionSound } from "../../constants/sounds.js";
 
 const label = "Text";
 const Text = ({ children = "" }) => {
@@ -47,6 +45,7 @@ const Text = ({ children = "" }) => {
 	const socket = useRecoilValue(socketState);
 	const client = useRecoilValue(clientState);
 	const classroom = useRecoilValue(classroomState);
+	const isSoundOn = useRecoilValue(isSoundOnState);
 
 	const [selectedAction, setSelectedAction] = useState(null);
 
@@ -85,7 +84,9 @@ const Text = ({ children = "" }) => {
 		});
 
 		setSelectedAction(action);
-		const playedSound = sound.play();
+		if (isSoundOn) {
+			attentionSound.play();
+		}
 		const prom = promiseKeeper.stall(2.25 * 1000).andThen((promise) => {
 			setSelectedAction(null);
 		});

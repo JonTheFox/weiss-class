@@ -10,8 +10,6 @@ import "./LogoScreen.scss";
 
 const BASE_ROUTE = "/";
 
-const resolveUrl = "https://soundcloud.com/ksmtk/chronemics";
-
 const label = "LogoScreen";
 let logg;
 let loggError;
@@ -44,7 +42,7 @@ const LogoScreen = (props) => {
 	const { match } = route;
 	const [appUtils, appState] = useContext(AppContext);
 	const { request, Logger, PromiseKeeper, EMPTY_FUNC } = appUtils;
-	const [video, setVideo] = useState(CLOUD_VIDEOS[0]);
+	const [video, setVideo] = useState(CLOUD_VIDEOS[1]);
 
 	const [isPlaying, setIsPlaying] = useState(false);
 

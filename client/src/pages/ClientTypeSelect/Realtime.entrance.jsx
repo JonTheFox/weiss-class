@@ -14,11 +14,17 @@ import PieChart from "../../components/PieChart/PieChart.jsx";
 import { useRecoilState, useRecoilValue } from "recoil";
 import roomsState from "../../store/rooms.atom.js";
 import userState from "../../store/user.atom.js";
+import isSoundOnState from "../../store/isSoundOn.selector.js";
+
 import socketState from "../../store/socket.atom.js";
 import socketConnectionState from "../../store/socketConnection.atom.js";
 import clientState from "../../store/client.atom.js";
 import { CONNECTION_STATES } from "../../store/CONNECTION_STATES.js";
 import "./Realtime.entrance.jsx";
+
+import { Howl, Howler } from "howler";
+
+import { mainClickSound } from "../../constants/sounds.js";
 
 let animationFrame;
 let logg;
@@ -164,6 +170,7 @@ const RTEntrance = (props) => {
 	} = CONNECTION_STATES;
 
 	const user = useRecoilValue(userState);
+	const isSoundOn = useRecoilValue(isSoundOnState);
 
 	const [feedback, setFeedback] = useState("");
 	const [connectionStatus, setConnectionStatus] = useRecoilState(
@@ -390,6 +397,8 @@ const RTEntrance = (props) => {
 								..._client,
 								type,
 							}));
+
+							isSoundOn && mainClickSound.play();
 
 							setShowPieChart(false);
 

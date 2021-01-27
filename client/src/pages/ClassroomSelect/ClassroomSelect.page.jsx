@@ -45,10 +45,13 @@ import roomsState from "../../store/rooms.atom.js";
 import socketState from "../../store/socket.atom.js";
 import clientState from "../../store/client.atom.js";
 import classroomState from "../../store/classroom.atom.js";
+import isSoundOnState from "../../store/isSoundOn.selector.js";
 import refsState from "../../store/refs.atom.js";
 import * as io from "socket.io-client";
 import { useHistory } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
+
+import { mainClickSound } from "../../constants/sounds.js";
 
 const scaleInPoses = {
   enter: {
@@ -137,6 +140,8 @@ export default function ClassroomSelect(props) {
 
   const history = useHistory();
 
+  const isSoundOn = useRecoilValue(isSoundOnState);
+
   return (
     <View className={classes.root}>
       <main>
@@ -208,6 +213,11 @@ export default function ClassroomSelect(props) {
                         loggError("socket is inactive");
                         debugger;
                         return null;
+                      }
+
+                      if (isSoundOn) {
+                        debugger;
+                        mainClickSound.play();
                       }
 
                       const { id, type } = client;
