@@ -8,20 +8,11 @@ import React, {
 } from "react";
 
 import useLogg from "../../hooks/useLogg.jsx";
-// import usePromiseKeeper from "../../../hooks/usePromiseKeeper.jsx";
+import usePromiseKeeper from "../../hooks/usePromiseKeeper.jsx";
 import SpeedDial from "@material-ui/lab/SpeedDial";
 import Backdrop from "@material-ui/core/Backdrop";
 import SpeedDialIcon from "@material-ui/lab/SpeedDialIcon";
 import SpeedDialAction from "@material-ui/lab/SpeedDialAction";
-import FileCopyIcon from "@material-ui/icons/FileCopyOutlined";
-import SaveIcon from "@material-ui/icons/Save";
-import HelpIcon from "@material-ui/icons/Help";
-import PrintIcon from "@material-ui/icons/Print";
-import ShareIcon from "@material-ui/icons/Share";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import PanToolIcon from "@material-ui/icons/PanTool";
-import "./SpeedDial.scss";
-
 import {
 	// atom,
 	// selector,
@@ -32,19 +23,9 @@ import {
 import socketState from "../../store/socket.atom.js";
 import clientState from "../../store/client.atom.js";
 import classroomState from "../../store/classroom.atom.js";
-
-const CLIENT_ACTIONS = [
-	//{ icon: <FileCopyIcon />, name: "Copy" },
-	{
-		icon: <PanToolIcon />,
-		name: "Raise Hand",
-	},
-	//{ icon: <SaveIcon />, name: "Save" },
-	//{ icon: <PrintIcon />, name: "Print" },
-	//{ icon: <ShareIcon />, name: "Share" },
-	{ icon: <FavoriteIcon />, name: "Like" },
-	{ icon: <HelpIcon />, name: "Help!" },
-];
+import CLIENT_ACTIONS from "./clientActions.js";
+import clsx from "clsx";
+import "./SpeedDial.scss";
 
 const label = "Text";
 const Text = ({ children = "" }) => {
@@ -52,7 +33,7 @@ const Text = ({ children = "" }) => {
 	// const { PromiseKeeper, Logger } = appUtils;
 
 	const { logg, loggError } = useLogg({ label });
-	// const promiseKeeper = usePromiseKeeper({ label });
+	const promiseKeeper = usePromiseKeeper({ label });
 
 	const [isBackdropVisible, setIsBackgroundVisible] = useState(false);
 	const [isSpeedDialOpen, setIsSpeedDialOpen] = useState(false);
@@ -60,6 +41,8 @@ const Text = ({ children = "" }) => {
 	const socket = useRecoilValue(socketState);
 	const client = useRecoilValue(clientState);
 	const classroom = useRecoilValue(classroomState);
+
+	const [selectedAction, setSelectedAction] = useState(null);
 
 	const handleVisibility = () => {
 		setIsBackgroundVisible((prevHidden) => !prevHidden);
@@ -87,7 +70,16 @@ const Text = ({ children = "" }) => {
 			actionName: action.name,
 		});
 
-		handleSpeedDialClose();
+		setSelectedAction(action);
+		const prom = promiseKeeper.stall(2.25 * 1000).andThen((promise) => {
+			setSelectedAction(null);
+		});
+
+		prom.catch((err) => {
+			setSelectedAction(null);
+		});
+
+		// handleSpeedDialClose();
 	};
 
 	return (
@@ -106,15 +98,24 @@ const Text = ({ children = "" }) => {
 					right: "calc( 2 * var(--spacing))",
 				}}
 			>
-				{CLIENT_ACTIONS.map((action, actionIndex) => (
-					<SpeedDialAction
-						key={action.name}
-						icon={action.icon}
-						tooltipTitle={action.name}
-						tooltipOpen
-						onClick={() => handleActionSelect(action)}
-					/>
-				))}
+				{CLIENT_ACTIONS.map((action, actionIndex) => {
+					const isSelected = selectedAction === action;
+
+					return (
+						<SpeedDialAction
+							className={clsx(
+								"SpeedDialAction",
+								`SpeedDialAction--${actionIndex}`,
+								isSelected && "selected"
+							)}
+							key={action.name}
+							icon={action.icon}
+							tooltipTitle={action.name}
+							tooltipOpen
+							onClick={() => handleActionSelect(action)}
+						/>
+					);
+				})}
 			</SpeedDial>
 			<Backdrop
 				open={isSpeedDialOpen}

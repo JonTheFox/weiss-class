@@ -14,7 +14,9 @@ const { logg, loggError } = classroomLogger;
 
 const CLASSROOMS = require("../data/classrooms/allClassrooms.js");
 
-const USER_TYPES = ["student", "teacher", "platform"];
+const clientTypes = require("./clientTypes.js");
+
+const CLIENT_TYPES = ["student", "teacher", "platform"];
 
 const assertValidCredentials = (creds = {}) => {
 	if (!creds)
@@ -568,7 +570,7 @@ const supplementIO = function(io) {
 				clientType = clientType.toLowerCase();
 				//make sure that the clientType is one of the accepted types (teacher, student, platform
 				clientType =
-					clientType && USER_TYPES.includes(clientType)
+					clientType && CLIENT_TYPES.includes(clientType)
 						? clientType
 						: "student";
 
