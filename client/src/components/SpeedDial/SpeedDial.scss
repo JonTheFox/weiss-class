@@ -66,12 +66,17 @@
 		background-color: var(--primary);
 	}
 
-	90% {
+	85% {
 		transform: scale(3) translateX(-50%) translateY(-50%);
 		background-color: var(--primary);
 	}
 
+	92% {
+		transform: scale3d(0.3, 0.3, 0.3) rotate(5deg) skewX(0deg) skewY(20deg);
+	}
+
 	100% {
 		transform: scale3d(1, 1, 1) rotate(0deg) skewX(0deg) skewY(0deg);
+		background-color: var(--white);
 	}
 }

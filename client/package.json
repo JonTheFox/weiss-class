@@ -15,6 +15,7 @@
         "flubber": "^0.4.2",
         "graphql": "^15.4.0",
         "hero-slider": "^2.0.3",
+        "howler": "^2.2.1",
         "material-table": "^1.57.2",
         "node-sass": "^4.14.1",
         "prop-types": "^15.6.2",
