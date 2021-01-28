@@ -194,7 +194,13 @@ export default function ClassroomSelect(props) {
   };
 
   const renderCarousel = () => {
-    return <Carousel onItemSelect={onRoomSelect} items={roomsInfo} />;
+    return (
+      <Carousel
+        className={"glass"}
+        onItemSelect={onRoomSelect}
+        items={roomsInfo}
+      />
+    );
   };
 
   // return (

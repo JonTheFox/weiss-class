@@ -1,5 +1,5 @@
 import React from "react";
-import cx from "clsx";
+import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
@@ -8,7 +8,6 @@ import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import ParallaxSlide from "@mui-treasury/components/slide/parallax";
 import DotIndicator from "@mui-treasury/components/indicator/dot";
 import { useArrowDarkButtonStyles } from "@mui-treasury/styles/button/arrowDark";
-import clsx from "clsx";
 
 import "./Carousel.scss";
 
@@ -90,7 +89,7 @@ const useStyles = makeStyles(({ palette, breakpoints, spacing }) => ({
     top: 20,
     left: "20%",
     height: "40%",
-    fontSize: 40,
+    fontSize: "3rem",
     zIndex: 1,
     background: "linear-gradient(0deg, rgba(255,255,255,0) 0%, #9c9c9c 100%)",
     [breakpoints.up("sm")]: {
@@ -99,24 +98,24 @@ const useStyles = makeStyles(({ palette, breakpoints, spacing }) => ({
     },
     [breakpoints.up("md")]: {
       top: 52,
-      fontSize: 72,
+      fontSize: "3rem",
     },
   },
   subtitle: {
     top: 60,
     left: "0%",
     height: "52%",
-    fontSize: 56,
+    fontSize: "2rem",
     zIndex: 2,
     background: "linear-gradient(0deg, rgba(255,255,255,0) 0%, #888888 100%)",
     [breakpoints.up("sm")]: {
       top: 112,
       left: "6%",
-      fontSize: 96,
+      fontSize: "2.5rem",
     },
     [breakpoints.up("md")]: {
       top: 128,
-      fontSize: 104,
+      fontSize: "3rem",
     },
   },
   indicatorContainer: {
@@ -126,7 +125,7 @@ const useStyles = makeStyles(({ palette, breakpoints, spacing }) => ({
 }));
 
 const ParallaxCarousel = (props) => {
-  const { items, onItemSelect } = props;
+  const { items, onItemSelect, className } = props;
   const classes = useStyles();
   const arrowStyles = useArrowDarkButtonStyles();
   const createStyle = (slideIndex, fineIndex) => {
@@ -140,7 +139,7 @@ const ParallaxCarousel = (props) => {
   const renderElements = ({ index, onChangeIndex }) => (
     <React.Fragment>
       <Button
-        className={cx(classes.arrow, classes.arrowLeft)}
+        className={clsx(classes.arrow, classes.arrowLeft)}
         classes={arrowStyles}
         disabled={index === 0}
         onClick={() => onChangeIndex(index - 1)}
@@ -148,7 +147,7 @@ const ParallaxCarousel = (props) => {
         <KeyboardArrowLeft />
       </Button>
       <Button
-        className={cx(classes.arrow, classes.arrowRight)}
+        className={clsx(classes.arrow, classes.arrowRight)}
         classes={arrowStyles}
         disabled={index === items.length - 1}
         onClick={() => onChangeIndex(index + 1)}
@@ -172,19 +171,19 @@ const ParallaxCarousel = (props) => {
       return (
         <div
           key={id}
-          className={classes.slide}
+          className={clsx(className && className, classes.slide)}
           onClick={() => onItemSelect && onItemSelect(item)}
         >
           <Typography
             noWrap
-            className={cx(classes.text, classes.title)}
+            className={clsx(classes.text, classes.title)}
             style={{ ...injectStyle(i, 60), ...createStyle(i, fineIndex) }}
           >
             {title}
           </Typography>
           <Typography
             noWrap
-            className={cx(classes.text, classes.subtitle)}
+            className={clsx(classes.text, classes.subtitle)}
             style={{ ...injectStyle(i, 40), ...createStyle(i, fineIndex) }}
           >
             {subtitle}

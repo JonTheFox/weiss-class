@@ -474,7 +474,7 @@ body {
 	transition: all 0.3;
 }
 
-.glass:hover {
+.show-main--hover:hover {
 	color: black;
 	border-radius: 8px;
 	padding: 20px;
