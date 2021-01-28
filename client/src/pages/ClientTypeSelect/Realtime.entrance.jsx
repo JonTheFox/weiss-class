@@ -206,6 +206,8 @@ const RTEntrance = (props) => {
 	const [showHeading, setShowHeading] = useState(false);
 	const [showGlass, setShowGlass] = useState(false);
 
+	const [animatedSegmentIndex, setAnimatedSegmentIndex] = useState(0);
+
 	// const refs = useRecoilValue(refsState);
 
 	const navigateToClassroomSelect = useCallback((delay = 0) => {
@@ -397,14 +399,17 @@ const RTEntrance = (props) => {
 						startReveal={pieReveal}
 						paddingAngle={piePaddingAngle}
 						className={clsx(showGlass && "glass-container")}
-						animateSelected={Boolean(
-							[
-								CONNECTING,
-								ENTERING_ROOM,
-								ENTERED_ROOM,
-								ALREADY_INSIDE_ROOM,
-							].includes(connectionStatus)
-						)}
+						animateSelected={
+							animatedSegmentIndex > 0 ||
+							Boolean(
+								[
+									CONNECTING,
+									ENTERING_ROOM,
+									ENTERED_ROOM,
+									ALREADY_INSIDE_ROOM,
+								].includes(connectionStatus)
+							)
+						}
 						showHoverAnimation={Boolean(
 							[IDLE].includes(connectionStatus)
 						)}
@@ -434,12 +439,15 @@ const RTEntrance = (props) => {
 
 							isSoundOn && mainClickSound.play();
 
-							promiseKeeper
-								.stall(1000 * 0.75, "hide pie chart")
-								.andThen(() => {
-									setShowPieChart(false);
+							debugger;
+							setAnimatedSegmentIndex(sectionIndex + 1);
 
+							promiseKeeper
+								.stall(1000 * 1, "hide pie chart")
+								.andThen(() => {
 									setShowGlass(false);
+
+									setShowPieChart(false);
 
 									navigateToClassroomSelect(
 										DURATIONS.enter * 1

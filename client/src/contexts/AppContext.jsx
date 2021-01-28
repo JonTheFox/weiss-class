@@ -165,7 +165,6 @@ const getUserFromLocalStorage = () => {
         const { first_name, last_name, email } = user;
         const userSansPassword = { first_name, last_name, email };
         logg("User from LocalStorage: ", userSansPassword);
-        debugger;
     } else {
         logg("No user saved in LocalStorage.");
     }
@@ -211,6 +210,7 @@ const AppContextProvider = (props) => {
 
     const setUser = (user, remember) => {
         //pass null to logout
+
         if (user === null) {
             localStorage.setObj(localStorageKey, null);
             logg("User was deleted from localStorage");
@@ -233,7 +233,7 @@ const AppContextProvider = (props) => {
 
     useEffect(() => {
         //deferred props
-        debugger;
+
         if (appState.user) {
             const { first_name, last_name, email, role } = appState.user;
             appState.userSansPassword = { first_name, last_name, email };
@@ -246,6 +246,7 @@ const AppContextProvider = (props) => {
 
     useEffect(() => {
         const user = getUserFromLocalStorage();
+        debugger;
         appState.setUser(user);
     }, []);
 

@@ -66,11 +66,11 @@ const Classroom = (props) => {
 	const bgImage =
 		room?.img?.uprl || room?.teachers?.clients?.[0]?.img?.url || "";
 
-	useEffect(() => {
-		if (!slides || !slides.length) {
-			navigateTo("/", history);
-		}
-	}, []);
+	// useEffect(() => {
+	// 	if (!slides || !slides.length) {
+	// 		navigateTo("/", history);
+	// 	}
+	// }, []);
 
 	// const mapSlide = useCallback((refs, goToStep, slide) => {
 	// 	return <Slide slide={slide}></Slide>;
