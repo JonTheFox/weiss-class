@@ -1234,8 +1234,9 @@ class DOMClimber {
 }
 
 const climbFrom = (domElem) => {
+    debugger;
     if (!domElem || !(domElem instanceof HTMLElement))
-        return new DomClimberError({ missingParam: "domElem" });
+        return new DOMClimber({});
     return new DOMClimber(domElem);
 };
 

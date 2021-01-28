@@ -434,12 +434,12 @@ const RTEntrance = (props) => {
 
 							isSoundOn && mainClickSound.play();
 
-							setShowGlass(false);
-
 							promiseKeeper
 								.stall(1000 * 0.75, "hide pie chart")
 								.andThen(() => {
 									setShowPieChart(false);
+
+									setShowGlass(false);
 
 									navigateToClassroomSelect(
 										DURATIONS.enter * 1
