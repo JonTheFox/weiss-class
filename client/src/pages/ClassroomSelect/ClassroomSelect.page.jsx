@@ -158,6 +158,8 @@ export default function ClassroomSelect(props) {
 
   const isSoundOn = useRecoilValue(isSoundOnState);
 
+  const [showCarousel, setShowCarousel] = useState(false);
+
   const roomsInfo = rooms.map((room) => {
     return {
       ...room,
@@ -215,6 +217,11 @@ export default function ClassroomSelect(props) {
   //     })}
   //   </Swiper>
   // );
+  useEffect(() => {
+    promiseKeeper.stall(0.75 * 1000, "show carousel").then(() => {
+      setShowCarousel(true);
+    });
+  }, []);
 
   return (
     <View className={clsx("classroom-select", classes.root)}>
@@ -227,8 +234,10 @@ export default function ClassroomSelect(props) {
           </Container>
         </div>
 
-        <Container className={classes.cardGrid} maxWidth="md">
-          {renderCarousel()}
+        <Container className={clsx("centered", classes.cardGrid)} maxWidth="md">
+          <ScaleIn initialPose="exit" pose={showCarousel ? "enter" : "exit"}>
+            {renderCarousel()}
+          </ScaleIn>
         </Container>
       </main>
     </View>

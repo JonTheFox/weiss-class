@@ -2,7 +2,7 @@ import React, {
   useState,
   useContext,
   useRef,
-  useEffect
+  useEffect,
   //useCallback
 } from "react";
 import PieChart from "react-minimal-pie-chart";
@@ -17,8 +17,8 @@ const defaultData = [
   {
     color: "var(--primary)",
     title: "Student",
-    value: 100
-  }
+    value: 100,
+  },
 ];
 
 let animationFrame;
@@ -39,7 +39,7 @@ const CustomPieChart = React.forwardRef((props, ref) => {
     cx = 50,
     cy = 50,
     labelStyle = {
-      fontFamily: "inherit"
+      fontFamily: "inherit",
     },
     //segmentsStyle = {},
     //label={"donut"}
@@ -61,7 +61,7 @@ const CustomPieChart = React.forwardRef((props, ref) => {
     active = true,
     showHoverAnimation = true,
     animateSelected = true,
-    pauseAnimation = false
+    pauseAnimation = false,
   } = props;
 
   const [appUtils] = useContext(AppContext);
@@ -96,7 +96,7 @@ const CustomPieChart = React.forwardRef((props, ref) => {
         ev,
         chartData,
         sectionIndex,
-        title: _selectedSeg.title
+        title: _selectedSeg.title,
       });
     }
   };
@@ -162,7 +162,7 @@ const CustomPieChart = React.forwardRef((props, ref) => {
       cy={cy}
       labelStyle={labelStyle}
       //label={"donut"}
-      label={labelProps => {
+      label={(labelProps) => {
         const { dataIndex } = labelProps;
         return data?.[dataIndex]?.title?.toLowerCase?.() ?? {};
       }}
@@ -194,7 +194,7 @@ CustomPieChart.propTypes = {
   animateSelected: PropTypes.bool,
   pauseAnimation: PropTypes.bool,
   className: PropTypes.string,
-  paddingAngle: PropTypes.number
+  paddingAngle: PropTypes.number,
 };
 
 export default CustomPieChart;

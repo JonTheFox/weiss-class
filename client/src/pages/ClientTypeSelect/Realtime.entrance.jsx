@@ -26,6 +26,7 @@ import Heading from "../../components/Heading/Heading.js";
 import { Howl, Howler } from "howler";
 import { mainClickSound } from "../../constants/sounds.js";
 import Container from "@material-ui/core/Container";
+import "./_Entrance.scss";
 
 const scaleInPoses = {
 	enter: {
@@ -195,12 +196,15 @@ const RTEntrance = (props) => {
 	);
 	const [isPieActive, setIsPieActive] = useState(false);
 	const [showRooms, setShowRooms] = useState(false);
-	const [showPieChart, setShowPieChart] = useState(true);
+	const [showPieChart, setShowPieChart] = useState(false);
 	const [pieReveal, setPieReveal] = useState(100);
 	const [pieData, setPieData] = useState(props.pieData || initialPieData);
 	const [piePaddingAngle, setPiePaddingAngle] = useState(2);
 
 	const [client, setClient] = useRecoilState(clientState);
+
+	const [showHeading, setShowHeading] = useState(false);
+	const [showGlass, setShowGlass] = useState(false);
 
 	// const refs = useRecoilValue(refsState);
 
@@ -226,6 +230,13 @@ const RTEntrance = (props) => {
 		} else {
 			appState.realtime.clientID = clientID;
 		}
+
+		promiseKeeper.stall(1 * 1000, "show PieChart").then(() => {
+			setShowPieChart(true);
+			promiseKeeper.stall(1 * 1000, "show glass").then(() => {
+				setShowGlass(true);
+			});
+		});
 
 		promiseKeeper.stall(PIE_ENTER_DURATION).then(() => {
 			setConnectionStatus(CONNECTION_STATES.IDLE);
@@ -291,8 +302,19 @@ const RTEntrance = (props) => {
 				// return navigateToClassroomSelect();
 				// });
 				promiseKeeper
-					.stall(DURATIONS.enter * 1, "hide pie chart")
+					.stall(DURATIONS.enter * 0.5, "hide glass")
 					.then(() => {
+						promiseKeeper
+							.stall(1 * 1000, "show PieChart")
+							.then(() => {
+								setShowPieChart(true);
+								promiseKeeper
+									.stall(1 * 1000, "show glass")
+									.then(() => {
+										setShowGlass(true);
+									});
+							});
+
 						setShowPieChart(false);
 						navigateToClassroomSelect(DURATIONS.enter * 1);
 					});
@@ -353,20 +375,11 @@ const RTEntrance = (props) => {
 			<div className={clsx("section section--header flex")}>
 				<Container maxWidth="sm">
 					<ScaleIn initialPose="exit" pose="enter">
-						<Heading h="1" style={{ fontSize: "10rem" }}>
-							What are you, exactly?
-						</Heading>
+						<Heading h="1">What are you, exactly?</Heading>
 					</ScaleIn>
 				</Container>
 			</div>
-			<div
-				className={clsx(
-					"section section--room-list",
-					showRooms && "showRooms"
-				)}
-			>
-				<div className={clsx("room-list")}></div>
-			</div>
+
 			<div className={clsx("section section--pie")}>
 				<PosedPieContainer
 					className={clsx(
@@ -383,7 +396,7 @@ const RTEntrance = (props) => {
 						reveal={pieReveal}
 						startReveal={pieReveal}
 						paddingAngle={piePaddingAngle}
-						className={"stroke--children"}
+						className={clsx(showGlass && "glass-container")}
 						animateSelected={Boolean(
 							[
 								CONNECTING,
@@ -421,9 +434,17 @@ const RTEntrance = (props) => {
 
 							isSoundOn && mainClickSound.play();
 
-							setShowPieChart(false);
+							setShowGlass(false);
 
-							navigateToClassroomSelect(DURATIONS.enter * 1);
+							promiseKeeper
+								.stall(1000 * 0.75, "hide pie chart")
+								.andThen(() => {
+									setShowPieChart(false);
+
+									navigateToClassroomSelect(
+										DURATIONS.enter * 1
+									);
+								});
 
 							// setConnectionStatus(CONNECTION_STATES.ENTERED_ROOM);
 						}}

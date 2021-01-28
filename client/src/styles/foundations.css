@@ -460,6 +460,7 @@ body {
 	position: fixed;
 }
 
+.glass-container > *,
 .glass {
 	color: darkgray;
 	border-radius: 8px;

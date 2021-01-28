@@ -1,0 +1,14 @@
+.realtime-entrance {
+	.PieChart {
+		padding: calc(2 * var(--spacing));
+
+		.glass-container {
+			padding: var(--spacing);
+			svg {
+				padding: var(--spacing);
+			}
+		}
+	}
+
+	height: 100%;
+}

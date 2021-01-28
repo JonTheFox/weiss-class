@@ -102,7 +102,6 @@ const Realtime = (props) => {
 		setUser(localStorageUser);
 		const localStorageClient = localStorage.getObj(CLIENT_STORAGE_KEY);
 		setClient(localStorageClient);
-		debugger;
 	}, []);
 
 	useEffect(() => {
