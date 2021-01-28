@@ -1,27 +1,25 @@
 const PRESENT_SIMPLE_SLIDES = require("../lessons/PresentSimple/PresentSimple.index.js");
 
 const IMAGE_URL =
-	"https://images.unsplash.com/photo-1485178575877-1a13bf489dfe?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwzMTI2M3wwfDF8c2VhcmNofDE5fHx3b21hbnxlbnwwfDB8fA&ixlib=rb-1.2.1&q=80&w=400";
+	"https://i.pinimg.com/originals/1a/60/70/1a6070e136db70744a4103d2c71882c0.png";
 
 const classroom = {
 	id: 2,
 	//image: { url: IMAGE_URL },
-	subject: "Present Simple",
-	title: "Our Everday",
-	subtitle: "Our Everday",
+	subject: "Present Progressive",
+	title: "Living the moment",
+	//subtitle: "Our Everday",
 	slides: PRESENT_SIMPLE_SLIDES,
 	//currentSlideIndex: 0,
 	teachers: [
 		{
-			first_name: "Angelina",
-			last_name: "Bloom",
-			email: "angelina@bloom.com",
+			first_name: "Peter",
+			last_name: "Parker",
+			email: "spiderman@marvel.com",
 			clientId: 111,
 			img: {
 				url: IMAGE_URL,
 			},
-			title: "Firestar",
-			subtitle: "The Fiery Lady",
 		},
 	],
 };

@@ -5,10 +5,32 @@
 
 	.image-container {
 		margin-top: calc(8 * var(--spacing));
+		&:hover {
+			cursor: pointer;
+		}
 
 		img {
 			border-radius: 5%;
 			// border-radius: 10% 20% 150%;
+			margin-top: calc(var(--spacing) * 5);
 		}
+	}
+}
+
+.phone .Carousel {
+	.image-container {
+		margin-top: calc(2 * var(--spacing));
+	}
+}
+
+.tablet .Carousel {
+	.image-container {
+		margin-top: calc(5 * var(--spacing));
+	}
+}
+
+.desktop-or-laptop .Carousel {
+	.image-container {
+		margin-top: calc(8 * var(--spacing));
 	}
 }

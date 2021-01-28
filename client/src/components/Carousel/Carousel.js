@@ -12,33 +12,6 @@ import clsx from "clsx";
 
 import "./Carousel.scss";
 
-const data = [
-  {
-    id: 1,
-    title: "Huarache",
-    subtitle: "Gripp",
-    image:
-      // eslint-disable-next-line max-len
-      "https://firebasestorage.googleapis.com/v0/b/mui-treasury.appspot.com/o/public%2Fshoes%2Fair-huarache-gripp.png?alt=media",
-  },
-  {
-    id: 2,
-    title: "Air Max",
-    subtitle: "270 P",
-    image:
-      // eslint-disable-next-line max-len
-      "https://firebasestorage.googleapis.com/v0/b/mui-treasury.appspot.com/o/public%2Fshoes%2Fair-max-270.png?alt=media",
-  },
-  {
-    id: 3,
-    title: "Air Max",
-    subtitle: "Deluxe",
-    image:
-      // eslint-disable-next-line max-len
-      "https://firebasestorage.googleapis.com/v0/b/mui-treasury.appspot.com/o/public%2Fshoes%2Fair-max-deluxe.png?alt=media",
-  },
-];
-
 const useStyles = makeStyles(({ palette, breakpoints, spacing }) => ({
   root: {
     // a must if you want to set arrows, indicator as absolute
@@ -69,7 +42,7 @@ const useStyles = makeStyles(({ palette, breakpoints, spacing }) => ({
     position: "absolute",
     zIndex: 10,
     width: "100%",
-    height: "100%",
+    height: "auto",
     objectFit: "cover",
     marginLeft: "12%",
     [breakpoints.up("sm")]: {

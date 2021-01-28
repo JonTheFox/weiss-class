@@ -96,7 +96,7 @@ export default function SignIn(props) {
 				{ email, password }
 			);
 			const { error, wrongCredentials, loggedIn, user } = ajaxResult;
-			debugger;
+
 			if (error) throw new Error(error);
 			if (wrongCredentials) {
 				throw new Error(

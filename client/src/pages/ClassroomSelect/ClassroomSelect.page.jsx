@@ -63,6 +63,8 @@ import FancyCard from "../../components/FancyCard/FancyCard.jsx";
 import { mainClickSound } from "../../constants/sounds.js";
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper";
 
+import "./CLassroomSelect.scss";
+
 const scaleInPoses = {
   enter: {
     scale: 1,
@@ -215,7 +217,7 @@ export default function ClassroomSelect(props) {
   // );
 
   return (
-    <View className={classes.root}>
+    <View className={clsx("classroom-select", classes.root)}>
       <main>
         <div className={classes.heroContent}>
           <Container maxWidth="sm">

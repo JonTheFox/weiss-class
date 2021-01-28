@@ -21,10 +21,27 @@ import socketConnectionState from "../../store/socketConnection.atom.js";
 import clientState from "../../store/client.atom.js";
 import { CONNECTION_STATES } from "../../store/CONNECTION_STATES.js";
 import "./Realtime.entrance.jsx";
+import Heading from "../../components/Heading/Heading.js";
 
 import { Howl, Howler } from "howler";
-
 import { mainClickSound } from "../../constants/sounds.js";
+import Container from "@material-ui/core/Container";
+
+const scaleInPoses = {
+	enter: {
+		scale: 1,
+		rotateZ: "0deg",
+		opacity: 1,
+		transition: { duration: 400 },
+	},
+	exit: {
+		scale: 0,
+		rotateZ: "12deg",
+		opacity: 0,
+		transition: { duration: 400 },
+	},
+};
+const ScaleIn = posed.div(scaleInPoses);
 
 let animationFrame;
 let logg;
@@ -334,9 +351,13 @@ const RTEntrance = (props) => {
 			></div>
 
 			<div className={clsx("section section--header flex")}>
-				<PosedTitle pose={"enter"} initialPose="exit">
-					<h2>I am a...</h2>
-				</PosedTitle>
+				<Container maxWidth="sm">
+					<ScaleIn initialPose="exit" pose="enter">
+						<Heading h="1" style={{ fontSize: "10rem" }}>
+							What are you, exactly?
+						</Heading>
+					</ScaleIn>
+				</Container>
 			</div>
 			<div
 				className={clsx(
