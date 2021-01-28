@@ -34,13 +34,20 @@ import clientsTypes from "../../constants/clientsTypes.js";
 // import Swiper from "../../../partials/Swiper.jsx";
 import SpeedDial from "../SpeedDial/SpeedDial.js";
 import Slider from "../Slider/Slider.js";
+import { useHistory } from "react-router-dom";
 import "./_classroom.scss";
 
 const label = "Classroom";
 
 const Classroom = (props) => {
 	const [appUtils] = useContext(AppContext);
-	const { PromiseKeeper, Logger, getUniqueString, CLIENT_ONLY } = appUtils;
+	const {
+		PromiseKeeper,
+		Logger,
+		getUniqueString,
+		CLIENT_ONLY,
+		navigateTo,
+	} = appUtils;
 
 	const { logg, loggError } = useLogg({ label });
 	const promiseKeeper = usePromiseKeeper({ label });
@@ -54,8 +61,16 @@ const Classroom = (props) => {
 
 	const { slides, currentSlideIndex } = room;
 
+	const history = useHistory();
+
 	const bgImage =
-		room?.img?.url || room?.teachers?.clients?.[0]?.img?.url || "";
+		room?.img?.uprl || room?.teachers?.clients?.[0]?.img?.url || "";
+
+	useEffect(() => {
+		if (!slides || !slides.length) {
+			navigateTo("/", history);
+		}
+	}, []);
 
 	// const mapSlide = useCallback((refs, goToStep, slide) => {
 	// 	return <Slide slide={slide}></Slide>;

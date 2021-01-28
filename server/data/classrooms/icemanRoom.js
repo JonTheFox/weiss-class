@@ -3,6 +3,7 @@ const PRESENT_SIMPLE_SLIDES = require("../lessons/PresentSimple/PresentSimple.in
 const IMAGE_URL = "https://www.pngarts.com/files/2/Iceman-PNG-Image.png";
 
 const classroom = {
+	id: 4,
 	slides: PRESENT_SIMPLE_SLIDES,
 	image: { url: IMAGE_URL },
 	subject: "Present Simple",

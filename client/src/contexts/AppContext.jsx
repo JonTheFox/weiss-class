@@ -233,6 +233,7 @@ const AppContextProvider = (props) => {
 
     useEffect(() => {
         //deferred props
+        debugger;
         if (appState.user) {
             const { first_name, last_name, email, role } = appState.user;
             appState.userSansPassword = { first_name, last_name, email };

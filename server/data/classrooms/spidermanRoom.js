@@ -4,13 +4,12 @@ const IMAGE_URL =
 	"https://i.pinimg.com/originals/1a/60/70/1a6070e136db70744a4103d2c71882c0.png";
 
 const classroom = {
-	id: 2,
-	//image: { url: IMAGE_URL },
-	subject: "Present Progressive",
-	title: "Living the moment",
-	//subtitle: "Our Everday",
+	id: 10,
 	slides: PRESENT_SIMPLE_SLIDES,
-	//currentSlideIndex: 0,
+	image: { url: IMAGE_URL },
+	title: "Living the moment",
+	subject: "Present Progressive",
+	subtitle: "Keepin' it cool.",
 	teachers: [
 		{
 			first_name: "Peter",
@@ -23,5 +22,6 @@ const classroom = {
 		},
 	],
 };
+//i.pinimg.com/originals/b5/7c/d0/b57cd02190373f498e397cecbcbbdd03.jpg
 
-module.exports = classroom;
+https: module.exports = classroom;
