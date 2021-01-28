@@ -8,6 +8,9 @@ import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import ParallaxSlide from "@mui-treasury/components/slide/parallax";
 import DotIndicator from "@mui-treasury/components/indicator/dot";
 import { useArrowDarkButtonStyles } from "@mui-treasury/styles/button/arrowDark";
+import clsx from "clsx";
+
+import "./Carousel.scss";
 
 const data = [
   {
@@ -58,7 +61,7 @@ const useStyles = makeStyles(({ palette, breakpoints, spacing }) => ({
   imageContainer: {
     display: "block",
     position: "relative",
-    zIndex: 0,
+    zIndex: 4,
     paddingBottom: "56.25%",
   },
   image: {
@@ -145,6 +148,7 @@ const useStyles = makeStyles(({ palette, breakpoints, spacing }) => ({
   },
   indicatorContainer: {
     textAlign: "center",
+    marginTop: "calc(var(--spacing) * 4)",
   },
 }));
 
@@ -212,7 +216,7 @@ const ParallaxCarousel = (props) => {
           >
             {subtitle}
           </Typography>
-          <div className={classes.imageContainer}>
+          <div className={clsx("image-container", classes.imageContainer)}>
             <img className={classes.image} src={image} alt={"slide"} />
           </div>
         </div>
@@ -220,8 +224,11 @@ const ParallaxCarousel = (props) => {
     });
 
   return (
-    <div className={classes.root}>
-      <ParallaxSlide renderElements={renderElements}>
+    <div className={clsx(classes.root, "Carousel")}>
+      <ParallaxSlide
+        renderElements={renderElements}
+        className={"carousel-slide"}
+      >
         {renderChildren}
       </ParallaxSlide>
     </div>

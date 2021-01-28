@@ -14,7 +14,7 @@ import usePromiseKeeper from "../../hooks/usePromiseKeeper.jsx";
 import View from "../../components/layout/View.jsx";
 
 import AppBar from "@material-ui/core/AppBar";
-import Card from "../../components/Card/Card.js";
+import Card from "../../components/Card/Card.jsx";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -33,6 +33,12 @@ import posed, { PoseGroup } from "react-pose";
 import Heading from "../../components/Heading/Heading.js";
 
 import Carousel from "../../components/Carousel/Carousel.js";
+
+// Import Swiper styles
+import "swiper/swiper.scss";
+import "swiper/components/navigation/navigation.scss";
+import "swiper/components/pagination/pagination.scss";
+import "swiper/components/scrollbar/scrollbar.scss";
 
 import {
   // RecoilRoot,
@@ -55,6 +61,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import FancyCard from "../../components/FancyCard/FancyCard.jsx";
 
 import { mainClickSound } from "../../constants/sounds.js";
+import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper";
 
 const scaleInPoses = {
   enter: {
@@ -84,7 +91,8 @@ const useStyles = makeStyles((theme) => ({
   },
   heroContent: {
     //backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(8, 0, 6),
+    padding: theme.spacing(3),
+    paddingBottom: 0,
     fontSize: "1.5rem",
   },
   heroButtons: {
@@ -126,6 +134,9 @@ const SWIPER_PARAMS = {
   },
 };
 
+// install Swiper components
+SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
+
 export default function ClassroomSelect(props) {
   const [appUtils, appState, setAppState] = useContext(AppContext);
 
@@ -149,7 +160,7 @@ export default function ClassroomSelect(props) {
     return {
       ...room,
       subtitle: room.subject || room.subtitle || "",
-      image: room?.image?.url,
+      image: room?.image?.url ?? room?.teachers?.clients?.[0]?.img?.url ?? "",
     };
   });
 
@@ -159,8 +170,9 @@ export default function ClassroomSelect(props) {
       debugger;
       return null;
     }
-
     isSoundOn && mainClickSound.play();
+
+    promiseKeeper.stall();
 
     const { id, type } = client;
     const roomKey = room.roomKey;
@@ -173,12 +185,34 @@ export default function ClassroomSelect(props) {
 
     setClassroom({ roomKey });
 
+    promiseKeeper.stall(1000 * 1, "nav to classroom");
     navigateTo(`/rt/classroom`, history);
   };
 
   const renderCarousel = () => {
     return <Carousel onItemSelect={onRoomSelect} items={roomsInfo} />;
   };
+
+  // return (
+  //   <Swiper
+  //     spaceBetween={50}
+  //     slidesPerView={3}
+  //     direction="vertical"
+  //     navigation
+  //     pagination={{ clickable: true }}
+  //     scrollbar={{ draggable: true }}
+  //     onSwiper={(swiper) => console.log(swiper)}
+  //     onSlideChange={() => console.log("slide change")}
+  //   >
+  //     {roomsInfo.map((room) => {
+  //       return (
+  //         <SwiperSlide>
+  //           <Card />
+  //         </SwiperSlide>
+  //       );
+  //     })}
+  //   </Swiper>
+  // );
 
   return (
     <View className={classes.root}>
@@ -246,15 +280,7 @@ ClassroomSelect.propTypes = {
 
                 const bgImage = img?.url || firstTeacher?.img?.url || "";
 
-                // return (
-                //   <Swiper>
-                //     <div
-                //       class="swiper-slide"
-                //       style={{ backgroundImage: bgImage }}
-                //     ></div>
-                //   </Swiper>
-                // );
-
+             
                 return <FancyCard />;
 
                 return (
