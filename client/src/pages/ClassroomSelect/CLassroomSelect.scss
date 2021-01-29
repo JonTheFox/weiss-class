@@ -11,4 +11,24 @@
 		width: auto;
 		margin: auto;
 	}
+
+	.heading {
+		margin-left: 0;
+		text-align: left;
+	}
+}
+
+.tablet,
+.desktop-or-laptop {
+	& {
+		.classroom-select {
+			.heading {
+				// text-align: center;
+			}
+
+			.Carousel {
+				margin-top: calc(var(--spacing) * 16);
+			}
+		}
+	}
 }

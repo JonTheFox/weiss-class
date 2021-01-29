@@ -176,8 +176,6 @@ export default function ClassroomSelect(props) {
     }
     isSoundOn && mainClickSound.play();
 
-    promiseKeeper.stall();
-
     const { id, type } = client;
     const roomKey = room.roomKey;
 
@@ -235,7 +233,9 @@ export default function ClassroomSelect(props) {
         <div className={classes.heroContent}>
           <Container maxWidth="sm">
             <ScaleIn initialPose="exit" pose="enter">
-              <Heading h="2"> Join a class</Heading>
+              <Heading h="2" className="title">
+                Join a class
+              </Heading>
             </ScaleIn>
           </Container>
         </div>

@@ -439,6 +439,7 @@ const RTEntrance = (props) => {
 
 							//animate the selected section of PieChart
 							setAnimatedSegmentIndex(sectionIndex + 1);
+							const _his = history;
 
 							promiseKeeper
 								.stall(1000 * 0.2, "hide glass")
