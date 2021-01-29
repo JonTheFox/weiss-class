@@ -233,7 +233,7 @@ const RTEntrance = (props) => {
 			appState.realtime.clientID = clientID;
 		}
 
-		promiseKeeper.stall(1 * 1000, "show PieChart").then(() => {
+		promiseKeeper.stall(0.8 * 1000, "show PieChart").then(() => {
 			setShowPieChart(true);
 			promiseKeeper.stall(1 * 1000, "show glass").then(() => {
 				setShowGlass(true);
@@ -287,7 +287,9 @@ const RTEntrance = (props) => {
 						// setShowPieChart(false);
 
 						// animationFrame = window.requestAnimationFrame(() => {
-						navigateToClassroomSelect();
+
+						debugger;
+						// navigateToClassroomSelect();
 					});
 
 				// });
@@ -300,25 +302,21 @@ const RTEntrance = (props) => {
 					"connection established"
 				);
 				debugger;
+
+				setShowGlass(true);
 				// animationFrame = window.requestAnimationFrame(() => {
 				// return navigateToClassroomSelect();
 				// });
 				promiseKeeper
-					.stall(DURATIONS.enter * 0.5, "hide glass")
+					.stall(DURATIONS.enter * 1, "hide PieChart")
 					.then(() => {
-						promiseKeeper
-							.stall(1 * 1000, "show PieChart")
-							.then(() => {
-								setShowPieChart(true);
-								promiseKeeper
-									.stall(1 * 1000, "show glass")
-									.then(() => {
-										setShowGlass(true);
-									});
-							});
-
 						setShowPieChart(false);
-						navigateToClassroomSelect(DURATIONS.enter * 1);
+						promiseKeeper
+							.stall(1 * 1000, "navigate to classroom")
+							.then(() => {
+								//debugger;
+								// navigateToClassroomSelect(DURATIONS.enter * 1);
+							});
 					});
 				return;
 
@@ -423,6 +421,8 @@ const RTEntrance = (props) => {
 								return;
 							}
 
+							isSoundOn && mainClickSound.play();
+
 							if (!user) {
 								loggError(
 									"Cannot connect to socket without being logged in."
@@ -437,21 +437,23 @@ const RTEntrance = (props) => {
 								type,
 							}));
 
-							isSoundOn && mainClickSound.play();
-
-							debugger;
+							//animate the selected section of PieChart
 							setAnimatedSegmentIndex(sectionIndex + 1);
 
 							promiseKeeper
-								.stall(1000 * 1, "hide pie chart")
+								.stall(1000 * 0.2, "hide glass")
 								.andThen(() => {
 									setShowGlass(false);
 
-									setShowPieChart(false);
+									promiseKeeper
+										.stall(1 * 1000, "hide pie chart")
+										.then(() => {
+											setShowPieChart(false);
 
-									navigateToClassroomSelect(
-										DURATIONS.enter * 1
-									);
+											navigateToClassroomSelect(
+												DURATIONS.enter * 1
+											);
+										});
 								});
 
 							// setConnectionStatus(CONNECTION_STATES.ENTERED_ROOM);

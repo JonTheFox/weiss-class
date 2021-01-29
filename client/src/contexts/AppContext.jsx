@@ -246,7 +246,7 @@ const AppContextProvider = (props) => {
 
     useEffect(() => {
         const user = getUserFromLocalStorage();
-        debugger;
+
         appState.setUser(user);
     }, []);
 
