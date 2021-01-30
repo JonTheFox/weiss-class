@@ -6,17 +6,14 @@ import React, {
 	Suspense,
 	useCallback,
 	Fragment,
+	lazy,
 } from "react";
-import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
+
 import { AppContext } from "../../contexts/AppContext.jsx";
-import ClientTypeSelect from "../../pages/ClientTypeSelect/Realtime.entrance.jsx";
-import Classroom from "../Classroom/Classroom.js";
-import Card from "../Card/Card.jsx";
-import WeissSpinner from "../WeissSpinner/WeissSpinner.jsx";
+
 //import PropTypes from "prop-types";
 // import clsx from "clsx";
-import View from "../layout/View.jsx";
-import ClassroomSelect from "../../pages/ClassroomSelect/ClassroomSelect.page.jsx";
+
 import useLogg from "../../hooks/useLogg.jsx";
 import usePromiseKeeper from "../../hooks/usePromiseKeeper.jsx";
 import { useQuery, gql } from "@apollo/client";
@@ -43,28 +40,11 @@ import { localStorage } from "../../lib/issy/index.js";
 import VideoPlayer from "../VideoPlayer/VideoPlayer.jsx";
 import LOCAL_STORAGE_KEY from "../../constants/localStorageKey.js";
 import { ParallaxProvider } from "react-scroll-parallax";
+import LogoScreen from "../../pages/LogoScreen/LogoScreen.jsx";
+import ErrorBoundary from "../../pages/ErrorPage/ErrorPage.jsx";
 import "./_RealtimeManager.scss";
 
-const CLOUD_VIDEOS = [
-	// {
-	// 	title: "from Pexels",
-	// 	url:
-	// 		"https://player.vimeo.com/external/331114247.sd.mp4?s=774a9cd251c1df88f5f031864a7b66dcdd393837&profile_id=164&oauth2_token_id=57447761",
-	// 	stopSecond: 10,
-	// },
-	{
-		title: "Flying Above the Clouds",
-		url: "https://www.youtube.com/watch?v=6AJl7DsL-1Y",
-		startSecond: 15,
-		stopSecond: 60 * 5 + 50,
-	},
-
-	{
-		title: "Flying into clouds, above clouds and around clouds",
-		url: "https://www.youtube.com/watch?v=VmMYfAR21KY",
-	},
-];
-
+const baseRoute = "/";
 const label = "RealtimeIndex";
 const SECTION_ROUTE = `rt/`;
 
@@ -92,9 +72,6 @@ const Realtime = (props) => {
 	const user = useRecoilValue(userState);
 	const [client, setClient] = useRecoilState(clientState);
 	const { slides } = useRecoilValue(lessonState);
-	const [video, setVideo] = useState(CLOUD_VIDEOS[0]);
-
-	const [isPlaying, setIsPlaying] = useState(false);
 
 	useEffect(() => {
 		if (user) return;
@@ -259,42 +236,7 @@ const Realtime = (props) => {
 		}
 	}, [user]);
 
-	const { location, match } = props.route;
-	return (
-		<Fragment>
-			<VideoPlayer
-				style={{ position: "absolute", zIndex: -1 }}
-				controls={false}
-				noInteraction={true}
-				light={false}
-				playing={true}
-				muted={true}
-				volume={0}
-				video={video}
-				scaleToFitViewport={true}
-				startSecond={video.startSecond || 0}
-				stopSecond={video.stopSecond}
-				onPlay={() => {
-					setIsPlaying(true);
-				}}
-			></VideoPlayer>
-			<Suspense fallback={<WeissSpinner />}>
-				<Switch location={location}>
-					<Route
-						path={`${match.path}rt/classroom-select`}
-						render={(route) => <ClassroomSelect route={route} />}
-					/>
-					<Route
-						path={`${match.path}rt/classroom`}
-						render={(route) => <Classroom route={route} />}
-					/>
-					<Route
-						render={(route) => <ClientTypeSelect route={route} />}
-					/>
-				</Switch>
-			</Suspense>
-		</Fragment>
-	);
+	return props.children;
 };
 
 export default Realtime;

@@ -213,7 +213,7 @@ const RTEntrance = (props) => {
 	const navigateToClassroomSelect = useCallback((delay = 0) => {
 		logg("About to navigate to classroom");
 		promiseKeeper.stall(delay, "navigate to classroom").then(() => {
-			navigateTo(`/rt/classroom-select`, history);
+			navigateTo(`/classroom-select`, history);
 		});
 	});
 

@@ -188,7 +188,7 @@ export default function ClassroomSelect(props) {
     setClassroom({ roomKey });
 
     promiseKeeper.stall(1000 * 1, "nav to classroom");
-    navigateTo(`/rt/classroom`, history);
+    navigateTo(`/classroom`, history);
   };
 
   const renderCarousel = () => {

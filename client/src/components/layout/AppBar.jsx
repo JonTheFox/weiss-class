@@ -76,13 +76,12 @@ import {
 import "./_Appbar.scss";
 
 const APP_ROUTE = "/";
-const SLIDES_ROUTE = "present-simple/";
 
 const mainLinks = [
-  { title: "Home", path: `${APP_ROUTE}animals/home`, Icon: Home },
+  { title: "Home", path: `${APP_ROUTE}`, Icon: Home },
   {
     title: "Classrooms",
-    path: `rt`,
+    path: `${APP_ROUTE}client-type-select`,
     Icon: Chat,
     adminOnly: false,
   },

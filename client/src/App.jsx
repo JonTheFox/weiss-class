@@ -7,12 +7,10 @@ import {
 } from "react-router-dom";
 import { ThemeProvider } from "@material-ui/styles";
 
-import LogoScreen from "./pages/LogoScreen/LogoScreen.jsx";
 import View from "./components/layout/View.jsx";
 import EntireView from "./components/layout/EntireView.jsx";
 import ErrorBoundary from "./pages/ErrorPage/ErrorPage.jsx";
-import WeissSpinner from "./components/WeissSpinner/WeissSpinner.jsx";
-
+import RealtimeManager from "./components/RealtimeManager/RealtimeManager.jsx";
 import "./index.scss";
 
 //The Apollo client is what is interacting with our GraphQL server on the backend. It's what is making requests for data and storing it locally when the data comes back. It doesn't know/care that we working with React.
@@ -21,6 +19,8 @@ import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client"; //
 import { AppContextProvider } from "./contexts/AppContext.jsx";
 import { DeviceContextProvider } from "./contexts/DeviceContext.jsx";
 import theme from "./constants/theme.js";
+
+import AppRoutes from "./AppRoutes.js";
 
 import {
 	RecoilRoot,
@@ -46,24 +46,6 @@ const client = new ApolloClient({
 	//The ramification of this line here, is that we have to ask for an id property to be returned from every single query we do
 });
 
-const SageAdvice = lazy(() =>
-	import(
-		/* webpackPrefetch: true, webpackChunkName: "SageAdvice" */ "./pages/SageAdvice/SageAdvice.jsx"
-	)
-);
-
-const LazyRealtime = lazy(() =>
-	import(
-		/* webpackChunkName: "RealtimeManager" */ "./components/RealtimeManager/RealtimeManager.jsx"
-	)
-);
-
-const LazyLogin = lazy(() =>
-	import(/* webpackChunkName: "Login" */ "./pages/Login/Login.jsx")
-);
-
-const baseRoute = "/";
-
 const App = (props) => {
 	return (
 		<ApolloProvider client={client}>
@@ -73,93 +55,20 @@ const App = (props) => {
 						<DeviceContextProvider>
 							<Router>
 								<Route
-									render={(route) => (
-										<EntireView animate="false">
-											<ErrorBoundary>
-												<View
-													responsive={true}
-													animateChildren={false}
-													key="innerView"
-												>
-													<Suspense
-														key="main-suspense"
-														fallback={
-															<WeissSpinner />
-														}
-													>
-														<Switch
-															location={
-																route.location
-															}
-														>
-															<Route
-																path={`${baseRoute}advice`}
-															>
-																<SageAdvice />
-															</Route>
-
-															<Route
-																path={`${baseRoute}login`}
-																render={(
-																	route
-																) => (
-																	<LazyLogin
-																		route={
-																			route
-																		}
-																	/>
-																)}
-															/>
-
-															<Route
-																path={`${baseRoute}loading`}
-															>
-																<WeissSpinner
-																	route={
-																		route
-																	}
-																/>
-															</Route>
-															<Route
-																path={`${baseRoute}error`}
-															>
-																<ErrorBoundary
-																	debug={true}
-																	route={
-																		route
-																	}
-																/>
-															</Route>
-
-															<Route
-																path={`${baseRoute}rt`}
-															>
-																<LazyRealtime
-																	route={
-																		route
-																	}
-																/>
-															</Route>
-
-															<Route
-																path={`${baseRoute}`}
-															>
-																<LogoScreen
-																	route={
-																		route
-																	}
-																></LogoScreen>
-															</Route>
-															<Redirect
-																to={`${baseRoute}`}
-															></Redirect>
-														</Switch>
-													</Suspense>
-												</View>
-											</ErrorBoundary>
-										</EntireView>
-									)}
-								/>
+									render={(route) => {
+										return (
+											<RealtimeManager>
+												<EntireView animate="false">
+													<ErrorBoundary>
+														<AppRoutes
+															route={route}
+														/>
+													</ErrorBoundary>
+												</EntireView>
+											</RealtimeManager>
+										);
+									}}
+								></Route>
 							</Router>
 						</DeviceContextProvider>
 					</AppContextProvider>

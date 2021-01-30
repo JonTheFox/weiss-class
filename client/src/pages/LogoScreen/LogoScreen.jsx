@@ -255,7 +255,7 @@ const LogoScreen = (props) => {
 				></VideoPlayer>
 			)}
 
-			<Link className={"link"} to={`${BASE_ROUTE}rt`}>
+			<Link className={"link"} to={`${BASE_ROUTE}client-type-select`}>
 				<Button
 					className={"enter-btn"}
 					variant="outlined"
@@ -267,7 +267,10 @@ const LogoScreen = (props) => {
 			</Link>
 
 			<h1 className={clsx("weiss-title unselectable")}>
-				<Link className={"weiss-title--link"} to={`${BASE_ROUTE}rt`}>
+				<Link
+					className={"weiss-title--link"}
+					to={`${BASE_ROUTE}client-type-select`}
+				>
 					Weiss
 				</Link>
 			</h1>
