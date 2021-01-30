@@ -26,13 +26,59 @@
 	}
 }
 
-.tablet.portrait {
+.large-screen.portrait,
+.xl-screen.portrait {
 	.realtime-entrance {
 		.PieChart {
 			svg {
 				width: auto;
 				margin: auto;
 				max-width: 450px;
+				height: auto;
+
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+			}
+		}
+	}
+}
+
+.large-screen.landscape,
+.xl-screen.landscape {
+	.realtime-entrance {
+		.PieChart {
+			svg {
+				width: auto;
+				margin: auto;
+				max-width: 450px;
+				height: auto;
+
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+			}
+		}
+	}
+}
+
+.tablet.portrait,
+.tablet.landscape {
+	.realtime-entrance {
+		.section--header {
+			height: 10%;
+		}
+		.section--pie {
+			height: 50%;
+		}
+		.PieChart {
+			svg {
+				width: auto;
+				margin: auto;
+				max-width: 450px;
+				height: auto;
 
 				position: absolute;
 				top: 50%;
