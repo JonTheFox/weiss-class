@@ -12,6 +12,7 @@
 
 .view--responsive {
 	position: relative;
+	overflow: hidden;
 }
 
 #root .view:not(*.view--responsive) {
@@ -21,9 +22,9 @@
 --view-bg-color #root .portrait .view--responsive {
 	overflow: hidden;
 }
-#root .landscape .view--responsive {
-	overflow: auto;
-}
+// #root .landscape .view--responsive {
+// 	overflow: auto;
+// }
 
 #root .landscape,
 .portrait {

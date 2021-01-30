@@ -110,6 +110,7 @@
 .large-screen.landscape,
 .xl-screen.landscape {
 	.react-player--scale-to-fit-viewport.VideoPlayer {
-		transform: scale(1.25);
+		transform: scale(1.35);
 	}
+	overflow: hidden;
 }
