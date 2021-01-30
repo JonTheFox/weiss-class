@@ -213,7 +213,7 @@
   .large-screen.landscape,
   .large-screen.portrait,
   .xl-screen {
-    .logo-screen.show-video {
+    .logo-screen {
       // opacity: 0;
 
       //   .weiss-title {
@@ -225,6 +225,10 @@
       .weiss-title--link {
         text-decoration: none;
         color: var(--white, white);
+      }
+
+      &.hide-bg {
+        background: unset;
       }
 
       .link {
