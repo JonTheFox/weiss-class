@@ -20,6 +20,7 @@ const useStyles = makeStyles(({ palette, breakpoints, spacing }) => ({
   slide: {
     perspective: 1000, // create perspective
     overflow: "hidden",
+    margin: "0 calc(2 * var(--spacing))",
     // relative is a must if you want to create overlapping layers in children
     position: "relative",
     paddingTop: spacing(8),
@@ -62,12 +63,14 @@ const useStyles = makeStyles(({ palette, breakpoints, spacing }) => ({
     [breakpoints.up("lg")]: {
       left: -64,
     },
+    marginLeft: "calc(2 * var(--spacing))",
   },
   arrowRight: {
     right: 0,
     [breakpoints.up("lg")]: {
       right: -64,
     },
+    marginRight: "calc(2 * var(--spacing))",
   },
   text: {
     // shared style for text-top and text-bottom
