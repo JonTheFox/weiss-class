@@ -78,6 +78,12 @@ const scaleInPoses = {
     opacity: 0,
     transition: { duration: 400 },
   },
+  large: {
+    scale: 1.5,
+    rotateZ: "2.5deg",
+    opacity: 0,
+    transition: { duration: 400 },
+  },
 };
 const ScaleIn = posed.div(scaleInPoses);
 
@@ -160,6 +166,8 @@ export default function ClassroomSelect(props) {
 
   const [showCarousel, setShowCarousel] = useState(false);
 
+  const [isLarge, setIsLarge] = useState(false);
+
   const roomsInfo = rooms.map((room) => {
     return {
       ...room,
@@ -186,9 +194,12 @@ export default function ClassroomSelect(props) {
     });
 
     setClassroom({ roomKey });
+    // setShowCarousel(false);
+    setIsLarge(true);
 
-    promiseKeeper.stall(1000 * 1, "nav to classroom");
-    navigateTo(`/classroom`, history);
+    promiseKeeper.stall(300 * 1, "nav to classroom").then(() => {
+      navigateTo(`/classroom`, history);
+    });
   };
 
   const renderCarousel = () => {
@@ -232,7 +243,7 @@ export default function ClassroomSelect(props) {
       <main>
         <div className={classes.heroContent}>
           <Container maxWidth="sm">
-            <ScaleIn initialPose="exit" pose="enter">
+            <ScaleIn initialPose="exit" pose={isLarge ? "exit" : "enter"}>
               <Heading h="2" className="title">
                 Join a class
               </Heading>
@@ -241,7 +252,10 @@ export default function ClassroomSelect(props) {
         </div>
 
         <Container className={clsx("centered", classes.cardGrid)} maxWidth="md">
-          <ScaleIn initialPose="exit" pose={showCarousel ? "enter" : "exit"}>
+          <ScaleIn
+            initialPose="exit"
+            pose={isLarge ? "large" : showCarousel ? "enter" : "exit"}
+          >
             {renderCarousel()}
           </ScaleIn>
         </Container>

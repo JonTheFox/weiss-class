@@ -7,7 +7,7 @@ const classroom = {
 	slides: PRESENT_SIMPLE_SLIDES,
 	image: { url: IMAGE_URL },
 	subject: "Present Simple",
-	title: "Iceman's Class",
+	title: "Life",
 	subtitle: "Keepin' it cool.",
 	teachers: [
 		{

@@ -6,8 +6,8 @@ const IMAGE_URL =
 const classroom = {
 	id: 3,
 	image: { url: IMAGE_URL },
-	subject: "Present Simple",
-	title: "Firestar",
+	subject: "Future Simple",
+	title: "Your Future",
 	subtitle: "The Fiery Lady",
 	slides: PRESENT_SIMPLE_SLIDES,
 	//currentSlideIndex: 0,
