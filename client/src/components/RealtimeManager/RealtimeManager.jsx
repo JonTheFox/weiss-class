@@ -67,9 +67,8 @@ const Realtime = (props) => {
 	const setRooms = useSetRecoilState(roomsState);
 	const [room, setRoom] = useRecoilState(roomState);
 	const setSocket = useSetRecoilState(socketState);
-	const setUser = useSetRecoilState(userState);
+	const [user, setUser] = useRecoilState(userState);
 	const setLesson = useSetRecoilState(lessonState);
-	const user = useRecoilValue(userState);
 	const [client, setClient] = useRecoilState(clientState);
 	const { slides } = useRecoilValue(lessonState);
 
@@ -120,21 +119,6 @@ const Realtime = (props) => {
 			// 	// 	"Could not connect for some reason. Please check your internet connection and try again."
 			// 	// );
 			// });
-
-			socket.on("userConnectedHandled", (serverMsg) => {
-				const { content, sender, id } = serverMsg;
-				// setConnectionStatus(CONNECTION_STATES.CONNECTED);
-				// animationFrame = window.requestAnimationFrame(() => {
-				// 	setServerMsg(content);
-				// });
-			});
-
-			socket.on("userIsAlreadyConnected", (serverMsg) => {
-				const { content, sender, id } = serverMsg;
-
-				// setServerMsg("We're already connected ;) ");
-				// setConnectionStatus(CONNECTION_STATES.CONNECTED);
-			});
 
 			socket.on("server__failedAuth", ({ error }) => {
 				debugger;
@@ -225,6 +209,10 @@ const Realtime = (props) => {
 	useEffect(() => {
 		try {
 			if (isSocketInitialized || !user) return;
+			if (socket) {
+				//close the current connection
+				socket.offAny();
+			}
 			const socket = initSocket({
 				user,
 			});

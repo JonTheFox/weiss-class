@@ -1533,8 +1533,9 @@ class DomClimberError {
 
 class DOMClimber {
     constructor(domElem) {
-        if (!domElem || !(domElem instanceof HTMLElement))
-            return new DomClimberError({ missingParam: "domElem" });
+        // if (!domElem || !(domElem instanceof HTMLElement))
+        //     return new DomClimberError({ missingParam: "domElem" });
+
         this.offsetElem = domElem;
     }
     upTo = (config = {}) => {
@@ -1604,8 +1605,8 @@ class DOMClimber {
 }
 
 const climbFrom = (domElem) => {
-    if (!domElem || !(domElem instanceof HTMLElement))
-        return new DomClimberError({ missingParam: "domElem" });
+    // if (!domElem || !(domElem instanceof HTMLElement))
+    //     return new DomClimberError({ missingParam: "domElem" });
     return new DOMClimber(domElem);
 };
 

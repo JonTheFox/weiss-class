@@ -58,10 +58,18 @@ const EntireView = (props) => {
 				if (!target) {
 					return;
 				}
-				const readableElem = climbFrom(target).upTo({
+
+				const result = climbFrom(target);
+				debugger;
+				const readableElem = result.upTo({
 					className: "readable",
 					maxIterations: 6,
 				});
+
+				// const readableElem = climbFrom(target).upTo({
+				// 	className: "readable",
+				// 	maxIterations: 6,
+				// });
 				if (!readableElem) {
 					ev.stopPropagation();
 					return;
