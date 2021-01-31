@@ -26,7 +26,7 @@ import Heading from "../../components/Heading/Heading.js";
 import { Howl, Howler } from "howler";
 import { mainClickSound } from "../../constants/sounds.js";
 import Container from "@material-ui/core/Container";
-import "./_Entrance.scss";
+import "./_ClientTypeSelect.scss";
 
 const scaleInPoses = {
 	enter: {

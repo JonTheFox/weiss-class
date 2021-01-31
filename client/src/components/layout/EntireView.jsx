@@ -59,9 +59,7 @@ const EntireView = (props) => {
 					return;
 				}
 
-				const result = climbFrom(target);
-				debugger;
-				const readableElem = result.upTo({
+				const readableElem = climbFrom(target).upTo({
 					className: "readable",
 					maxIterations: 6,
 				});

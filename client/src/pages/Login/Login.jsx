@@ -26,18 +26,7 @@ import {
 } from "recoil";
 import userState from "../../store/user.atom.js";
 
-function Copyright() {
-	return (
-		<Typography variant="body2" color="textSecondary" align="center">
-			{"Copyright © "}
-			<Link color="inherit" href="https://weiss-english.herokuapp.com/">
-				Weiss English
-			</Link>{" "}
-			{new Date().getFullYear()}
-			{"."}
-		</Typography>
-	);
-}
+import Copyright from "../../components/Copyright/Copyright.js";
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
