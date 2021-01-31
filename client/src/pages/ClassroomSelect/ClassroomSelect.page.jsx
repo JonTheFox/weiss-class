@@ -233,7 +233,7 @@ export default function ClassroomSelect(props) {
   //   </Swiper>
   // );
   useEffect(() => {
-    promiseKeeper.stall(0.75 * 1000, "show carousel").then(() => {
+    promiseKeeper.stall(0.5 * 1000, "show carousel").then(() => {
       setShowCarousel(true);
     });
   }, []);

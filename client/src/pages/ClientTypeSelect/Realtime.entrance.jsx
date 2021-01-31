@@ -208,6 +208,8 @@ const RTEntrance = (props) => {
 
 	const [animatedSegmentIndex, setAnimatedSegmentIndex] = useState(0);
 
+	const [hideElements, setHideElements] = useState(false);
+
 	// const refs = useRecoilValue(refsState);
 
 	const navigateToClassroomSelect = useCallback((delay = 0) => {
@@ -233,7 +235,7 @@ const RTEntrance = (props) => {
 			appState.realtime.clientID = clientID;
 		}
 
-		promiseKeeper.stall(0.8 * 1000, "show PieChart").then(() => {
+		promiseKeeper.stall(0.5 * 1000, "show PieChart").then(() => {
 			setShowPieChart(true);
 			promiseKeeper.stall(1 * 1000, "show glass").then(() => {
 				setShowGlass(true);
@@ -374,7 +376,10 @@ const RTEntrance = (props) => {
 
 			<div className={clsx("section section--header flex")}>
 				<Container maxWidth="sm">
-					<ScaleIn initialPose="exit" pose="enter">
+					<ScaleIn
+						initialPose="exit"
+						pose={hideElements ? "exit" : "enter"}
+					>
 						<Heading h="1">What are you, exactly?</Heading>
 					</ScaleIn>
 				</Container>
@@ -439,7 +444,6 @@ const RTEntrance = (props) => {
 
 							//animate the selected section of PieChart
 							setAnimatedSegmentIndex(sectionIndex + 1);
-							const _his = history;
 
 							promiseKeeper
 								.stall(1000 * 0.2, "hide glass")
@@ -450,6 +454,7 @@ const RTEntrance = (props) => {
 										.stall(1 * 1000, "hide pie chart")
 										.then(() => {
 											setShowPieChart(false);
+											setHideElements(true);
 
 											navigateToClassroomSelect(
 												DURATIONS.enter * 1
