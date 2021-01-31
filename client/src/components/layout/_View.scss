@@ -13,6 +13,7 @@
 .view--responsive {
 	position: relative;
 	overflow: hidden;
+	display: flex;
 }
 
 #root .view:not(*.view--responsive) {

@@ -33,6 +33,7 @@ import posed, { PoseGroup } from "react-pose";
 import Heading from "../../components/Heading/Heading.js";
 
 import Carousel from "../../components/Carousel/Carousel.js";
+import GlowingLoader from "../../components/GlowingLoader/GlowingLoader.jsx";
 
 // Import Swiper styles
 import "swiper/swiper.scss";
@@ -251,14 +252,22 @@ export default function ClassroomSelect(props) {
           </Container>
         </div>
 
-        <Container className={clsx("centered", classes.cardGrid)} maxWidth="md">
-          <ScaleIn
-            initialPose="exit"
-            pose={isLarge ? "large" : showCarousel ? "enter" : "exit"}
-          >
-            {renderCarousel()}
-          </ScaleIn>
-        </Container>
+        {!rooms ||
+          (!rooms.length ? (
+            <GlowingLoader className="centered" />
+          ) : (
+            <Container
+              className={clsx("centered", classes.cardGrid)}
+              maxWidth="md"
+            >
+              <ScaleIn
+                initialPose="exit"
+                pose={isLarge ? "large" : showCarousel ? "enter" : "exit"}
+              >
+                {renderCarousel()}
+              </ScaleIn>
+            </Container>
+          ))}
       </main>
     </View>
   );

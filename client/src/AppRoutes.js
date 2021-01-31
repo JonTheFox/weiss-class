@@ -10,12 +10,12 @@ import {
 import View from "./components/layout/View.jsx";
 import EntireView from "./components/layout/EntireView.jsx";
 import ErrorBoundary from "./pages/ErrorPage/ErrorPage.jsx";
-import WeissSpinner from "./components/WeissSpinner/WeissSpinner.jsx";
 import ClientTypeSelect from "./pages/ClientTypeSelect/Realtime.entrance.jsx";
 import Classroom from "./components/Classroom/Classroom.js";
 import Card from "./components/Card/Card.js";
 import ClassroomSelect from "./pages/ClassroomSelect/ClassroomSelect.page.jsx";
 import LogoScreen from "./pages/LogoScreen/LogoScreen.jsx";
+import GlowingLoader from "./components/GlowingLoader/GlowingLoader.jsx";
 
 // import roomsState from "../../store/rooms.atom.js";
 // import roomState from "../../store/room.atom.js";
@@ -285,7 +285,7 @@ const AppRoutes = (props) => {
 					setIsPlaying(true);
 				}}
 			></VideoPlayer>
-			<Suspense fallback={<WeissSpinner />}>
+			<Suspense fallback={<GlowingLoader />}>
 				<Switch location={location}>
 					<Route
 						path={`${match.path}client-type-select`}
@@ -311,7 +311,7 @@ const AppRoutes = (props) => {
 					/>
 
 					<Route path={`${baseRoute}loading`}>
-						<WeissSpinner route={route} />
+						<GlowingLoader route={route} />
 					</Route>
 					<Route path={`${baseRoute}error`}>
 						<ErrorBoundary debug={true} route={route} />

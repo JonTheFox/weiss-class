@@ -172,10 +172,6 @@ const Realtime = (props) => {
 				});
 			});
 
-			socket.on("server__admitsToRoom", ({ room }) => {
-				debugger;
-			});
-
 			socket.on("server__sendsSlideIndex", function(payload) {
 				const { currentSlideIndex } = payload;
 				const content = "Received slide: " + currentSlideIndex;
@@ -209,10 +205,6 @@ const Realtime = (props) => {
 	useEffect(() => {
 		try {
 			if (isSocketInitialized || !user) return;
-			if (socket) {
-				//close the current connection
-				socket.offAny();
-			}
 			const socket = initSocket({
 				user,
 			});

@@ -7,7 +7,6 @@ import React, {
 	useCallback,
 } from "react";
 // import { AppContext } from "../../state/AppContext.js";
-import { DeviceContext } from "../../state/DeviceContext.js";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 // import useLogg from "../../utils/useLogg.js";
@@ -35,7 +34,7 @@ const GlowingLoader = React.forwardRef((props, ref) => {
 	} = props;
 
 	// const [appUtils, appState] = useContext(AppContext);
-	const deviceState = useContext(DeviceContext);
+
 	// const { our, request } = appUtils;
 	// const { logg, loggError } = useLogg({ label });
 	// const promiseKeeper = usePromiseKeeper({ label });
@@ -53,7 +52,7 @@ const GlowingLoader = React.forwardRef((props, ref) => {
 				fullpage && "page gradient--diagonal",
 				fullpage && styles.fullpage,
 				styles.root,
-				styles[deviceState.device]
+				className && className
 			)}
 			ref={ref}
 		>
