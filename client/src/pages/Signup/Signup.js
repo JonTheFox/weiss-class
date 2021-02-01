@@ -27,6 +27,8 @@ import { AppContext } from "../../contexts/AppContext.jsx";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import ENDPOINTS from "../../AJAX/ajax-endpoints.js";
+// import MOCK_USER from "../../mockData/mockUser.js";
+import clsx from "clsx";
 
 const useStyles = makeStyles((theme) => ({
 	appBar: {
@@ -64,33 +66,12 @@ const useStyles = makeStyles((theme) => ({
 		marginTop: theme.spacing(3),
 		marginLeft: theme.spacing(1),
 	},
+	error: {
+		"& svg": {
+			color: "var(--canvas) !important",
+		},
+	},
 }));
-
-//const steps = ["Profile", "Personal", "Address"];
-
-const validateFormData = ({ data = {}, requiredFields = [] }) => {
-	const { email } = data;
-
-	let isFormValid = true; //a missing or invalid required field will change this to false
-	Object.values(requiredFields).map((formField) => {
-		const { label } = formField;
-		const inputValue = data[label];
-
-		if (!inputValue) {
-			isFormValid = false;
-		}
-		const { validate } = formField;
-
-		if (validate) {
-			return validate(inputValue);
-		}
-
-		//no validation rules... so anything passes
-		return true;
-	});
-
-	return isFormValid;
-};
 
 const isTruthy = (val) => !!val;
 
@@ -165,7 +146,7 @@ const ADDRESS_FIELDS = [
 		name: "state",
 		label: "State",
 		validate: isTruthy,
-		required: true,
+		required: false,
 	},
 	{
 		name: "country",
@@ -184,7 +165,7 @@ const FORMS = [
 	{ label: "Address", fields: ADDRESS_FIELDS },
 ];
 
-export default function Signup() {
+export default function Signup(props) {
 	const classes = useStyles();
 	const [activeStep, setActiveStep] = useState(0);
 	const [user, setUser] = useRecoilState(userState);
@@ -196,8 +177,12 @@ export default function Signup() {
 		address: {},
 		activeStep,
 	});
+	const [showError, setShowError] = useState(false);
+
+	// Object.assign(refs.current, MOCK_USER);
+
 	const [appUtils] = useContext(AppContext);
-	const { capitalizeFirstLetter, request } = appUtils;
+	const { capitalizeFirstLetter, request, navigateTo } = appUtils;
 
 	const [isFormValid, setIsFormValid] = useState(false);
 
@@ -243,8 +228,6 @@ export default function Signup() {
 								...addressData,
 							};
 
-							debugger;
-
 							if (_isLastForm) {
 								const ajaxResult = await request(
 									"POST",
@@ -266,7 +249,7 @@ export default function Signup() {
 					} catch (err) {
 						const _err = err;
 						console.error(err);
-						debugger;
+						setShowError(true);
 					}
 
 					handleNext();
@@ -279,6 +262,7 @@ export default function Signup() {
 							<TextField
 								required={Boolean(required)}
 								id={name}
+								defaultValue={refs.current[name]}
 								key={name}
 								name={name}
 								label={label}
@@ -304,12 +288,6 @@ export default function Signup() {
 		);
 	}
 
-	const validateForm = () => {
-		FORMS.map((form) => {
-			debugger;
-		});
-	};
-
 	const handleNext = () => {
 		setActiveStep(activeStep + 1);
 	};
@@ -318,7 +296,14 @@ export default function Signup() {
 		setActiveStep(activeStep - 1);
 	};
 
-	const handlePostSubmissionClick = useCallback(() => {}, []);
+	const handleTryAgain = useCallback(
+		(val) => {
+			setShowError(false);
+			refs.current.setIsFormValid(true);
+			setActiveStep(0);
+		},
+		[refs.current, setActiveStep]
+	);
 
 	const FinishedMessage = (
 		<React.Fragment>
@@ -329,8 +314,29 @@ export default function Signup() {
 				Thank you for signing up. We are so glad to have you here with
 				us.
 				<div className={classes.buttons}>
-					<Button onClick={handleBack} className={classes.button}>
-						Edit
+					<Button
+						onClick={() => {
+							navigateTo("/", props.history);
+						}}
+						className={classes.button}
+					>
+						Continue
+					</Button>
+				</div>
+			</Typography>
+		</React.Fragment>
+	);
+
+	const ErrorMessage = (
+		<React.Fragment>
+			<Typography variant="h5" gutterBottom>
+				{`Umm,`}
+			</Typography>
+			<Typography variant="subtitle1">
+				{`That didn't work. Sorry about that, ${refs.current.first_name}.`}
+				<div className={classes.buttons}>
+					<Button onClick={handleTryAgain} className={classes.button}>
+						Try Again
 					</Button>
 				</div>
 			</Typography>
@@ -346,7 +352,10 @@ export default function Signup() {
 					</Typography>
 					<Stepper
 						activeStep={activeStep}
-						className={classes.stepper}
+						className={clsx(
+							classes.stepper,
+							showError && classes.error
+						)}
 					>
 						{FORMS.map(({ label }) => (
 							<Step key={label}>
@@ -355,7 +364,9 @@ export default function Signup() {
 						))}
 					</Stepper>
 					<React.Fragment>
-						{activeStep === FORMS.length
+						{showError
+							? ErrorMessage
+							: activeStep === FORMS.length
 							? FinishedMessage
 							: getFormComponent(activeStep, refs)}
 					</React.Fragment>

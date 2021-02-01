@@ -1,4 +1,10 @@
-import React, { useCallback, useRef, useState, useEffect } from "react";
+import React, {
+	useCallback,
+	useRef,
+	useState,
+	useEffect,
+	useContext,
+} from "react";
 
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -8,6 +14,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import { makeStyles } from "@material-ui/core/styles";
 import userState from "../store/user.atom.js";
+import { AppContext } from "../contexts/AppContext.jsx";
 
 const useStyles = makeStyles((theme) => ({
 	button: {
@@ -33,6 +40,9 @@ export default function Form(props) {
 		nextBtnText = "",
 	} = props;
 
+	const [appUtils] = useContext(AppContext);
+	const { capitalizeFirstLetter } = appUtils;
+
 	const [isFormValid, setIsFormValid] = useState(false);
 
 	const [isNextBtnDisabled, setIsNextBtnDisabled] = useState(true);
@@ -43,7 +53,7 @@ export default function Form(props) {
 		const allData = {};
 		fields.map((field) => {
 			const { name } = field;
-			debugger;
+
 			const formRef = refs.current[props.name];
 			let formData;
 			try {
@@ -65,7 +75,7 @@ export default function Form(props) {
 
 		Object.values(fields).map((formField) => {
 			const { name, required } = formField;
-			debugger;
+
 			if (!required) return true;
 
 			const inputValue = data[name];
@@ -85,12 +95,19 @@ export default function Form(props) {
 		return isFormValid;
 	};
 	refs.current[`${name}__validateFormData`] = validateFormData;
+	refs.current[`setIs${capitalizeFirstLetter(name)}Valid`] = (val) => {
+		setIsFormValid(val);
+	};
 
 	const handleChange = (value) => {
 		const isValid = validateFormData();
 		setIsFormValid(isValid);
 	};
 	refs.current.handleChange = handleChange;
+
+	refs.current.setIsFormValid = (val) => {
+		setIsFormValid(val);
+	};
 
 	const handleSubmit = useCallback(
 		(ev) => {
@@ -111,7 +128,6 @@ export default function Form(props) {
 			Object.assign(refs.current[name + "Data"], allData);
 
 			const _isFormValid = validateFormData(allData, fields);
-			debugger;
 
 			if (!_isFormValid) {
 				if (props.onValidationFailed) props.onValidationFailed(allData);

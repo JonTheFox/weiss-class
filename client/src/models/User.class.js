@@ -5,7 +5,6 @@ class User {
   middle_name = "";
   last_name = "";
   role = "";
-  clientType = "";
   gender = "";
   street_name = "";
   street_number = 0;
