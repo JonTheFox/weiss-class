@@ -10,16 +10,13 @@ import { makeStyles } from "@material-ui/core/styles";
 import userState from "../store/user.atom.js";
 
 const FORM_INPUTS = [
-  { id: "first_name", name: "first_name", label: "First name", required: true },
+  { id: "email", name: "email", label: "Email", required: true },
   {
-    id: "middle_name",
-    name: "middle_name",
-    label: "Middle name",
+    id: "password",
+    name: "password",
+    label: "Password",
     required: false,
   },
-  { id: "last_name", name: "last_name", label: "Last name", required: true },
-  { id: "gender", name: "gender", label: "Gender", required: true },
-  { id: "bDay", name: "bDay", label: "Date of birth", required: true },
 ];
 
 const useStyles = makeStyles((theme) => ({
@@ -28,6 +25,45 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(1),
   },
 }));
+
+const REQUIRED_FIELDS = [
+  {
+    label: "email",
+    validateValue: (val) => {
+      return !!val;
+    },
+  },
+  {
+    label: "password",
+    validateValue: (val) => {
+      return !!val;
+    },
+  },
+];
+
+const validateFormData = (formData = {}) => {
+  const { email } = formData;
+
+  let result = true; //a missing or invalid required field will change this to false
+  Object.values(REQUIRED_FIELDS).map((formField) => {
+    const { label } = formField;
+    const inputValue = formData[label];
+    debugger;
+    if (!inputValue) {
+      result = false;
+    }
+    const { validateValue } = formField;
+
+    if (validateValue) {
+      return validateValue(inputValue);
+    }
+
+    //no validation rules... so anything passes
+    return true;
+  });
+
+  return result;
+};
 
 export default function PersonalInfoForm(props) {
   const classes = useStyles();
@@ -41,25 +77,26 @@ export default function PersonalInfoForm(props) {
 
     const formData = new FormData(form);
 
-    const firstNameInput = formData.get("first_name");
-    const lastNameInput = formData.get("last_name");
-    const middleNameInput = formData.get("middle_name");
-    const bDayInput = formData.get("bDay");
-    const personalInfo = {
-      first_name: firstNameInput,
-      last_name: lastNameInput,
-      middle_name: middleNameInput,
-      bDay: bDayInput,
+    const emailInput = formData.get("email");
+    const [passwordInput] = formData.get("password");
+    const profileInfo = {
+      email: emailInput?.toLowerCase(),
+      password: passwordInput?.toLowerCase(),
     };
-
     if (!refs?.current?.forms) {
       refs.current.forms = {};
     }
-    refs.current.forms.personal = {};
+    refs.current.forms.profile = {};
+    Object.assign(refs.current.forms.profile, profileInfo);
 
-    Object.assign(refs.current.forms.personal, personalInfo);
+    const isFormValid = validateFormData(profileInfo);
 
-    handleNext();
+    if (isFormValid) {
+      handleNext();
+    } else {
+      //todo: show toast
+      return;
+    }
   }, []); //pass an array of dependencies (you can pass an empty array)
 
   return (
@@ -70,7 +107,7 @@ export default function PersonalInfoForm(props) {
       }}
     >
       <Typography variant="h6" gutterBottom>
-        About you
+        Profile
       </Typography>
       <Grid container spacing={3}>
         {FORM_INPUTS.map(({ name, label, required }, inputIndex) => {
@@ -94,7 +131,7 @@ export default function PersonalInfoForm(props) {
           type="submit"
           color="primary"
           value={"Next"}
-          onClick={handleNext}
+          onClick={handleSubmit}
           className={classes.button}
         />
       </Grid>

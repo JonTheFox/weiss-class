@@ -1,4 +1,4 @@
-import React, { useContext, useCallback } from "react";
+import React, { useState, useContext, useCallback, useRef } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import AppBar from "@material-ui/core/AppBar";
@@ -10,12 +10,16 @@ import StepLabel from "@material-ui/core/StepLabel";
 import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
+import Form from "../../forms/Form.js";
 import AddressForm from "../../forms/AddressForm.js";
 import PersonalInformationForm from "../../forms/PersonalInformationForm.js";
+import ProfileForm from "../../forms/ProfileForm.js";
 import Copyright from "../../components/Copyright/Copyright.js";
 import { useRecoilState } from "recoil";
 import userState from "../../store/user.atom.js";
 import { AppContext } from "../../contexts/AppContext.jsx";
+import Grid from "@material-ui/core/Grid";
+import TextField from "@material-ui/core/TextField";
 
 const useStyles = makeStyles((theme) => ({
 	appBar: {
@@ -55,26 +59,185 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const steps = ["Personal Information", "Address"];
+//const steps = ["Profile", "Personal", "Address"];
 
-function getStepContent(step) {
-	switch (step) {
-		case 0:
-			return <PersonalInformationForm />;
-		case 1:
-			return <AddressForm />;
+const validateFormData = ({ data = {}, requiredFields = [] }) => {
+	const { email } = data;
 
-		default:
-			throw new Error("Unknown step");
-	}
-}
+	let isFormValid = true; //a missing or invalid required field will change this to false
+	Object.values(requiredFields).map((formField) => {
+		const { label } = formField;
+		const inputValue = data[label];
+		debugger;
+		if (!inputValue) {
+			isFormValid = false;
+		}
+		const { validateValue } = formField;
 
-export default function Checkout() {
+		if (validateValue) {
+			return validateValue(inputValue);
+		}
+
+		//no validation rules... so anything passes
+		return true;
+	});
+
+	return isFormValid;
+};
+
+const isTruthy = (val) => !!val;
+
+const PROFILE_FIELDS = [
+	{
+		name: "email",
+		label: "Email",
+		validateValue: isTruthy,
+		required: true,
+	},
+	{
+		name: "password",
+		label: "Password",
+		validateValue: isTruthy,
+		required: true,
+	},
+];
+
+const PERSONAL_FIELDS = [
+	{
+		label: "First Name",
+		name: "first_name",
+		validateValue: isTruthy,
+		required: true,
+	},
+	{
+		label: "Middle Name",
+		name: "middle_name",
+		validateValue: isTruthy,
+		required: false,
+	},
+	{
+		label: "Last Name",
+		name: "last_name",
+		validateValue: isTruthy,
+		required: true,
+	},
+	{
+		label: "Date of birth",
+		name: "bDay",
+		validateValue: isTruthy,
+		required: true,
+	},
+	{
+		label: "Gender",
+		name: "gender",
+		validateValue: isTruthy,
+		required: true,
+	},
+];
+
+const ADDRESS_FIELDS = [
+	{
+		name: "street_name",
+		label: "Street",
+		validateValue: isTruthy,
+		required: true,
+	},
+	{
+		name: "street_number",
+		label: "Number",
+		validateValue: isTruthy,
+		required: true,
+	},
+	{
+		name: "city",
+		label: "City",
+		validateValue: isTruthy,
+		required: true,
+	},
+	{
+		name: "state",
+		label: "State",
+		validateValue: isTruthy,
+		required: true,
+	},
+	{
+		name: "country",
+		label: "Country",
+		validateValue: isTruthy,
+		required: true,
+	},
+];
+
+const FORMS = [
+	{
+		label: "Profile",
+		fields: PROFILE_FIELDS,
+	},
+	{ label: "Personal", fields: PERSONAL_FIELDS },
+	{ label: "Address", fields: ADDRESS_FIELDS },
+];
+
+export default function Signup() {
 	const classes = useStyles();
-	const [activeStep, setActiveStep] = React.useState(0);
+	const [activeStep, setActiveStep] = useState(0);
 	const [user, setUser] = useRecoilState(userState);
+	const refs = useRef({
+		form: {},
+		forms: {},
+		personal: {},
+		profile: {},
+		address: {},
+	});
 	const [appUtils] = useContext(AppContext);
 	const { capitalizeFirstLetter } = appUtils;
+
+	function getFormComponent(step, refs) {
+		const form = FORMS[step];
+		const { fields = [], label } = form;
+
+		return (
+			<Form
+				refs={refs}
+				name={label.toLowerCase()}
+				label={label}
+				//handleNext={handleNext}
+				handleBack={handleBack}
+				showBack={activeStep > 0}
+				onSubmit={({ data }) => {
+					if (activeStep === FORMS.length) {
+						//todo: collect data from all forms and do AJAX
+						debugger;
+						return;
+					}
+					handleNext();
+				}}
+				fields={fields}
+			>
+				{fields.map(({ label, name, required }, inputIndex) => {
+					return (
+						<Grid item xs={12} sm={12} key={label}>
+							<TextField
+								required={Boolean(required)}
+								id={name}
+								key={name}
+								name={name}
+								label={label}
+								fullWidth
+								onChange={(ev) => {
+									const { value } = ev.target;
+									refs.current[name] = value;
+								}}
+								autoComplete={name}
+								defaultValue={refs.current[name] || ""}
+							/>
+						</Grid>
+					);
+				})}
+			</Form>
+		);
+	}
+
+	const validateForm = () => {};
 
 	const handleNext = () => {
 		setActiveStep(activeStep + 1);
@@ -87,7 +250,7 @@ export default function Checkout() {
 	const handlePostSubmissionClick = useCallback(() => {}, []);
 
 	const nextBtnText =
-		activeStep === steps.length - 1 ? "Place order" : "Next";
+		activeStep === FORMS.length - 1 ? "Place order" : "Next";
 
 	return (
 		<React.Fragment>
@@ -100,14 +263,14 @@ export default function Checkout() {
 						activeStep={activeStep}
 						className={classes.stepper}
 					>
-						{steps.map((label) => (
+						{FORMS.map(({ label }) => (
 							<Step key={label}>
 								<StepLabel>{label}</StepLabel>
 							</Step>
 						))}
 					</Stepper>
 					<React.Fragment>
-						{activeStep === steps.length ? (
+						{activeStep === FORMS.length ? (
 							<React.Fragment>
 								<Typography variant="h5" gutterBottom>
 									{`Welcome, ${capitalizeFirstLetter(
@@ -116,11 +279,7 @@ export default function Checkout() {
 								</Typography>
 								<Typography variant="subtitle1">
 									We are so glad to have you here. We are
-									going to have a good time. Might as well
-									<Button onClick={handlePostSubmissionClick}>
-										begin
-									</Button>{" "}
-									.
+									going to have a good time.
 									<div className={classes.buttons}>
 										<Button
 											onClick={handleBack}
@@ -132,31 +291,10 @@ export default function Checkout() {
 								</Typography>
 							</React.Fragment>
 						) : (
-							<React.Fragment>
-								{getStepContent(activeStep)}
-								<div className={classes.buttons}>
-									{activeStep !== 0 && (
-										<Button
-											onClick={handleBack}
-											className={classes.button}
-										>
-											Back
-										</Button>
-									)}
-									<Button
-										variant="contained"
-										color="primary"
-										onClick={handleNext}
-										className={classes.button}
-									>
-										{nextBtnText}
-									</Button>
-								</div>
-							</React.Fragment>
+							getFormComponent(activeStep, refs)
 						)}
 					</React.Fragment>
 				</Paper>
-				<Copyright />
 			</main>
 		</React.Fragment>
 	);

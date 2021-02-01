@@ -1,163 +1,137 @@
-import React, { useContext, useCallback } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Paper from "@material-ui/core/Paper";
-import Stepper from "@material-ui/core/Stepper";
-import Step from "@material-ui/core/Step";
-import StepLabel from "@material-ui/core/StepLabel";
-import Button from "@material-ui/core/Button";
-import Link from "@material-ui/core/Link";
+import React, { useCallback, useRef } from "react";
+
+import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import AddressForm from "../../forms/AddressForm.js";
-import PersonalInformationForm from "../../forms/PersonalInformationForm.js";
-import Copyright from "../../components/Copyright/Copyright.js";
-import { useRecoilState } from "recoil";
-import userState from "../../store/user.atom.js";
-import { AppContext } from "../../contexts/AppContext.jsx";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+import { makeStyles } from "@material-ui/core/styles";
+import userState from "../store/user.atom.js";
 
 const useStyles = makeStyles((theme) => ({
-	appBar: {
-		position: "relative",
-	},
-	layout: {
-		width: "auto",
-		marginLeft: theme.spacing(2),
-		marginRight: theme.spacing(2),
-		[theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
-			width: 600,
-			marginLeft: "auto",
-			marginRight: "auto",
-		},
-		overflow: "auto",
-	},
-	paper: {
+	button: {
 		marginTop: theme.spacing(3),
-		marginBottom: theme.spacing(3),
-		padding: theme.spacing(2),
-		[theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
-			marginTop: theme.spacing(6),
-			marginBottom: theme.spacing(6),
-			padding: theme.spacing(3),
-		},
-	},
-	stepper: {
-		padding: theme.spacing(3, 0, 5),
+		marginLeft: theme.spacing(1),
 	},
 	buttons: {
 		display: "flex",
 		justifyContent: "flex-end",
 	},
-	button: {
-		marginTop: theme.spacing(3),
-		marginLeft: theme.spacing(1),
-	},
 }));
 
-const steps = ["Personal Information", "Address"];
+const validateFormData = (data = {}, fields = []) => {
+	let isFormValid = true; //a missing or invalid required field will change this to false
 
-function getStepContent(step) {
-	switch (step) {
-		case 0:
-			return <PersonalInformationForm />;
-		case 1:
-			return <AddressForm />;
+	Object.values(fields).map((formField) => {
+		const { name, required } = formField;
+		if (!required) return true;
 
-		default:
-			throw new Error("Unknown step");
-	}
-}
+		const inputValue = data[name];
 
-export default function Checkout() {
+		if (!inputValue) {
+			isFormValid = false;
+		}
+		const { validateValue } = formField;
+
+		if (validateValue) {
+			return validateValue(inputValue);
+		}
+
+		//no validation rules... so anything passes
+		return true;
+	});
+
+	return isFormValid;
+};
+
+export default function Form(props) {
 	const classes = useStyles();
-	const [activeStep, setActiveStep] = React.useState(0);
-	const [user, setUser] = useRecoilState(userState);
-	const [appUtils] = useContext(AppContext);
-	const { capitalizeFirstLetter } = appUtils;
+	const {
+		refs = { current: {} },
+		fields,
+		name = "",
+		label = "",
+		activeStep,
+		showBack,
+		children,
+	} = props;
 
-	const handleNext = () => {
-		setActiveStep(activeStep + 1);
-	};
+	// const setUser = useSetRecoilState(userState);
 
-	const handleBack = () => {
-		setActiveStep(activeStep - 1);
-	};
+	const handleSubmit = useCallback(
+		(ev) => {
+			if (ev) ev.preventDefault();
 
-	const handlePostSubmissionClick = useCallback(() => {}, []);
+			const form = refs.current[name];
 
-	const nextBtnText =
-		activeStep === steps.length - 1 ? "Place order" : "Next";
+			if (!form) return;
+			let formData;
+
+			try {
+				formData = new FormData(form);
+			} catch (err) {
+				return null;
+			}
+
+			const allData = {};
+
+			fields.map((field) => {
+				const { name } = field;
+				const inputValue = formData.get(name);
+
+				allData[name] = inputValue;
+				return inputValue;
+			});
+
+			refs.current[name + "Data"] = {};
+			Object.assign(refs.current[name + "Data"], allData);
+
+			const isFormValid = validateFormData(allData, fields);
+
+			if (!isFormValid) {
+				if (props.onValidationFailed) props.onValidationFailed(allData);
+				return;
+			}
+			// return isFormValid;
+
+			if (props.onSubmit) return props.onSubmit({ data: allData });
+		},
+		[fields]
+	);
 
 	return (
-		<React.Fragment>
-			<main className={classes.layout}>
-				<Paper className={classes.paper}>
-					<Typography component="h1" variant="h4" align="center">
-						Sign Up
-					</Typography>
-					<Stepper
-						activeStep={activeStep}
-						className={classes.stepper}
+		<form
+			onSubmit={handleSubmit}
+			ref={(ref) => {
+				if (ref) refs.current[name] = ref;
+			}}
+		>
+			<Typography variant="h6" gutterBottom>
+				{label}
+			</Typography>
+			<Grid container spacing={3}>
+				{children}
+			</Grid>
+
+			<div className={classes.buttons}>
+				{showBack && (
+					<Button
+						onClick={props.handleBack}
+						className={classes.button}
 					>
-						{steps.map((label) => (
-							<Step key={label}>
-								<StepLabel>{label}</StepLabel>
-							</Step>
-						))}
-					</Stepper>
-					<React.Fragment>
-						{activeStep === steps.length ? (
-							<React.Fragment>
-								<Typography variant="h5" gutterBottom>
-									{`Welcome, ${capitalizeFirstLetter(
-										user.first_name
-									)}!`}
-								</Typography>
-								<Typography variant="subtitle1">
-									We are so glad to have you here. We are
-									going to have a good time. Might as well
-									<Button onClick={handlePostSubmissionClick}>
-										begin
-									</Button>{" "}
-									.
-									<div className={classes.buttons}>
-										<Button
-											onClick={handleBack}
-											className={classes.button}
-										>
-											Edit
-										</Button>
-									</div>
-								</Typography>
-							</React.Fragment>
-						) : (
-							<React.Fragment>
-								{getStepContent(activeStep)}
-								<div className={classes.buttons}>
-									{activeStep !== 0 && (
-										<Button
-											onClick={handleBack}
-											className={classes.button}
-										>
-											Back
-										</Button>
-									)}
-									<Button
-										variant="contained"
-										color="primary"
-										onClick={handleNext}
-										className={classes.button}
-									>
-										{nextBtnText}
-									</Button>
-								</div>
-							</React.Fragment>
-						)}
-					</React.Fragment>
-				</Paper>
-				<Copyright />
-			</main>
-		</React.Fragment>
+						Back
+					</Button>
+				)}
+				<Button
+					variant="contained"
+					color="primary"
+					onClick={handleSubmit}
+					className={classes.button}
+				>
+					{"next"}
+				</Button>
+			</div>
+		</form>
 	);
 }
