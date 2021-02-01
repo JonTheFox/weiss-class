@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useRef, useState, useEffect } from "react";
 
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -20,31 +20,6 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const validateFormData = (data = {}, fields = []) => {
-	let isFormValid = true; //a missing or invalid required field will change this to false
-
-	Object.values(fields).map((formField) => {
-		const { name, required } = formField;
-		if (!required) return true;
-
-		const inputValue = data[name];
-
-		if (!inputValue) {
-			isFormValid = false;
-		}
-		const { validateValue } = formField;
-
-		if (validateValue) {
-			return validateValue(inputValue);
-		}
-
-		//no validation rules... so anything passes
-		return true;
-	});
-
-	return isFormValid;
-};
-
 export default function Form(props) {
 	const classes = useStyles();
 	const {
@@ -55,45 +30,93 @@ export default function Form(props) {
 		activeStep,
 		showBack,
 		children,
+		nextBtnText = "",
 	} = props;
 
+	const [isFormValid, setIsFormValid] = useState(false);
+
+	const [isNextBtnDisabled, setIsNextBtnDisabled] = useState(true);
+
 	// const setUser = useSetRecoilState(userState);
+
+	const getAllData = () => {
+		const allData = {};
+		fields.map((field) => {
+			const { name } = field;
+			debugger;
+			const formRef = refs.current[props.name];
+			let formData;
+			try {
+				formData = new FormData(formRef);
+			} catch (err) {
+				return null;
+			}
+			const inputValue = formData.get(name);
+			allData[name] = inputValue;
+			return inputValue;
+		});
+		return allData;
+	};
+
+	const validateFormData = () => {
+		let isFormValid = true; //a missing or invalid required field will change this to false
+
+		const data = getAllData();
+
+		Object.values(fields).map((formField) => {
+			const { name, required } = formField;
+			debugger;
+			if (!required) return true;
+
+			const inputValue = data[name];
+			if (!inputValue) {
+				isFormValid = false;
+			}
+			const { validate } = formField;
+
+			if (validate) {
+				return validate(inputValue);
+			}
+
+			//no validation rules... so anything passes
+			return true;
+		});
+
+		return isFormValid;
+	};
+	refs.current[`${name}__validateFormData`] = validateFormData;
+
+	const handleChange = (value) => {
+		const isValid = validateFormData();
+		setIsFormValid(isValid);
+	};
+	refs.current.handleChange = handleChange;
 
 	const handleSubmit = useCallback(
 		(ev) => {
 			if (ev) ev.preventDefault();
-
 			const form = refs.current[name];
-
 			if (!form) return;
-			let formData;
 
+			let formData;
 			try {
 				formData = new FormData(form);
 			} catch (err) {
 				return null;
 			}
 
-			const allData = {};
-
-			fields.map((field) => {
-				const { name } = field;
-				const inputValue = formData.get(name);
-
-				allData[name] = inputValue;
-				return inputValue;
-			});
+			const allData = getAllData();
 
 			refs.current[name + "Data"] = {};
 			Object.assign(refs.current[name + "Data"], allData);
 
-			const isFormValid = validateFormData(allData, fields);
+			const _isFormValid = validateFormData(allData, fields);
+			debugger;
 
-			if (!isFormValid) {
+			if (!_isFormValid) {
 				if (props.onValidationFailed) props.onValidationFailed(allData);
 				return;
 			}
-			// return isFormValid;
 
 			if (props.onSubmit) return props.onSubmit({ data: allData });
 		},
@@ -102,7 +125,7 @@ export default function Form(props) {
 
 	return (
 		<form
-			onSubmit={handleSubmit}
+			onSubmit={(ev) => handleSubmit(ev, { activeStep })}
 			ref={(ref) => {
 				if (ref) refs.current[name] = ref;
 			}}
@@ -126,10 +149,11 @@ export default function Form(props) {
 				<Button
 					variant="contained"
 					color="primary"
+					disabled={!isFormValid}
 					onClick={handleSubmit}
 					className={classes.button}
 				>
-					{"next"}
+					{nextBtnText}
 				</Button>
 			</div>
 		</form>

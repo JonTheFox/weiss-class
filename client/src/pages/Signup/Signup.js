@@ -1,4 +1,10 @@
-import React, { useState, useContext, useCallback, useRef } from "react";
+import React, {
+	useState,
+	useContext,
+	useCallback,
+	useRef,
+	useEffect,
+} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import AppBar from "@material-ui/core/AppBar";
@@ -20,6 +26,7 @@ import userState from "../../store/user.atom.js";
 import { AppContext } from "../../contexts/AppContext.jsx";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
+import ENDPOINTS from "../../AJAX/ajax-endpoints.js";
 
 const useStyles = makeStyles((theme) => ({
 	appBar: {
@@ -68,14 +75,14 @@ const validateFormData = ({ data = {}, requiredFields = [] }) => {
 	Object.values(requiredFields).map((formField) => {
 		const { label } = formField;
 		const inputValue = data[label];
-		debugger;
+
 		if (!inputValue) {
 			isFormValid = false;
 		}
-		const { validateValue } = formField;
+		const { validate } = formField;
 
-		if (validateValue) {
-			return validateValue(inputValue);
+		if (validate) {
+			return validate(inputValue);
 		}
 
 		//no validation rules... so anything passes
@@ -91,13 +98,13 @@ const PROFILE_FIELDS = [
 	{
 		name: "email",
 		label: "Email",
-		validateValue: isTruthy,
+		validate: isTruthy,
 		required: true,
 	},
 	{
 		name: "password",
 		label: "Password",
-		validateValue: isTruthy,
+		validate: isTruthy,
 		required: true,
 	},
 ];
@@ -106,31 +113,31 @@ const PERSONAL_FIELDS = [
 	{
 		label: "First Name",
 		name: "first_name",
-		validateValue: isTruthy,
+		validate: isTruthy,
 		required: true,
 	},
 	{
 		label: "Middle Name",
 		name: "middle_name",
-		validateValue: isTruthy,
+		validate: isTruthy,
 		required: false,
 	},
 	{
 		label: "Last Name",
 		name: "last_name",
-		validateValue: isTruthy,
+		validate: isTruthy,
 		required: true,
 	},
 	{
 		label: "Date of birth",
 		name: "bDay",
-		validateValue: isTruthy,
+		validate: isTruthy,
 		required: true,
 	},
 	{
 		label: "Gender",
 		name: "gender",
-		validateValue: isTruthy,
+		validate: isTruthy,
 		required: true,
 	},
 ];
@@ -139,31 +146,31 @@ const ADDRESS_FIELDS = [
 	{
 		name: "street_name",
 		label: "Street",
-		validateValue: isTruthy,
+		validate: isTruthy,
 		required: true,
 	},
 	{
 		name: "street_number",
 		label: "Number",
-		validateValue: isTruthy,
+		validate: isTruthy,
 		required: true,
 	},
 	{
 		name: "city",
 		label: "City",
-		validateValue: isTruthy,
+		validate: isTruthy,
 		required: true,
 	},
 	{
 		name: "state",
 		label: "State",
-		validateValue: isTruthy,
+		validate: isTruthy,
 		required: true,
 	},
 	{
 		name: "country",
 		label: "Country",
-		validateValue: isTruthy,
+		validate: isTruthy,
 		required: true,
 	},
 ];
@@ -187,28 +194,81 @@ export default function Signup() {
 		personal: {},
 		profile: {},
 		address: {},
+		activeStep,
 	});
 	const [appUtils] = useContext(AppContext);
-	const { capitalizeFirstLetter } = appUtils;
+	const { capitalizeFirstLetter, request } = appUtils;
+
+	const [isFormValid, setIsFormValid] = useState(false);
+
+	useEffect(() => {
+		refs.current.activeStep = activeStep;
+		// logg("activeStep:", activeStep);
+	}, [activeStep]);
+
+	const isLastForm = activeStep + 1 === FORMS.length;
+	const nextBtnText = isLastForm ? "Finish" : "Next";
 
 	function getFormComponent(step, refs) {
 		const form = FORMS[step];
 		const { fields = [], label } = form;
+
+		// setIsNextDisabled
 
 		return (
 			<Form
 				refs={refs}
 				name={label.toLowerCase()}
 				label={label}
+				nextBtnText={nextBtnText}
 				//handleNext={handleNext}
 				handleBack={handleBack}
 				showBack={activeStep > 0}
-				onSubmit={({ data }) => {
-					if (activeStep === FORMS.length) {
-						//todo: collect data from all forms and do AJAX
+				showSubmit={isFormValid}
+				onSubmit={async ({ data }) => {
+					try {
+						const _isLastForm =
+							refs.current.activeStep + 1 === FORMS.length;
+						if (_isLastForm) {
+							//todo: collect data from all forms and do AJAX
+
+							const {
+								profileData,
+								personalData,
+								addressData,
+							} = refs.current;
+							const allFormsData = {
+								...profileData,
+								...personalData,
+								...addressData,
+							};
+
+							debugger;
+
+							if (_isLastForm) {
+								const ajaxResult = await request(
+									"POST",
+									ENDPOINTS.users.POST.signup.path,
+									{
+										user: allFormsData,
+										collectionName: "user",
+									}
+								);
+
+								const { error, data } = ajaxResult;
+
+								if (error) throw new Error(error);
+								if (!data) throw new Error("No data received");
+
+								debugger;
+							}
+						}
+					} catch (err) {
+						const _err = err;
+						console.error(err);
 						debugger;
-						return;
 					}
+
 					handleNext();
 				}}
 				fields={fields}
@@ -226,8 +286,15 @@ export default function Signup() {
 								onChange={(ev) => {
 									const { value } = ev.target;
 									refs.current[name] = value;
+									refs.current.handleChange(value);
+
+									// const validate =
+									// 	refs.current[`${name}__validate`];
+									// debugger;
+									// const isFormValid = validate();
 								}}
 								autoComplete={name}
+								isFormValid={isFormValid}
 								defaultValue={refs.current[name] || ""}
 							/>
 						</Grid>
@@ -237,7 +304,11 @@ export default function Signup() {
 		);
 	}
 
-	const validateForm = () => {};
+	const validateForm = () => {
+		FORMS.map((form) => {
+			debugger;
+		});
+	};
 
 	const handleNext = () => {
 		setActiveStep(activeStep + 1);
@@ -249,8 +320,22 @@ export default function Signup() {
 
 	const handlePostSubmissionClick = useCallback(() => {}, []);
 
-	const nextBtnText =
-		activeStep === FORMS.length - 1 ? "Place order" : "Next";
+	const FinishedMessage = (
+		<React.Fragment>
+			<Typography variant="h5" gutterBottom>
+				{`Welcome, ${capitalizeFirstLetter(refs.current.first_name)}!`}
+			</Typography>
+			<Typography variant="subtitle1">
+				Thank you for signing up. We are so glad to have you here with
+				us.
+				<div className={classes.buttons}>
+					<Button onClick={handleBack} className={classes.button}>
+						Edit
+					</Button>
+				</div>
+			</Typography>
+		</React.Fragment>
+	);
 
 	return (
 		<React.Fragment>
@@ -270,29 +355,9 @@ export default function Signup() {
 						))}
 					</Stepper>
 					<React.Fragment>
-						{activeStep === FORMS.length ? (
-							<React.Fragment>
-								<Typography variant="h5" gutterBottom>
-									{`Welcome, ${capitalizeFirstLetter(
-										user.first_name
-									)}!`}
-								</Typography>
-								<Typography variant="subtitle1">
-									We are so glad to have you here. We are
-									going to have a good time.
-									<div className={classes.buttons}>
-										<Button
-											onClick={handleBack}
-											className={classes.button}
-										>
-											Edit
-										</Button>
-									</div>
-								</Typography>
-							</React.Fragment>
-						) : (
-							getFormComponent(activeStep, refs)
-						)}
+						{activeStep === FORMS.length
+							? FinishedMessage
+							: getFormComponent(activeStep, refs)}
 					</React.Fragment>
 				</Paper>
 			</main>

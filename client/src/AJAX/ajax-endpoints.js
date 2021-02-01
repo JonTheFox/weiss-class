@@ -37,8 +37,8 @@ const ENDPOINTS = {
 				path: BASE_PATH + "users/update-one",
 			},
 
-			add: {
-				path: BASE_PATH + "users/add",
+			signup: {
+				path: BASE_PATH + "users/signtup",
 			},
 			login: {
 				path: BASE_PATH + "users/login",
