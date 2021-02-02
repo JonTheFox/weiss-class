@@ -587,8 +587,6 @@ const supplementIO = function(io) {
 				});
 				//todo:  disconnect other sockets that use the same email
 
-				logg("existingClient: ", existingClient);
-
 				// classroomsManager.disconnectClient(existingClient);
 
 				const clientId = existingClient

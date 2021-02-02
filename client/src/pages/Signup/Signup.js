@@ -27,7 +27,7 @@ import { AppContext } from "../../contexts/AppContext.jsx";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import ENDPOINTS from "../../AJAX/ajax-endpoints.js";
-// import MOCK_USER from "../../mockData/mockUser.js";
+import MOCK_USER from "../../mockData/mockUser.js";
 import clsx from "clsx";
 
 const useStyles = makeStyles((theme) => ({
@@ -111,7 +111,7 @@ const PERSONAL_FIELDS = [
 	},
 	{
 		label: "Date of birth",
-		name: "bDay",
+		name: "bday",
 		validate: isTruthy,
 		required: true,
 	},
@@ -179,7 +179,7 @@ export default function Signup(props) {
 	});
 	const [showError, setShowError] = useState(false);
 
-	// Object.assign(refs.current, MOCK_USER);
+	Object.assign(refs.current, MOCK_USER);
 
 	const [appUtils] = useContext(AppContext);
 	const { capitalizeFirstLetter, request, navigateTo } = appUtils;
@@ -228,6 +228,14 @@ export default function Signup(props) {
 								...addressData,
 							};
 
+							//convert types
+							allFormsData.street_number = parseInt(
+								addressData.street_number
+							);
+							allFormsData.bday = new Date();
+
+							debugger;
+
 							if (_isLastForm) {
 								const ajaxResult = await request(
 									"POST",
@@ -238,12 +246,11 @@ export default function Signup(props) {
 									}
 								);
 
+								debugger;
 								const { error, data } = ajaxResult;
 
 								if (error) throw new Error(error);
 								if (!data) throw new Error("No data received");
-
-								debugger;
 							}
 						}
 					} catch (err) {

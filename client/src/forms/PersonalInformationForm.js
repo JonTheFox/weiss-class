@@ -19,7 +19,7 @@ const FORM_INPUTS = [
   },
   { id: "last_name", name: "last_name", label: "Last name", required: true },
   { id: "gender", name: "gender", label: "Gender", required: true },
-  { id: "bDay", name: "bDay", label: "Date of birth", required: true },
+  { id: "bday", name: "bday", label: "Date of birth", required: true },
 ];
 
 const useStyles = makeStyles((theme) => ({
@@ -44,12 +44,12 @@ export default function PersonalInfoForm(props) {
     const firstNameInput = formData.get("first_name");
     const lastNameInput = formData.get("last_name");
     const middleNameInput = formData.get("middle_name");
-    const bDayInput = formData.get("bDay");
+    const bDayInput = formData.get("bday");
     const personalInfo = {
       first_name: firstNameInput,
       last_name: lastNameInput,
       middle_name: middleNameInput,
-      bDay: bDayInput,
+      bday: bDayInput,
     };
 
     if (!refs?.current?.forms) {
