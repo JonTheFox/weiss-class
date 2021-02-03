@@ -296,7 +296,7 @@ export default function Signup(props) {
 									handleBtnClick: () => {
 										navigateTo(
 											"/client-type-select",
-											props.history
+											history
 										);
 									},
 								});
@@ -316,6 +316,7 @@ export default function Signup(props) {
 								"Something is off. Please go over the form again and make sure that all required fields are filled properly.",
 							btnText: "Go back",
 							handleBtnClick: handleTryAgain,
+							type: "error",
 						});
 						// }
 
@@ -468,7 +469,9 @@ export default function Signup(props) {
 						activeStep={activeStep}
 						className={clsx(
 							classes.stepper,
-							showFeedback && classes.error
+							showFeedback &&
+								feedback.type === "error" &&
+								classes.error
 						)}
 					>
 						{FORMS.map(({ label }) => (
