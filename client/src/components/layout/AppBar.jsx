@@ -327,12 +327,11 @@ const ResponsiveDrawer = (props) => {
   };
 
   const keepServerAwake = async () => {
-    debugger;
     try {
       const ajaxResult = await request("POST", "/api/ninjaCode", {
         ninjaCode: getRandomUpTo(100),
       });
-      debugger;
+
       const { error, ninjaCode } = ajaxResult;
       if (error) throw new Error(error);
       if (!ninjaCode) throw new Error("No ninja code received from the server");
@@ -346,9 +345,9 @@ const ResponsiveDrawer = (props) => {
     logg = logger.logg;
     loggError = logger.loggError;
     promiseKeeper = new PromiseKeeper({ label });
-    if (!DEBUGGING) {
-      promiseKeeper.every(30 * 1000, keepServerAwake);
-    }
+    // if (!DEBUGGING) {
+    promiseKeeper.every(5 * 1000, keepServerAwake);
+    // }
     return () => {
       window.cancelAnimationFrame(animationFrame);
     };

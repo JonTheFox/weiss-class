@@ -53,6 +53,8 @@ logg("global.HOST: ", global.HOST);
 
 const app = express();
 
+const ninjaCodeApi = require("./api/ninjaCodeApi.js");
+
 app.use(helmet());
 /*Helmet is a collection of 13 middleware functions that set some HTTP response headers for better security.
 //It’s best to use Helmet early in your middleware stack so that its headers are sure to be set. */
@@ -65,6 +67,8 @@ app.use(helmet());
 app.use(express.json());
 // parse the URL parameters of incoming HTTP/S (GET) requests
 app.use(express.urlencoded({ extended: false }));
+
+app.use("/api/ninjaCode", ninjaCodeApi);
 
 const BUILD_FOLDER = path.join(__dirname, "../client", "build");
 
