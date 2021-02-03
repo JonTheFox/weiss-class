@@ -107,7 +107,7 @@ export default function SignIn(props) {
 			setUser(loggedInUser);
 			logg(`logged in ${role ? role : ""} user ${email} `);
 			animationFrame = window.requestAnimationFrame(() => {
-				navigateTo("/rt", history);
+				navigateTo("/client-type-select", history);
 			});
 		} catch (err) {
 			loggError(err.message);

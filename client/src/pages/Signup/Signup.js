@@ -26,6 +26,8 @@ import ENDPOINTS, { USER_SERVER_URL } from "../../AJAX/ajax-endpoints.js";
 import MOCK_USER from "../../mockData/mockUser.js";
 import clsx from "clsx";
 import useLogg from "../../hooks/useLogg.jsx";
+import { useHistory } from "react-router-dom";
+
 const useStyles = makeStyles((theme) => ({
 	appBar: {
 		position: "relative",
@@ -181,10 +183,13 @@ const ELKANA = {
 
 const label = "Signup";
 
+// const errorMsg = `That didn't work. Sorry about that, ${refs.current.first_name}.`;
+
 export default function Signup(props) {
 	const classes = useStyles();
 	const [activeStep, setActiveStep] = useState(0);
 	const [user, setUser] = useRecoilState(userState);
+	const history = useHistory();
 	const refs = useRef({
 		form: {},
 		forms: {},
@@ -193,14 +198,12 @@ export default function Signup(props) {
 		address: {},
 		activeStep,
 	});
-	const [showError, setShowError] = useState(false);
+	const [showFeedback, setshowFeedback] = useState(false);
+	const [feedback, setFeedback] = useState({});
 	const { logg, loggError } = useLogg({ label });
-
 	Object.assign(refs.current, ELKANA);
-
 	const [appUtils] = useContext(AppContext);
 	const { capitalizeFirstLetter, request, navigateTo } = appUtils;
-
 	const [isFormValid, setIsFormValid] = useState(false);
 
 	useEffect(() => {
@@ -227,7 +230,7 @@ export default function Signup(props) {
 				handleBack={handleBack}
 				showBack={activeStep > 0}
 				showSubmit={isFormValid}
-				onSubmit={async ({ data }) => {
+				onSubmit={async () => {
 					try {
 						const _isLastForm =
 							refs.current.activeStep + 1 === FORMS.length;
@@ -258,18 +261,65 @@ export default function Signup(props) {
 									allFormsData
 								);
 
-								debugger;
+								const {
+									error,
+									alreadyExists,
+									success,
+									reason,
+									data,
+								} = ajaxResult;
 
-								const { error, data } = ajaxResult;
-
+								if (alreadyExists) {
+									setshowFeedback(true);
+									setFeedback({
+										heading: `Hey, ${refs.current.first_name}, `,
+										bodyText: `you are not new here. We know each already.`,
+										btnText: "Login",
+										handleBtnClick: handleLogin,
+									});
+									return;
+								}
 								if (error) throw new Error(error);
-								if (!data) throw new Error("No data received");
+
+								if (!data)
+									throw new Error(
+										"Did not receive any data from the server"
+									);
+
+								//success
+								setUser(data);
+								setshowFeedback(true);
+								setFeedback({
+									heading: "Great Success!",
+									bodyText: `You are all signed up and ready to go.`,
+									btnText: "continue",
+									handleBtnClick: () => {
+										navigateTo(
+											"/client-type-select",
+											props.history
+										);
+									},
+								});
+
+								return;
 							}
 						}
 					} catch (err) {
-						const _err = err;
 						console.error(err);
-						setShowError(true);
+						// if (err.name && err.name === "ValidationError") {
+
+						const { message } = err;
+						setshowFeedback(true);
+						return setFeedback({
+							heading: `Hmm.`,
+							bodyText:
+								"Something is off. Please go over the form again and make sure that all required fields are filled properly.",
+							btnText: "Go back",
+							handleBtnClick: handleTryAgain,
+						});
+						// }
+
+						setshowFeedback(true);
 					}
 
 					handleNext();
@@ -318,34 +368,62 @@ export default function Signup(props) {
 
 	const handleTryAgain = useCallback(
 		(val) => {
-			setShowError(false);
+			setshowFeedback(false);
 			refs.current.setIsFormValid(true);
 			setActiveStep(0);
 		},
 		[refs.current, setActiveStep]
 	);
 
-	const FinishedMessage = (
-		<React.Fragment>
-			<Typography variant="h5" gutterBottom>
-				{`Welcome, ${capitalizeFirstLetter(refs.current.first_name)}!`}
-			</Typography>
-			<Typography variant="subtitle1">
-				Thank you for signing up. We are so glad to have you here with
-				us.
-				<div className={classes.buttons}>
-					<Button
-						onClick={() => {
-							navigateTo("/", props.history);
-						}}
-						className={classes.button}
-					>
-						Continue
-					</Button>
-				</div>
-			</Typography>
-		</React.Fragment>
+	const handleLogin = useCallback(
+		(val) => {
+			setshowFeedback(false);
+			navigateTo("/login", history);
+		},
+		[setshowFeedback]
 	);
+
+	const getSuccessFeedback = useCallback(
+		(first_name) => {
+			return {
+				heading: `Welcome, ${capitalizeFirstLetter(
+					refs.current.first_name
+				)}!`,
+				bodyText:
+					"Thank you for signing up. We are so glad to have you here with us.",
+				btnText: "",
+				handleBtnClick: () => {
+					navigateTo("/", props.history);
+				},
+			};
+		},
+		[navigateTo, capitalizeFirstLetter]
+	);
+
+	const { heading, bodyText, btnText, handleBtnClick } = feedback;
+
+	const FeedbackMessage = ({
+		heading,
+		bodyText,
+		btnText = "",
+		onBtnClick,
+	}) => {
+		return (
+			<React.Fragment>
+				<Typography variant="h5" gutterBottom>
+					{heading}
+				</Typography>
+				<Typography variant="subtitle1">
+					{bodyText}
+					<div className={classes.buttons}>
+						<Button onClick={onBtnClick} className={classes.button}>
+							{btnText}
+						</Button>
+					</div>
+				</Typography>
+			</React.Fragment>
+		);
+	};
 
 	const ErrorMessage = (
 		<React.Fragment>
@@ -363,6 +441,22 @@ export default function Signup(props) {
 		</React.Fragment>
 	);
 
+	const AlreadyTaken = (
+		<React.Fragment>
+			<Typography variant="h5" gutterBottom>
+				{`Hey, ${refs.current.first_name}.`}
+			</Typography>
+			<Typography variant="subtitle1">
+				{`We see that you already have an account (which is nice).`}
+				<div className={classes.buttons}>
+					<Button onClick={handleLogin} className={classes.button}>
+						Login
+					</Button>
+				</div>
+			</Typography>
+		</React.Fragment>
+	);
+
 	return (
 		<React.Fragment>
 			<main className={classes.layout}>
@@ -374,7 +468,7 @@ export default function Signup(props) {
 						activeStep={activeStep}
 						className={clsx(
 							classes.stepper,
-							showError && classes.error
+							showFeedback && classes.error
 						)}
 					>
 						{FORMS.map(({ label }) => (
@@ -384,11 +478,16 @@ export default function Signup(props) {
 						))}
 					</Stepper>
 					<React.Fragment>
-						{showError
-							? ErrorMessage
-							: activeStep === FORMS.length
-							? FinishedMessage
-							: getFormComponent(activeStep, refs)}
+						{showFeedback ? (
+							<FeedbackMessage
+								heading={heading}
+								btnText={btnText}
+								bodyText={bodyText}
+								onBtnClick={handleBtnClick}
+							></FeedbackMessage>
+						) : (
+							getFormComponent(activeStep, refs)
+						)}
 					</React.Fragment>
 				</Paper>
 			</main>
