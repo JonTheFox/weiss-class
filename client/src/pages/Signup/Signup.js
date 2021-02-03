@@ -255,11 +255,9 @@ export default function Signup(props) {
 								const ajaxResult = await request(
 									"POST",
 									ENDPOINTS.users.POST.signup.path,
-									{
-										user: allFormsData,
-										collectionName: "user",
-									}
+									allFormsData
 								);
+
 								debugger;
 
 								const { error, data } = ajaxResult;
