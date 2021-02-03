@@ -17,19 +17,15 @@ import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
 import Form from "../../forms/Form.js";
-import AddressForm from "../../forms/AddressForm.js";
-import PersonalInformationForm from "../../forms/PersonalInformationForm.js";
-import ProfileForm from "../../forms/ProfileForm.js";
-import Copyright from "../../components/Copyright/Copyright.js";
 import { useRecoilState } from "recoil";
 import userState from "../../store/user.atom.js";
 import { AppContext } from "../../contexts/AppContext.jsx";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
-import ENDPOINTS from "../../AJAX/ajax-endpoints.js";
+import ENDPOINTS, { USER_SERVER_URL } from "../../AJAX/ajax-endpoints.js";
 import MOCK_USER from "../../mockData/mockUser.js";
 import clsx from "clsx";
-
+import useLogg from "../../hooks/useLogg.jsx";
 const useStyles = makeStyles((theme) => ({
 	appBar: {
 		position: "relative",
@@ -165,6 +161,26 @@ const FORMS = [
 	{ label: "Address", fields: ADDRESS_FIELDS },
 ];
 
+const ELKANA = {
+	first_name: "Elkana",
+	last_name: "Danino",
+	middle_name: "",
+	bday: "01/01/1992",
+	email: "elkana@gmail.com",
+	password: "elkana7777",
+
+	gender: "male",
+	address1: "_",
+	address2: "_",
+	street_name: "_",
+	street_number: 3,
+	city: "_",
+	state: "_",
+	country: "Israel",
+};
+
+const label = "Signup";
+
 export default function Signup(props) {
 	const classes = useStyles();
 	const [activeStep, setActiveStep] = useState(0);
@@ -178,8 +194,9 @@ export default function Signup(props) {
 		activeStep,
 	});
 	const [showError, setShowError] = useState(false);
+	const { logg, loggError } = useLogg({ label });
 
-	Object.assign(refs.current, MOCK_USER);
+	Object.assign(refs.current, ELKANA);
 
 	const [appUtils] = useContext(AppContext);
 	const { capitalizeFirstLetter, request, navigateTo } = appUtils;
@@ -232,9 +249,7 @@ export default function Signup(props) {
 							allFormsData.street_number = parseInt(
 								addressData.street_number
 							);
-							allFormsData.bday = new Date();
-
-							debugger;
+							// allFormsData.bday = new Date();
 
 							if (_isLastForm) {
 								const ajaxResult = await request(
@@ -245,8 +260,8 @@ export default function Signup(props) {
 										collectionName: "user",
 									}
 								);
-
 								debugger;
+
 								const { error, data } = ajaxResult;
 
 								if (error) throw new Error(error);

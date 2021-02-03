@@ -210,7 +210,6 @@ const Realtime = (props) => {
 			});
 			isSocketInitialized = true;
 			setSocket(socket);
-			console.log("passed without an error!!!!");
 		} catch (err) {
 			console.log(err);
 		}

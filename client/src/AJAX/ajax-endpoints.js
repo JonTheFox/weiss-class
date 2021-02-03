@@ -1,29 +1,31 @@
-// const BASE_PATH = "/api/";
-const BASE_PATH = "https://weiss-english-server.herokuapp.com/api/";
+// const USER_SERVER_URL = "/api/";
+const USER_SERVER_URL = "https://weiss-english-server.herokuapp.com/api/";
+
+export { USER_SERVER_URL };
 
 const ENDPOINTS = {
 	animals: {
 		GET: {
 			search: {
-				path: BASE_PATH + "animals/search",
+				path: USER_SERVER_URL + "animals/search",
 			},
 		},
 		POST: {
 			getAll: {
-				path: BASE_PATH + "animals/getAll",
+				path: USER_SERVER_URL + "animals/getAll",
 			},
 			updateRow: {
-				path: BASE_PATH + "animals/update-row",
+				path: USER_SERVER_URL + "animals/update-row",
 			},
 		},
 		DELETE: {
 			animal: {
-				path: BASE_PATH + "animals/animal",
+				path: USER_SERVER_URL + "animals/animal",
 			},
 		},
 		PUT: {
 			animal: {
-				path: BASE_PATH + "animal",
+				path: USER_SERVER_URL + "animal",
 			},
 		},
 	},
@@ -31,27 +33,27 @@ const ENDPOINTS = {
 		GET: {},
 		POST: {
 			getAll: {
-				path: BASE_PATH + "users/getAll",
+				path: USER_SERVER_URL + "users/getAll",
 			},
 			updateOne: {
-				path: BASE_PATH + "users/update-one",
+				path: USER_SERVER_URL + "users/update-one",
 			},
 
 			signup: {
-				path: BASE_PATH + "users/signup",
+				path: USER_SERVER_URL + "users/signup",
 			},
 			login: {
-				path: BASE_PATH + "users/login",
+				path: USER_SERVER_URL + "users/login",
 			},
 		},
 		DELETE: {
 			user: {
-				path: BASE_PATH + "users/user",
+				path: USER_SERVER_URL + "users/user",
 			},
 		},
 		PUT: {
 			user: {
-				path: BASE_PATH + "users/user",
+				path: USER_SERVER_URL + "users/user",
 			},
 		},
 	},
@@ -59,28 +61,28 @@ const ENDPOINTS = {
 		GET: {},
 		POST: {
 			getAll: {
-				path: BASE_PATH + "lyrics/getAll",
+				path: USER_SERVER_URL + "lyrics/getAll",
 			},
 			find: {
-				path: BASE_PATH + "lyrics/find",
+				path: USER_SERVER_URL + "lyrics/find",
 				// path: `https://weiss-english.now.sh/api/lyrics`,
 				// path: `http://localhost:3000/api/lyrics`,
 			},
 			updateRow: {
-				path: BASE_PATH + "lyrics/update-row",
+				path: USER_SERVER_URL + "lyrics/update-row",
 			},
 			updateAll: {
-				path: BASE_PATH + "lyrics/updateAll",
+				path: USER_SERVER_URL + "lyrics/updateAll",
 			},
 		},
 		DELETE: {
 			song: {
-				path: BASE_PATH + "lyrics/song",
+				path: USER_SERVER_URL + "lyrics/song",
 			},
 		},
 		PUT: {
 			song: {
-				path: BASE_PATH + "lyrics/song",
+				path: USER_SERVER_URL + "lyrics/song",
 			},
 		},
 	},
@@ -88,20 +90,20 @@ const ENDPOINTS = {
 		GET: {},
 		POST: {
 			getAll: {
-				path: BASE_PATH + "images/getAll",
+				path: USER_SERVER_URL + "images/getAll",
 			},
 			updateRow: {
-				path: BASE_PATH + "images/update-row",
+				path: USER_SERVER_URL + "images/update-row",
 			},
 		},
 		DELETE: {
 			category: {
-				path: BASE_PATH + "images/category",
+				path: USER_SERVER_URL + "images/category",
 			},
 		},
 		PUT: {
 			category: {
-				path: BASE_PATH + "images/category",
+				path: USER_SERVER_URL + "images/category",
 			},
 		},
 	},
@@ -109,29 +111,29 @@ const ENDPOINTS = {
 		GET: {},
 		POST: {
 			getAll: {
-				path: BASE_PATH + "foods/getAll",
+				path: USER_SERVER_URL + "foods/getAll",
 			},
 			updateRow: {
-				path: BASE_PATH + "foods/update-row",
+				path: USER_SERVER_URL + "foods/update-row",
 			},
 			search: {
-				path: BASE_PATH + "foods/search",
+				path: USER_SERVER_URL + "foods/search",
 			},
 			add: {
-				path: BASE_PATH + "foods/add",
+				path: USER_SERVER_URL + "foods/add",
 			},
 			addByName: {
-				path: BASE_PATH + "foods/add/by-name",
+				path: USER_SERVER_URL + "foods/add/by-name",
 			},
 		},
 		DELETE: {
 			one: {
-				path: BASE_PATH + "images/one",
+				path: USER_SERVER_URL + "images/one",
 			},
 		},
 		PUT: {
 			category: {
-				path: BASE_PATH + "images/category",
+				path: USER_SERVER_URL + "images/category",
 			},
 		},
 	},

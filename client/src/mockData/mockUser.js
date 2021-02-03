@@ -3,7 +3,7 @@ export default {
 	last_name: "Meuyan",
 	middle_name: "",
 	bday: "01.01.1990",
-	email: "Yinon@gmail.com",
+	email: "Yinon7@gmail.com",
 	password: "Yinon777",
 	gender: "male",
 	address1: "Yinon",
