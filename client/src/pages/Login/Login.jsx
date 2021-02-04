@@ -157,17 +157,7 @@ export default function SignIn(props) {
 							id="password"
 							autoComplete="current-password"
 						/>
-						<FormControlLabel
-							control={
-								<Checkbox
-									value={"remember"}
-									name="remember"
-									color="primary"
-								/>
-							}
-							name="remember"
-							label="Remember me"
-						/>
+
 						<Button
 							type="submit"
 							fullWidth

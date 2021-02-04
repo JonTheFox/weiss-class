@@ -71,13 +71,24 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
+const getPublicUserInfo = (user) => {
+	// assertValidCredentials(user);
+	if (!user) return null;
+	const { first_name, last_name, email, role } = user;
+	return { first_name, last_name, email, role };
+};
+
 const isTruthy = (val) => !!val;
+const validateEmail = (email) => {
+	const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	return regex.test(String(email).toLowerCase());
+};
 
 const PROFILE_FIELDS = [
 	{
 		name: "email",
 		label: "Email",
-		validate: isTruthy,
+		validate: validateEmail,
 		required: true,
 	},
 	{
@@ -214,6 +225,103 @@ export default function Signup(props) {
 	const isLastForm = activeStep + 1 === FORMS.length;
 	const nextBtnText = isLastForm ? "Finish" : "Next";
 
+	const handleSubmit = async () => {
+		try {
+			const _isLastForm = refs.current.activeStep + 1 === FORMS.length;
+			if (_isLastForm) {
+				//todo: collect data from all forms and do AJAX
+
+				const { profileData, personalData, addressData } = refs.current;
+				const allFormsData = {
+					...profileData,
+					...personalData,
+					...addressData,
+				};
+
+				//convert types
+				allFormsData.street_number = parseInt(
+					addressData.street_number
+				);
+				// allFormsData.bday = new Date();
+
+				if (_isLastForm) {
+					const ajaxResult = await request(
+						"POST",
+						ENDPOINTS.users.POST.signup.path,
+						allFormsData
+					);
+
+					const {
+						error,
+						alreadyExists,
+						success,
+						reason,
+						data,
+					} = ajaxResult;
+
+					if (alreadyExists) {
+						setshowFeedback(true);
+						setFeedback({
+							heading: `Hey, ${refs.current.first_name}, `,
+							bodyText: `you are not new here. We know each already.`,
+							btnText: "Login",
+							handleBtnClick: handleLogin,
+						});
+						return;
+					}
+					if (error) throw new Error(error);
+
+					if (!data)
+						throw new Error(
+							"Did not receive any data from the server"
+						);
+
+					//success
+
+					const updateUser = (allUserInfo) => {
+						setUser({
+							...getPublicUserInfo(allUserInfo),
+							password: profileData.password,
+						});
+					};
+					updateUser(allFormsData);
+
+					debugger;
+					setshowFeedback(true);
+					setFeedback({
+						heading: "Great Success!",
+						bodyText: `You are all signed up and ready to go.`,
+						btnText: "continue",
+						handleBtnClick: () => {
+							navigateTo("/client-type-select", history);
+						},
+					});
+
+					return;
+				}
+			}
+		} catch (err) {
+			console.error(err);
+			// if (err.name && err.name === "ValidationError") {
+
+			const { message } = err;
+			setshowFeedback(true);
+			return setFeedback({
+				heading: `Hmm.`,
+				bodyText:
+					"Something is off. Please go over the form again and make sure that all required fields are filled properly.",
+				btnText: "Go back",
+				handleBtnClick: handleTryAgain,
+				type: "error",
+			});
+			// }
+
+			setshowFeedback(true);
+		}
+
+		handleNext();
+	};
+
 	function getFormComponent(step, refs) {
 		const form = FORMS[step];
 		const { fields = [], label } = form;
@@ -230,101 +338,7 @@ export default function Signup(props) {
 				handleBack={handleBack}
 				showBack={activeStep > 0}
 				showSubmit={isFormValid}
-				onSubmit={async () => {
-					try {
-						const _isLastForm =
-							refs.current.activeStep + 1 === FORMS.length;
-						if (_isLastForm) {
-							//todo: collect data from all forms and do AJAX
-
-							const {
-								profileData,
-								personalData,
-								addressData,
-							} = refs.current;
-							const allFormsData = {
-								...profileData,
-								...personalData,
-								...addressData,
-							};
-
-							//convert types
-							allFormsData.street_number = parseInt(
-								addressData.street_number
-							);
-							// allFormsData.bday = new Date();
-
-							if (_isLastForm) {
-								const ajaxResult = await request(
-									"POST",
-									ENDPOINTS.users.POST.signup.path,
-									allFormsData
-								);
-
-								const {
-									error,
-									alreadyExists,
-									success,
-									reason,
-									data,
-								} = ajaxResult;
-
-								if (alreadyExists) {
-									setshowFeedback(true);
-									setFeedback({
-										heading: `Hey, ${refs.current.first_name}, `,
-										bodyText: `you are not new here. We know each already.`,
-										btnText: "Login",
-										handleBtnClick: handleLogin,
-									});
-									return;
-								}
-								if (error) throw new Error(error);
-
-								if (!data)
-									throw new Error(
-										"Did not receive any data from the server"
-									);
-
-								//success
-								setUser(allFormsData);
-								setshowFeedback(true);
-								setFeedback({
-									heading: "Great Success!",
-									bodyText: `You are all signed up and ready to go.`,
-									btnText: "continue",
-									handleBtnClick: () => {
-										navigateTo(
-											"/client-type-select",
-											history
-										);
-									},
-								});
-
-								return;
-							}
-						}
-					} catch (err) {
-						console.error(err);
-						// if (err.name && err.name === "ValidationError") {
-
-						const { message } = err;
-						setshowFeedback(true);
-						return setFeedback({
-							heading: `Hmm.`,
-							bodyText:
-								"Something is off. Please go over the form again and make sure that all required fields are filled properly.",
-							btnText: "Go back",
-							handleBtnClick: handleTryAgain,
-							type: "error",
-						});
-						// }
-
-						setshowFeedback(true);
-					}
-
-					handleNext();
-				}}
+				onSubmit={handleSubmit}
 				fields={fields}
 			>
 				{fields.map(({ label, name, required }, inputIndex) => {
