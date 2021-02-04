@@ -228,78 +228,64 @@ export default function Signup(props) {
 	const handleSubmit = async () => {
 		try {
 			const _isLastForm = refs.current.activeStep + 1 === FORMS.length;
-			if (_isLastForm) {
-				//todo: collect data from all forms and do AJAX
+			if (!_isLastForm) return handleNext();
 
-				const { profileData, personalData, addressData } = refs.current;
-				const allFormsData = {
-					...profileData,
-					...personalData,
-					...addressData,
-				};
+			const { profileData, personalData, addressData } = refs.current;
+			const allFormsData = {
+				...profileData,
+				...personalData,
+				...addressData,
+			};
 
-				//convert types
-				allFormsData.street_number = parseInt(
-					addressData.street_number
-				);
-				// allFormsData.bday = new Date();
+			//convert types
+			allFormsData.street_number = parseInt(addressData.street_number);
+			// allFormsData.bday = new Date();
 
-				if (_isLastForm) {
-					const ajaxResult = await request(
-						"POST",
-						ENDPOINTS.users.POST.signup.path,
-						allFormsData
-					);
+			const ajaxResult = await request(
+				"POST",
+				ENDPOINTS.users.POST.signup.path,
+				allFormsData
+			);
 
-					const {
-						error,
-						alreadyExists,
-						success,
-						reason,
-						data,
-					} = ajaxResult;
+			const { error, alreadyExists, success, reason, data } = ajaxResult;
 
-					if (alreadyExists) {
-						setshowFeedback(true);
-						setFeedback({
-							heading: `Hey, ${refs.current.first_name}, `,
-							bodyText: `you are not new here. We know each already.`,
-							btnText: "Login",
-							handleBtnClick: handleLogin,
-						});
-						return;
-					}
-					if (error) throw new Error(error);
-
-					if (!data)
-						throw new Error(
-							"Did not receive any data from the server"
-						);
-
-					//success
-
-					const updateUser = (allUserInfo) => {
-						setUser({
-							...getPublicUserInfo(allUserInfo),
-							password: profileData.password,
-						});
-					};
-					updateUser(allFormsData);
-
-					debugger;
-					setshowFeedback(true);
-					setFeedback({
-						heading: "Great Success!",
-						bodyText: `You are all signed up and ready to go.`,
-						btnText: "continue",
-						handleBtnClick: () => {
-							navigateTo("/client-type-select", history);
-						},
-					});
-
-					return;
-				}
+			if (alreadyExists) {
+				setshowFeedback(true);
+				setFeedback({
+					heading: `Hey, ${refs.current.first_name}, `,
+					bodyText: `You already have an account.`,
+					btnText: "Login",
+					handleBtnClick: handleLogin,
+				});
+				return;
 			}
+			if (error) throw new Error(error);
+
+			if (!data)
+				throw new Error("Did not receive any data from the server");
+
+			//success
+
+			const updateUser = (allUserInfo) => {
+				setUser({
+					...getPublicUserInfo(allUserInfo),
+					password: profileData.password,
+				});
+			};
+			updateUser(allFormsData);
+
+			debugger;
+			setshowFeedback(true);
+			setFeedback({
+				heading: "Great Success!",
+				bodyText: `You are all signed up and ready to go.`,
+				btnText: "continue",
+				handleBtnClick: () => {
+					navigateTo("/client-type-select", history);
+				},
+			});
+
+			return;
 		} catch (err) {
 			console.error(err);
 			// if (err.name && err.name === "ValidationError") {
@@ -396,23 +382,6 @@ export default function Signup(props) {
 			navigateTo("/login", history);
 		},
 		[setshowFeedback]
-	);
-
-	const getSuccessFeedback = useCallback(
-		(first_name) => {
-			return {
-				heading: `Welcome, ${capitalizeFirstLetter(
-					refs.current.first_name
-				)}!`,
-				bodyText:
-					"Thank you for signing up. We are so glad to have you here with us.",
-				btnText: "",
-				handleBtnClick: () => {
-					navigateTo("/", props.history);
-				},
-			};
-		},
-		[navigateTo, capitalizeFirstLetter]
 	);
 
 	const { heading, bodyText, btnText, handleBtnClick } = feedback;
