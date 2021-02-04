@@ -48,6 +48,7 @@ const useStyles = makeStyles(({ palette, breakpoints, spacing }) => ({
     [breakpoints.up("sm")]: {
       marginLeft: "4%",
     },
+    borderRadius: "var(--spacing)",
   },
   arrow: {
     display: "none",
@@ -59,18 +60,16 @@ const useStyles = makeStyles(({ palette, breakpoints, spacing }) => ({
     },
   },
   arrowLeft: {
-    left: 0,
     [breakpoints.up("lg")]: {
-      left: -64,
+      left: "calc(-8 * var(--spacing))",
     },
-    marginLeft: "calc(2 * var(--spacing))",
+    left: "calc(-8 * var(--spacing))",
   },
   arrowRight: {
-    right: 0,
+    right: "calc(-8 * var(--spacing))",
     [breakpoints.up("lg")]: {
-      right: -64,
+      right: "calc(-8 * var(--spacing))",
     },
-    marginRight: "calc(2 * var(--spacing))",
   },
   text: {
     // shared style for text-top and text-bottom
@@ -89,10 +88,11 @@ const useStyles = makeStyles(({ palette, breakpoints, spacing }) => ({
     },
   },
   title: {
+    marginTop: 0,
     top: 20,
     left: "20%",
     height: "40%",
-    fontSize: "3rem",
+    fontSize: "2rem",
     zIndex: 1,
     background: "linear-gradient(0deg, rgba(255,255,255,0) 0%, #9c9c9c 100%)",
     [breakpoints.up("sm")]: {
