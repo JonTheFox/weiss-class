@@ -267,10 +267,8 @@ const ResponsiveDrawer = (props) => {
   const [getOptionLabel, setGetOptionLabel] = useState(EMPTY_FUNC);
 
   const sharedRefs = useRef(props.sharedRefs?.current || {});
-
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-
   const mediaContext = useContext(DeviceContext);
   const [visible, setVisible] = useState(true);
   const classes = useStyles(mediaContext);
@@ -320,6 +318,7 @@ const ResponsiveDrawer = (props) => {
             // handleLinkClick("/login");
             // appState.setUser(null);
             setUser(null);
+            navigateTo("/login", props.history);
             break;
         }
       });

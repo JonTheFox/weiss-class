@@ -14,6 +14,8 @@ const { logg, loggError } = classroomLogger;
 
 const CLASSROOMS = require("../data/classrooms/allClassrooms.js");
 
+const getPublicUserInfo = require("../api/getPublicUserInfo.js");
+
 const clientTypes = require("./clientTypes.js");
 
 const CLIENT_TYPES = ["student", "teacher", "platform"];
@@ -486,13 +488,6 @@ CLASSROOMS.map((room) => {
 	return classroomsManager.addClassroom(room);
 });
 
-const getPublicUserData = (user) => {
-	// assertValidCredentials(user);
-	if (!is(user).anObject) return null;
-	const { first_name, last_name, email } = user;
-	return { first_name, last_name, email };
-};
-
 const findClient = ({ email, clients }) => {
 	if (!clients || !clients.length) return null;
 	return clients.find((client) => {
@@ -534,7 +529,7 @@ const supplementIO = function(io) {
 					// });
 				}
 
-				const userWithoutPass = getPublicUserData(client);
+				const userWithoutPass = getPublicUserInfo(client);
 				socket.join(roomKey);
 				logg(
 					`${userWithoutPass.first_name} ${userWithoutPass.last_name} joined room ${roomKey}`
@@ -577,7 +572,7 @@ const supplementIO = function(io) {
 
 				const existingClientRoomKey = roomKey;
 
-				const userWithoutPass = getPublicUserData(authenticatedUser);
+				const userWithoutPass = getPublicUserInfo(authenticatedUser);
 
 				const { first_name, last_name, email } = userWithoutPass;
 
@@ -696,7 +691,7 @@ const supplementIO = function(io) {
 				requestedRoom.addClient({ ...user });
 				socket.join(roomName);
 				socket.to(roomName).emit("anotherUserJoined", {
-					user: getPublicUserData(user),
+					user: getPublicUserInfo(user),
 				});
 			} catch (err) {
 				const errMsg = err.message;
@@ -741,7 +736,7 @@ const supplementIO = function(io) {
 					classrooms,
 				});
 				// classroomsIO.emit("anotherUserJoined", {
-				// 	user: getPublicUserData(user),
+				// 	user: getPublicUserInfo(user),
 				// });
 				return;
 			} catch (err) {

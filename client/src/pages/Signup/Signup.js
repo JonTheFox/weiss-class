@@ -287,7 +287,7 @@ export default function Signup(props) {
 									);
 
 								//success
-								setUser(data);
+								setUser(allFormsData);
 								setshowFeedback(true);
 								setFeedback({
 									heading: "Great Success!",
