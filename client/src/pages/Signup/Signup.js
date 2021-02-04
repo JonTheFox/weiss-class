@@ -83,6 +83,15 @@ const validateEmail = (email) => {
 	const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 	return regex.test(String(email).toLowerCase());
 };
+const isValidDate = (d) => {
+	if (!d || isNaN(d)) return null;
+	const date = new Date(d);
+	const result = date instanceof Date;
+	debugger;
+	return result;
+
+	return result;
+};
 
 const PROFILE_FIELDS = [
 	{
@@ -119,10 +128,11 @@ const PERSONAL_FIELDS = [
 		required: true,
 	},
 	{
-		label: "Date of birth",
+		label: "Birthday",
 		name: "bday",
-		validate: isTruthy,
+		validate: isValidDate,
 		required: true,
+		type: "date",
 	},
 	{
 		label: "Gender",
@@ -225,7 +235,7 @@ export default function Signup(props) {
 	const isLastForm = activeStep + 1 === FORMS.length;
 	const nextBtnText = isLastForm ? "Finish" : "Next";
 
-	const handleSubmit = async () => {
+	const handleSubmit = useCallback(async () => {
 		try {
 			const _isLastForm = refs.current.activeStep + 1 === FORMS.length;
 			if (!_isLastForm) return handleNext();
@@ -306,13 +316,38 @@ export default function Signup(props) {
 		}
 
 		handleNext();
-	};
+	}, [refs.current, setUser, setshowFeedback, setFeedback]);
+
+	const handleInputChange = useCallback(
+		(ev, fieldName) => {
+			const { value } = ev.target;
+			refs.current[fieldName] = value;
+			refs.current.handleChange(value);
+			debugger;
+		},
+		[refs]
+	); //pass an array of dependencies (you can pass an empty array)
 
 	function getFormComponent(step, refs) {
 		const form = FORMS[step];
 		const { fields = [], label } = form;
 
 		// setIsNextDisabled
+
+		const DateInput = ({ label, defaultValue, ...otherProps }) => {
+			return (
+				<TextField
+					type="date"
+					label={label}
+					defaultValue={defaultValue}
+					className={classes.textField}
+					InputLabelProps={{
+						shrink: true,
+					}}
+					{...otherProps}
+				/>
+			);
+		};
 
 		return (
 			<Form
@@ -327,34 +362,42 @@ export default function Signup(props) {
 				onSubmit={handleSubmit}
 				fields={fields}
 			>
-				{fields.map(({ label, name, required }, inputIndex) => {
-					return (
-						<Grid item xs={12} sm={12} key={label}>
-							<TextField
-								required={Boolean(required)}
-								id={name}
-								defaultValue={refs.current[name]}
-								key={name}
-								name={name}
-								label={label}
-								fullWidth
-								onChange={(ev) => {
-									const { value } = ev.target;
-									refs.current[name] = value;
-									refs.current.handleChange(value);
-
-									// const validate =
-									// 	refs.current[`${name}__validate`];
-									// debugger;
-									// const isFormValid = validate();
-								}}
-								autoComplete={name}
-								isFormValid={isFormValid}
-								defaultValue={refs.current[name] || ""}
-							/>
-						</Grid>
-					);
-				})}
+				{fields.map(
+					({ label, name, type = "", required }, inputIndex) => {
+						if (type === "date")
+							return (
+								<Grid key="" item xs={12} sm={12} key={label}>
+									<DateInput
+										label="Birthday"
+										defaultValue={refs.current.bday}
+										key={name}
+										name={name}
+										label={label}
+										onChange={(ev) => {
+											handleInputChange(ev, name);
+										}}
+									/>
+								</Grid>
+							);
+						return (
+							<Grid item xs={12} sm={12} key={label}>
+								<TextField
+									required={required}
+									id={name}
+									defaultValue={refs.current[name]}
+									key={name}
+									name={name}
+									label={label}
+									fullWidth
+									onChange={handleInputChange}
+									autoComplete={name}
+									isFormValid={isFormValid}
+									defaultValue={refs.current[name] || ""}
+								/>
+							</Grid>
+						);
+					}
+				)}
 			</Form>
 		);
 	}
@@ -408,38 +451,6 @@ export default function Signup(props) {
 			</React.Fragment>
 		);
 	};
-
-	const ErrorMessage = (
-		<React.Fragment>
-			<Typography variant="h5" gutterBottom>
-				{`Umm,`}
-			</Typography>
-			<Typography variant="subtitle1">
-				{`That didn't work. Sorry about that, ${refs.current.first_name}.`}
-				<div className={classes.buttons}>
-					<Button onClick={handleTryAgain} className={classes.button}>
-						Try Again
-					</Button>
-				</div>
-			</Typography>
-		</React.Fragment>
-	);
-
-	const AlreadyTaken = (
-		<React.Fragment>
-			<Typography variant="h5" gutterBottom>
-				{`Hey, ${refs.current.first_name}.`}
-			</Typography>
-			<Typography variant="subtitle1">
-				{`We see that you already have an account (which is nice).`}
-				<div className={classes.buttons}>
-					<Button onClick={handleLogin} className={classes.button}>
-						Login
-					</Button>
-				</div>
-			</Typography>
-		</React.Fragment>
-	);
 
 	return (
 		<React.Fragment>

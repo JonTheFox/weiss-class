@@ -57,6 +57,10 @@ var issy = (function() {
                             ? true
                             : false;
                     break;
+                case "aValidDate":
+                    const _date = new Date(this.arg);
+                    result = _date instanceof Date && !isNaN(_date);
+                    break;
 
                 default:
                     throw new Error(

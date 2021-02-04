@@ -84,6 +84,8 @@ export default function Form(props) {
 			}
 			const { validate } = formField;
 
+			debugger;
+
 			if (validate) {
 				return validate(inputValue);
 			}
