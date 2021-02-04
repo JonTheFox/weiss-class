@@ -5,11 +5,17 @@
 }
 
 #root .PieChart {
+	display: flex;
 	svg {
+		display: flex;
+		width: 100%;
+		height: auto;
 		transition: all 0.2s ease-in-out;
 		opacity: 1;
+		padding: 0;
+		margin: auto;
 		// overflow: visible;
-		padding: calc(2 * var(--spacing));
+		// padding: calc(2 * var(--spacing));
 		// background-color: var(--white);
 		// border-radius: 50%;
 
@@ -35,7 +41,7 @@
 	}
 
 	text {
-		fill: var(--black);
+		fill: var(--white);
 		// stroke: var(--transparent-black);
 		// stroke-width: 0.0075rem;
 

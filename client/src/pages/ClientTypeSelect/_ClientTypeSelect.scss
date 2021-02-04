@@ -1,6 +1,12 @@
 .realtime-entrance {
+	display: flex;
+	flex-flow: column;
 	.PieChart {
-		padding: calc(2 * var(--spacing));
+		// padding: calc(2 * var(--spacing));
+
+		svg {
+			padding: 0;
+		}
 
 		.glass-container {
 			padding: var(--spacing);
