@@ -69,6 +69,7 @@ export default function Form(props) {
 	};
 
 	const validateFormData = () => {
+		debugger;
 		let isFormValid = true; //a missing or invalid required field will change this to false
 
 		const data = getAllData();
@@ -81,13 +82,13 @@ export default function Form(props) {
 			const inputValue = data[name];
 			if (!inputValue) {
 				isFormValid = false;
+				return false;
 			}
 			const { validate } = formField;
 
-			debugger;
-
-			if (validate) {
-				return validate(inputValue);
+			if (validate && !validate(inputValue)) {
+				isFormValid = false;
+				return false;
 			}
 
 			//no validation rules... so anything passes
@@ -103,6 +104,7 @@ export default function Form(props) {
 
 	const handleChange = (value) => {
 		const isValid = validateFormData();
+		debugger;
 		setIsFormValid(isValid);
 	};
 	refs.current.handleChange = handleChange;

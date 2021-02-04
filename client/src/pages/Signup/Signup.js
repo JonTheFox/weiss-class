@@ -27,6 +27,9 @@ import MOCK_USER from "../../mockData/mockUser.js";
 import clsx from "clsx";
 import useLogg from "../../hooks/useLogg.jsx";
 import { useHistory } from "react-router-dom";
+import validatePassword from "./validatePassword.js";
+import validateEmail from "./validateEmail.js";
+import validateDate from "./validateDate.js";
 
 const useStyles = makeStyles((theme) => ({
 	appBar: {
@@ -79,19 +82,6 @@ const getPublicUserInfo = (user) => {
 };
 
 const isTruthy = (val) => !!val;
-const validateEmail = (email) => {
-	const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-	return regex.test(String(email).toLowerCase());
-};
-const isValidDate = (d) => {
-	if (!d || isNaN(d)) return null;
-	const date = new Date(d);
-	const result = date instanceof Date;
-	debugger;
-	return result;
-
-	return result;
-};
 
 const PROFILE_FIELDS = [
 	{
@@ -103,7 +93,7 @@ const PROFILE_FIELDS = [
 	{
 		name: "password",
 		label: "Password",
-		validate: isTruthy,
+		validate: validatePassword,
 		required: true,
 	},
 ];
@@ -130,7 +120,7 @@ const PERSONAL_FIELDS = [
 	{
 		label: "Birthday",
 		name: "bday",
-		validate: isValidDate,
+		validate: validateDate,
 		required: true,
 		type: "date",
 	},
@@ -284,7 +274,6 @@ export default function Signup(props) {
 			};
 			updateUser(allFormsData);
 
-			debugger;
 			setshowFeedback(true);
 			setFeedback({
 				heading: "Great Success!",
@@ -318,15 +307,18 @@ export default function Signup(props) {
 		handleNext();
 	}, [refs.current, setUser, setshowFeedback, setFeedback]);
 
-	const handleInputChange = useCallback(
-		(ev, fieldName) => {
-			const { value } = ev.target;
-			refs.current[fieldName] = value;
-			refs.current.handleChange(value);
-			debugger;
-		},
-		[refs]
-	); //pass an array of dependencies (you can pass an empty array)
+	const handleInputChange = useCallback((ev, fieldName) => {
+		const { value } = ev.target;
+		refs.current[fieldName] = value;
+		refs.current.handleChange(value);
+		// refs.current.setIsFormValid(true);
+
+		// const result = refs.current[`${fieldName}__validateFormData`]?.();
+
+		// const result2 = refs.current[
+		// 	`setIs${capitalizeFirstLetter(fieldName)}Valid`
+		// ]?.();
+	}, []);
 
 	function getFormComponent(step, refs) {
 		const form = FORMS[step];
@@ -363,7 +355,7 @@ export default function Signup(props) {
 				fields={fields}
 			>
 				{fields.map(
-					({ label, name, type = "", required }, inputIndex) => {
+					({ label, name = "", type = "", required }, inputIndex) => {
 						if (type === "date")
 							return (
 								<Grid key="" item xs={12} sm={12} key={label}>
