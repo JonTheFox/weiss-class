@@ -69,7 +69,6 @@ export default function Form(props) {
 	};
 
 	const validateFormData = () => {
-		debugger;
 		let isFormValid = true; //a missing or invalid required field will change this to false
 
 		const data = getAllData();
@@ -90,6 +89,8 @@ export default function Form(props) {
 				isFormValid = false;
 				return false;
 			}
+
+			debugger;
 
 			//no validation rules... so anything passes
 			return true;

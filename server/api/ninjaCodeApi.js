@@ -1,5 +1,5 @@
 const express = require("express");
-const { logger, is, request } = global;
+const { logger, is, request, getRandomUpTo } = global;
 
 const label = "ninjaCode";
 
@@ -11,13 +11,14 @@ const { logg, loggError } = logger.createSubLogger({
 const { authenticatedUsers, USER_SERVER_URL } = global;
 const router = express.Router();
 
-router.post("/", async (req, res, next) => {
+router.get("/", async (req, res, next) => {
 	try {
-		let { ninjaCode } = req.body;
+		let ninjaCode = getRandomUpTo(100);
 		ninjaCode = `#_${ninjaCode}_#`;
+		logg("ninjaCode: ", ninjaCode);
 		res.send({ ninjaCode });
 	} catch (err) {
-		loggError(err.message);
+		loggError(err);
 		return res.send({ error: err.message });
 	}
 });

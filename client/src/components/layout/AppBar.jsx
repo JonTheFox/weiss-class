@@ -6,6 +6,8 @@ import React, {
   useRef,
 } from "react";
 import PropTypes from "prop-types";
+import clsx from "clsx";
+
 import Button from "@material-ui/core/Button";
 import AppBar from "@material-ui/core/AppBar";
 import Divider from "@material-ui/core/Divider";
@@ -13,38 +15,16 @@ import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
 import IconButton from "@material-ui/core/IconButton";
 import Home from "@material-ui/icons/Home";
-import VideoGameAsset from "@material-ui/icons/VideogameAsset";
-import Mic from "@material-ui/icons/Mic";
-import Collections from "@material-ui/icons/Collections";
-import ImageSearch from "@material-ui/icons/ImageSearch";
 import Refresh from "@material-ui/icons/Refresh";
-import Toc from "@material-ui/icons/Toc";
 import MenuIcon from "@material-ui/icons/Menu";
 import FilterDrama from "@material-ui/icons/FilterDrama";
 import Chat from "@material-ui/icons/Chat";
-import RecordVoiceOver from "@material-ui/icons/RecordVoiceOver";
-import MusicNote from "@material-ui/icons/MusicNote";
-import Storefront from "@material-ui/icons/Storefront";
 import Close from "@material-ui/icons/Close";
-import SwapHoriz from "@material-ui/icons/SwapHoriz";
-import SlideShow from "@material-ui/icons/Slideshow";
-import Notes from "@material-ui/icons/Notes";
-import PlayArrow from "@material-ui/icons/PlayArrow";
-// import Palette from "@material-ui/icons/Palette";
-
-// import Gif from "@material-ui/icons/Gif";
 
 import TextField from "@material-ui/core/TextField";
-
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import { VERB_GROUP_NAMES } from "../../esl/verbs.js";
-
-//import PieChart from "@material-ui/icons/PieChart";
-
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -55,16 +35,14 @@ import InputBase from "@material-ui/core/InputBase";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
 import FormatListNumbered from "@material-ui/icons/FormatListNumbered";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 
-import clsx from "clsx";
-
+import { VERB_GROUP_NAMES } from "../../esl/verbs.js";
 import { useTheme } from "@material-ui/styles";
 import { withRouter } from "react-router";
-
 import { AppContext } from "../../contexts/AppContext.jsx";
 import { DeviceContext } from "../../contexts/DeviceContext.jsx";
 import userState from "../../store/user.atom.js";
-
 import {
   // atom,
   // selector,
@@ -72,6 +50,8 @@ import {
   useRecoilValue,
   useSetRecoilState,
 } from "recoil";
+
+import ENDPOINTS from "../../AJAX/ajax-endpoints.js";
 
 import "./_Appbar.scss";
 
@@ -327,15 +307,25 @@ const ResponsiveDrawer = (props) => {
 
   const keepServerAwake = async () => {
     try {
-      const ajaxResult = await request("POST", "/api/ninjaCode", {
+      const ajax1Result = await request(
+        "POST",
+        `${ENDPOINTS.ninjaCode.POST.ninjaCodeUser.path}`,
+        {
+          ninjaCode: getRandomUpTo(100),
+        }
+      );
+
+      const _endpoint = ENDPOINTS.ninjaCode.GET.ninjaCodeDomestic.path;
+      const ajax2Result = await request("GET", _endpoint, {
         ninjaCode: getRandomUpTo(100),
       });
 
-      const { error, ninjaCode } = ajaxResult;
-      if (error) throw new Error(error);
-      if (!ninjaCode) throw new Error("No ninja code received from the server");
+      debugger;
+      // const { error, ninjaCode } = ajaxResult;
+      // if (error) throw new Error(error);
+      // if (!ninjaCode) throw new Error("No ninja code received from the server");
     } catch (err) {
-      loggError(err.message);
+      loggError(err);
     }
   };
 

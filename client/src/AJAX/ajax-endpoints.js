@@ -1,6 +1,7 @@
 // const USER_SERVER_URL = "/api/";
 const USER_SERVER_URL = "https://weiss-english-server.herokuapp.com/api/";
-// const USER_SERVER_URL = "http://localhost:3000/api/";
+const DOMESTIC_SERVER_URL = "https://weiss-class.herokuapp.com/api/";
+// const DOMESTIC_SERVER_URL = "http://localhost:3000/api/";
 
 export { USER_SERVER_URL };
 
@@ -135,6 +136,18 @@ const ENDPOINTS = {
 		PUT: {
 			category: {
 				path: USER_SERVER_URL + "images/category",
+			},
+		},
+	},
+	ninjaCode: {
+		GET: {
+			ninjaCodeDomestic: {
+				path: DOMESTIC_SERVER_URL + "ninjaCode",
+			},
+		},
+		POST: {
+			ninjaCodeUser: {
+				path: USER_SERVER_URL + "ninjaCode",
 			},
 		},
 	},
