@@ -1685,8 +1685,6 @@ const handleBadData = (data, uri) => {
 
 const request = async (method = "GET", uri = "", payload = {}, config = {}) => {
     //make an AJAX request and either catch errors or parse the received response
-
-    //logg({ method, uri, payload, config });
     if (!uri) {
         throw new Error(`missing parameter "uri"`);
     }
@@ -1709,7 +1707,6 @@ const request = async (method = "GET", uri = "", payload = {}, config = {}) => {
         let res;
         if (method === "GET") {
             let uriWithQueryParams = uri;
-
             if (payload) {
                 let queryParams = "?";
                 for (let [key, value] of Object.entries(payload)) {

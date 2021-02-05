@@ -305,38 +305,11 @@ const ResponsiveDrawer = (props) => {
     });
   };
 
-  const keepServerAwake = async () => {
-    try {
-      const ajax1Result = await request(
-        "POST",
-        `${ENDPOINTS.ninjaCode.POST.ninjaCodeUser.path}`,
-        {
-          ninjaCode: getRandomUpTo(100),
-        }
-      );
-
-      const _endpoint = ENDPOINTS.ninjaCode.GET.ninjaCodeDomestic.path;
-      const ajax2Result = await request("GET", _endpoint, {
-        ninjaCode: getRandomUpTo(100),
-      });
-
-      debugger;
-      // const { error, ninjaCode } = ajaxResult;
-      // if (error) throw new Error(error);
-      // if (!ninjaCode) throw new Error("No ninja code received from the server");
-    } catch (err) {
-      loggError(err);
-    }
-  };
-
   useEffect(() => {
     const logger = new Logger({ label });
     logg = logger.logg;
     loggError = logger.loggError;
     promiseKeeper = new PromiseKeeper({ label });
-    // if (!DEBUGGING) {
-    promiseKeeper.every(5 * 1000, keepServerAwake);
-    // }
     return () => {
       window.cancelAnimationFrame(animationFrame);
     };

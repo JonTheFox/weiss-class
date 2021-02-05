@@ -140,14 +140,12 @@ const ENDPOINTS = {
 		},
 	},
 	ninjaCode: {
-		GET: {
-			ninjaCodeDomestic: {
-				path: DOMESTIC_SERVER_URL + "ninjaCode",
-			},
-		},
 		POST: {
 			ninjaCodeUser: {
 				path: USER_SERVER_URL + "ninjaCode",
+			},
+			ninjaCodeDomestic: {
+				path: DOMESTIC_SERVER_URL + "ninjaCode",
 			},
 		},
 	},

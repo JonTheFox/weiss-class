@@ -43,6 +43,7 @@ import { ParallaxProvider } from "react-scroll-parallax";
 import LogoScreen from "../../pages/LogoScreen/LogoScreen.jsx";
 import ErrorBoundary from "../../pages/ErrorPage/ErrorPage.jsx";
 import "./_RealtimeManager.scss";
+import ENDPOINTS from "../../AJAX/ajax-endpoints.js";
 
 const baseRoute = "/";
 const label = "RealtimeIndex";
@@ -55,7 +56,14 @@ const USER_STORAGE_KEY = `${LOCAL_STORAGE_KEY}__user`;
 
 const Realtime = (props) => {
 	const [appUtils] = useContext(AppContext);
-	const { PromiseKeeper, Logger, getUniqueString, CLIENT_ONLY } = appUtils;
+	const {
+		PromiseKeeper,
+		Logger,
+		getUniqueString,
+		CLIENT_ONLY,
+		getRandomUpTo,
+		request,
+	} = appUtils;
 
 	const { logg, loggError } = useLogg({ label });
 	const promiseKeeper = usePromiseKeeper({ label });
@@ -72,12 +80,41 @@ const Realtime = (props) => {
 	const [client, setClient] = useRecoilState(clientState);
 	const { slides } = useRecoilValue(lessonState);
 
+	const keepServersAwake = useCallback(async (serversUris = []) => {
+		try {
+			let ninjaCode = 0;
+			return promiseKeeper.every(
+				5 * 1000,
+				() => {
+					ninjaCode = getRandomUpTo(100);
+					Object.values(serversUris).map(async (serverUri) => {
+						debugger;
+						const postNinjaCode = await request("POST", serverUri, {
+							ninjaCode,
+						});
+					});
+				},
+				"keepServerAwake"
+			);
+		} catch (err) {
+			loggError(err);
+		}
+	}, []);
+
 	useEffect(() => {
 		if (user) return;
 		const localStorageUser = localStorage.getObj(USER_STORAGE_KEY);
 		setUser(localStorageUser);
 		const localStorageClient = localStorage.getObj(CLIENT_STORAGE_KEY);
 		setClient(localStorageClient);
+		const promiseTokeepServerAwake = keepServersAwake([
+			ENDPOINTS.ninjaCode.POST.ninjaCodeUser.path,
+			ENDPOINTS.ninjaCode.POST.ninjaCodeDomestic.path,
+		]);
+
+		return () => {
+			promiseTokeepServerAwake.reject("component unmounts");
+		};
 	}, []);
 
 	useEffect(() => {
