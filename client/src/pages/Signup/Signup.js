@@ -129,6 +129,8 @@ const PERSONAL_FIELDS = [
 		name: "gender",
 		validate: isTruthy,
 		required: true,
+		type: "select",
+		options: ["male", "female", "other"],
 	},
 ];
 
@@ -212,7 +214,7 @@ export default function Signup(props) {
 	const [showFeedback, setshowFeedback] = useState(false);
 	const [feedback, setFeedback] = useState({});
 	const { logg, loggError } = useLogg({ label });
-	Object.assign(refs.current, ELKANA);
+	// Object.assign(refs.current, ELKANA);
 	const [appUtils] = useContext(AppContext);
 	const { capitalizeFirstLetter, request, navigateTo } = appUtils;
 	const [isFormValid, setIsFormValid] = useState(false);
@@ -259,6 +261,7 @@ export default function Signup(props) {
 				});
 				return;
 			}
+
 			if (error) throw new Error(error);
 
 			if (!data)
@@ -277,7 +280,7 @@ export default function Signup(props) {
 			setshowFeedback(true);
 			return setFeedback({
 				heading: "Great Success!",
-				bodyText: `You are all signed up and ready to go.`,
+				bodyText: `You are now ready to go.`,
 				btnText: "continue",
 				handleBtnClick: () => {
 					navigateTo("/client-type-select", history);
@@ -286,8 +289,8 @@ export default function Signup(props) {
 		} catch (err) {
 			console.error(err);
 			// if (err.name && err.name === "ValidationError") {
-
 			const { message } = err;
+			debugger;
 			setshowFeedback(true);
 			return setFeedback({
 				heading: `Hmm.`,
@@ -305,10 +308,12 @@ export default function Signup(props) {
 		handleNext();
 	}, [refs.current, setUser, setshowFeedback, setFeedback]);
 
-	const handleInputChange = useCallback((ev, fieldName) => {
+	const handleInputChange = useCallback((ev, { fieldName }) => {
 		const { value } = ev.target;
 		refs.current[fieldName] = value;
+
 		refs.current.handleChange(value);
+
 		// refs.current.setIsFormValid(true);
 
 		// const result = refs.current[`${fieldName}__validateFormData`]?.();
@@ -324,21 +329,7 @@ export default function Signup(props) {
 
 		// setIsNextDisabled
 
-		const DateInput = ({ label, defaultValue, ...otherProps }) => {
-			return (
-				<TextField
-					label={label}
-					defaultValue={null}
-					className={classes.textField}
-					InputLabelProps={{
-						shrink: true,
-					}}
-					{...otherProps}
-				/>
-			);
-		};
-
-		refs.current.validateFormData && refs.current.validateFormData();
+		// refs.current.validateFormData && refs.current.validateFormData();
 
 		return (
 			<Form
@@ -369,7 +360,11 @@ export default function Signup(props) {
 									name={name}
 									label={label}
 									fullWidth
-									onChange={handleInputChange}
+									onChange={(ev) =>
+										handleInputChange(ev, {
+											fieldName: name,
+										})
+									}
 									autoComplete={name}
 									isFormValid={isFormValid}
 									defaultValue={refs.current[name] || ""}
@@ -415,6 +410,8 @@ export default function Signup(props) {
 		btnText = "",
 		onBtnClick,
 	}) => {
+		const _refs = refs.current;
+		debugger;
 		return (
 			<React.Fragment>
 				<Typography variant="h5" gutterBottom>
@@ -431,6 +428,8 @@ export default function Signup(props) {
 			</React.Fragment>
 		);
 	};
+
+	logg(refs.current);
 
 	return (
 		<React.Fragment>
