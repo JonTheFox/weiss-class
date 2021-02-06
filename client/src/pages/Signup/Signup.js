@@ -14,6 +14,7 @@ import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import Button from "@material-ui/core/Button";
+import SearchIcon from "@material-ui/icons/Search";
 import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -32,6 +33,8 @@ import { useHistory } from "react-router-dom";
 import validatePassword from "./validatePassword.js";
 import validateEmail from "./validateEmail.js";
 import validateDate from "./validateDate.js";
+import countries from "./countryList.js";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 
 const useStyles = makeStyles((theme) => ({
 	appBar: {
@@ -74,6 +77,40 @@ const useStyles = makeStyles((theme) => ({
 			color: "var(--canvas) !important",
 		},
 	},
+	autoComplete: {
+		// position: "relative",
+		// borderRadius: theme.shape.borderRadius,
+		// backgroundColor: fade(theme.palette.primary.main, 0.15),
+		// "&:hover": {
+		//   backgroundColor: fade(theme.palette.primary.main, 0.25)
+		// },
+		// marginLeft: 0,
+		// width: "100%",
+		// [theme.breakpoints.up("sm")]: {
+		//   marginLeft: theme.spacing(1),
+		//   width: "auto"
+		// }
+		// padding: theme.spacing(1, 1, 1, 7),
+		transition: theme.transitions.create("width"),
+		width: "100%",
+
+		[theme.breakpoints.up("sm")]: {
+			width: 200,
+			"&:focus": {
+				width: 800,
+			},
+		},
+	},
+	searchIcon: {
+		width: theme.spacing(7),
+
+		height: "100%",
+		position: "absolute",
+		pointerEvents: "none",
+		display: "flex",
+		alignItems: "center",
+		justifyContent: "center",
+	},
 }));
 
 const getPublicUserInfo = (user) => {
@@ -84,6 +121,14 @@ const getPublicUserInfo = (user) => {
 };
 
 const isTruthy = (val) => !!val;
+
+const isCountry = (countryName) => {
+	debugger;
+	if (!countryName || !countries || !countries.length) {
+		return null;
+	}
+	return countries.includes(countryName);
+};
 
 const PROFILE_FIELDS = [
 	{
@@ -136,7 +181,7 @@ const PERSONAL_FIELDS = [
 			{ label: "Male", value: "male" },
 			{ label: "Female", value: "female" },
 			{ label: "Fluid", value: "fluid" },
-			{ label: "Transgender", value: "transgender" },
+			{ label: "Trans", value: "transgender" },
 		],
 	},
 ];
@@ -169,8 +214,10 @@ const ADDRESS_FIELDS = [
 	{
 		name: "country",
 		label: "Country",
-		validate: isTruthy,
+		type: "autoComplete",
+		validate: isCountry,
 		required: true,
+		options: countries,
 	},
 ];
 
@@ -315,20 +362,26 @@ export default function Signup(props) {
 		handleNext();
 	}, [refs.current, setUser, setshowFeedback, setFeedback]);
 
-	const handleInputChange = useCallback((ev, { fieldName }) => {
-		const { value } = ev.target;
-		refs.current[fieldName] = value;
+	const handleInputChange = useCallback(
+		(ev, { fieldName, useInnerText = false }) => {
+			const value = ev.target[useInnerText ? "innerText" : "value"];
+			// if (fieldName === "country") {
+			// 	debugger;
+			// }
+			if (!value) debugger;
+			refs.current[fieldName] = value;
+			refs.current.handleChange(value);
 
-		refs.current.handleChange(value);
+			// refs.current.setIsFormValid(true);
 
-		// refs.current.setIsFormValid(true);
+			// const result = refs.current[`${fieldName}__validateFormData`]?.();
 
-		// const result = refs.current[`${fieldName}__validateFormData`]?.();
-
-		// const result2 = refs.current[
-		// 	`setIs${capitalizeFirstLetter(fieldName)}Valid`
-		// ]?.();
-	}, []);
+			// const result2 = refs.current[
+			// 	`setIs${capitalizeFirstLetter(fieldName)}Valid`
+			// ]?.();
+		},
+		[]
+	);
 
 	function getFormComponent(step, refs) {
 		const form = FORMS[step];
@@ -356,6 +409,67 @@ export default function Signup(props) {
 						{ label, name = "", type = "", required, options = [] },
 						inputIndex
 					) => {
+						if (type === "autoComplete") {
+							return (
+								<Grid item xs={12} sm={12} key={label}>
+									<Autocomplete
+										className={clsx(
+											classes.autoComplete,
+											"auto-complete"
+										)}
+										classes={{
+											root: classes.inputRoot,
+										}}
+										options={options}
+										//groupBy={appState.searchables.groupBy}
+										//defaultValue={appState.searchables.list[0]}
+										getOptionsLabel={(option) => option}
+										autoComplete={true}
+										placeholder={"Select your country"}
+										autoHighlight={false}
+										autoSelect={true}
+										clearOnEscape={false}
+										disableClearable={false}
+										disableCloseOnSelect={false}
+										disabled={false}
+										loading={false}
+										loadingText={"Working.."}
+										noOptionsText={
+											"Imagine there's no countries.."
+										}
+										renderInput={(params) => (
+											<React.Fragment>
+												<div
+													className={clsx(
+														"search-icon",
+														classes.searchIcon
+													)}
+												>
+													<SearchIcon />
+												</div>
+
+												<TextField
+													{...params}
+													// label="search-term"
+													variant="outlined"
+													fullWidth
+												/>
+											</React.Fragment>
+										)}
+										onChange={(ev) => {
+											const value = ev.target.innerText;
+											logg("selected option: ", value);
+
+											handleInputChange(ev, {
+												fieldName: name,
+												useInnerText: true,
+											});
+										}}
+										aria-label="search"
+									></Autocomplete>
+								</Grid>
+							);
+						}
 						return (
 							<Grid item xs={12} sm={12} key={label}>
 								<TextField

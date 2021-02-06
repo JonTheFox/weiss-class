@@ -112,6 +112,7 @@ const Realtime = (props) => {
 		]);
 
 		return () => {
+			debugger;
 			promiseTokeepServerAwake.reject("component unmounts");
 		};
 	}, []);
