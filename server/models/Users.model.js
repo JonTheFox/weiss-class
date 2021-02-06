@@ -38,35 +38,35 @@ const UserSchema = new Schema({
 		type: String,
 		lowercase: true,
 		trim: true,
-		required: true
+		required: true,
 	},
 	last_name: {
 		type: String,
 		lowercase: true,
 		trim: true,
-		required: true
+		required: true,
 	},
 	middle_name: {
 		type: String,
 		lowercase: true,
 		trim: true,
-		default: ""
+		required: true,
 	},
 	role: {
 		type: String,
 		enum: SUPPORTED_ROLES,
 		default: SUPPORTED_ROLES[0],
 		required: true,
-		lowercase: true
-	},
-	client_type: {
-		type: String,
-		enum: SUPPORTED_CLIENT_TYPES,
-		default: SUPPORTED_CLIENT_TYPES[0],
-		required: true,
 		lowercase: true,
-		trim: true
 	},
+	// client_type: {
+	// 	type: String,
+	// 	enum: SUPPORTED_CLIENT_TYPES,
+	// 	default: SUPPORTED_CLIENT_TYPES[0],
+	// 	required: true,
+	// 	lowercase: true,
+	// 	trim: true
+	// },
 	email: {
 		type: String,
 		trim: true,
@@ -76,30 +76,30 @@ const UserSchema = new Schema({
 		validate: [validateEmail, "Please fill a valid email address"],
 		match: [
 			/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-			"Please fill a valid email address"
-		]
+			"Please fill a valid email address",
+		],
 	},
 	gender: {
 		type: String,
 		enum: ["male", "female", "fluid", "transgender"],
-		required: true
+		required: true,
 	},
 	password: {
 		type: String,
 		trim: true,
 		required: true,
-		validate: [validatePassword, passwordRequirements]
+		validate: [validatePassword, passwordRequirements],
 	},
 
 	bday: {
 		type: Date,
-		required: true
+		required: true,
 	},
 	street_name: {
 		type: String,
 		lowercase: true,
 		trim: true,
-		required: true
+		required: false,
 	},
 	street_number: {
 		type: Number,
@@ -107,30 +107,30 @@ const UserSchema = new Schema({
 		max: 2000,
 		lowercase: true,
 		trim: true,
-		required: true
+		required: false,
 	},
 	city: {
 		type: String,
 		lowercase: true,
 		trim: true,
-		required: true
+		required: false,
 	},
 	state: {
 		type: String,
 		lowercase: true,
 		trim: true,
-		required: false
+		required: false,
 	},
 	country: {
 		type: String,
 		trim: true,
-		required: true
+		required: true,
 	},
 	friends: {
-		type: Array
+		type: Array,
 	},
 
-	updated: { type: Date, default: Date.now() }
+	updated: { type: Date, default: Date.now() },
 });
 
 // // NOTE: methods must be added to the schema before compiling it with mongoose.model()

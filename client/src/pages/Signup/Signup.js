@@ -16,6 +16,8 @@ import StepLabel from "@material-ui/core/StepLabel";
 import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
+import MenuItem from "@material-ui/core/MenuItem";
+
 import Form from "../../components/Form/Form.js";
 import { useRecoilState } from "recoil";
 import userState from "../../store/user.atom.js";
@@ -130,7 +132,12 @@ const PERSONAL_FIELDS = [
 		validate: isTruthy,
 		required: true,
 		type: "select",
-		options: ["male", "female", "other"],
+		options: [
+			{ label: "Male", value: "male" },
+			{ label: "Female", value: "female" },
+			{ label: "Fluid", value: "fluid" },
+			{ label: "Transgender", value: "transgender" },
+		],
 	},
 ];
 
@@ -345,14 +352,18 @@ export default function Signup(props) {
 				fields={fields}
 			>
 				{fields.map(
-					({ label, name = "", type = "", required }, inputIndex) => {
+					(
+						{ label, name = "", type = "", required, options = [] },
+						inputIndex
+					) => {
 						return (
 							<Grid item xs={12} sm={12} key={label}>
 								<TextField
 									InputLabelProps={{
 										shrink: true,
 									}}
-									type={type === "date" && "date"}
+									select={type === "select"}
+									type={type}
 									required={required}
 									id={name}
 									//	defaultValue={refs.current[name]}
@@ -368,7 +379,18 @@ export default function Signup(props) {
 									autoComplete={name}
 									isFormValid={isFormValid}
 									defaultValue={refs.current[name] || ""}
-								/>
+								>
+									{options &&
+										options.map &&
+										options.map((option) => (
+											<MenuItem
+												key={option.value}
+												value={option.value}
+											>
+												{option.label}
+											</MenuItem>
+										))}
+								</TextField>
 							</Grid>
 						);
 					}
@@ -428,8 +450,6 @@ export default function Signup(props) {
 			</React.Fragment>
 		);
 	};
-
-	logg(refs.current);
 
 	return (
 		<React.Fragment>
