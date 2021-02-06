@@ -15,7 +15,6 @@ router.post("/", async (req, res, next) => {
 	try {
 		let ninjaCode = getRandomUpTo(100);
 		ninjaCode = `#_${ninjaCode}_#`;
-		logg("ninjaCode: ", ninjaCode);
 		res.send({ ninjaCode });
 	} catch (err) {
 		loggError(err);

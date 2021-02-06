@@ -16,7 +16,7 @@ import StepLabel from "@material-ui/core/StepLabel";
 import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
-import Form from "../../forms/Form.js";
+import Form from "../../components/Form/Form.js";
 import { useRecoilState } from "recoil";
 import userState from "../../store/user.atom.js";
 import { AppContext } from "../../contexts/AppContext.jsx";
@@ -137,19 +137,19 @@ const ADDRESS_FIELDS = [
 		name: "street_name",
 		label: "Street",
 		validate: isTruthy,
-		required: true,
+		required: false,
 	},
 	{
 		name: "street_number",
 		label: "Number",
 		validate: isTruthy,
-		required: true,
+		required: false,
 	},
 	{
 		name: "city",
 		label: "City",
 		validate: isTruthy,
-		required: true,
+		required: false,
 	},
 	{
 		name: "state",
@@ -175,14 +175,14 @@ const FORMS = [
 ];
 
 const ELKANA = {
-	first_name: "Elkana",
-	last_name: "Danino",
+	first_name: "Jade",
+	last_name: "Spark",
 	middle_name: "",
 	bday: "01/01/1992",
-	email: "elkana@gmail.com",
-	password: "elkana7777",
+	email: "jade@gmail.com",
+	password: "Jade7777",
 
-	gender: "male",
+	gender: "female",
 	address1: "_",
 	address2: "_",
 	street_name: "_",
@@ -253,7 +253,7 @@ export default function Signup(props) {
 				setshowFeedback(true);
 				setFeedback({
 					heading: `Hey, ${refs.current.first_name}, `,
-					bodyText: `You already have an account.`,
+					bodyText: `You already have an account. Which is great.`,
 					btnText: "Login",
 					handleBtnClick: handleLogin,
 				});
@@ -275,7 +275,7 @@ export default function Signup(props) {
 			updateUser(allFormsData);
 
 			setshowFeedback(true);
-			setFeedback({
+			return setFeedback({
 				heading: "Great Success!",
 				bodyText: `You are all signed up and ready to go.`,
 				btnText: "continue",
@@ -283,8 +283,6 @@ export default function Signup(props) {
 					navigateTo("/client-type-select", history);
 				},
 			});
-
-			return;
 		} catch (err) {
 			console.error(err);
 			// if (err.name && err.name === "ValidationError") {
@@ -329,9 +327,8 @@ export default function Signup(props) {
 		const DateInput = ({ label, defaultValue, ...otherProps }) => {
 			return (
 				<TextField
-					type="date"
 					label={label}
-					defaultValue={defaultValue}
+					defaultValue={null}
 					className={classes.textField}
 					InputLabelProps={{
 						shrink: true,
@@ -340,6 +337,8 @@ export default function Signup(props) {
 				/>
 			);
 		};
+
+		refs.current.validateFormData && refs.current.validateFormData();
 
 		return (
 			<Form
@@ -356,27 +355,16 @@ export default function Signup(props) {
 			>
 				{fields.map(
 					({ label, name = "", type = "", required }, inputIndex) => {
-						if (type === "date")
-							return (
-								<Grid key="" item xs={12} sm={12} key={label}>
-									<DateInput
-										label="Birthday"
-										defaultValue={refs.current.bday}
-										key={name}
-										name={name}
-										label={label}
-										onChange={(ev) => {
-											handleInputChange(ev, name);
-										}}
-									/>
-								</Grid>
-							);
 						return (
 							<Grid item xs={12} sm={12} key={label}>
 								<TextField
+									InputLabelProps={{
+										shrink: true,
+									}}
+									type={type === "date" && "date"}
 									required={required}
 									id={name}
-									defaultValue={refs.current[name]}
+									//	defaultValue={refs.current[name]}
 									key={name}
 									name={name}
 									label={label}
@@ -395,7 +383,7 @@ export default function Signup(props) {
 	}
 
 	const handleNext = () => {
-		setActiveStep(activeStep + 1);
+		setActiveStep((_step) => ++_step);
 	};
 
 	const handleBack = () => {

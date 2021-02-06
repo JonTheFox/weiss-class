@@ -13,8 +13,8 @@ import Button from "@material-ui/core/Button";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import { makeStyles } from "@material-ui/core/styles";
-import userState from "../store/user.atom.js";
-import { AppContext } from "../contexts/AppContext.jsx";
+import userState from "../../store/user.atom.js";
+import { AppContext } from "../../contexts/AppContext.jsx";
 
 const useStyles = makeStyles((theme) => ({
 	button: {
@@ -90,8 +90,6 @@ export default function Form(props) {
 				return false;
 			}
 
-			debugger;
-
 			//no validation rules... so anything passes
 			return true;
 		});
@@ -99,14 +97,13 @@ export default function Form(props) {
 		return isFormValid;
 	};
 	refs.current[`${name}__validateFormData`] = validateFormData;
+	refs.current.validateFormData = validateFormData;
 	refs.current[`setIs${capitalizeFirstLetter(name)}Valid`] = (val) => {
 		setIsFormValid(val);
 	};
 
 	const handleChange = (value) => {
-		const isValid = validateFormData();
-		debugger;
-		setIsFormValid(isValid);
+		setIsFormValid(validateFormData());
 	};
 	refs.current.handleChange = handleChange;
 
@@ -119,13 +116,6 @@ export default function Form(props) {
 			if (ev) ev.preventDefault();
 			const form = refs.current[name];
 			if (!form) return;
-
-			let formData;
-			try {
-				formData = new FormData(form);
-			} catch (err) {
-				return null;
-			}
 
 			const allData = getAllData();
 

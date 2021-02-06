@@ -9,9 +9,7 @@ const validateDate = (d) => {
 	if (!d) return null;
 	if (!isDate(d)) {
 		const date = new Date(d);
-		const result = date instanceof Date;
-		debugger;
-		return result;
+		return date instanceof Date;
 	}
 	if (isDate(d) && isNaN(d)) {
 		return false;

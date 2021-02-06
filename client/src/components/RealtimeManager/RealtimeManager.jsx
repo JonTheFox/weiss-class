@@ -88,7 +88,6 @@ const Realtime = (props) => {
 				() => {
 					ninjaCode = getRandomUpTo(100);
 					Object.values(serversUris).map(async (serverUri) => {
-						debugger;
 						const postNinjaCode = await request("POST", serverUri, {
 							ninjaCode,
 						});
