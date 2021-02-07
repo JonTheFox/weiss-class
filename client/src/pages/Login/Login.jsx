@@ -84,7 +84,9 @@ export default function SignIn(props) {
 				ENDPOINTS.users.POST.login.path,
 				{ email, password }
 			);
+
 			const { error, wrongCredentials, loggedIn, user } = ajaxResult;
+			debugger;
 
 			if (error) throw new Error(error);
 			if (wrongCredentials) {
@@ -110,7 +112,7 @@ export default function SignIn(props) {
 				navigateTo("/client-type-select", history);
 			});
 		} catch (err) {
-			loggError(err.message);
+			loggError(err);
 		}
 	}, []);
 
