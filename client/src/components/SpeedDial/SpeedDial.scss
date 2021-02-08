@@ -1,11 +1,11 @@
 .MuiFab-primary {
 	// todo: change the following to be global and be set dyanmically
-	----user--color---secondary: var(--secondary);
+	---user--color---secondary: var(--secondary);
 	--user--color---primary: var(--primary);
 
 	background: linear-gradient(
 		75deg,
-		var(----user--color---secondary),
+		var(---user--color---secondary),
 		var(--user--color---primary)
 	);
 }
@@ -35,7 +35,7 @@
 
 		z-index: 30;
 
-		animation: drawAttention 2.25s 1;
+		animation: popup 2.25s 1;
 		animation-delay: 0s;
 		animation-fill-mode: forwards;
 	}
@@ -77,5 +77,47 @@
 	100% {
 		transform: scale3d(1, 1, 1) rotate(0deg) skewX(0deg) skewY(0deg);
 		background-color: var(--white);
+	}
+}
+
+@keyframes popup {
+	0% {
+		transform: scale3d(1, 1, 1) rotate(0deg) skewX(0deg) skewY(0deg);
+
+		color: var(--canvas);
+		background: linear-gradient(75deg, var(--secondary), var(--primary));
+	}
+
+	3.5% {
+		transform: scale3d(0.3, 0.3, 0.3) rotate(5deg) skewX(0deg) skewY(20deg);
+	}
+
+	25%,
+	45% {
+		color: var(--red-1);
+		// transform: scale3d(2, 0.3, 0.3) rotate(5deg) skewX(0deg) skewY(20deg);
+
+		transform: scale(3) translateX(-50%) translateY(-50%);
+		background: linear-gradient(75deg, var(---white), var(--black));
+	}
+
+	60%,
+	70% {
+		transform: scale(3) translateX(-50%) translateY(-50%);
+	}
+
+	90% {
+		transform: scale3d(0.3, 0.3, 0.3) rotate(5deg) skewX(0deg) skewY(20deg);
+		color: var(--red-1);
+	}
+
+	100% {
+		transform: scale3d(1, 1, 1) rotate(0deg) skewX(0deg) skewY(0deg);
+		color: var(--black);
+		background: linear-gradient(
+			75deg,
+			var(---user--color---secondary),
+			var(--user--color---primary)
+		);
 	}
 }

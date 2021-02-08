@@ -11,13 +11,14 @@ const CLIENT_ACTIONS = [
 	//{ icon: <FileCopyIcon />, name: "Copy" },
 	{
 		icon: <PanToolIcon />,
-		name: "Raise Hand",
+		label: "Raise Hand",
+		name: "raiseHand",
 	},
-	//{ icon: <SaveIcon />, name: "Save" },
-	//{ icon: <PrintIcon />, name: "Print" },
-	//{ icon: <ShareIcon />, name: "Share" },
-	{ icon: <FavoriteIcon />, name: "Like" },
-	{ icon: <HelpIcon />, name: "Help!" },
+	//{ icon: <SaveIcon />, label: "Save" },
+	//{ icon: <PrintIcon />, label: "Print" },
+	//{ icon: <ShareIcon />, label: "Share" },
+	{ icon: <FavoriteIcon />, label: "Like", name: "like" },
+	{ icon: <HelpIcon />, label: "Help!", name: "help" },
 ];
 
 export default CLIENT_ACTIONS;

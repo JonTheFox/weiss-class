@@ -116,16 +116,19 @@ const Text = ({ children = "" }) => {
 				{CLIENT_ACTIONS.map((action, actionIndex) => {
 					const isSelected = selectedAction === action;
 
+					const { name, icon, label } = action;
+
 					return (
 						<SpeedDialAction
 							className={clsx(
 								"SpeedDialAction",
+								`SpeedDialAction--${name}`,
 								`SpeedDialAction--${actionIndex}`,
 								isSelected && "selected"
 							)}
-							key={action.name}
-							icon={action.icon}
-							tooltipTitle={action.name}
+							key={label}
+							icon={icon}
+							tooltipTitle={label}
 							tooltipOpen
 							onClick={() => handleActionSelect(action)}
 						/>
