@@ -123,7 +123,6 @@ const getPublicUserInfo = (user) => {
 const isTruthy = (val) => !!val;
 
 const isCountry = (countryName) => {
-	debugger;
 	if (!countryName || !countries || !countries.length) {
 		return null;
 	}
@@ -344,7 +343,7 @@ export default function Signup(props) {
 			console.error(err);
 			// if (err.name && err.name === "ValidationError") {
 			const { message } = err;
-			debugger;
+			loggError(err);
 			setshowFeedback(true);
 			return setFeedback({
 				heading: `Hmm.`,
@@ -547,7 +546,6 @@ export default function Signup(props) {
 		onBtnClick,
 	}) => {
 		const _refs = refs.current;
-		debugger;
 		return (
 			<React.Fragment>
 				<Typography variant="h5" gutterBottom>

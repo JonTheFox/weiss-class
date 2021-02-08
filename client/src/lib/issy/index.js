@@ -1760,7 +1760,7 @@ const request = async (method = "GET", uri = "", payload = {}, config = {}) => {
         return parsedResponse;
     } catch (err) {
         const ajaxResult = {
-            error: err.message,
+            error: err,
             response: parsedResponse,
         };
 
