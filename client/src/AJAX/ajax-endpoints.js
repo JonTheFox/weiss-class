@@ -1,7 +1,7 @@
-// const USER_SERVER_URL = "/api/";
 const USER_SERVER_URL = "http://weiss-english-server.herokuapp.com/api/";
-const DOMESTIC_SERVER_URL = "https://weiss-class.herokuapp.com/api/";
+// const DOMESTIC_SERVER_URL = "https://weiss-class.herokuapp.com/api/";
 // const DOMESTIC_SERVER_URL = "http://localhost:3000/api/";
+const DOMESTIC_SERVER_URL = "/api/";
 // const USER_SERVER_URL = "http://localhost:5001/api/";
 
 export { USER_SERVER_URL };
