@@ -23,6 +23,8 @@ import theme from "./constants/theme.js";
 import AppRoutes from "./AppRoutes.js";
 import VideoPlayer from "./components/VideoPlayer/VideoPlayer.jsx";
 import bgVideos from "./constants/bgVideos.js";
+import ReactNotification from "react-notifications-component";
+import "react-notifications-component/dist/theme.css";
 
 import {
 	RecoilRoot,
@@ -72,6 +74,7 @@ const App = (props) => {
 															}
 															key="innerView"
 														>
+															<ReactNotification></ReactNotification>
 															<VideoPlayer
 																style={{
 																	position:

@@ -1,3 +1,9 @@
+import Logger from "../../lib/logg.js";
+
+const label = "clientTypes.js";
+
+const { logg, loggError } = new Logger({ label });
+
 class ClassroomClient {
 	clientId;
 	email;
@@ -109,7 +115,7 @@ class ClassroomClientList {
 }
 
 export {
-	classroomClientList,
+	ClassroomClientList,
 	ClassroomClient,
 	Teacher,
 	Student,

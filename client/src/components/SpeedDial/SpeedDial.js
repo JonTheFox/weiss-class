@@ -22,9 +22,13 @@ import {
 } from "recoil";
 import socketState from "../../store/socket.atom.js";
 import clientState from "../../store/client.atom.js";
-import classroomState from "../../store/classroom.atom.js";
+import roomState from "../../store/room.atom.js";
 import isSoundOnState from "../../store/isSoundOn.selector.js";
-import CLIENT_ACTIONS from "./clientActions.js";
+import {
+	studentActions,
+	teacherActions,
+	platformActions,
+} from "./clientActions.js";
 import clsx from "clsx";
 import { Howl, Howler } from "howler";
 import "./SpeedDial.scss";
@@ -37,14 +41,16 @@ const Text = ({ children = "" }) => {
 	// const { PromiseKeeper, Logger } = appUtils;
 
 	const { logg, loggError } = useLogg({ label });
+	const [clientActions, setClientActions] = useState(studentActions);
 	const promiseKeeper = usePromiseKeeper({ label });
 
 	const [isBackdropVisible, setIsBackgroundVisible] = useState(false);
 	const [isSpeedDialOpen, setIsSpeedDialOpen] = useState(false);
+	const refs = useRef({ selectedAction: {} });
 
 	const socket = useRecoilValue(socketState);
 	const client = useRecoilValue(clientState);
-	const classroom = useRecoilValue(classroomState);
+	const room = useRecoilValue(roomState);
 	const isSoundOn = useRecoilValue(isSoundOnState);
 
 	const [selectedAction, setSelectedAction] = useState(null);
@@ -67,31 +73,81 @@ const Text = ({ children = "" }) => {
 		}
 	}, [isSpeedDialOpen]);
 
-	const handleActionSelect = (action = {}) => {
+	useEffect(() => {
+		refs.current.selectedAction = selectedAction;
+	}, [selectedAction]);
+
+	useEffect(() => {
+		refs.current.client = client;
+
+		let clientActions;
+		switch (client.type) {
+			case "student":
+				clientActions = studentActions;
+				break;
+			case "teacher":
+				clientActions = teacherActions;
+				break;
+			case "platform":
+				clientActions = platformActions;
+			default:
+				clientActions = studentActions;
+				break;
+		}
+		refs.current.clientActions = clientActions;
+		setClientActions(clientActions);
+	}, [client]);
+
+	const handleActionClick = ({ action, clientId, clientType, type } = {}) => {
 		if (!action) {
 			loggError(
-				"handleActionSelect was called without an action. Returning."
+				"handleActionClick was called without an action. Returning."
 			);
 			return null;
 		}
 
-		if (selectedAction) return;
+		if (refs.current.selectedAction) return;
 
-		socket.emit(`client__sendsAction`, {
+		const payload = {
 			clientId: client.id,
-			roomKey: classroom.roomKey,
+			roomKey: room.roomKey,
 			actionName: action.name,
-		});
+			toAllStudents: true,
+		};
 
+		let eventName;
+		switch (clientType) {
+			case "student":
+				eventName = "client__studentSendsAction";
+				break;
+			case "teacher":
+				eventName = "client__teacherSendsAction";
+				break;
+			case "platform":
+				eventName = "client__platformSendsAction";
+			default:
+				debugger;
+				loggError("unrecognized client type");
+				eventName = studentActions;
+				break;
+		}
+
+		socket.emit(eventName, payload);
 		setSelectedAction(action);
+		refs.current.selectedAction = action;
+
 		if (isSoundOn) {
 			attentionSound.play();
 		}
-		const prom = promiseKeeper.stall(2.25 * 1000).andThen((promise) => {
+		const minimizeIcon = promiseKeeper
+			.stall(2.25 * 1000)
+			.andThen((promise) => {
+				setSelectedAction(null);
+				refs.current.selectedAction = null;
+			});
+		minimizeIcon.catch((err) => {
 			setSelectedAction(null);
-		});
-		prom.catch((err) => {
-			setSelectedAction(null);
+			refs.current.selectedAction = null;
 		});
 
 		// handleSpeedDialClose();
@@ -113,7 +169,7 @@ const Text = ({ children = "" }) => {
 					right: "calc( 2 * var(--spacing))",
 				}}
 			>
-				{CLIENT_ACTIONS.map((action, actionIndex) => {
+				{clientActions.map((action, actionIndex) => {
 					const isSelected = selectedAction === action;
 
 					const { name, icon, label } = action;
@@ -130,7 +186,13 @@ const Text = ({ children = "" }) => {
 							icon={icon}
 							tooltipTitle={label}
 							tooltipOpen
-							onClick={() => handleActionSelect(action)}
+							onClick={() =>
+								handleActionClick({
+									action,
+									clientId: client.id,
+									clientType: client.type,
+								})
+							}
 						/>
 					);
 				})}

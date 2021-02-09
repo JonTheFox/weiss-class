@@ -11,16 +11,18 @@ import posed, { PoseGroup } from "react-pose";
 import DURATIONS from "../../constants/durations.js";
 import View from "../../components/layout/View.jsx";
 import PieChart from "../../components/PieChart/PieChart.jsx";
+
 import { useRecoilState, useRecoilValue } from "recoil";
-import roomsState from "../../store/rooms.atom.js";
+
 import userState from "../../store/user.atom.js";
 import isSoundOnState from "../../store/isSoundOn.selector.js";
-
 import socketState from "../../store/socket.atom.js";
 import socketConnectionState from "../../store/socketConnection.atom.js";
 import clientState from "../../store/client.atom.js";
 import { CONNECTION_STATES } from "../../store/CONNECTION_STATES.js";
+
 import "./Realtime.entrance.jsx";
+
 import Heading from "../../components/Heading/Heading.js";
 
 import { Howl, Howler } from "howler";
@@ -203,6 +205,8 @@ const RTEntrance = (props) => {
 
 	const [client, setClient] = useRecoilState(clientState);
 
+	const socket = useRecoilValue(socketState);
+
 	const [showHeading, setShowHeading] = useState(false);
 	const [showGlass, setShowGlass] = useState(false);
 
@@ -353,8 +357,6 @@ const RTEntrance = (props) => {
 		}
 		setFeedback(newFeedback);
 	}, [connectionStatus]);
-
-	const rooms = useRecoilValue(roomsState);
 
 	return (
 		<View

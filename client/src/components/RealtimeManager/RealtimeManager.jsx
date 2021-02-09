@@ -46,6 +46,9 @@ import "./_RealtimeManager.scss";
 import ENDPOINTS from "../../AJAX/ajax-endpoints.js";
 import ACTION_TYPES from "./actionTypes.js";
 import { Teacher } from "./clientTypes.js";
+import clsx from "clsx";
+
+import { store as notificationStore } from "react-notifications-component";
 
 const baseRoute = "/";
 const label = "RealtimeIndex";
@@ -76,11 +79,11 @@ const Realtime = (props) => {
 
 	const setRooms = useSetRecoilState(roomsState);
 	const [room, setRoom] = useRecoilState(roomState);
-	const setSocket = useSetRecoilState(socketState);
+
+	const [socket, setSocket] = useRecoilState(socketState);
 	const [user, setUser] = useRecoilState(userState);
 	const setLesson = useSetRecoilState(lessonState);
 	const [client, setClient] = useRecoilState(clientState);
-	const setFeedback = useSetRecoilState(clientState);
 	const { slides } = useRecoilValue(lessonState);
 
 	const keepServersAwake = useCallback(async (serversUris = []) => {
@@ -131,6 +134,12 @@ const Realtime = (props) => {
 		refs.current.user = user;
 		logg("user: ", user);
 	}, [user]);
+
+	useEffect(() => {
+		localStorage.setObj("room", room);
+		refs.current.room = room;
+		logg("room: ", room);
+	}, [room]);
 
 	// useEffect(() => {
 	// 	if (data?.rooms) {
@@ -207,16 +216,23 @@ const Realtime = (props) => {
 			});
 
 			socket.on(
-				"server__teachersSendsMsg",
-				({ actionType = "", teacher = {} }) => {
-					setFeedback({ ...ACTION_TYPES[actionType], teacher });
+				"server__teacherSendsAction",
+				({ actionType = "success", teacher = {} }) => {
 					debugger;
 
-					logg(
-						`server__teachersSendsMsg: Teacher ${new Teacher(
-							teacher
-						).getFullName()} has sent the following action: ${actionType}`
-					);
+					notificationStore.addNotification({
+						title: "Wonderful!",
+						message: "teodosii@react-notifications-component",
+						type: "success",
+						insert: "top",
+						container: "top-right",
+						// animationIn: ["animate__animated", "animate__fadeIn"],
+						// animationOut: ["animate__animated", "animate__fadeOut"],
+						dismiss: {
+							duration: 5000,
+							onScreen: true,
+						},
+					});
 				}
 			);
 
@@ -271,6 +287,22 @@ const Realtime = (props) => {
 			});
 
 			return socket;
+
+			promiseKeeper.every(1500, () => {
+				notificationStore.addNotification({
+					title: "Nice!",
+					message: "You are doing a good job.",
+					type: "success",
+					insert: "bottom",
+					container: "top-left",
+					// animationIn: ["animate__animated", "animate__fadeIn"],
+					// animationOut: ["animate__animated", "animate__fadeOut"],
+					dismiss: {
+						duration: 5000,
+						onScreen: true,
+					},
+				});
+			});
 		} catch (err) {
 			loggError(err.message);
 			console.error(`error in initsocket(): `, err);
@@ -280,11 +312,11 @@ const Realtime = (props) => {
 	useEffect(() => {
 		try {
 			if (isSocketInitialized || !user) return;
-			const socket = initSocket({
+			const _socket = initSocket({
 				user,
 			});
 			isSocketInitialized = true;
-			setSocket(socket);
+			setSocket(_socket);
 		} catch (err) {
 			console.log(err);
 		}

@@ -3,7 +3,7 @@ import React, {
 	useContext,
 	useRef,
 	useEffect,
-	useCallback
+	useCallback,
 } from "react";
 import { AppContext } from "../../contexts/AppContext.jsx";
 import PropTypes from "prop-types";
@@ -20,13 +20,13 @@ const label = "Feedback";
 const feedbackPoses = {
 	enter: {
 		opacity: 1,
-		rotateY: "0deg"
+		rotateY: "0deg",
 	},
 	exit: {
 		opacity: 0,
 		delay: 0,
-		rotateY: "180deg"
-	}
+		rotateY: "180deg",
+	},
 };
 
 const PosedFeedback = posed.div(feedbackPoses);
@@ -58,7 +58,7 @@ const Feedback = React.forwardRef((props, ref) => {
 });
 
 Feedback.propTypes = {
-	show: PropTypes.bool
+	show: PropTypes.bool,
 };
 
 export default Feedback;

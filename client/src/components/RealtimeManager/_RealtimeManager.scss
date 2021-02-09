@@ -93,7 +93,7 @@
 						overflow: auto;
 					}
 
-					pre.server-msg--container {
+					pre.feedback {
 						// padding: var(--spacing);
 						transition: all 0.2s;
 						padding: calc(1 * var(--spacing));
@@ -169,6 +169,44 @@
 		}
 		.realtime-classroom {
 			background-color: pink;
+		}
+	}
+}
+
+.feedback {
+	pre {
+		// padding: var(--spacing);
+		transition: all 0.2s;
+		padding: calc(1 * var(--spacing));
+		border-radius: 0.1rem;
+		margin: auto;
+		z-index: 1;
+		font-family: inherit;
+		color: var(--black);
+		user-select: none;
+		height: auto;
+
+		&.isIdle {
+			// opacity: 0;
+		}
+		&.isConnecting,
+		&.isEnteringRoom {
+			color: var(--black);
+			background-color: var(--white);
+		}
+		&.isConnected,
+		&.isAlreadyConnected {
+			color: var(--black);
+			background-color: var(--green);
+		}
+		&.isDisconnected {
+			color: var(--black);
+			background-color: var(--red-1);
+		}
+		&.connectionFailed {
+			color: var(--yellow);
+			color: var(--black);
+			background-color: var(--yellow);
 		}
 	}
 }

@@ -53,7 +53,7 @@ import {
 import roomsState from "../../store/rooms.atom.js";
 import socketState from "../../store/socket.atom.js";
 import clientState from "../../store/client.atom.js";
-import classroomState from "../../store/classroom.atom.js";
+import roomState from "../../store/room.atom.js";
 import isSoundOnState from "../../store/isSoundOn.selector.js";
 import refsState from "../../store/refs.atom.js";
 import * as io from "socket.io-client";
@@ -157,7 +157,9 @@ export default function ClassroomSelect(props) {
   const refs = useRecoilValue(refsState);
 
   const [rooms, setRooms] = useRecoilState(roomsState);
-  const setClassroom = useSetRecoilState(classroomState);
+  const room = useRecoilValue(roomState);
+  const setRoom = useSetRecoilState(roomState);
+
   const socket = useRecoilValue(socketState);
   const client = useRecoilValue(clientState);
 
@@ -194,8 +196,14 @@ export default function ClassroomSelect(props) {
       clientType: client.type,
     });
 
-    setClassroom({ roomKey });
-    // setShowCarousel(false);
+    //todo: put this where a teacher command gets sent
+    // socket.emit("client__teachersSendsMsg", {
+    //   //user,
+    //   roomKey,
+    // });
+
+    setRoom({ roomKey });
+    setShowCarousel(false);
     setIsLarge(true);
 
     promiseKeeper.stall(300 * 1, "nav to classroom").then(() => {
@@ -346,7 +354,7 @@ ClassroomSelect.propTypes = {
                         clientType: client.type,
                       });
 
-                      setClassroom({ roomKey });
+                      setRoom({ roomKey });
 
                       navigateTo(`/rt/classroom`, history);
                     }}

@@ -94,11 +94,11 @@
 
 	25%,
 	45% {
-		color: var(--red-1);
+		color: var(--white);
 		// transform: scale3d(2, 0.3, 0.3) rotate(5deg) skewX(0deg) skewY(20deg);
 
 		transform: scale(3) translateX(-50%) translateY(-50%);
-		background: linear-gradient(75deg, var(---white), var(--black));
+		background: linear-gradient(75deg, var(--secondary), var(--primary));
 	}
 
 	60%,
@@ -108,7 +108,7 @@
 
 	90% {
 		transform: scale3d(0.3, 0.3, 0.3) rotate(5deg) skewX(0deg) skewY(20deg);
-		color: var(--red-1);
+		color: var(--white);
 	}
 
 	100% {

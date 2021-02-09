@@ -630,7 +630,7 @@ const supplementIO = function(io) {
 			io.emit(msg);
 		});
 
-		socket.on("client__sendsAction", function({
+		socket.on("client__studentSendsAction", function({
 			clientId,
 			roomKey,
 			actionName,
@@ -648,8 +648,6 @@ const supplementIO = function(io) {
 				);
 				return null;
 			}
-
-			logg("classroomsManager.clients:", classroomsManager.clients);
 
 			const room = classroomsManager.getRoomByKey(roomKey);
 
@@ -678,6 +676,60 @@ const supplementIO = function(io) {
 		});
 
 		socket.on("teacher__setsSlideIndex", function({ index }) {});
+
+		socket.on("client__teacherSendsAction", (payload, b) => {
+			const {
+				user,
+				recipients = [],
+				toAllStudents,
+				msg = {},
+				studentClientId,
+				teacherClientId,
+				roomKey = 1,
+				actionName,
+			} = payload;
+
+			try {
+				if (toAllStudents) {
+					logg("server__teacherSendsAction");
+					return socket
+						.to(roomKey)
+						.emit("server__teacherSendsAction", {
+							roomKey,
+							teacherClientId,
+							msg,
+						});
+				}
+
+				return;
+
+				// const classroomClientList = new ClassroomClientList({
+				// 	clientType: "student",
+				// 	clients: recipients,
+				// 	roomKey: "temp",
+				// });
+
+				// logg("classroom: ", classroom);
+				// return;
+				// const studentClientIds = getAllClients();
+				// logg("recipients: ", recipients);
+				// const teacherClientId = teacher.clientId;
+				// const teacherInstance = classroomsManager.getClientById(
+				// 	teacherClientId
+				// );
+				// const roomKey = teacherInstance.roomKey;
+
+				// if (toAllStudents) {
+				// 	return classroomsIO
+				// 		.to(roomKey)
+				// 		.emit("server__admitsAnotherUser", {
+				// 			...userWithoutPass,
+				// 		});
+				// }
+			} catch (err) {
+				loggError(err);
+			}
+		});
 
 		socket.on("clientSelectsRoom", function({ user, intent }) {
 			try {

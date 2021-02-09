@@ -28,6 +28,7 @@ import roomState from "../../store/room.atom.js";
 import socketState from "../../store/socket.atom.js";
 import userState from "../../store/user.atom.js";
 import clientState from "../../store/client.atom.js";
+
 import currentSlideState from "../../store/slide.selector.js";
 import * as io from "socket.io-client";
 import clientsTypes from "../../constants/clientsTypes.js";
@@ -35,6 +36,8 @@ import clientsTypes from "../../constants/clientsTypes.js";
 import SpeedDial from "../SpeedDial/SpeedDial.js";
 import Slider from "../Slider/Slider.js";
 import { useHistory } from "react-router-dom";
+
+import clsx from "clsx";
 import "./_classroom.scss";
 
 const label = "Classroom";
@@ -68,47 +71,17 @@ const Classroom = (props) => {
 
 	// useEffect(() => {
 	// 	if (!slides || !slides.length) {
-	// 		navigateTo("/", history);
+	// 		navigateTo("/classroom-select", history);
 	// 	}
 	// }, []);
 
-	// const mapSlide = useCallback((refs, goToStep, slide) => {
-	// 	return <Slide slide={slide}></Slide>;
-	// }, []);
-
-	// const handleChangeSlideIndex = useCallback((slideIndex) => {
-	// 	logg("handleChangeSlideIndex ", slideIndex);
-	// }, []);
 	return (
 		<View className={"classroom"}>
 			<Slider slideIndex={2} slides={slides}></Slider>
+
 			<SpeedDial></SpeedDial>
 		</View>
 	);
 };
 
 export default Classroom;
-
-/*
-
-<Swiper
-				sharedRefs={refs}
-				index={1}
-				items={slides || []}
-				mapItem={mapSlide.bind(
-					null,
-					refs,
-					refs.current.swiper_goToStep
-				)}
-				onItemsLoaded={(a, b) => {
-					logg("onItemsLoaded: ", a, b);
-				}}
-				noFullscreen={true}
-				size={DeviceContext.screenSize}
-				justifyContent="space-between"
-				//onChange={handleViewedItemChange}
-				onChangeIndex={handleChangeSlideIndex}
-				onSwitching={(index, type) => {}}
-			></Swiper>
-
-*/

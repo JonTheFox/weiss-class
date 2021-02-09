@@ -7,7 +7,7 @@ import ShareIcon from "@material-ui/icons/Share";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import PanToolIcon from "@material-ui/icons/PanTool";
 
-const CLIENT_ACTIONS = [
+const studentActions = [
 	//{ icon: <FileCopyIcon />, name: "Copy" },
 	{
 		icon: <PanToolIcon />,
@@ -21,4 +21,22 @@ const CLIENT_ACTIONS = [
 	{ icon: <HelpIcon />, label: "Help!", name: "help" },
 ];
 
-export default CLIENT_ACTIONS;
+const teacherActions = [
+	//{ icon: <FileCopyIcon />, name: "Copy" },
+
+	//{ icon: <SaveIcon />, label: "Save" },
+	//{ icon: <PrintIcon />, label: "Print" },
+	//{ icon: <ShareIcon />, label: "Share" },
+	{ icon: <FavoriteIcon />, label: "Like", name: "like" },
+];
+
+const platformActions = [
+	//{ icon: <FileCopyIcon />, name: "Copy" },
+
+	//{ icon: <SaveIcon />, label: "Save" },
+	//{ icon: <PrintIcon />, label: "Print" },
+	{ icon: <ShareIcon />, label: "Share" },
+	// { icon: <FavoriteIcon />, label: "Like", name: "like" },
+];
+
+export { studentActions, teacherActions, platformActions };
