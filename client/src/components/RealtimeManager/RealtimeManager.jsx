@@ -44,6 +44,8 @@ import LogoScreen from "../../pages/LogoScreen/LogoScreen.jsx";
 import ErrorBoundary from "../../pages/ErrorPage/ErrorPage.jsx";
 import "./_RealtimeManager.scss";
 import ENDPOINTS from "../../AJAX/ajax-endpoints.js";
+import ACTION_TYPES from "./actionTypes.js";
+import { Teacher } from "./clientTypes.js";
 
 const baseRoute = "/";
 const label = "RealtimeIndex";
@@ -78,6 +80,7 @@ const Realtime = (props) => {
 	const [user, setUser] = useRecoilState(userState);
 	const setLesson = useSetRecoilState(lessonState);
 	const [client, setClient] = useRecoilState(clientState);
+	const setFeedback = useSetRecoilState(clientState);
 	const { slides } = useRecoilValue(lessonState);
 
 	const keepServersAwake = useCallback(async (serversUris = []) => {
@@ -181,6 +184,41 @@ const Realtime = (props) => {
 				setClient((_client) => ({ ..._client, id: client.id }));
 				setRooms(classrooms);
 			});
+
+			socket.on("server__setsState", ({ state, stateName }) => {
+				switch (stateName) {
+					case "lesson":
+						setLesson(state);
+						break;
+					case "rooms":
+						setRooms(state);
+						break;
+					case "room":
+						setRoom(state);
+						break;
+					case "user":
+						setUser(state);
+						break;
+					case "client":
+						setClient(state);
+						break;
+				}
+				logg(`server__setsState: ${stateName} state is now ${state}`);
+			});
+
+			socket.on(
+				"server__teachersSendsMsg",
+				({ actionType = "", teacher = {} }) => {
+					setFeedback({ ...ACTION_TYPES[actionType], teacher });
+					debugger;
+
+					logg(
+						`server__teachersSendsMsg: Teacher ${new Teacher(
+							teacher
+						).getFullName()} has sent the following action: ${actionType}`
+					);
+				}
+			);
 
 			socket.on("connect", function(msg) {
 				const content = `User ${email} has connected to realtime room.`;

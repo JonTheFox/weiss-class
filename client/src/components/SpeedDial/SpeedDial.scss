@@ -114,10 +114,6 @@
 	100% {
 		transform: scale3d(1, 1, 1) rotate(0deg) skewX(0deg) skewY(0deg);
 		color: var(--black);
-		background: linear-gradient(
-			75deg,
-			var(---user--color---secondary),
-			var(--user--color---primary)
-		);
+		background: linear-gradient(75deg, var(--secondary), var(--primary));
 	}
 }
