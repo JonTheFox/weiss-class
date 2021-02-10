@@ -229,24 +229,6 @@ const FORMS = [
 	{ label: "Address", fields: ADDRESS_FIELDS },
 ];
 
-const ELKANA = {
-	first_name: "Jade",
-	last_name: "Spark",
-	middle_name: "",
-	bday: "01/01/1992",
-	email: "jade@gmail.com",
-	password: "Jade7777",
-
-	gender: "female",
-	address1: "_",
-	address2: "_",
-	street_name: "_",
-	street_number: 3,
-	city: "_",
-	state: "_",
-	country: "Israel",
-};
-
 const label = "Signup";
 
 // const errorMsg = `That didn't work. Sorry about that, ${refs.current.first_name}.`;
@@ -267,7 +249,7 @@ export default function Signup(props) {
 	const [showFeedback, setshowFeedback] = useState(false);
 	const [feedback, setFeedback] = useState({});
 	const { logg, loggError } = useLogg({ label });
-	// Object.assign(refs.current, ELKANA);
+	Object.assign(refs.current, MOCK_USER);
 	const [appUtils] = useContext(AppContext);
 	const { capitalizeFirstLetter, request, navigateTo } = appUtils;
 	const [isFormValid, setIsFormValid] = useState(false);

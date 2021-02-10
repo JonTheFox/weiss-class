@@ -210,3 +210,8 @@
 		}
 	}
 }
+
+#root .notification__item--success {
+	background-color: var(--secondary);
+	border-left: 8px solid var(--secondary-darker-1);
+}

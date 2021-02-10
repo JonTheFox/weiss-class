@@ -118,7 +118,6 @@ const Realtime = (props) => {
 		]);
 
 		return () => {
-			debugger;
 			promiseTokeepServerAwake.reject("component unmounts");
 		};
 	}, []);
@@ -217,19 +216,23 @@ const Realtime = (props) => {
 
 			socket.on(
 				"server__teacherSendsAction",
-				({ actionType = "success", teacher = {} }) => {
-					debugger;
-
+				({
+					actionName = "like",
+					toastActionType = "success",
+					teacher = {},
+					headingText = "",
+					bodyText = "",
+				}) => {
 					notificationStore.addNotification({
-						title: "Wonderful!",
-						message: "teodosii@react-notifications-component",
-						type: "success",
+						title: headingText,
+						message: bodyText,
+						type: toastActionType,
 						insert: "top",
 						container: "top-right",
-						// animationIn: ["animate__animated", "animate__fadeIn"],
-						// animationOut: ["animate__animated", "animate__fadeOut"],
+						animationIn: ["animate__animated", "animate__fadeIn"],
+						animationOut: ["animate__animated", "animate__fadeOut"],
 						dismiss: {
-							duration: 5000,
+							duration: 60000,
 							onScreen: true,
 						},
 					});

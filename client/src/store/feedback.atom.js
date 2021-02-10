@@ -8,8 +8,8 @@ import {
 const recoilState = atom({
 	key: "feedbackState",
 	default: {
-		heading: "",
-		text: "",
+		headingText: "",
+		bodyText: "",
 	},
 });
 

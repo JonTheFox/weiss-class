@@ -7,18 +7,14 @@ const {
 	is,
 	getUniqueString,
 } = global;
-// const { logg, loggError } = logger.createSubLogger(label, "kettem");
 const authenticate = require("../api/auth.js");
 const classroomLogger = logger.createSubLogger({ label, style: "orange" });
 const { logg, loggError } = classroomLogger;
-
 const CLASSROOMS = require("../data/classrooms/allClassrooms.js");
-
 const getPublicUserInfo = require("../api/getPublicUserInfo.js");
-
 const clientTypes = require("./clientTypes.js");
-
 const CLIENT_TYPES = ["student", "teacher", "platform"];
+const TEACHER_FEEDBACKS = require("./teacherFeedbacks.js");
 
 const assertValidCredentials = (creds = {}) => {
 	if (!creds)
@@ -677,27 +673,82 @@ const supplementIO = function(io) {
 
 		socket.on("teacher__setsSlideIndex", function({ index }) {});
 
-		socket.on("client__teacherSendsAction", (payload, b) => {
+		socket.on("client__teacherSendsAction", (payload) => {
 			const {
 				user,
-				recipients = [],
+				recipients = "allStudents",
 				toAllStudents,
-				msg = {},
+				// msg = {},
 				studentClientId,
 				teacherClientId,
 				roomKey = 1,
 				actionName,
+				headingText,
+				bodyText,
 			} = payload;
 
+			if (!teacherClientId) {
+				throw new Error(`missing teacherClientId`);
+			}
+
 			try {
-				if (toAllStudents) {
+				const teacherInfo = getPublicUserInfo(
+					classroomsManager.getClientById(teacherClientId)
+				);
+				logg("teacher info: ", teacherInfo);
+				const feedback =
+					TEACHER_FEEDBACKS[actionName] || TEACHER_FEEDBACKS["like"];
+
+				logg("feedback: ", feedback);
+
+				if (!feedback) {
+					const answer =
+						"something went wrong. Couldn't find feedback.";
+
+					throw new Error(answer);
+				}
+
+				if (!teacherInfo) {
+					const answer = "An unknown teacher has sent an action";
+					loggError(answer);
+					throw new Error(answer);
+				}
+
+				//the fedault headfing and body texts can be overriden
+				const headingText = payload.headingText || feedback.headingText;
+				const bodyText = payload.bodyText || feedback.bodyText;
+				const emoji = payload.emoji || feedback.emoji;
+
+				if (recipients == "allStudents") {
+					// switch (actionName.toLowerCase()) {
+					// 	case "like":
+					// 		title = msg || "I like it!";
+
+					// 		break;
+					// 	case "goodjob":
+					// 		title = title || "Nice work!";
+					// 		break;
+					// 	default:
+					// 		//If none of the above is the case..
+					// 		break;
+					// }
+
 					logg("server__teacherSendsAction");
 					return socket
 						.to(roomKey)
 						.emit("server__teacherSendsAction", {
 							roomKey,
+							teacher: teacherInfo,
+							actionName,
+							toastActionType: "success",
+							headingText,
+							bodyText,
+
+							user,
+							recipients,
+							studentClientId,
 							teacherClientId,
-							msg,
+							roomKey,
 						});
 				}
 
@@ -718,16 +769,10 @@ const supplementIO = function(io) {
 				// 	teacherClientId
 				// );
 				// const roomKey = teacherInstance.roomKey;
-
-				// if (toAllStudents) {
-				// 	return classroomsIO
-				// 		.to(roomKey)
-				// 		.emit("server__admitsAnotherUser", {
-				// 			...userWithoutPass,
-				// 		});
-				// }
 			} catch (err) {
 				loggError(err);
+				socket.emit("re:client__teacherSendsAction", { error: err });
+				return null;
 			}
 		});
 

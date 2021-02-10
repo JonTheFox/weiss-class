@@ -113,6 +113,7 @@ const Text = ({ children = "" }) => {
 			roomKey: room.roomKey,
 			actionName: action.name,
 			toAllStudents: true,
+			teacherClientId: client.id,
 		};
 
 		let eventName;
@@ -122,6 +123,7 @@ const Text = ({ children = "" }) => {
 				break;
 			case "teacher":
 				eventName = "client__teacherSendsAction";
+				payload.teacherClientId = client.id;
 				break;
 			case "platform":
 				eventName = "client__platformSendsAction";
