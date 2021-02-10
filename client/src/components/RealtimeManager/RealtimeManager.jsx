@@ -47,8 +47,13 @@ import ENDPOINTS from "../../AJAX/ajax-endpoints.js";
 import ACTION_TYPES from "./actionTypes.js";
 import { Teacher } from "./clientTypes.js";
 import clsx from "clsx";
+import ThumbUpIcon from "@material-ui/icons/ThumbUp";
+import FavoriteIcon from "@material-ui/icons/Favorite";
 
-import { store as notificationStore } from "react-notifications-component";
+import FeedbackContent from "./FeedbackContent.js";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const baseRoute = "/";
 const label = "RealtimeIndex";
@@ -223,19 +228,30 @@ const Realtime = (props) => {
 					headingText = "",
 					bodyText = "",
 				}) => {
-					notificationStore.addNotification({
-						title: headingText,
-						message: bodyText,
-						type: toastActionType,
-						insert: "top",
-						container: "top-right",
-						animationIn: ["animate__animated", "animate__fadeIn"],
-						animationOut: ["animate__animated", "animate__fadeOut"],
-						dismiss: {
-							duration: 60000,
-							onScreen: true,
-						},
-					});
+					// notificationStore.addNotification({
+					// 	title: headingText,
+					// 	message: bodyText,
+					// 	type: toastActionType,
+					// 	insert: "top",
+					// 	container: "top-right",
+					// 	animationIn: ["animate__animated", "animate__fadeIn"],
+					// 	animationOut: ["animate__animated", "animate__fadeOut"],
+					// 	dismiss: {
+					// 		duration: 180 * 60 * 1000,
+					// 		onScreen: true,
+					// 	},
+					// });
+
+					const toastConfig = {
+						position: "top-left",
+						autoClose: 6000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+					};
+
+					toast(headingText, toastConfig);
 				}
 			);
 
@@ -290,22 +306,6 @@ const Realtime = (props) => {
 			});
 
 			return socket;
-
-			promiseKeeper.every(1500, () => {
-				notificationStore.addNotification({
-					title: "Nice!",
-					message: "You are doing a good job.",
-					type: "success",
-					insert: "bottom",
-					container: "top-left",
-					// animationIn: ["animate__animated", "animate__fadeIn"],
-					// animationOut: ["animate__animated", "animate__fadeOut"],
-					dismiss: {
-						duration: 5000,
-						onScreen: true,
-					},
-				});
-			});
 		} catch (err) {
 			loggError(err.message);
 			console.error(`error in initsocket(): `, err);
@@ -325,7 +325,23 @@ const Realtime = (props) => {
 		}
 	}, [user]);
 
-	return props.children;
+	return (
+		<React.Fragment>
+			<ToastContainer
+				position="top-left"
+				autoClose={6000}
+				hideProgressBar={false}
+				newestOnTop={false}
+				closeOnClick
+				rtl={false}
+				pauseOnFocusLoss
+				draggable
+				pauseOnHover
+			/>
+
+			{props.children}
+		</React.Fragment>
+	);
 };
 
 export default Realtime;

@@ -17,6 +17,10 @@
 	);
 }
 
+.gradient-mix {
+	background: linear-gradient(75deg, var(--secondary), var(--primary));
+}
+
 // #root .weiss-logo--gradient {
 // 	&.has-before:before,
 // 	&:not(*.has-before) {
