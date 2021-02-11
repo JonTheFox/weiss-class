@@ -315,4 +315,10 @@
 			var(--white)
 		);
 	}
+
+	.Toastify__toast-body {
+		font-size: 1.05rem;
+		color: darkgray;
+		// color: var(--black);
+	}
 }

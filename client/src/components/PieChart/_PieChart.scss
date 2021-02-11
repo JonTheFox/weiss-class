@@ -6,13 +6,14 @@
 
 #root .PieChart {
 	display: flex;
+	padding: var(--spacing);
 	svg {
 		display: flex;
 		width: 100%;
 		height: auto;
 		transition: all 0.2s ease-in-out;
 		opacity: 1;
-		padding: 0;
+		padding: var(--spacing);
 		margin: auto;
 		// overflow: visible;
 		// padding: calc(2 * var(--spacing));

@@ -59,7 +59,6 @@ import refsState from "../../store/refs.atom.js";
 import * as io from "socket.io-client";
 import { useHistory } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
-import FancyCard from "../../components/FancyCard/FancyCard.jsx";
 
 import { mainClickSound } from "../../constants/sounds.js";
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper";
@@ -196,12 +195,6 @@ export default function ClassroomSelect(props) {
       clientType: client.type,
     });
 
-    //todo: put this where a teacher command gets sent
-    // socket.emit("client__teachersSendsMsg", {
-    //   //user,
-    //   roomKey,
-    // });
-
     setRoom({ roomKey });
     setShowCarousel(false);
     setIsLarge(true);
@@ -221,26 +214,6 @@ export default function ClassroomSelect(props) {
     );
   };
 
-  // return (
-  //   <Swiper
-  //     spaceBetween={50}
-  //     slidesPerView={3}
-  //     direction="vertical"
-  //     navigation
-  //     pagination={{ clickable: true }}
-  //     scrollbar={{ draggable: true }}
-  //     onSwiper={(swiper) => console.log(swiper)}
-  //     onSlideChange={() => console.log("slide change")}
-  //   >
-  //     {roomsInfo.map((room) => {
-  //       return (
-  //         <SwiperSlide>
-  //           <Card />
-  //         </SwiperSlide>
-  //       );
-  //     })}
-  //   </Swiper>
-  // );
   useEffect(() => {
     promiseKeeper.stall(0.5 * 1000, "show carousel").then(() => {
       setShowCarousel(true);
@@ -285,102 +258,3 @@ ClassroomSelect.propTypes = {
   rounds: PropTypes.object,
   onCorrect: PropTypes.func,
 };
-
-/*
-
-
-<Grid container spacing={4}>
-            {rooms &&
-              rooms.map &&
-              rooms.map((classroom, i, _items) => {
-                const {
-                  teachers,
-                  students,
-                  platforms,
-                  title = "",
-                  name = "",
-                  roomKey,
-                  img = {},
-                } = classroom;
-
-                const getTeacherFullName = (teacher = {}) => {
-                  if (!teacher) return null;
-                  const { first_name = "", last_name = "" } = teacher;
-                  if (!first_name && !last_name) return null;
-                  //capitalize first letters
-                  const _first_name =
-                    first_name[0].toUpperCase() + first_name.slice(1);
-                  const _last_name =
-                    last_name &&
-                    last_name[0] &&
-                    last_name[0].toUpperCase() + last_name.slice(1);
-                  return `${_first_name} ${_last_name}`;
-                };
-
-                const numTeachers = teachers.length;
-                const firstTeacher = teachers?.clients?.[0] || {};
-                // const firstName = firstTeacher.first_name || "";
-                // const lastName = firstTeacher.last_name || "";
-                // const firstTeacherFullname = capitalizeFirstLetter(
-                //   `${firstName} ${lastName}`
-                // );
-                const firstTeacherFullname = getTeacherFullName(firstTeacher);
-
-                const bgImage = img?.url || firstTeacher?.img?.url || "";
-
-             
-                return <FancyCard />;
-
-                return (
-                  <Card
-                    className={clsx(classes.card, "dynamic-shadow")}
-                    style={{
-                      background: `url(${bgImage})`,
-                    }}
-                    onClick={(ev) => {
-                      if (is(socket).aString) {
-                        loggError("socket is inactive");
-                        debugger;
-                        return null;
-                      }
-
-                      isSoundOn && mainClickSound.play();
-
-                      const { id, type } = client;
-
-                      socket.emit("client__selectsRoom", {
-                        roomKey,
-                        clientId: client.id,
-                        clientType: client.type,
-                      });
-
-                      setRoom({ roomKey });
-
-                      navigateTo(`/rt/classroom`, history);
-                    }}
-                  >
-                    <CardContent className={classes.cardContent}>
-                      <CardActions>
-                        <Typography
-                          gutterBottom
-                          className="readable"
-                          variant="h5"
-                          component="h5"
-                        >
-                          {firstTeacherFullname}
-                        </Typography>
-                        <Typography
-                          gutterBottom
-                          className="readable"
-                          variant="p"
-                          component="p"
-                        >
-                          {title || name}
-                        </Typography>
-                      </CardActions>
-                    </CardContent>
-                  </Card>
-                );
-              })}
-          </Grid>
-*/
