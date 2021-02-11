@@ -118,7 +118,6 @@ const Realtime = (props) => {
 	const toastNotification = useCallback(
 		async ({ actionName, teacher, bodyText, actions }) => {
 			const _bodyText = bodyText || actions[actionName]?.bodyText;
-			const acts = actions;
 			if (!_bodyText) {
 				loggError("no body text");
 				return null;
@@ -325,7 +324,7 @@ const Realtime = (props) => {
 		<React.Fragment>
 			<ToastContainer
 				position="top-left"
-				autoClose={6000}
+				autoClose={500 * 6000}
 				hideProgressBar={false}
 				newestOnTop={false}
 				closeOnClick

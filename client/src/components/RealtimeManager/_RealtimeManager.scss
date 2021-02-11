@@ -305,4 +305,14 @@
 		background: linear-gradient(75deg, var(--yellow), var(--red-1));
 		color: white;
 	}
+
+	.Toastify__progress-bar {
+		background: linear-gradient(
+			to right,
+			var(--white),
+			var(--primary),
+			var(--secondary),
+			var(--white)
+		);
+	}
 }
