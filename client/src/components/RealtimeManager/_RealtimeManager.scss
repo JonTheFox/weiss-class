@@ -280,3 +280,29 @@
 
 // 	align-items: center;
 // }
+
+.Toastify {
+	color: black;
+	.toast--default {
+		background-color: var(--white);
+	}
+
+	.toast--props {
+		// background: linear-gradient(75deg, var(--secondary), var(--primary));
+		// color: var(--black);
+	}
+	// .toast--like {
+	// 	//background-color: var(--white);
+	// 	background: linear-gradient(75deg, var(--secondary), var(--primary));
+	// 	background-color: var(--white);
+	// }
+	.toast--dislike {
+		//background-color: var(--red-1);
+		background: linear-gradient(75deg, var(--red-1), var(--red-3));
+		color: white;
+	}
+	.toast--warn {
+		background: linear-gradient(75deg, var(--yellow), var(--red-1));
+		color: white;
+	}
+}

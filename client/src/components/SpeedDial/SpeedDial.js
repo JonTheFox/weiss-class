@@ -28,7 +28,7 @@ import {
 	studentActions,
 	teacherActions,
 	platformActions,
-} from "./clientActions.js";
+} from "../RealtimeManager/clientActionTypes.js";
 import clsx from "clsx";
 import { Howl, Howler } from "howler";
 import "./SpeedDial.scss";
@@ -171,7 +171,7 @@ const Text = ({ children = "" }) => {
 					right: "calc( 2 * var(--spacing))",
 				}}
 			>
-				{clientActions.map((action, actionIndex) => {
+				{Object.values(clientActions).map((action, actionIndex) => {
 					const isSelected = selectedAction === action;
 
 					const { name, icon, label } = action;

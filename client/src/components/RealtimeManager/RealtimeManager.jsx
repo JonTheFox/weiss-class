@@ -44,7 +44,11 @@ import LogoScreen from "../../pages/LogoScreen/LogoScreen.jsx";
 import ErrorBoundary from "../../pages/ErrorPage/ErrorPage.jsx";
 import "./_RealtimeManager.scss";
 import ENDPOINTS from "../../AJAX/ajax-endpoints.js";
-import ACTION_TYPES from "./actionTypes.js";
+import {
+	studentActions,
+	teacherActions,
+	platformActions,
+} from "./clientActionTypes";
 import { Teacher } from "./clientTypes.js";
 import clsx from "clsx";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
@@ -110,6 +114,27 @@ const Realtime = (props) => {
 			loggError(err);
 		}
 	}, []);
+
+	const toastNotification = useCallback(
+		async ({ actionName, teacher, bodyText, actions }) => {
+			const _bodyText = bodyText || actions[actionName]?.bodyText;
+			const acts = actions;
+			if (!_bodyText) {
+				loggError("no body text");
+				return null;
+			}
+			toast(_bodyText, {
+				position: "top-left",
+				autoClose: 6000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				className: `toast--${actionName}`,
+			});
+		},
+		[]
+	);
 
 	useEffect(() => {
 		if (user) return;
@@ -219,41 +244,12 @@ const Realtime = (props) => {
 				logg(`server__setsState: ${stateName} state is now ${state}`);
 			});
 
-			socket.on(
-				"server__teacherSendsAction",
-				({
-					actionName = "like",
-					toastActionType = "success",
-					teacher = {},
-					headingText = "",
-					bodyText = "",
-				}) => {
-					// notificationStore.addNotification({
-					// 	title: headingText,
-					// 	message: bodyText,
-					// 	type: toastActionType,
-					// 	insert: "top",
-					// 	container: "top-right",
-					// 	animationIn: ["animate__animated", "animate__fadeIn"],
-					// 	animationOut: ["animate__animated", "animate__fadeOut"],
-					// 	dismiss: {
-					// 		duration: 180 * 60 * 1000,
-					// 		onScreen: true,
-					// 	},
-					// });
-
-					const toastConfig = {
-						position: "top-left",
-						autoClose: 6000,
-						hideProgressBar: false,
-						closeOnClick: true,
-						pauseOnHover: true,
-						draggable: true,
-					};
-
-					toast(headingText, toastConfig);
-				}
-			);
+			socket.on("server__teacherSendsAction", (payload) => {
+				toastNotification({ ...payload, actions: teacherActions });
+			});
+			socket.on("server__studentSendsAction", (payload) => {
+				toastNotification({ ...payload, actions: studentActions });
+			});
 
 			socket.on("connect", function(msg) {
 				const content = `User ${email} has connected to realtime room.`;

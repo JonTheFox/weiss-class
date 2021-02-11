@@ -630,6 +630,7 @@ const supplementIO = function(io) {
 			clientId,
 			roomKey,
 			actionName,
+			bodyText, //optional overriding
 		}) {
 			const client = classroomsManager.getClientById(clientId);
 			if (!client) {
@@ -662,13 +663,23 @@ const supplementIO = function(io) {
 				);
 				return null;
 			}
-			teachers.map((teacher, i) => {
-				const { clientId } = teacher;
-				//emit to teacher
-			});
+
 			const msg = `${client.getFullName()}: client__sendsAction: ${actionName}`;
 			logg(msg);
-			io.emit(msg);
+
+			return socket.to(roomKey).emit("server__studentSendsAction", {
+				roomKey,
+				clientId,
+				roomKey,
+				actionName,
+				bodyText,
+			});
+			/*
+						teachers.map((teacher, i) => {
+				const { clientId } = teacher;
+				//todo: emit to teacher only
+			});
+						*/
 		});
 
 		socket.on("teacher__setsSlideIndex", function({ index }) {});
@@ -682,8 +693,9 @@ const supplementIO = function(io) {
 				studentClientId,
 				teacherClientId,
 				roomKey = 1,
+
 				actionName,
-				headingText,
+				//	headingText,
 				bodyText,
 			} = payload;
 
@@ -695,44 +707,15 @@ const supplementIO = function(io) {
 				const teacherInfo = getPublicUserInfo(
 					classroomsManager.getClientById(teacherClientId)
 				);
-				logg("teacher info: ", teacherInfo);
-				const feedback =
-					TEACHER_FEEDBACKS[actionName] || TEACHER_FEEDBACKS["like"];
-
-				logg("feedback: ", feedback);
-
-				if (!feedback) {
-					const answer =
-						"something went wrong. Couldn't find feedback.";
-
-					throw new Error(answer);
-				}
-
 				if (!teacherInfo) {
 					const answer = "An unknown teacher has sent an action";
 					loggError(answer);
 					throw new Error(answer);
 				}
 
-				//the fedault headfing and body texts can be overriden
-				const headingText = payload.headingText || feedback.headingText;
-				const bodyText = payload.bodyText || feedback.bodyText;
-				const emoji = payload.emoji || feedback.emoji;
+				//the default body text can be overriden
 
 				if (recipients == "allStudents") {
-					// switch (actionName.toLowerCase()) {
-					// 	case "like":
-					// 		title = msg || "I like it!";
-
-					// 		break;
-					// 	case "goodjob":
-					// 		title = title || "Nice work!";
-					// 		break;
-					// 	default:
-					// 		//If none of the above is the case..
-					// 		break;
-					// }
-
 					logg("server__teacherSendsAction");
 					return socket
 						.to(roomKey)
@@ -740,8 +723,6 @@ const supplementIO = function(io) {
 							roomKey,
 							teacher: teacherInfo,
 							actionName,
-							toastActionType: "success",
-							headingText,
 							bodyText,
 
 							user,

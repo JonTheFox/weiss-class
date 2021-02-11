@@ -10,6 +10,9 @@ const recoilState = atom({
 	default: {
 		headingText: "",
 		bodyText: "",
+		emoji: "",
+		toastActionName: "",
+		toastActionType: "",
 	},
 });
 
