@@ -39,7 +39,6 @@ import * as io from "socket.io-client";
 import { localStorage } from "../../lib/issy/index.js";
 import VideoPlayer from "../VideoPlayer/VideoPlayer.jsx";
 import LOCAL_STORAGE_KEY from "../../constants/localStorageKey.js";
-import { ParallaxProvider } from "react-scroll-parallax";
 import LogoScreen from "../../pages/LogoScreen/LogoScreen.jsx";
 import ErrorBoundary from "../../pages/ErrorPage/ErrorPage.jsx";
 import "./_RealtimeManager.scss";
