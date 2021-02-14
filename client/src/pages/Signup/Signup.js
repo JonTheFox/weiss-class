@@ -36,6 +36,8 @@ import validateDate from "./validateDate.js";
 import countries from "./countryList.js";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
+import ImageUploader from "../../components/ImageUploader/ImageUploader.jsx";
+
 const useStyles = makeStyles((theme) => ({
 	appBar: {
 		position: "relative",
@@ -183,6 +185,13 @@ const PERSONAL_FIELDS = [
 			{ label: "Trans", value: "transgender" },
 		],
 	},
+	{
+		label: "Image",
+		name: "image",
+		validate: isTruthy,
+		required: true,
+		type: "imageUpload",
+	},
 ];
 
 const ADDRESS_FIELDS = [
@@ -278,6 +287,8 @@ export default function Signup(props) {
 			allFormsData.street_number = parseInt(addressData.street_number);
 			// allFormsData.bday = new Date();
 
+			debugger;
+
 			const ajaxResult = await request(
 				"POST",
 				ENDPOINTS.users.POST.signup.path,
@@ -364,6 +375,44 @@ export default function Signup(props) {
 		[]
 	);
 
+	const handleImageChange = useCallback(async (image, images) => {
+		try {
+			const formData = new FormData();
+			formData.append("uploadedImage", image);
+			const config = {
+				headers: {
+					"content-type": "multipart/form-data",
+				},
+			};
+			refs.current.image = formData;
+
+			// const payload = { formData, image };
+
+			const ajaxResult = await request(
+				"POST",
+				ENDPOINTS.userImages.POST.uploadOne.path,
+				{ elkana: "elkaan" },
+				config
+			);
+
+			debugger;
+
+			// const ajaxResult = await request(
+			// 	"POST",
+			// 	ENDPOINTS.images.POST.uploadOne.path,
+			// 	payload,
+			// 	config
+			// );
+
+			// const { error, data } = ajaxResult;
+			// if (error) throw new Error(error);
+		} catch (err) {
+			loggError(err);
+			debugger;
+			return null;
+		}
+	}, []);
+
 	function getFormComponent(step, refs) {
 		const form = FORMS[step];
 		const { fields = [], label } = form;
@@ -390,6 +439,24 @@ export default function Signup(props) {
 						{ label, name = "", type = "", required, options = [] },
 						inputIndex
 					) => {
+						if (type === "imageUpload") {
+							return (
+								<Grid key={label}>
+									<ImageUploader
+										withIcon={true}
+										buttonText="Choose images"
+										onChange={handleImageChange}
+										imgExtension={[
+											".jpg",
+											".gif",
+											".png",
+											".gif",
+										]}
+										maxFileSize={5242880}
+									></ImageUploader>
+								</Grid>
+							);
+						}
 						if (type === "autoComplete") {
 							return (
 								<Grid item xs={12} sm={12} key={label}>

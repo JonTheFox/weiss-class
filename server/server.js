@@ -54,6 +54,7 @@ logg("global.HOST: ", global.HOST);
 const app = express();
 
 const ninjaCodeApi = require("./api/ninjaCodeApi.js");
+const imagesApi = require("./api/imagesApi.js");
 
 app.use(helmet());
 /*Helmet is a collection of 13 middleware functions that set some HTTP response headers for better security.
@@ -69,6 +70,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use("/api/ninjaCode", ninjaCodeApi);
+app.use("/api/images", imagesApi);
 
 const BUILD_FOLDER = path.join(__dirname, "../client", "build");
 
