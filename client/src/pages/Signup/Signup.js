@@ -37,8 +37,10 @@ import countries from "./countryList.js";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
 import ImageUploader from "../../components/ImageUploader/ImageUploader.jsx";
-import firebase from "firebase";
-import { connect } from "react-firebase";
+import firebase from "firebase/app";
+import "firebase/storage";
+
+import { storage } from "../../firebase/firebase.js";
 
 const useStyles = makeStyles((theme) => ({
 	appBar: {
@@ -242,8 +244,6 @@ const FORMS = [
 
 const label = "Signup";
 
-// const errorMsg = `That didn't work. Sorry about that, ${refs.current.first_name}.`;
-
 export default function Signup(props) {
 	const classes = useStyles();
 	const [activeStep, setActiveStep] = useState(0);
@@ -379,14 +379,24 @@ export default function Signup(props) {
 
 	const handleImageChange = useCallback(async (image, images) => {
 		try {
-			const formData = new FormData();
-			formData.append("uploadedImage", image);
-			const config = {
-				headers: {
-					"content-type": "multipart/form-data",
-				},
-			};
-			refs.current.image = formData;
+			// const formData = new FormData();
+			// formData.append("uploadedImage", image);
+			// const config = {
+			// 	headers: {
+			// 		"content-type": "multipart/form-data",
+			// 	},
+			// };
+			//refs.current.image = formData;
+
+			if (image === "") {
+				console.error(
+					`not an image, the image file is a ${typeof image}`
+				);
+			}
+
+			const uploadTask = storage.ref(`/images/${image.name}`).put(image);
+
+			debugger;
 
 			// const payload = { formData, image };
 
@@ -396,10 +406,6 @@ export default function Signup(props) {
 			// 	{ elkana: "elkaan" },
 			// 	config
 			// );
-
-			// const uploadTask = storage
-			// 	.ref(`/images/${imageAsFile.name}`)
-			// 	.put(imageAsFile);
 
 			debugger;
 
