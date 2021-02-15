@@ -1,11 +1,12 @@
 // const USER_SERVER_URL = "/api/";
 
-const USER_SERVER_URL = "https://weiss-english-server.herokuapp.com/api/";
+// const USER_SERVER_URL = "https://weiss-english-server.herokuapp.com/api/";
+const USER_SERVER_URL = "https://weiss-server-a0b22.web.app/api/";
 // const USER_SERVER_URL = "https://weiss-server.web.app/api/";
 // const USER_SERVER_URL = "http://localhost:5001/api/";
 
-const DOMESTIC_SERVER_URL = "https://weiss-class.herokuapp.com/api/";
-// const DOMESTIC_SERVER_URL = "https://weiss-class.web/api/"; // Firebase hosting
+// const DOMESTIC_SERVER_URL = "https://weiss-class.herokuapp.com/api/";
+const DOMESTIC_SERVER_URL = "https://weiss-class.web.app/api/"; // Firebase hosting
 // const DOMESTIC_SERVER_URL = "https://localhost:3000/api/";
 //
 //

@@ -37,6 +37,8 @@ import countries from "./countryList.js";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
 import ImageUploader from "../../components/ImageUploader/ImageUploader.jsx";
+import firebase from "firebase";
+import { connect } from "react-firebase";
 
 const useStyles = makeStyles((theme) => ({
 	appBar: {
@@ -388,12 +390,16 @@ export default function Signup(props) {
 
 			// const payload = { formData, image };
 
-			const ajaxResult = await request(
-				"POST",
-				ENDPOINTS.userImages.POST.uploadOne.path,
-				{ elkana: "elkaan" },
-				config
-			);
+			// const ajaxResult = await request(
+			// 	"POST",
+			// 	ENDPOINTS.userImages.POST.uploadOne.path,
+			// 	{ elkana: "elkaan" },
+			// 	config
+			// );
+
+			// const uploadTask = storage
+			// 	.ref(`/images/${imageAsFile.name}`)
+			// 	.put(imageAsFile);
 
 			debugger;
 
