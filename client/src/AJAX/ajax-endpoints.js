@@ -1,7 +1,7 @@
 // const USER_SERVER_URL = "/api/";
 
-const USER_SERVER_URL = "https://weiss-english-server.herokuapp.com/api/";
-// const USER_SERVER_URL = "https://weiss-server-a0b22.web.app/api/";
+// const USER_SERVER_URL = "https://weiss-english-server.herokuapp.com/api/";
+const USER_SERVER_URL = "https://weiss-server-a0b22.web.app/api/";
 // const USER_SERVER_URL = "https://weiss-server.web.app/api/";
 // const USER_SERVER_URL = "http://localhost:5001/api/";
 

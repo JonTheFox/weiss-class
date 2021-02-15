@@ -17,8 +17,7 @@ var firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-//analytics is optional for this tutoral
-firebase.analytics();
+// firebase.analytics();
 
 const storage = firebase.storage();
 
