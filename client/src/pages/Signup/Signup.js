@@ -188,13 +188,13 @@ const PERSONAL_FIELDS = [
 			{ label: "Trans", value: "transgender" },
 		],
 	},
-	{
-		label: "Image",
-		name: "image",
-		validate: isTruthy,
-		required: true,
-		type: "imageUpload",
-	},
+	// {
+	// 	label: "Image",
+	// 	name: "image",
+	// 	validate: isTruthy,
+	// 	required: true,
+	// 	type: "imageUpload",
+	// },
 ];
 
 const ADDRESS_FIELDS = [
