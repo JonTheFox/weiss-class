@@ -37,9 +37,11 @@ import countries from "./countryList.js";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
 import ImageUploader from "../../components/ImageUploader/ImageUploader.jsx";
+import FileUploadWithPreview from "file-upload-with-preview";
+import "file-upload-with-preview/dist/file-upload-with-preview.min.css";
+
 import firebase from "firebase/app";
 import "firebase/storage";
-
 import { storage } from "../../firebase/firebase.js";
 
 const useStyles = makeStyles((theme) => ({
@@ -117,6 +119,20 @@ const useStyles = makeStyles((theme) => ({
 		alignItems: "center",
 		justifyContent: "center",
 	},
+	userImageContainer: {
+		backgroundRepeat: "no-repeat",
+		backgroundPositionX: "left",
+		width: "100%",
+		height: "auto",
+		position: "relative",
+	},
+	fileUploaderGrid: {
+		width: "100%",
+	},
+	userImage: {
+		position: "absolute",
+		width: "100%",
+	},
 }));
 
 const getPublicUserInfo = (user) => {
@@ -189,13 +205,13 @@ const PERSONAL_FIELDS = [
 			{ label: "Trans", value: "transgender" },
 		],
 	},
-	// {
-	// 	label: "Image",
-	// 	name: "image",
-	// 	validate: isTruthy,
-	// 	required: true,
-	// 	type: "imageUpload",
-	// },
+	{
+		label: "Image",
+		name: "image",
+		validate: isTruthy,
+		required: true,
+		type: "imageUpload",
+	},
 ];
 
 const ADDRESS_FIELDS = [
@@ -260,10 +276,11 @@ export default function Signup(props) {
 	const [showFeedback, setshowFeedback] = useState(false);
 	const [feedback, setFeedback] = useState({});
 	const { logg, loggError } = useLogg({ label });
-	// Object.assign(refs.current, MOCK_USER);
+	Object.assign(refs.current, MOCK_USER);
 	const [appUtils] = useContext(AppContext);
 	const { capitalizeFirstLetter, request, navigateTo } = appUtils;
 	const [isFormValid, setIsFormValid] = useState(false);
+	const [userImage, setUserImage] = useState({});
 
 	useEffect(() => {
 		refs.current.activeStep = activeStep;
@@ -288,8 +305,6 @@ export default function Signup(props) {
 			//convert types
 			allFormsData.street_number = parseInt(addressData.street_number);
 			// allFormsData.bday = new Date();
-
-			debugger;
 
 			const ajaxResult = await request(
 				"POST",
@@ -377,26 +392,51 @@ export default function Signup(props) {
 		[]
 	);
 
-	const handleImageChange = useCallback(async (image, images) => {
+	const handleImageChange = useCallback(async (_image, images) => {
 		try {
 			// const formData = new FormData();
-			// formData.append("uploadedImage", image);
+			// formData.append("uploadedImage", _image);
 			// const config = {
 			// 	headers: {
 			// 		"content-type": "multipart/form-data",
 			// 	},
 			// };
-			//refs.current.image = formData;
+			//refs.current._image = formData;
 
-			if (image === "") {
+			if (_image === "") {
 				console.error(
-					`not an image, the image file is a ${typeof image}`
+					`not an image, the image file is a ${typeof _image}`
 				);
 			}
 
-			debugger;
+			const uploadTask = storage
+				.ref(`/images/${_image.name}`)
+				.put(_image);
 
-			const uploadTask = storage.ref(`/images/${image.name}`).put(image);
+			uploadTask.on(
+				"state_changed",
+				(snapShot) => {
+					//takes a snap shot of the process as it is happening
+					logg(snapShot);
+				},
+				(err) => {
+					logg(err);
+				},
+				() => {
+					// gets the functions from storage refences the image storage in firebase by the children
+					// gets the download url then sets the image from firebase as the value for the imgUrl key:
+					storage
+						.ref("images")
+						.child(_image.name)
+						.getDownloadURL()
+						.then((fireBaseUrl) => {
+							setUserImage((prevObject) => ({
+								...prevObject,
+								imgUrl: fireBaseUrl,
+							}));
+						});
+				}
+			);
 
 			// const payload = { formData, image };
 
@@ -443,7 +483,20 @@ export default function Signup(props) {
 				showSubmit={isFormValid}
 				onSubmit={handleSubmit}
 				fields={fields}
+				className={classes.form}
 			>
+				<div
+					className={classes.userImageContainer}
+					style={{ backgroundImage: userImage?.imgUrl }}
+				>
+					{userImage && userImage.imgUrl && (
+						<img
+							className={classes.userImage}
+							src={userImage?.imgUrl}
+							alt="image tag"
+						></img>
+					)}
+				</div>
 				{fields.map(
 					(
 						{ label, name = "", type = "", required, options = [] },
@@ -451,10 +504,13 @@ export default function Signup(props) {
 					) => {
 						if (type === "imageUpload") {
 							return (
-								<Grid key={label}>
+								<Grid
+									key={label}
+									className={classes.fileUploaderGrid}
+								>
 									<ImageUploader
 										withIcon={true}
-										buttonText="Choose images"
+										buttonText="Select image"
 										onChange={handleImageChange}
 										imgExtension={[
 											".jpg",
