@@ -82,7 +82,14 @@ export default function SignIn(props) {
 			const ajaxResult = await request(
 				"POST",
 				ENDPOINTS.users.POST.login.path,
-				{ email, password }
+				{ email, password },
+				{
+					headers: {
+						"Access-Control-Allow-Origin": "*",
+						"Access-Control-Allow-Headers":
+							"Origin, X-Requested-With, Content-Type, Accept",
+					},
+				}
 			);
 
 			const { error, wrongCredentials, loggedIn, user } = ajaxResult;

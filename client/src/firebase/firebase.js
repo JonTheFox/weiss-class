@@ -4,11 +4,12 @@ import "firebase/storage";
 var firebaseConfig = {
 	//apiKey: "super secret keys.....asgvegxgevergfvr",
 	//authDomain: "tallans-imageupload-tutorial.firebaseapp.com",
-	//databaseURL: "https://tallans-imageupload-tutorial.firebaseio.com",
-	// storageBucket: "tallans-imageupload-tutorial.appspot.com",
-	messagingSenderId: "super secret keys.....asgvegxgevergfvr",
 	measurementId: "super secret as;dlkfjal;dskjf",
 
+	databaseURL: "gs://weiss-class.appspot.com/",
+	storageBucket: "gs://weiss-class.appspot.com/",
+
+	messagingSenderId: "165508430741",
 	appId: "1:165508430741:web:23c00812a4ed477ef9d49c",
 	projectId: "weiss-server-a0b22",
 	serverKey:

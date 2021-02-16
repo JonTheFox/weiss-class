@@ -39,7 +39,6 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import ImageUploader from "../../components/ImageUploader/ImageUploader.jsx";
 import firebase from "firebase/app";
 import "firebase/storage";
-
 import { storage } from "../../firebase/firebase.js";
 
 const useStyles = makeStyles((theme) => ({
@@ -189,13 +188,13 @@ const PERSONAL_FIELDS = [
 			{ label: "Trans", value: "transgender" },
 		],
 	},
-	// {
-	// 	label: "Image",
-	// 	name: "image",
-	// 	validate: isTruthy,
-	// 	required: true,
-	// 	type: "imageUpload",
-	// },
+	{
+		label: "Image",
+		name: "image",
+		validate: isTruthy,
+		required: true,
+		type: "imageUpload",
+	},
 ];
 
 const ADDRESS_FIELDS = [
@@ -260,7 +259,7 @@ export default function Signup(props) {
 	const [showFeedback, setshowFeedback] = useState(false);
 	const [feedback, setFeedback] = useState({});
 	const { logg, loggError } = useLogg({ label });
-	// Object.assign(refs.current, MOCK_USER);
+	Object.assign(refs.current, MOCK_USER);
 	const [appUtils] = useContext(AppContext);
 	const { capitalizeFirstLetter, request, navigateTo } = appUtils;
 	const [isFormValid, setIsFormValid] = useState(false);
@@ -394,9 +393,8 @@ export default function Signup(props) {
 				);
 			}
 
-			debugger;
-
 			const uploadTask = storage.ref(`/images/${image.name}`).put(image);
+			debugger;
 
 			// const payload = { formData, image };
 
