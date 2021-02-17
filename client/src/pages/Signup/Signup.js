@@ -284,7 +284,7 @@ export default function Signup(props) {
 	const [showFeedback, setshowFeedback] = useState(false);
 	const [feedback, setFeedback] = useState({});
 	const { logg, loggError } = useLogg({ label });
-	Object.assign(refs.current, MOCK_USER);
+	//Object.assign(refs.current, MOCK_USER);
 	const [appUtils] = useContext(AppContext);
 	const { capitalizeFirstLetter, request, navigateTo } = appUtils;
 	const [isFormValid, setIsFormValid] = useState(false);
