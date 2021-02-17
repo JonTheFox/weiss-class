@@ -133,9 +133,9 @@ const useStyles = makeStyles((theme) => ({
 		width: "100%",
 	},
 	profilePic: {
-		position: "absolute",
+		//position: "absolute",
 		width: "100%",
-		opacity: 0.35,
+		opacity: 0.95,
 	},
 	bday: {
 		"& #bday": {
@@ -172,6 +172,13 @@ const ACCOUNT_FIELDS = [
 
 const PROFILE_FIELDS = [
 	{
+		label: "Picture",
+		name: "profile_pic_url",
+		validate: isTruthy,
+		required: true,
+		type: "imageUpload",
+	},
+	{
 		label: "First Name",
 		name: "first_name",
 		validate: isTruthy,
@@ -202,13 +209,7 @@ const PROFILE_FIELDS = [
 			{ label: "Trans", value: "transgender" },
 		],
 	},
-	{
-		label: "Birthday",
-		name: "bday",
-		validate: validateDate,
-		required: true,
-		type: "date",
-	},
+
 	{
 		name: "country",
 		label: "Country",
@@ -217,13 +218,12 @@ const PROFILE_FIELDS = [
 		required: true,
 		options: countries,
 	},
-
 	{
-		label: "Picture",
-		name: "profile_pic_url",
-		validate: isTruthy,
+		label: "Birthday",
+		name: "bday",
+		validate: validateDate,
 		required: true,
-		type: "imageUpload",
+		type: "date",
 	},
 ];
 
@@ -481,7 +481,7 @@ export default function Signup(props) {
 						<img
 							className={classes.profilePic}
 							src={profilePic?.url}
-							alt="image tag"
+							alt={user?.first_name ?? ""}
 						></img>
 					)}
 				</div>
@@ -499,6 +499,7 @@ export default function Signup(props) {
 									<ImageUploader
 										withIcon={true}
 										buttonText="Select image"
+										buttonClassName="gradient-mix"
 										onChange={handleImageChange}
 										imgExtension={[
 											".jpg",
@@ -513,7 +514,7 @@ export default function Signup(props) {
 						}
 						if (type === "autoComplete") {
 							return (
-								<Grid item xs={12} sm={12} key={label}>
+								<Grid item xs={10} sm={10} key={label}>
 									<Autocomplete
 										className={clsx(
 											classes.autoComplete,
