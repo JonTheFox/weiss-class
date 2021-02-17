@@ -20,7 +20,8 @@ const ImageUploader = ({ onChange, children, ...otherProps }) => {
 			buttonText="Choose images"
 			onChange={handleChange}
 			imgExtension={[".jpg", ".gif", ".png", ".gif"]}
-			maxFileSize={5242880}
+			maxFileSize={10242880}
+			{...otherProps}
 		/>
 	);
 };

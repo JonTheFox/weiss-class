@@ -33,6 +33,9 @@ import { useHistory } from "react-router-dom";
 import validatePassword from "./validatePassword.js";
 import validateEmail from "./validateEmail.js";
 import validateDate from "./validateDate.js";
+//import validateImage from "./validateImage.js";
+import validateCountry from "./validateCountry.js";
+
 import countries from "./countryList.js";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
@@ -129,9 +132,17 @@ const useStyles = makeStyles((theme) => ({
 	fileUploaderGrid: {
 		width: "100%",
 	},
-	userImage: {
+	profilePic: {
 		position: "absolute",
 		width: "100%",
+		opacity: 0.35,
+	},
+	bday: {
+		"& #bday": {
+			textAlign: "left",
+			flexBasis: "60%",
+			width: "auto",
+		},
 	},
 }));
 
@@ -144,14 +155,7 @@ const getPublicUserInfo = (user) => {
 
 const isTruthy = (val) => !!val;
 
-const isCountry = (countryName) => {
-	if (!countryName || !countries || !countries.length) {
-		return null;
-	}
-	return countries.includes(countryName);
-};
-
-const PROFILE_FIELDS = [
+const ACCOUNT_FIELDS = [
 	{
 		name: "email",
 		label: "Email",
@@ -166,7 +170,7 @@ const PROFILE_FIELDS = [
 	},
 ];
 
-const PERSONAL_FIELDS = [
+const PROFILE_FIELDS = [
 	{
 		label: "First Name",
 		name: "first_name",
@@ -186,13 +190,6 @@ const PERSONAL_FIELDS = [
 		required: true,
 	},
 	{
-		label: "Birthday",
-		name: "bday",
-		validate: validateDate,
-		required: true,
-		type: "date",
-	},
-	{
 		label: "Gender",
 		name: "gender",
 		validate: isTruthy,
@@ -206,56 +203,64 @@ const PERSONAL_FIELDS = [
 		],
 	},
 	{
-		label: "Image",
-		name: "image",
+		label: "Birthday",
+		name: "bday",
+		validate: validateDate,
+		required: true,
+		type: "date",
+	},
+	{
+		name: "country",
+		label: "Country",
+		type: "autoComplete",
+		validate: validateCountry,
+		required: true,
+		options: countries,
+	},
+
+	{
+		label: "Picture",
+		name: "profile_pic_url",
 		validate: isTruthy,
 		required: true,
 		type: "imageUpload",
 	},
 ];
 
-const ADDRESS_FIELDS = [
-	{
-		name: "street_name",
-		label: "Street",
-		validate: isTruthy,
-		required: false,
-	},
-	{
-		name: "street_number",
-		label: "Number",
-		validate: isTruthy,
-		required: false,
-	},
-	{
-		name: "city",
-		label: "City",
-		validate: isTruthy,
-		required: false,
-	},
-	{
-		name: "state",
-		label: "State",
-		validate: isTruthy,
-		required: false,
-	},
-	{
-		name: "country",
-		label: "Country",
-		type: "autoComplete",
-		validate: isCountry,
-		required: true,
-		options: countries,
-	},
-];
+// const ADDRESS_FIELDS = [
+// 	{
+// 		name: "street_name",
+// 		label: "Street",
+// 		validate: isTruthy,
+// 		required: false,
+// 	},
+// 	{
+// 		name: "street_number",
+// 		label: "Number",
+// 		validate: isTruthy,
+// 		required: false,
+// 	},
+// 	{
+// 		name: "city",
+// 		label: "City",
+// 		validate: isTruthy,
+// 		required: false,
+// 	},
+// 	{
+// 		name: "state",
+// 		label: "State",
+// 		validate: isTruthy,
+// 		required: false,
+// 	},
+// ];
 
 const FORMS = [
 	{
-		label: "Profile",
-		fields: PROFILE_FIELDS,
+		label: "Account",
+		fields: ACCOUNT_FIELDS,
 	},
-	{ label: "Personal", fields: PERSONAL_FIELDS },
-	{ label: "Address", fields: ADDRESS_FIELDS },
+	{ label: "Profile", fields: PROFILE_FIELDS },
+	//{ label: "Address", fields: ADDRESS_FIELDS },
 ];
 
 const label = "Signup";
@@ -271,6 +276,9 @@ export default function Signup(props) {
 		personal: {},
 		profile: {},
 		address: {},
+		profileData: {},
+		accountData: {},
+		//addressData: {},
 		activeStep,
 	});
 	const [showFeedback, setshowFeedback] = useState(false);
@@ -280,7 +288,7 @@ export default function Signup(props) {
 	const [appUtils] = useContext(AppContext);
 	const { capitalizeFirstLetter, request, navigateTo } = appUtils;
 	const [isFormValid, setIsFormValid] = useState(false);
-	const [userImage, setUserImage] = useState({});
+	const [profilePic, setProfilePic] = useState({});
 
 	useEffect(() => {
 		refs.current.activeStep = activeStep;
@@ -295,15 +303,15 @@ export default function Signup(props) {
 			const _isLastForm = refs.current.activeStep + 1 === FORMS.length;
 			if (!_isLastForm) return handleNext();
 
-			const { profileData, personalData, addressData } = refs.current;
+			const { accountData, profileData } = refs.current;
 			const allFormsData = {
+				...accountData,
 				...profileData,
-				...personalData,
-				...addressData,
+				//...addressData,
 			};
 
 			//convert types
-			allFormsData.street_number = parseInt(addressData.street_number);
+			// allFormsData.street_number = parseInt(addressData.street_number);
 			// allFormsData.bday = new Date();
 
 			const ajaxResult = await request(
@@ -312,13 +320,15 @@ export default function Signup(props) {
 				allFormsData
 			);
 
+			debugger;
+
 			const { error, alreadyExists, success, reason, data } = ajaxResult;
 
 			if (alreadyExists) {
 				setshowFeedback(true);
 				setFeedback({
 					heading: `Hey, ${refs.current.first_name}, `,
-					bodyText: `You already have an account. Which is great.`,
+					bodyText: `You already have an account (which is great).`,
 					btnText: "Login",
 					handleBtnClick: handleLogin,
 				});
@@ -335,7 +345,7 @@ export default function Signup(props) {
 			const updateUser = (allUserInfo) => {
 				setUser({
 					...getPublicUserInfo(allUserInfo),
-					password: profileData.password,
+					password: accountData.password,
 				});
 			};
 			updateUser(allFormsData);
@@ -350,9 +360,7 @@ export default function Signup(props) {
 				},
 			});
 		} catch (err) {
-			console.error(err);
 			// if (err.name && err.name === "ValidationError") {
-			const { message } = err;
 			loggError(err);
 			setshowFeedback(true);
 			return setFeedback({
@@ -374,9 +382,6 @@ export default function Signup(props) {
 	const handleInputChange = useCallback(
 		(ev, { fieldName, useInnerText = false }) => {
 			const value = ev.target[useInnerText ? "innerText" : "value"];
-			// if (fieldName === "country") {
-			// 	debugger;
-			// }
 			if (!value) debugger;
 			refs.current[fieldName] = value;
 			refs.current.handleChange(value);
@@ -404,9 +409,7 @@ export default function Signup(props) {
 			//refs.current._image = formData;
 
 			if (_image === "") {
-				console.error(
-					`not an image, the image file is a ${typeof _image}`
-				);
+				loggError(`not an image, the image file is a ${typeof _image}`);
 			}
 
 			const uploadTask = storage
@@ -424,15 +427,21 @@ export default function Signup(props) {
 				},
 				() => {
 					// gets the functions from storage refences the image storage in firebase by the children
-					// gets the download url then sets the image from firebase as the value for the imgUrl key:
+					// gets the download url then sets the image from firebase as the value for the url key:
 					storage
 						.ref("images")
 						.child(_image.name)
 						.getDownloadURL()
 						.then((fireBaseUrl) => {
-							setUserImage((prevObject) => ({
+							refs.current.profile_pic_url = fireBaseUrl;
+							refs.current.profileData.profile_pic_url = fireBaseUrl;
+
+							refs.current.handleChange(fireBaseUrl);
+
+							//todo: test to see that the image was indeed uploaded successfully
+							setProfilePic((prevObject) => ({
 								...prevObject,
-								imgUrl: fireBaseUrl,
+								url: fireBaseUrl,
 							}));
 						});
 				}
@@ -467,8 +476,6 @@ export default function Signup(props) {
 		const form = FORMS[step];
 		const { fields = [], label } = form;
 
-		// setIsNextDisabled
-
 		// refs.current.validateFormData && refs.current.validateFormData();
 
 		return (
@@ -487,12 +494,12 @@ export default function Signup(props) {
 			>
 				<div
 					className={classes.userImageContainer}
-					style={{ backgroundImage: userImage?.imgUrl }}
+					style={{ backgroundImage: profilePic?.url }}
 				>
-					{userImage && userImage.imgUrl && (
+					{profilePic && profilePic.url && (
 						<img
-							className={classes.userImage}
-							src={userImage?.imgUrl}
+							className={classes.profilePic}
+							src={profilePic?.url}
 							alt="image tag"
 						></img>
 					)}
@@ -514,9 +521,9 @@ export default function Signup(props) {
 										onChange={handleImageChange}
 										imgExtension={[
 											".jpg",
-											".gif",
+											//".gif",
 											".png",
-											".gif",
+											//".gif",
 										]}
 										maxFileSize={5242880}
 									></ImageUploader>
@@ -537,11 +544,17 @@ export default function Signup(props) {
 										options={options}
 										//groupBy={appState.searchables.groupBy}
 										//defaultValue={appState.searchables.list[0]}
-										getOptionsLabel={(option) => option}
+										getOptionsLabel={(option) =>
+											option.label
+										}
+										label="Country"
+										aria-label="search"
 										autoComplete={true}
-										placeholder={"Select your country"}
+										placeholder={
+											"Please select your country"
+										}
 										autoHighlight={false}
-										autoSelect={true}
+										autoSelect={false}
 										clearOnEscape={false}
 										disableClearable={false}
 										disableCloseOnSelect={false}
@@ -565,8 +578,8 @@ export default function Signup(props) {
 												<TextField
 													{...params}
 													// label="search-term"
-													variant="outlined"
-													fullWidth
+													variant="standard"
+													label="Country"
 												/>
 											</React.Fragment>
 										)}
@@ -579,14 +592,25 @@ export default function Signup(props) {
 												useInnerText: true,
 											});
 										}}
-										aria-label="search"
 									></Autocomplete>
 								</Grid>
 							);
 						}
-						return (
-							<Grid item xs={12} sm={12} key={label}>
+
+						const isNarrowField = [
+							"first_name",
+							"middle_name",
+							"last_name",
+							//"bday",
+							"gender",
+						].includes(name);
+
+						const isMediumSizeField = ["bday"].includes(name);
+
+						const renderTextField = () => {
+							return (
 								<TextField
+									className={classes[name]}
 									InputLabelProps={{
 										shrink: true,
 									}}
@@ -598,7 +622,7 @@ export default function Signup(props) {
 									key={name}
 									name={name}
 									label={label}
-									fullWidth
+									fullWidth={!isNarrowField}
 									onChange={(ev) =>
 										handleInputChange(ev, {
 											fieldName: name,
@@ -606,7 +630,7 @@ export default function Signup(props) {
 									}
 									autoComplete={name}
 									isFormValid={isFormValid}
-									defaultValue={refs.current[name] || ""}
+									defaultValue={refs.current[name] || null}
 								>
 									{options &&
 										options.map &&
@@ -619,6 +643,29 @@ export default function Signup(props) {
 											</MenuItem>
 										))}
 								</TextField>
+							);
+						};
+
+						return (
+							<Grid
+								item
+								xs={
+									isNarrowField
+										? 4
+										: isMediumSizeField
+										? 10
+										: 12
+								}
+								sm={
+									isNarrowField
+										? 4
+										: isMediumSizeField
+										? 10
+										: 12
+								}
+								key={label}
+							>
+								{renderTextField()}
 							</Grid>
 						);
 					}
@@ -639,7 +686,7 @@ export default function Signup(props) {
 		(val) => {
 			setshowFeedback(false);
 			refs.current.setIsFormValid(true);
-			setActiveStep(0);
+			//setActiveStep((step) => step - 1);
 		},
 		[refs.current, setActiveStep]
 	);
