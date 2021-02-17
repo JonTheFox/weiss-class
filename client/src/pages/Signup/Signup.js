@@ -498,7 +498,7 @@ export default function Signup(props) {
 									className={classes.fileUploaderGrid}
 								>
 									<ImageUploader
-										withIcon={true}
+										withIcon={false}
 										buttonText="Select image"
 										buttonClassName="gradient-mix"
 										onChange={handleImageChange}
@@ -508,7 +508,7 @@ export default function Signup(props) {
 											".png",
 											//".gif",
 										]}
-										maxFileSize={20242880}
+										maxFileSize={40242880}
 									></ImageUploader>
 								</Grid>
 							);
