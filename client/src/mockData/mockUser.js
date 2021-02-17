@@ -12,5 +12,5 @@ export default {
 	street_number: 3,
 	city: "Yinon",
 	state: "Yinon",
-	country: "Yinon",
+	//country: "Yinon",
 };
