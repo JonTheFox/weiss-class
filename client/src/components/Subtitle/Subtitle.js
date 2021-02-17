@@ -13,12 +13,16 @@ import Text from "../Text/Text.js";
 
 const label = "Subtitle";
 
-const Subtitle = ({ paragraphs, children = "" }) => {
+const Subtitle = ({ paragraphs, readable = true, children = "" }) => {
 	return (
 		<StyledSubtitle className={`${label}`}>
 			{paragraphs &&
 				paragraphs.map((paragraph) => {
-					return <Text>{paragraph}</Text>;
+					return (
+						<Text className={readable && "readable"}>
+							{paragraph}
+						</Text>
+					);
 				})}
 		</StyledSubtitle>
 	);
