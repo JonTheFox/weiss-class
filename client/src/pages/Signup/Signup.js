@@ -412,10 +412,6 @@ export default function Signup(props) {
 				loggError(`not an image, the image file is a ${typeof _image}`);
 			}
 
-<<<<<<< HEAD
-			const uploadTask = storage.ref(`/images/${image.name}`).put(image);
-			debugger;
-=======
 			const uploadTask = storage
 				.ref(`/images/${_image.name}`)
 				.put(_image);
@@ -450,26 +446,6 @@ export default function Signup(props) {
 						});
 				}
 			);
->>>>>>> feature/upload_image
-
-			// const payload = { formData, image };
-
-			// const ajaxResult = await request(
-			// 	"POST",
-			// 	ENDPOINTS.userImages.POST.uploadOne.path,
-			// 	{ elkana: "elkaan" },
-			// 	config
-			// );
-
-			// const ajaxResult = await request(
-			// 	"POST",
-			// 	ENDPOINTS.images.POST.uploadOne.path,
-			// 	payload,
-			// 	config
-			// );
-
-			// const { error, data } = ajaxResult;
-			// if (error) throw new Error(error);
 		} catch (err) {
 			loggError(err);
 			debugger;
