@@ -135,7 +135,8 @@ const useStyles = makeStyles((theme) => ({
 	profilePic: {
 		//position: "absolute",
 		width: "100%",
-		opacity: 0.95,
+		opacity: 1,
+		borderRadius: "0.5rem",
 	},
 	bday: {
 		"& #bday": {
@@ -507,7 +508,7 @@ export default function Signup(props) {
 											".png",
 											//".gif",
 										]}
-										maxFileSize={5242880}
+										maxFileSize={20242880}
 									></ImageUploader>
 								</Grid>
 							);
