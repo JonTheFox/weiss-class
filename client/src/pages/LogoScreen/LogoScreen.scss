@@ -97,6 +97,9 @@
   .enter-btn {
     transition: all 0.5s ease-in-out;
     transform: scale(1);
+    color: var(--white);
+    padding: calc(1 * var(--spacing)) calc(4 * var(--spacing));
+    border-radius: 1.5rem;
   }
 }
 

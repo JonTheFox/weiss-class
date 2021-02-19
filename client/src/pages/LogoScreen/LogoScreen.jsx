@@ -40,9 +40,9 @@ const LogoScreen = (props) => {
 		>
 			<Link className={"link"} to={`${BASE_ROUTE}client-type-select`}>
 				<Button
-					className={"enter-btn"}
-					variant="outlined"
-					color={showVideo ? "secondary" : "secondary"}
+					className={"gradient-mix enter-btn"}
+					//variant="outlined"
+					//color={showVideo ? "secondary" : "secondary"}
 					size="large"
 				>
 					Enter

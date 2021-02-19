@@ -499,12 +499,15 @@ export default function Signup(props) {
 								>
 									<ImageUploader
 										withIcon={false}
+										label={
+											"Accepted types: jpeg, jpg and png"
+										}
 										buttonText="Select image"
 										buttonClassName="gradient-mix"
 										onChange={handleImageChange}
 										imgExtension={[
 											".jpg",
-											//".gif",
+											".jpeg",
 											".png",
 											//".gif",
 										]}

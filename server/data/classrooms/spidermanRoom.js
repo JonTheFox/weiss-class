@@ -1,11 +1,11 @@
-const PRESENT_SIMPLE_SLIDES = require("../lessons/PresentSimple/PresentSimple.index.js");
+const PRESENT_PROGRESSIVE_SLIDES = require("../lessons/Present Progressive/PresentProgressive.index.js");
 
 const IMAGE_URL =
 	"https://i.pinimg.com/originals/1a/60/70/1a6070e136db70744a4103d2c71882c0.png";
 
 const classroom = {
 	id: 10,
-	slides: PRESENT_SIMPLE_SLIDES,
+	slides: PRESENT_PROGRESSIVE_SLIDES,
 	image: { url: IMAGE_URL },
 	title: "Living the moment",
 	subject: "Present Progressive",
