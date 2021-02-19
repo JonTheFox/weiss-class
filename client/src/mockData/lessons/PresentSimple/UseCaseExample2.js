@@ -1,11 +1,11 @@
 const { BottomThirdCaption } = require("../../slideTemplates.js");
-const { raining } = require("./presentProgressiveVideos.js");
+const { eating_breakfast } = require("./presentSimpleImages.js");
 
 const imageSize = "regular";
 
 const UseCaseExample2 = {
-	id: 202,
-	bgImage: raining[imageSize],
+	id: 5,
+	bgImage: eating_breakfast[imageSize],
 	pages: [
 		{
 			templateName: BottomThirdCaption,

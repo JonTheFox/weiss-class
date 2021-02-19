@@ -1,4 +1,4 @@
-const { VideoCentered } = require("../../slideTemplates.js");
+const { CenteredHeadings } = require("../../slideTemplates.js");
 
 //const videoSet = require("./presentProgressiveVideos.js").raining;
 
@@ -9,7 +9,7 @@ const UseCaseExample4 = {
 	bgImage: "none",
 	pages: [
 		{
-			templateName: VideoCentered,
+			templateName: CenteredHeadings,
 			heading: "Present Progressive",
 			subheading: "Living the moment",
 			//videoSet,

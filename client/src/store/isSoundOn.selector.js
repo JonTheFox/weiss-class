@@ -6,7 +6,7 @@ import {
 } from "recoil";
 
 const recoilState = selector({
-	key: "isSlideOnSelector",
+	key: "isSoundOnSelector",
 	default: false,
 	get: ({ get }) => {
 		const { isSoundOn } = get(soundState);

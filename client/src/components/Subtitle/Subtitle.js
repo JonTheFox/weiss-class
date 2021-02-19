@@ -14,6 +14,8 @@ import Text from "../Text/Text.js";
 const label = "Subtitle";
 
 const Subtitle = ({ paragraphs, readable = true, children = "" }) => {
+	if (!paragraphs.length || !paragraphs[0]) return null;
+
 	return (
 		<StyledSubtitle className={`${label}`}>
 			{paragraphs &&
