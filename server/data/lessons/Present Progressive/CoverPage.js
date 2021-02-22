@@ -1,23 +1,23 @@
 const { VideoCentered } = require("../../slideTemplates.js");
 
-//const videoSet = require("./presentProgressiveVideos.js").raining;
+const videoSet = require("./presentProgressiveVideos.js").flyingAboveMountains;
+// .coupleWalkingOnTheBeach;
 
-const imageSize = "regular";
-
-const UseCaseExample4 = {
+const CoverPage = {
 	id: 201,
-	bgImage: "none",
+	//bgImage: "none",
+	background: "var(--white)",
 	pages: [
 		{
 			templateName: VideoCentered,
 			heading: "Present Progressive",
 			subheading: "Living the moment",
-			//videoSet,
+			videoSet,
 			p: [
-				"When we are talking about what's  happening at the moment, we are using 'Present Progressive.",
+				"When we are talking about what's happening at the moment, we are using 'Present Progressive.",
 			],
 		},
 	],
 };
 
-module.exports = UseCaseExample4;
+module.exports = CoverPage;

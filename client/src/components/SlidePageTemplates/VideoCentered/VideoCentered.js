@@ -54,7 +54,16 @@ const VideoCentered = (props) => {
 	// };
 
 	//todo: use MediaContext to determine the size to diaply
-	const videoSize = "full";
+	const videoSize = videoSet.hdFull
+		? "hdFull"
+		: videoSet.hdReady
+		? "hdReady"
+		: videoSet.tablet
+		? "tablet"
+		: videoSet.phone
+		? "phone"
+		: "small";
+
 	const video = videoSet && { url: videoSet[videoSize] };
 
 	return (
@@ -73,25 +82,28 @@ const VideoCentered = (props) => {
 				</Heading>
 			</div>
 			{video && (
-				<VideoPlayer
-					style={{
-						position: "relative",
-						zIndex: -1,
-					}}
-					video={video}
-					controls={false}
-					noInteraction={true}
-					light={false}
-					playing={true}
-					muted={!isSoundOn}
-					volume={!isSoundOn && 0}
-					scaleToFitViewport={false}
-					startSecond={video.startSecond || 0}
-					stopSecond={video.stopSecond}
-					onPlay={() => {
-						setIsVideoPlaying(true);
-					}}
-				></VideoPlayer>
+				<CenteredContainer>
+					<VideoPlayer
+						style={{
+							position: "relative",
+							zIndex: -1,
+						}}
+						video={video}
+						controls={true}
+						noInteraction={false}
+						light={false}
+						playing={true}
+						loop={true}
+						muted={!isSoundOn}
+						volume={isSoundOn ? 0.25 : 0}
+						scaleToFitViewport={false}
+						startSecond={video.startSecond || 0}
+						stopSecond={video.stopSecond}
+						onPlay={() => {
+							setIsVideoPlaying(true);
+						}}
+					></VideoPlayer>
+				</CenteredContainer>
 			)}
 
 			<Subtitle paragraphs={[caption]} />

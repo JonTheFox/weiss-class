@@ -125,6 +125,8 @@ const Header = React.forwardRef(
 
 		const StyledHeading = h == "1" ? StyledHeading1 : StyledHeading2;
 
+		if (!children) return null;
+
 		return (
 			<Container
 				maxWidth="sm"
