@@ -7,6 +7,7 @@ import React, {
 	useCallback,
 } from "react";
 import CenteredContainer from "../../CenteredContainer/CenteredContainer.js";
+import Grid from "@material-ui/core/Grid";
 import Heading from "../../Heading/Heading.js";
 import View from "../../layout/View.jsx";
 import Page from "../Page.js";
@@ -25,6 +26,19 @@ import IsSoundOnState from "../../../store/isSoundOn.selector.js";
 import { useRecoilValue } from "recoil";
 
 const label = "VideoCentered";
+
+const PexelsLogo = () => {
+	return (
+		<Grid item style={{ position: "absolute", bottom: 0, right: 0 }}>
+			<a href="https://www.pexels.com">
+				<img
+					src="https://images.pexels.com/lib/api/pexels.png"
+					style={{ width: "100px", padding: "var(--spacing)" }}
+				/>
+			</a>
+		</Grid>
+	);
+};
 
 const VideoCentered = (props) => {
 	// const [appUtils] = useContext(AppContext);
@@ -54,8 +68,8 @@ const VideoCentered = (props) => {
 	// };
 
 	//todo: use MediaContext to determine the size to diaply
-	const videoSize = videoSet.hdFull
-		? "hdFull"
+	const videoSize = videoSet.fullHd
+		? "fullHd"
 		: videoSet.hdReady
 		? "hdReady"
 		: videoSet.tablet
@@ -103,6 +117,7 @@ const VideoCentered = (props) => {
 							setIsVideoPlaying(true);
 						}}
 					></VideoPlayer>
+					<PexelsLogo />
 				</CenteredContainer>
 			)}
 
