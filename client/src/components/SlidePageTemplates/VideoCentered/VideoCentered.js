@@ -5,6 +5,7 @@ import React, {
 	useRef,
 	Suspense,
 	useCallback,
+	Fragment,
 } from "react";
 import CenteredContainer from "../../CenteredContainer/CenteredContainer.js";
 import Grid from "@material-ui/core/Grid";
@@ -67,18 +68,37 @@ const VideoCentered = (props) => {
 	// 	});
 	// };
 
-	//todo: use MediaContext to determine the size to diaply
-	const videoSize = videoSet.fullHd
+	//todo: use MediaContext to determine the size to display
+	const { links } = videoSet;
+	const videoSize = links?.fullHd
 		? "fullHd"
-		: videoSet.hdReady
+		: links.hdReady
 		? "hdReady"
-		: videoSet.tablet
+		: links.tablet
 		? "tablet"
-		: videoSet.phone
+		: links.phone
 		? "phone"
 		: "small";
 
-	const video = videoSet && { url: videoSet[videoSize] };
+	const video = videoSet && { url: videoSet.links[videoSize] };
+	const videoUser = videoSet.user;
+
+	const VideographerCredit = ({ name = "", url = "" }) => {
+		const creditText = name
+			? `Video by ${name} @Pexels`
+			: "Video by Pexels";
+		const _url = name ? url : "www.pexels.com";
+		return (
+			<Text variant="small" className="photographer-credit">
+				<a
+					href={_url}
+					style={{ color: "inherit", textDecoration: "none" }}
+				>
+					{creditText}
+				</a>
+			</Text>
+		);
+	};
 
 	return (
 		<StyledPage className={"Page Page--video-centered"}>
@@ -95,8 +115,9 @@ const VideoCentered = (props) => {
 					{subheading}
 				</Heading>
 			</div>
-			{video && (
-				<CenteredContainer style={{ zIndex: -1 }}>
+
+			<CenteredContainer style={{ zIndex: -1 }}>
+				{video && (
 					<VideoPlayer
 						style={{
 							position: "relative",
@@ -117,12 +138,12 @@ const VideoCentered = (props) => {
 							setIsVideoPlaying(true);
 						}}
 					></VideoPlayer>
-					<PexelsLogo />
-				</CenteredContainer>
-			)}
+				)}
+			</CenteredContainer>
 
 			<Subtitle paragraphs={[caption]} />
 			<Subtitle paragraphs={[caption]} />
+			<VideographerCredit name={videoUser.name} url={videoUser.url} />
 		</StyledPage>
 	);
 };

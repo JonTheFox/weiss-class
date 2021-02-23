@@ -84,5 +84,13 @@ export default styled.div`
 				transform: scale(1.2);
 			}
 		}
+		&.small {
+			color: var(--black);
+			transition: all 0.2s;
+
+			&:hover {
+				font-weight: bold;
+			}
+		}
 	}
 `;
