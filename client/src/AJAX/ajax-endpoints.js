@@ -161,6 +161,11 @@ const ENDPOINTS = {
 			uploadOne: { path: USER_SERVER_URL + "userImages/uploadOne" },
 		},
 	},
+	videos: {
+		POST: {
+			getVideoById: { path: USER_SERVER_URL + "videos/getVideoById" },
+		},
+	},
 };
 
 export default ENDPOINTS;

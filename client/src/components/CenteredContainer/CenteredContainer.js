@@ -13,10 +13,13 @@ import StyledCenteredContainer from "./CenteredContainer.styles.js";
 
 const label = "CenteredContainer";
 
-const CenteredContainer = ({ children = "" }) => {
+const CenteredContainer = (props) => {
 	return (
-		<StyledCenteredContainer className={`${label} centered`}>
-			{children}
+		<StyledCenteredContainer
+			className={`${label} centered`}
+			style={props.style}
+		>
+			{props.children}
 		</StyledCenteredContainer>
 	);
 };

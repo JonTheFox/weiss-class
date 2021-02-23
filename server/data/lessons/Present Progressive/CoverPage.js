@@ -1,6 +1,6 @@
 const { VideoCentered } = require("../../slideTemplates.js");
 
-const videoSet = require("./presentProgressiveVideos.js").flyingAboveMountains;
+const videoSet = require("./presentProgressiveVideos.js").raining;
 // .coupleWalkingOnTheBeach;
 
 const CoverPage = {

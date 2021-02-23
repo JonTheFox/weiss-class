@@ -96,7 +96,7 @@ const VideoCentered = (props) => {
 				</Heading>
 			</div>
 			{video && (
-				<CenteredContainer>
+				<CenteredContainer style={{ zIndex: -1 }}>
 					<VideoPlayer
 						style={{
 							position: "relative",

@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect, useContext } from "react";
 import StyledPage from "./Page.styles.js";
 import CenteredHeadings from "../SlidePageTemplates/CenteredHeadings.js";
 import BottomThirdCaption from "../SlidePageTemplates/BottomThirdCaption.js";
 import Text1 from "../SlidePageTemplates/Text1.js";
 import ListMain from "../SlidePageTemplates/ListMain/ListMain.js";
 import VideoCentered from "../SlidePageTemplates/VideoCentered/VideoCentered.js";
+// import { AppContext } from "../../contexts/AppContext.jsx";
 
 const PAGE_TEMPLATES = {
 	CenteredHeadings,
@@ -16,7 +17,11 @@ const PAGE_TEMPLATES = {
 
 const label = "Page";
 const Page = (props) => {
-	const { templateName = "" } = props;
+	const { templateName = "", videoId } = props;
+
+	// const [appUtils, appState] = useContext(AppContext);
+	// const { request } = appUtils;
+
 	const LessonPage =
 		PAGE_TEMPLATES[templateName] || PAGE_TEMPLATES["CenteredHeadings"];
 

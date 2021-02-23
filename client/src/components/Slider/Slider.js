@@ -9,6 +9,7 @@ import Slide from "../SlidePageTemplates/Slide.js";
 import CenteredHeadings from "../SlidePageTemplates/CenteredHeadings.js";
 import Text1 from "../SlidePageTemplates/Text1.js";
 import { AppContext } from "../../store/AppContext.js";
+import clsx from "clsx";
 
 import currentSlideIndexState from "../../store/currentSlideIndex.atom.js";
 
@@ -85,8 +86,10 @@ const Slider = ({ children, slides }) => {
             <PresentationSlide
               background={{
                 backgroundImage: bgImage,
+
                 backgroundAttachment: "fixed",
               }}
+              className={clsx(!bgImage && "gradient")}
             >
               <Slide {...slide}></Slide>
             </PresentationSlide>

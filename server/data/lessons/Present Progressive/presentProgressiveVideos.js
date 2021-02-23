@@ -1,13 +1,13 @@
 module.exports = {
 	raining: {
 		fullHd:
-			"https://vod-progressive.akamaized.net/exp=1614031218~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F1527%2F16%2F407639430%2F1746308951.mp4~hmac=eb1a260f8043df9041a98318df318a25d16eb559f9c198223d9a4df82a9025f7/vimeo-prod-skyfire-std-us/01/1527/16/407639430/1746308951.mp4?filename=production+ID%3A4154268.mp4",
+			"https://player.vimeo.com/external/407639430.hd.mp4?s=c5351a21941f38726ee6160dc4714c385ca42cfd&profile_id=175&oauth2_token_id=57447761",
 		hdReady:
-			"https://vod-progressive.akamaized.net/exp=1614031279~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F1527%2F16%2F407639430%2F1746308952.mp4~hmac=4885943ee189265ffe7339afca5743b7831c00e493c3a7855f3d988987075d61/vimeo-prod-skyfire-std-us/01/1527/16/407639430/1746308952.mp4?filename=production+ID%3A4154268.mp4",
+			"https://player.vimeo.com/external/407639430.hd.mp4?s=c5351a21941f38726ee6160dc4714c385ca42cfd&profile_id=174&oauth2_token_id=57447761",
 		tablet:
-			"https://vod-progressive.akamaized.net/exp=1614031298~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F1527%2F16%2F407639430%2F1746308956.mp4~hmac=474d83b725655e92c3e3f6d5e74a22d08be6e44dc60245e4f2b98ee935c55d23/vimeo-prod-skyfire-std-us/01/1527/16/407639430/1746308956.mp4?filename=production+ID%3A4154268.mp4",
+			"https://player.vimeo.com/external/407639430.sd.mp4?s=741a25839672bf671c00f51fc19fc145c9c24aef&profile_id=165&oauth2_token_id=57447761",
 		phone:
-			"https://vod-progressive.akamaized.net/exp=1614031329~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F1527%2F16%2F407639430%2F1746308782.mp4~hmac=6452cad08738cc5623b6c22bf7d39ab71664749ac6b59c75ebcc95e164c020eb/vimeo-prod-skyfire-std-us/01/1527/16/407639430/1746308782.mp4?filename=production+ID%3A4154268.mp4",
+			"https://player.vimeo.com/external/407639430.sd.mp4?s=741a25839672bf671c00f51fc19fc145c9c24aef&profile_id=139&oauth2_token_id=57447761",
 	},
 	motherBotheredByDaughter: {
 		phone:
@@ -58,11 +58,11 @@ module.exports = {
 	},
 	tropicalBeach: {
 		phone:
-			"https://vod-progressive.akamaized.net/exp=1613952845~acl=%2A%2F1213110092.mp4%2A~hmac=b23395236b3813123f1e110c69063235ec84e3110496d29deb5f4c07696eeb5c/vimeo-prod-skyfire-std-us/01/2878/12/314390042/1213110092.mp4?filename=Pexels+Videos+1854202.mp4",
+			"https://vod-progressive.akamaized.net/exp=1614033171~acl=%2A%2F1213110092.mp4%2A~hmac=530582caf637399c64540d024aa8b4b4880a64d2975a073a526a918dd609daff/vimeo-prod-skyfire-std-us/01/2878/12/314390042/1213110092.mp4?filename=Pexels+Videos+1854202.mp4",
 		tablet:
-			"https://vod-progressive.akamaized.net/exp=1613942061~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F2878%2F12%2F314390042%2F1213110091.mp4~hmac=0707934e2aa3e8c3e8ec3b074bf1eee494f437608910f66fa969d7772e8106b3/vimeo-prod-skyfire-std-us/01/2878/12/314390042/1213110091.mp4?filename=Pexels+Videos+1854202.mp4",
+			"https://vod-progressive.akamaized.net/exp=1614033158~acl=%2A%2F1213110091.mp4%2A~hmac=1d8691f007d63709e09c9880bb2d2e33281a3c5e27d06735857c2e01a5af37e8/vimeo-prod-skyfire-std-us/01/2878/12/314390042/1213110091.mp4?filename=Pexels+Videos+1854202.mp4",
 		hdReady:
-			"https://vod-progressive.akamaized.net/exp=1613941959~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F2878%2F12%2F314390042%2F1213110093.mp4~hmac=8c0051b58ccd3bbcadc97b2b634cb27e3780f5663c84f4fb7c51ed5e8e7e94da/vimeo-prod-skyfire-std-us/01/2878/12/314390042/1213110093.mp4?filename=Pexels+Videos+1854202.mp4",
+			"https://vod-progressive.akamaized.net/exp=1614033139~acl=%2A%2F1213110093.mp4%2A~hmac=7b82c22c5007b5a38e5cd167ac38d6f9e42e35c90112ac2fc1960849c53d84e5/vimeo-prod-skyfire-std-us/01/2878/12/314390042/1213110093.mp4?filename=Pexels+Videos+1854202.mp4",
 		fullHd: "",
 		fourK: "",
 	},
