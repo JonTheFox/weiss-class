@@ -50,6 +50,7 @@ export default styled.div`
 		font-family: Nunito;
 		text-align: left;
 		padding: calc(0.75 * var(--spacing));
+		padding-right: calc(2 * var(--spacing));
 		transform: all 0.2s;
 
 		&:hover {
@@ -77,16 +78,39 @@ export default styled.div`
 		&.cloudy {
 			color: var(--white);
 			transition: all 0.2s;
-			background-color: rgba(0, 0, 0, 0.8);
+			//background-color: rgba(0, 0, 0, 0.8);
+
 			&:hover {
 				// color: black;
 				background-color: rgba(0, 0, 0, 0.95);
 				transform: scale(1.2);
 			}
 		}
+
+		&.shadow--dark {
+			//fancy bg gradient
+			// background: linear-gradient(
+			// 	to right,
+			// 	rgba(0, 0, 0, 0.7) 0%,
+			// 	rgba(0, 0, 0, 0.3) 70%,
+			// 	rgba(0, 0, 0, 0) 100%
+			// );
+
+			background: linear-gradient(
+				to right,
+				rgba(0, 0, 0, 0) 0%,
+				rgba(0, 0, 0, 0.55) 2.5%,
+				rgba(0, 0, 0, 0.4) 97.5%,
+				rgba(0, 0, 0, 0) 100%
+			);
+		}
 		&.small {
 			color: var(--black);
 			transition: all 0.2s;
+			font-size: 0.75rem;
+
+			padding: 0;
+			padding-right: var(--spacing);
 
 			&:hover {
 				font-weight: bold;

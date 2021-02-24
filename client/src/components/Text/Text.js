@@ -6,6 +6,8 @@ import React, {
 	useCallback,
 } from "react";
 
+import clsx from "clsx";
+
 import StyledText from "./Text.styles.js";
 
 const Text = (props) => {
@@ -13,14 +15,26 @@ const Text = (props) => {
 		children,
 		pClassName = "",
 		readable = false,
-		variant = "cloudy",
+		variant = "cloudy", // or: "small"
+		style,
+		shadow = "", // One of: "dark"
 	} = props;
 	return (
 		<StyledText
 			className={`Text-Container ${readable ? "readable" : ""}`}
 			{...props}
+			style={style}
 		>
-			<p className={`text ${variant} ${pClassName}`}>{children}</p>
+			<p
+				className={clsx(
+					"text",
+					variant,
+					pClassName,
+					shadow && `shadow--${shadow}`
+				)}
+			>
+				{children}
+			</p>
 		</StyledText>
 	);
 };

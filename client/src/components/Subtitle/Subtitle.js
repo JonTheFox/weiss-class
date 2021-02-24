@@ -5,6 +5,7 @@ import React, {
 	Suspense,
 	useCallback,
 } from "react";
+import clsx from "clsx";
 
 // import useLogg from "../../../hooks/useLogg.jsx";
 // import usePromiseKeeper from "../../../hooks/usePromiseKeeper.jsx";
@@ -13,16 +14,37 @@ import Text from "../Text/Text.js";
 
 const label = "Subtitle";
 
-const Subtitle = ({ paragraphs, readable = true, children = "" }) => {
+const Subtitle = ({
+	paragraphs,
+	readable = true,
+	children = "",
+	className = "",
+	variant = "footer",
+	size = "small", //or: "regular"
+}) => {
 	if (!paragraphs.length || !paragraphs[0]) return null;
 
 	return (
-		<StyledSubtitle className={`${label}`}>
+		<StyledSubtitle
+			className={clsx(
+				label,
+				variant,
+				className && className,
+				size && `size--${size}`
+			)}
+		>
 			{paragraphs &&
-				paragraphs.map((paragraph) => {
+				paragraphs.map(({ text, className }, index) => {
 					return (
-						<Text className={readable && "readable"}>
-							{paragraph}
+						<Text
+							className={clsx(
+								className && className,
+								readable && "readable"
+							)}
+							variant="cloudy"
+							shadow="dark"
+						>
+							{text}
 						</Text>
 					);
 				})}

@@ -28,6 +28,28 @@ import { useRecoilValue } from "recoil";
 
 const label = "VideoCentered";
 
+const VideographerCredit = ({ name = "", url = "" }) => {
+	const creditText = name ? `Video by ${name} @Pexels` : "Video by Pexels";
+	const _url = name ? url : "www.pexels.com";
+	return (
+		<Text
+			variant="small"
+			className="photographer-credit"
+			style={{
+				position: "absolute",
+				//bottom: 0,
+				right: 0,
+
+				fontSize: "0.5rem",
+			}}
+		>
+			<a href={_url} style={{ color: "inherit", textDecoration: "none" }}>
+				{creditText}
+			</a>
+		</Text>
+	);
+};
+
 const PexelsLogo = () => {
 	return (
 		<Grid item style={{ position: "absolute", bottom: 0, right: 0 }}>
@@ -44,13 +66,12 @@ const PexelsLogo = () => {
 const VideoCentered = (props) => {
 	// const [appUtils] = useContext(AppContext);
 	// const { PromiseKeeper, Logger } = appUtils;
-
 	const {
 		heading = "",
 		subheading = "",
 		paragraphs = [""],
 		bgImage = "",
-		videoSet,
+		videoSet = {},
 		caption = "",
 	} = props;
 
@@ -61,15 +82,8 @@ const VideoCentered = (props) => {
 	// const { logg, loggError } = useLogg({ label });
 	// const promiseKeeper = usePromiseKeeper({ label });
 
-	// const renderTexts = () => {
-	// 	if (!p || !p.length) return null;
-	// 	return p.map((paragraph) => {
-	// 		return <Text pClassName="">{paragraph}</Text>;
-	// 	});
-	// };
-
 	//todo: use MediaContext to determine the size to display
-	const { links } = videoSet;
+	const links = videoSet.links || {};
 	const videoSize = links?.fullHd
 		? "fullHd"
 		: links.hdReady
@@ -78,27 +92,11 @@ const VideoCentered = (props) => {
 		? "tablet"
 		: links.phone
 		? "phone"
-		: "small";
+		: "phone";
 
-	const video = videoSet && { url: videoSet.links[videoSize] };
-	const videoUser = videoSet.user;
-
-	const VideographerCredit = ({ name = "", url = "" }) => {
-		const creditText = name
-			? `Video by ${name} @Pexels`
-			: "Video by Pexels";
-		const _url = name ? url : "www.pexels.com";
-		return (
-			<Text variant="small" className="photographer-credit">
-				<a
-					href={_url}
-					style={{ color: "inherit", textDecoration: "none" }}
-				>
-					{creditText}
-				</a>
-			</Text>
-		);
-	};
+	const video = videoSet &&
+		videoSet.links && { url: videoSet.links[videoSize] };
+	const videoUser = videoSet.user || {};
 
 	return (
 		<StyledPage className={"Page Page--video-centered"}>
@@ -129,7 +127,7 @@ const VideoCentered = (props) => {
 						light={false}
 						playing={true}
 						loop={true}
-						muted={!isSoundOn}
+						muted={true}
 						volume={isSoundOn ? 0.25 : 0}
 						scaleToFitViewport={false}
 						startSecond={video.startSecond || 0}
@@ -139,21 +137,18 @@ const VideoCentered = (props) => {
 						}}
 					></VideoPlayer>
 				)}
+				<Subtitle
+					paragraphs={paragraphs}
+					variant="default"
+					size="regular"
+				/>
+				<VideographerCredit
+					name={videoUser.name || ""}
+					url={videoUser.url || ""}
+				/>
 			</CenteredContainer>
-
-			<Subtitle paragraphs={[caption]} />
-			<Subtitle paragraphs={[caption]} />
-			<VideographerCredit name={videoUser.name} url={videoUser.url} />
 		</StyledPage>
 	);
 };
 
 export default VideoCentered;
-
-/*{p && (
-				<Page>
-					{p.map((paragraph) => {
-						return <Text>{paragraph}</Text>;
-					})}
-				</Page>
-			)}*/

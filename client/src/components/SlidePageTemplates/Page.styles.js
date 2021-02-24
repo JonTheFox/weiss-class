@@ -31,7 +31,7 @@ export default styled.div`
 
 		margin-top: 0;
 		margin-bottom: calc(2 * var(--spacing));
-		margin-left:0;
+		margin-left: 0;
 
 		.letter {
 			font-size: 1.25rem;
@@ -62,8 +62,6 @@ export default styled.div`
 		margin: 0;
 		line-height: 1;
 
-
-
 		.letter {
 			font-size: 1.25rem;
 			margin: 0;
@@ -78,13 +76,10 @@ export default styled.div`
 			margin: 0;
 			display: inline;
 			padding: 0 calc(var(--spacing) * 2);
-			
-
-}
-			// margin-bottom: calc(4 * var(--spacing));
-			// margin-top: 1rem;
-			line-height: 0.5;
-			text-align: left;
 		}
+		// margin-bottom: calc(4 * var(--spacing));
+		// margin-top: 1rem;
+		line-height: 0.5;
+		text-align: left;
 	}
 `;

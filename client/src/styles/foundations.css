@@ -462,7 +462,7 @@ body {
 
 .glass-container > *,
 .glass {
-	color: darkgray;
+	//color: darkgray;
 	border-radius: 8px;
 	padding: 20px;
 	background: rgba(255, 255, 255, 0.2);

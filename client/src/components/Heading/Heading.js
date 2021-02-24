@@ -127,6 +127,8 @@ const Header = React.forwardRef(
 
 		if (!children) return null;
 
+		const splitWords = children?.split?.(" ") || [];
+
 		return (
 			<Container
 				maxWidth="sm"
@@ -139,13 +141,17 @@ const Header = React.forwardRef(
 				<StyledHeading
 					className={`heading heading-${h} h${h} shadow--${shadow} textLook--${textLook} readable`}
 				>
-					<SplitText
-						charPoses={CHAR_POSES}
-						wordPoses={POSES.word__draggable}
-						className={`letter cursor--grab`}
-					>
-						{children}
-					</SplitText>
+					{splitWords.map((word, childIndex) => {
+						return (
+							<SplitText
+								charPoses={CHAR_POSES}
+								wordPoses={POSES.word__draggable}
+								className={`letter word-${childIndex} cursor--grab`}
+							>
+								{word + " "}
+							</SplitText>
+						);
+					})}
 				</StyledHeading>
 			</Container>
 		);

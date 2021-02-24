@@ -8,5 +8,16 @@ export default styled.div`
 	left: 0;
 	z-index: 1000;
 	padding: calc(2 * var(--spacing)) calc(2 * var(--spacing));
-	padding-bottom: calc(7 * var(--spacing));
+	&.footer {
+		padding-bottom: calc(7 * var(--spacing));
+	}
+	&.size--regular {
+		&,
+		p {
+			font-size: 1.35rem;
+		}
+	}
+	&.size--small {
+		font-size: 1.2rem;
+	}
 `;
