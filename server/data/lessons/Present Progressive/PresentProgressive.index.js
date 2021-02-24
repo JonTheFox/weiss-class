@@ -1,17 +1,20 @@
 const CoverPage = require("./CoverPage.js");
-//const Intro = require("./Intro.js");
 const UseCaseExample1 = require("./UseCaseExample1.js");
-const UseCaseExample2 = require("./UseCaseExample2.js");
-const UseCaseExample3 = require("./UseCaseExample3.js");
-const UseCaseExample4 = require("./UseCaseExample4.js");
+const CatsResting = require("./CatsResting.page.js");
+const DogPlaying = require("./DogPlaying.page.js");
+const BikeRidingFirstPerson = require("./BikeRidingFirstPerson.page.js");
+const Raining = require("./Raining.page.js");
+const Skiing = require("./Skiing.page.js");
+const FlyingAboveMountain = require("./FlyingAboveMountain.page.js");
 
-const presentSimpleSlides = [
+const PresentProgressiveSlides = [
 	CoverPage,
-	//Intro,
-	UseCaseExample1,
-	UseCaseExample2,
-	UseCaseExample3,
-	UseCaseExample4,
+	Raining,
+	BikeRidingFirstPerson,
+	Skiing,
+	FlyingAboveMountain,
+	CatsResting,
+	DogPlaying,
 ];
 
-module.exports = presentSimpleSlides;
+module.exports = PresentProgressiveSlides;

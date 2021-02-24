@@ -13,9 +13,9 @@ const CoverPage = {
 			subheading: "Living the moment",
 			//title: "I am driving.",
 			videoSet,
-			paragraphs: [
-				{ text: "I'm living the dream! ", className: "caption" },
-			],
+			// paragraphs: [
+			// 	{ text: "I'm living the dream! ", className: "caption" },
+			// ],
 		},
 
 		{

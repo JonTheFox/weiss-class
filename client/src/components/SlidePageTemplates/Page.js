@@ -17,7 +17,7 @@ const PAGE_TEMPLATES = {
 
 const label = "Page";
 const Page = (props) => {
-	const { templateName = "", videoId } = props;
+	const { templateName = "" } = props;
 
 	// const [appUtils, appState] = useContext(AppContext);
 	// const { request } = appUtils;
