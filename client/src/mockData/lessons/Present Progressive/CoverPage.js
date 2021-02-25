@@ -1,4 +1,10 @@
-const { VideoCentered, ListMain } = require("../../slideTemplates.js");
+const {
+	VideoWithContent,
+	ListMain,
+	CenteredHeadings,
+} = require("../../slideTemplates.js");
+
+debugger;
 
 const videoSet = require("./presentProgressiveVideos.js").tropicalBeach;
 
@@ -8,7 +14,7 @@ const CoverPage = {
 	bg: "var(--white)",
 	pages: [
 		{
-			templateName: VideoCentered,
+			templateName: VideoWithContent,
 			heading: "Present Progressive",
 			subheading: "Living the moment",
 			//title: "I am driving.",

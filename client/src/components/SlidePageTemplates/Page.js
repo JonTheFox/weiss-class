@@ -5,6 +5,7 @@ import BottomThirdCaption from "../SlidePageTemplates/BottomThirdCaption.js";
 import Text1 from "../SlidePageTemplates/Text1.js";
 import ListMain from "../SlidePageTemplates/ListMain/ListMain.js";
 import VideoCentered from "../SlidePageTemplates/VideoCentered/VideoCentered.js";
+import VideoWithContent from "../SlidePageTemplates/VideoWithContent/VideoWithContent.js";
 // import { AppContext } from "../../contexts/AppContext.jsx";
 
 const PAGE_TEMPLATES = {
@@ -13,6 +14,7 @@ const PAGE_TEMPLATES = {
 	BottomThirdCaption,
 	ListMain,
 	VideoCentered,
+	VideoWithContent,
 };
 
 const label = "Page";

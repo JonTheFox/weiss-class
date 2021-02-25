@@ -3,6 +3,7 @@ import BottomThirdCaption from "../SlidePageTemplates/BottomThirdCaption.js";
 import Text1 from "../SlidePageTemplates/Text1.js";
 import ListMain from "../SlidePageTemplates/ListMain/ListMain.js";
 import VideoCentered from "./VideoCentered/VideoCentered.js";
+import VideoWithContent from "./VideoWithContent/VideoWithContent.js";
 
 const PAGE_TEMPLATES = {
 	CenteredHeadings,
@@ -10,6 +11,7 @@ const PAGE_TEMPLATES = {
 	BottomThirdCaption,
 	ListMain,
 	VideoCentered,
+	VideoWithContent,
 };
 export default {
 	CenteredHeadings,
@@ -17,4 +19,5 @@ export default {
 	BottomThirdCaption,
 	ListMain,
 	VideoCentered,
+	VideoWithContent,
 };

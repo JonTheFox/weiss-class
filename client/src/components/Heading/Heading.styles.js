@@ -8,7 +8,7 @@ export const Heading1 = styled.h1`
     overflow: visible;
 
 	.letter {
-		font-size: 2.5rem;
+		font-size: 2.25rem; //used to be 2.5
 		text-align: center;
 		user-select: none;
 	}
@@ -22,7 +22,7 @@ export const Heading2 = styled.h2`
 	margin-top: 1rem;
 	 overflow: visible;
 	.letter {
-		font-size: 1.5rem;
+		font-size: 1.4rem; //used to be 1.5
 		text-align: center;
 		user-select: none;
 	}
