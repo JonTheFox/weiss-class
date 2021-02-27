@@ -82,7 +82,7 @@ export default styled.div`
 
 			&:hover {
 				// color: black;
-				background-color: rgba(0, 0, 0, 0.95);
+				linear-gradient( to right, rgba(0,0,0,0) 0%, var(--transparent-secondary) 2.5%, var(--secondary) 97.5%, rgba(0,0,0,0) 100% );
 				transform: scale(1.2);
 			}
 		}

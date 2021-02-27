@@ -6,6 +6,7 @@ import Text1 from "../SlidePageTemplates/Text1.js";
 import ListMain from "../SlidePageTemplates/ListMain/ListMain.js";
 import VideoCentered from "../SlidePageTemplates/VideoCentered/VideoCentered.js";
 import VideoWithContent from "../SlidePageTemplates/VideoWithContent/VideoWithContent.js";
+import clsx from "clsx";
 // import { AppContext } from "../../contexts/AppContext.jsx";
 
 const PAGE_TEMPLATES = {
@@ -28,7 +29,12 @@ const Page = (props) => {
 		PAGE_TEMPLATES[templateName] || PAGE_TEMPLATES["CenteredHeadings"];
 
 	return (
-		<StyledPage className={"Page-container"}>
+		<StyledPage
+			className={clsx(
+				"Page-container",
+				props.bgClass && `has-before show-before ${props.bgClass}`
+			)}
+		>
 			<LessonPage {...props} />
 		</StyledPage>
 	);
