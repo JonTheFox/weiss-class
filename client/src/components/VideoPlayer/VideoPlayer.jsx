@@ -118,6 +118,7 @@ const VideoPlayer = React.forwardRef((props, ref) => {
 							setFaded(false);
 						})
 						.catch((reason) => {
+							setFaded(false);
 							loggError(reason);
 						});
 				});

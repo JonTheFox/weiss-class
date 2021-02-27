@@ -13,12 +13,11 @@ const CoverPage = {
 	pages: [
 		{
 			templateName: VideoWithContent,
-			bgClass: "sunny",
+			bgClass: "cloud-up",
 			heading: "Present Progressive",
 			subheading: "Living the moment",
 			//title: "I am driving.",
 			videoSet,
-			bgClass: "sunny",
 			// paragraphs: [
 			// 	{ text: "I'm living the dream! ", className: "caption" },
 			// ],
@@ -26,16 +25,15 @@ const CoverPage = {
 
 		{
 			templateName: ListMain,
-			bgClass: "sunny",
+			bgClass: "cloud-up",
 			p: [
-				"When we are talking about what's happening at the moment, we are using 'Present Progressive. ",
+				"When we are talking about what's happening at the moment, we are using 'Present Progressive'. ",
+				"Here are a few examples: ",
 			],
-			//bullets: ["Fact", "Routine", "Hobby"],
-
 			bullets: [
-				"The sun is shining. ",
-				"The wind is blowing. ",
-				"I am having a good time 😎",
+				"The sun is shining. ☀️",
+				"The wind is blowing. 🌬️ ",
+				"I am having a good time.  😎",
 			],
 		},
 	],

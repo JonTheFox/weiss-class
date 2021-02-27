@@ -19,11 +19,13 @@ const Text = (props) => {
 		style,
 		shadow = "", // One of: "dark"
 	} = props;
+
+	const _style = { ...style, padding: "var(--spacing)" };
 	return (
 		<StyledText
 			className={`Text-Container ${readable ? "readable" : ""}`}
 			{...props}
-			style={style}
+			style={_style}
 		>
 			<p
 				className={clsx(
