@@ -1,5 +1,4 @@
 const CoverPage = require("./CoverPage.js");
-const UseCaseExample1 = require("./UseCaseExample1.js");
 const CatsResting = require("./CatsResting.page.js");
 const DogPlaying = require("./DogPlaying.page.js");
 const BikeRidingFirstPerson = require("./BikeRidingFirstPerson.page.js");

@@ -29,8 +29,11 @@ import { useRecoilValue } from "recoil";
 const label = "VideoWithContent";
 
 const VideographerCredit = ({ name = "", url = "" }) => {
-	const creditText = name ? `Video by ${name} @Pexels` : "Video by Pexels";
+	const creditText = name
+		? `Video by ${name} from Pexels`
+		: "Video from Pexels";
 	const _url = name ? url : "www.pexels.com";
+
 	return (
 		<Text
 			variant="small"
@@ -96,6 +99,7 @@ const VideoWithContent = (props) => {
 
 	const video = videoSet &&
 		videoSet.links && { url: videoSet.links[videoSize] };
+
 	const videoUser = videoSet.user || {};
 
 	return (
@@ -111,6 +115,8 @@ const VideoWithContent = (props) => {
 						style={{
 							position: "relative",
 							zIndex: -1,
+							height:
+								"calc(100 * var(--vh) - var(--appbar-height))",
 						}}
 						video={video}
 						controls={true}

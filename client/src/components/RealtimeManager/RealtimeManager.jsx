@@ -197,7 +197,8 @@ const Realtime = (props) => {
 			// });
 
 			socket.on("server__failedAuth", ({ error }) => {
-				debugger;
+				loggError("server__failedAuth: ", error);
+
 				// setConnectionStatus(CONNECTION_STATES.CONNECTED);
 				// animationFrame = window.requestAnimationFrame(() => {
 				// 	setServerMsg(content);

@@ -229,6 +229,54 @@ const skiing = new Video({
 	},
 });
 
+//portait videos
+const seaShoreWaves = {
+	user: {
+		name: "Dey Kheireddine",
+		url: "https://www.pexels.com/@deykhd",
+		id: 114448,
+	},
+	images: {
+		phone:
+			"https://player.vimeo.com/external/397754027.sd.mp4?s=a38cbaeac00a30f379044291715b15fc6e4ccd85&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/397754027.hd.mp4?s=8bdedf9ad49d8378b6f2afa56e1319195c2ee7ef&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/397754027.hd.mp4?s=8bdedf9ad49d8378b6f2afa56e1319195c2ee7ef&profile_id=175&oauth2_token_id=57447761",
+	},
+	links: {
+		phone:
+			"https://player.vimeo.com/external/397754027.sd.mp4?s=a38cbaeac00a30f379044291715b15fc6e4ccd85&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/397754027.hd.mp4?s=8bdedf9ad49d8378b6f2afa56e1319195c2ee7ef&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/397754027.hd.mp4?s=8bdedf9ad49d8378b6f2afa56e1319195c2ee7ef&profile_id=175&oauth2_token_id=57447761",
+	},
+};
+const tropicalBeach2 = {
+	user: {
+		name: "Charlene White",
+		url: "https://www.pexels.com/@charlene-white-900631",
+		id: 900631,
+	},
+	images: {
+		phone:
+			"https://player.vimeo.com/external/312179347.sd.mp4?s=c500fd34361bb8327d9cf616b1025e2057d6acca&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/312179347.hd.mp4?s=d3108f81bd15941edd40163caac3543c15014ff1&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/312179347.hd.mp4?s=d3108f81bd15941edd40163caac3543c15014ff1&profile_id=175&oauth2_token_id=57447761",
+	},
+	links: {
+		phone:
+			"https://player.vimeo.com/external/312179347.sd.mp4?s=c500fd34361bb8327d9cf616b1025e2057d6acca&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/312179347.hd.mp4?s=d3108f81bd15941edd40163caac3543c15014ff1&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/312179347.hd.mp4?s=d3108f81bd15941edd40163caac3543c15014ff1&profile_id=175&oauth2_token_id=57447761",
+	},
+};
+
 module.exports = {
 	rainyForest,
 	rainingSilent,
@@ -238,18 +286,9 @@ module.exports = {
 	dogPlaying,
 	bikeRidingFirstPerson,
 	skiing,
-	firstPersonBikeRiding: {
-		phone:
-			"https://player.vimeo.com/external/343052045.sd.mp4?s=7ff4748243927ebffab3ab3befeb0b8bf4960154&profile_id=139&oauth2_token_id=57447761",
-		tablet:
-			"https://player.vimeo.com/external/343052045.sd.mp4?s=7ff4748243927ebffab3ab3befeb0b8bf4960154&profile_id=165&oauth2_token_id=57447761",
-		hdReady:
-			"https://player.vimeo.com/external/343052045.hd.mp4?s=47f41ee7c9f0aa2838ddd330b8c71b94b30668e0&profile_id=174&oauth2_token_id=57447761",
-		fullHd:
-			"https://player.vimeo.com/external/343052045.hd.mp4?s=47f41ee7c9f0aa2838ddd330b8c71b94b30668e0&profile_id=175&oauth2_token_id=57447761",
-		fourK:
-			"https://player.vimeo.com/external/343052045.hd.mp4?s=47f41ee7c9f0aa2838ddd330b8c71b94b30668e0&profile_id=172&oauth2_token_id=57447761",
-	},
+	tropicalBeach2,
+
+	seaShoreWaves,
 	flyingThroughClouds: {
 		phone:
 			"https://player.vimeo.com/external/368748183.sd.mp4?s=dfa0c269d289bc12aa9f7d978efe9e07c0f2431a&profile_id=139&oauth2_token_id=57447761",

@@ -4,9 +4,7 @@ const {
 	CenteredHeadings,
 } = require("../../slideTemplates.js");
 
-debugger;
-
-const videoSet = require("./presentProgressiveVideos.js").tropicalBeach;
+const videoSet = require("./presentProgressiveVideos.js").tropicalBeach2;
 
 const CoverPage = {
 	id: 201,
