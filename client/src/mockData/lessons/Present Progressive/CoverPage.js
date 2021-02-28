@@ -7,7 +7,6 @@ const {
 const videoSet = require("./presentProgressiveVideos.js").tropicalBeach2;
 
 const CoverPage = {
-	id: 201,
 	//bgImage
 	bg: "var(--white)",
 	pages: [

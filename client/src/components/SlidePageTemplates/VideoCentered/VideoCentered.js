@@ -29,7 +29,9 @@ import { useRecoilValue } from "recoil";
 const label = "VideoCentered";
 
 const VideographerCredit = ({ name = "", url = "" }) => {
-	const creditText = name ? `Video by ${name} @Pexels` : "Video by Pexels";
+	const creditText = name
+		? `Video by ${name} from Pexels`
+		: "Video by Pexels";
 	const _url = name ? url : "www.pexels.com";
 	return (
 		<Text
@@ -120,6 +122,8 @@ const VideoCentered = (props) => {
 						style={{
 							position: "relative",
 							zIndex: -1,
+							height:
+								"calc(100 * var(--vh) - var(--appbar-height))",
 						}}
 						video={video}
 						controls={true}
@@ -139,13 +143,15 @@ const VideoCentered = (props) => {
 				)}
 				<Subtitle
 					paragraphs={paragraphs}
-					variant="default"
+					variant="footer"
 					size="regular"
 				/>
-				<VideographerCredit
-					name={videoUser.name || ""}
-					url={videoUser.url || ""}
-				/>
+				{video && (
+					<VideographerCredit
+						name={videoUser.name || ""}
+						url={videoUser.url || ""}
+					/>
+				)}
 			</CenteredContainer>
 		</StyledPage>
 	);

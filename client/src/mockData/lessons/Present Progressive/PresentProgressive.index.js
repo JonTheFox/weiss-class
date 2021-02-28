@@ -5,9 +5,32 @@ const BikeRidingFirstPerson = require("./BikeRidingFirstPerson.page.js");
 const Raining = require("./Raining.page.js");
 const Skiing = require("./Skiing.page.js");
 const FlyingAboveMountain = require("./FlyingAboveMountain.page.js");
+const CookingSoy = require("./CookingSoy.js");
+const TastingPancake = require("./TastingPancake.js");
+const DancingLadies = require("./DancingLadies.js");
+const DrivingInNiceScenery = require("./DrivingInNiceScenery.js");
+const PracticingJudo = require("./PracticingJudo.js");
+const GirlStudying = require("./GirlStudying.js");
+const WorkingOnComputer = require("./WorkingOnComputer.js");
+const GirlPlayingWithCat = require("./GirlPlayingWithCat.js");
+const PlayingBasketball = require("./PlayingBasketball.js");
+const PlayingSoccer = require("./PlayingSoccer.js");
 
 const PresentProgressiveSlides = [
+	//portrait
 	CoverPage,
+	DrivingInNiceScenery,
+	GirlStudying,
+	WorkingOnComputer,
+	CookingSoy,
+	TastingPancake,
+	DancingLadies,
+	PracticingJudo,
+	GirlPlayingWithCat,
+	PlayingBasketball,
+	PlayingSoccer,
+
+	//landscape
 	Raining,
 	BikeRidingFirstPerson,
 	Skiing,

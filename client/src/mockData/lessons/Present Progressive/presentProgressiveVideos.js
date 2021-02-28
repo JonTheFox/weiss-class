@@ -277,6 +277,414 @@ const tropicalBeach2 = {
 	},
 };
 
+const catWalkingOnPiano = {
+	user: {
+		name: "cottonbro",
+		url: "https://www.pexels.com/@cottonbro",
+		id: 1437723,
+	},
+	images: {
+		phone:
+			"https://player.vimeo.com/external/513373860.sd.mp4?s=9fc67940b1192611138cfe630478f7618b2d4dd6&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/513373860.hd.mp4?s=3aa9a256b9e4eea8b6ed071af5cf6052c3d88c69&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/513373860.hd.mp4?s=3aa9a256b9e4eea8b6ed071af5cf6052c3d88c69&profile_id=170&oauth2_token_id=57447761",
+		fullHd:
+			"https://player.vimeo.com/external/513373860.hd.mp4?s=3aa9a256b9e4eea8b6ed071af5cf6052c3d88c69&profile_id=172&oauth2_token_id=57447761",
+	},
+	links: {
+		phone:
+			"https://player.vimeo.com/external/513373860.sd.mp4?s=9fc67940b1192611138cfe630478f7618b2d4dd6&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/513373860.hd.mp4?s=3aa9a256b9e4eea8b6ed071af5cf6052c3d88c69&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/513373860.hd.mp4?s=3aa9a256b9e4eea8b6ed071af5cf6052c3d88c69&profile_id=170&oauth2_token_id=57447761",
+		fullHd:
+			"https://player.vimeo.com/external/513373860.hd.mp4?s=3aa9a256b9e4eea8b6ed071af5cf6052c3d88c69&profile_id=172&oauth2_token_id=57447761",
+	},
+};
+
+const PracticingJudo = {
+	user: {
+		name: "Artem Podrez",
+		url: "https://www.pexels.com/@artempodrez",
+		id: 2951544,
+	},
+	images: {
+		phone:
+			"https://player.vimeo.com/external/493409070.sd.mp4?s=77480349978d6dc7067d1fab5a0cc0368a6b8654&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/493409070.hd.mp4?s=dcf495b2bbbc08b656bf44d32173366349e5bf08&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/493409070.hd.mp4?s=dcf495b2bbbc08b656bf44d32173366349e5bf08&profile_id=170&oauth2_token_id=57447761",
+		fullHd:
+			"https://player.vimeo.com/external/493409070.hd.mp4?s=dcf495b2bbbc08b656bf44d32173366349e5bf08&profile_id=172&oauth2_token_id=57447761",
+	},
+	links: {
+		phone:
+			"https://player.vimeo.com/external/493409070.sd.mp4?s=77480349978d6dc7067d1fab5a0cc0368a6b8654&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/493409070.hd.mp4?s=dcf495b2bbbc08b656bf44d32173366349e5bf08&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/493409070.hd.mp4?s=dcf495b2bbbc08b656bf44d32173366349e5bf08&profile_id=170&oauth2_token_id=57447761",
+		fullHd:
+			"https://player.vimeo.com/external/493409070.hd.mp4?s=dcf495b2bbbc08b656bf44d32173366349e5bf08&profile_id=172&oauth2_token_id=57447761",
+	},
+};
+
+const PlayingBasketball = {
+	user: {
+		name: "Tima Miroshnichenko",
+		url: "https://www.pexels.com/@tima-miroshnichenko",
+		id: 3088726,
+	},
+	images: {
+		phone:
+			"https://player.vimeo.com/external/467436330.sd.mp4?s=76304706368278640ac086aa2232c50327b2491e&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/467436330.hd.mp4?s=17d8359d3357d31ea836ea898966b17b4af4b34c&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/467436330.hd.mp4?s=17d8359d3357d31ea836ea898966b17b4af4b34c&profile_id=175&oauth2_token_id=57447761",
+	},
+	links: {
+		phone:
+			"https://player.vimeo.com/external/467436330.sd.mp4?s=76304706368278640ac086aa2232c50327b2491e&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/467436330.hd.mp4?s=17d8359d3357d31ea836ea898966b17b4af4b34c&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/467436330.hd.mp4?s=17d8359d3357d31ea836ea898966b17b4af4b34c&profile_id=175&oauth2_token_id=57447761",
+	},
+};
+
+const PlayingSoccer = {
+	user: {
+		name: "Tima Miroshnichenko",
+		url: "https://www.pexels.com/@tima-miroshnichenko",
+		id: 3088726,
+	},
+	images: {
+		phone:
+			"https://player.vimeo.com/external/487388032.sd.mp4?s=cc10a3427332da8fd21611b744ea852ae3d49b6a&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/487388032.hd.mp4?s=6ea672d27c5579ed42872ef665472bd8c4973dd1&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/487388032.hd.mp4?s=6ea672d27c5579ed42872ef665472bd8c4973dd1&profile_id=175&oauth2_token_id=57447761",
+	},
+	links: {
+		phone:
+			"https://player.vimeo.com/external/487388032.sd.mp4?s=cc10a3427332da8fd21611b744ea852ae3d49b6a&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/487388032.hd.mp4?s=6ea672d27c5579ed42872ef665472bd8c4973dd1&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/487388032.hd.mp4?s=6ea672d27c5579ed42872ef665472bd8c4973dd1&profile_id=175&oauth2_token_id=57447761",
+	},
+};
+
+const girlStudying = {
+	user: {
+		name: "Polina Tankilevitch",
+		url: "https://www.pexels.com/@polina-tankilevitch",
+		id: 2104565,
+	},
+	images: {
+		phone:
+			"https://player.vimeo.com/external/515795363.sd.mp4?s=f226291916ab545993c0c379aced95d6255335b0&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/515795363.hd.mp4?s=c36580efd21b8e0a4d74c02004f81380653040e9&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/515795363.hd.mp4?s=c36580efd21b8e0a4d74c02004f81380653040e9&profile_id=175&oauth2_token_id=57447761",
+	},
+	links: {
+		phone:
+			"https://player.vimeo.com/external/515795363.sd.mp4?s=f226291916ab545993c0c379aced95d6255335b0&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/515795363.hd.mp4?s=c36580efd21b8e0a4d74c02004f81380653040e9&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/515795363.hd.mp4?s=c36580efd21b8e0a4d74c02004f81380653040e9&profile_id=175&oauth2_token_id=57447761",
+	},
+};
+
+const tastingPancake = {
+	user: {
+		name: "cottonbro",
+		url: "https://www.pexels.com/@cottonbro",
+		id: 1437723,
+	},
+	images: {
+		phone:
+			"https://player.vimeo.com/external/390189146.sd.mp4?s=856aceda389e10dfdc19a139360ff184661d7caa&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/390189146.hd.mp4?s=ee9ceba48abb134a5d81464755d02728a0c511a2&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/390189146.hd.mp4?s=ee9ceba48abb134a5d81464755d02728a0c511a2&profile_id=170&oauth2_token_id=57447761",
+		fullHd:
+			"https://player.vimeo.com/external/390189146.hd.mp4?s=ee9ceba48abb134a5d81464755d02728a0c511a2&profile_id=173&oauth2_token_id=57447761",
+	},
+	links: {
+		phone:
+			"https://player.vimeo.com/external/390189146.sd.mp4?s=856aceda389e10dfdc19a139360ff184661d7caa&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/390189146.hd.mp4?s=ee9ceba48abb134a5d81464755d02728a0c511a2&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/390189146.hd.mp4?s=ee9ceba48abb134a5d81464755d02728a0c511a2&profile_id=170&oauth2_token_id=57447761",
+		fullHd:
+			"https://player.vimeo.com/external/390189146.hd.mp4?s=ee9ceba48abb134a5d81464755d02728a0c511a2&profile_id=173&oauth2_token_id=57447761",
+	},
+};
+
+const cookingSoy = {
+	user: {
+		name: "cottonbro",
+		url: "https://www.pexels.com/@cottonbro",
+		id: 1437723,
+	},
+	images: {
+		phone:
+			"https://player.vimeo.com/external/376214014.sd.mp4?s=08f6031eb4bc5c58dbe1635967468a99a92fe13a&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/376214014.hd.mp4?s=f7f821b6aac45dab79ee4c299212bd527862c1d4&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/376214014.hd.mp4?s=f7f821b6aac45dab79ee4c299212bd527862c1d4&profile_id=170&oauth2_token_id=57447761",
+		fullHd:
+			"https://player.vimeo.com/external/376214014.hd.mp4?s=f7f821b6aac45dab79ee4c299212bd527862c1d4&profile_id=172&oauth2_token_id=57447761",
+	},
+	links: {
+		phone:
+			"https://player.vimeo.com/external/376214014.sd.mp4?s=08f6031eb4bc5c58dbe1635967468a99a92fe13a&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/376214014.hd.mp4?s=f7f821b6aac45dab79ee4c299212bd527862c1d4&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/376214014.hd.mp4?s=f7f821b6aac45dab79ee4c299212bd527862c1d4&profile_id=170&oauth2_token_id=57447761",
+		fullHd:
+			"https://player.vimeo.com/external/376214014.hd.mp4?s=f7f821b6aac45dab79ee4c299212bd527862c1d4&profile_id=172&oauth2_token_id=57447761",
+	},
+};
+
+const throwingTomatoUp = {
+	user: {
+		name: "cottonbro",
+		url: "https://www.pexels.com/@cottonbro",
+		id: 1437723,
+	},
+	images: {
+		phone:
+			"https://player.vimeo.com/external/397941600.sd.mp4?s=25738b06d6cb0d29862800713e47cbcc5a123ee2&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/397941600.hd.mp4?s=a9ebe7ff2fdaffe5480970cd3674b1802488fc6c&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/397941600.hd.mp4?s=a9ebe7ff2fdaffe5480970cd3674b1802488fc6c&profile_id=171&oauth2_token_id=57447761",
+		fullHd:
+			"https://player.vimeo.com/external/397941600.hd.mp4?s=a9ebe7ff2fdaffe5480970cd3674b1802488fc6c&profile_id=173&oauth2_token_id=57447761",
+	},
+	links: {
+		phone:
+			"https://player.vimeo.com/external/397941600.sd.mp4?s=25738b06d6cb0d29862800713e47cbcc5a123ee2&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/397941600.hd.mp4?s=a9ebe7ff2fdaffe5480970cd3674b1802488fc6c&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/397941600.hd.mp4?s=a9ebe7ff2fdaffe5480970cd3674b1802488fc6c&profile_id=171&oauth2_token_id=57447761",
+		fullHd:
+			"https://player.vimeo.com/external/397941600.hd.mp4?s=a9ebe7ff2fdaffe5480970cd3674b1802488fc6c&profile_id=173&oauth2_token_id=57447761",
+	},
+};
+
+const cleaningAndDancing = {
+	user: {
+		name: "cottonbro",
+		url: "https://www.pexels.com/@cottonbro",
+		id: 1437723,
+	},
+	images: {
+		phone:
+			"https://player.vimeo.com/external/405479087.sd.mp4?s=9a3ccb1b1669bf853c9daf06f204421f8b89c3a7&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/405479087.hd.mp4?s=1dacde1e3dc21a5e6ca72ecbd8e5764694fa2ee9&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/405479087.hd.mp4?s=1dacde1e3dc21a5e6ca72ecbd8e5764694fa2ee9&profile_id=171&oauth2_token_id=57447761",
+		fullHd:
+			"https://player.vimeo.com/external/405479087.hd.mp4?s=1dacde1e3dc21a5e6ca72ecbd8e5764694fa2ee9&profile_id=173&oauth2_token_id=57447761",
+	},
+	links: {
+		phone:
+			"https://player.vimeo.com/external/405479087.sd.mp4?s=9a3ccb1b1669bf853c9daf06f204421f8b89c3a7&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/405479087.hd.mp4?s=1dacde1e3dc21a5e6ca72ecbd8e5764694fa2ee9&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/405479087.hd.mp4?s=1dacde1e3dc21a5e6ca72ecbd8e5764694fa2ee9&profile_id=171&oauth2_token_id=57447761",
+		fullHd:
+			"https://player.vimeo.com/external/405479087.hd.mp4?s=1dacde1e3dc21a5e6ca72ecbd8e5764694fa2ee9&profile_id=173&oauth2_token_id=57447761",
+	},
+};
+
+const dancingYellow = {
+	user: {
+		name: "Anna Shvets",
+		url: "https://www.pexels.com/@shvetsa",
+		id: 1984515,
+	},
+	images: {
+		phone:
+			"https://player.vimeo.com/external/414795463.sd.mp4?s=95ba5c6cd195206c91c2ddae56a004058e9cacb1&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/414795463.hd.mp4?s=0bd8bdd6eb116017f7c1bdb039c820626fd11d78&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/414795463.hd.mp4?s=0bd8bdd6eb116017f7c1bdb039c820626fd11d78&profile_id=170&oauth2_token_id=57447761",
+		fullHd:
+			"https://player.vimeo.com/external/414795463.hd.mp4?s=0bd8bdd6eb116017f7c1bdb039c820626fd11d78&profile_id=172&oauth2_token_id=57447761",
+	},
+	links: {
+		phone:
+			"https://player.vimeo.com/external/414795463.sd.mp4?s=95ba5c6cd195206c91c2ddae56a004058e9cacb1&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/414795463.hd.mp4?s=0bd8bdd6eb116017f7c1bdb039c820626fd11d78&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/414795463.hd.mp4?s=0bd8bdd6eb116017f7c1bdb039c820626fd11d78&profile_id=170&oauth2_token_id=57447761",
+		fullHd:
+			"https://player.vimeo.com/external/414795463.hd.mp4?s=0bd8bdd6eb116017f7c1bdb039c820626fd11d78&profile_id=172&oauth2_token_id=57447761",
+	},
+};
+
+const dancingLadies = {
+	user: {
+		name: "Anna Shvets",
+		url: "https://www.pexels.com/@shvetsa",
+		id: 1984515,
+	},
+	images: {
+		phone:
+			"https://player.vimeo.com/external/435373899.sd.mp4?s=8b5067a03b5f02320c8b08823a2056f01b5266c4&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/435373899.hd.mp4?s=17d13bc3178c2dc3e20c6f2725916e72874a801d&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/435373899.hd.mp4?s=17d13bc3178c2dc3e20c6f2725916e72874a801d&profile_id=170&oauth2_token_id=57447761",
+		fullHd:
+			"https://player.vimeo.com/external/435373899.hd.mp4?s=17d13bc3178c2dc3e20c6f2725916e72874a801d&profile_id=172&oauth2_token_id=57447761",
+	},
+	links: {
+		phone:
+			"https://player.vimeo.com/external/435373899.sd.mp4?s=8b5067a03b5f02320c8b08823a2056f01b5266c4&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/435373899.hd.mp4?s=17d13bc3178c2dc3e20c6f2725916e72874a801d&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/435373899.hd.mp4?s=17d13bc3178c2dc3e20c6f2725916e72874a801d&profile_id=170&oauth2_token_id=57447761",
+		fullHd:
+			"https://player.vimeo.com/external/435373899.hd.mp4?s=17d13bc3178c2dc3e20c6f2725916e72874a801d&profile_id=172&oauth2_token_id=57447761",
+	},
+};
+
+const dancingGuy = {
+	user: {
+		name: "cottonbro",
+		url: "https://www.pexels.com/@cottonbro",
+		id: 1437723,
+	},
+	images: {
+		phone:
+			"https://player.vimeo.com/external/353559559.sd.mp4?s=341572245099a7b42e34e72473ce876d7e8c196c&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/353559559.hd.mp4?s=bab0e909b1c32bbfddf860fbcdb9e9b00c1b5aa6&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/353559559.hd.mp4?s=bab0e909b1c32bbfddf860fbcdb9e9b00c1b5aa6&profile_id=170&oauth2_token_id=57447761",
+		fullHd:
+			"https://player.vimeo.com/external/353559559.hd.mp4?s=bab0e909b1c32bbfddf860fbcdb9e9b00c1b5aa6&profile_id=172&oauth2_token_id=57447761",
+	},
+	links: {
+		phone:
+			"https://player.vimeo.com/external/353559559.sd.mp4?s=341572245099a7b42e34e72473ce876d7e8c196c&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/353559559.hd.mp4?s=bab0e909b1c32bbfddf860fbcdb9e9b00c1b5aa6&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/353559559.hd.mp4?s=bab0e909b1c32bbfddf860fbcdb9e9b00c1b5aa6&profile_id=170&oauth2_token_id=57447761",
+		fullHd:
+			"https://player.vimeo.com/external/353559559.hd.mp4?s=bab0e909b1c32bbfddf860fbcdb9e9b00c1b5aa6&profile_id=172&oauth2_token_id=57447761",
+	},
+};
+
+const girlPlayingWithCat = {
+	user: {
+		name: "cottonbro",
+		url: "https://www.pexels.com/@cottonbro",
+		id: 1437723,
+	},
+	images: {
+		phone:
+			"https://player.vimeo.com/external/513848114.sd.mp4?s=f1f7f288617965ecbbf76fdb43cc3924225c683e&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/513848114.hd.mp4?s=bf13232aefde611877694b4485949ce7979eef10&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/513848114.hd.mp4?s=bf13232aefde611877694b4485949ce7979eef10&profile_id=170&oauth2_token_id=57447761",
+		fullHd:
+			"https://player.vimeo.com/external/513848114.hd.mp4?s=bf13232aefde611877694b4485949ce7979eef10&profile_id=172&oauth2_token_id=57447761",
+	},
+	links: {
+		phone:
+			"https://player.vimeo.com/external/513848114.sd.mp4?s=f1f7f288617965ecbbf76fdb43cc3924225c683e&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/513848114.hd.mp4?s=bf13232aefde611877694b4485949ce7979eef10&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/513848114.hd.mp4?s=bf13232aefde611877694b4485949ce7979eef10&profile_id=170&oauth2_token_id=57447761",
+		fullHd:
+			"https://player.vimeo.com/external/513848114.hd.mp4?s=bf13232aefde611877694b4485949ce7979eef10&profile_id=172&oauth2_token_id=57447761",
+	},
+};
+
+const workingOnComputer = {
+	user: {
+		name: "cottonbro",
+		url: "https://www.pexels.com/@cottonbro",
+		id: 1437723,
+	},
+	images: {
+		phone:
+			"https://player.vimeo.com/external/403652508.sd.mp4?s=f6fff2f196fc5899d730fd9af5544b7e6fbc5aa6&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/403652508.hd.mp4?s=619899d6bfc52d8832cad04c0c0be57d45bb6c02&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/403652508.hd.mp4?s=619899d6bfc52d8832cad04c0c0be57d45bb6c02&profile_id=171&oauth2_token_id=57447761",
+		fullHd:
+			"https://player.vimeo.com/external/403652508.hd.mp4?s=619899d6bfc52d8832cad04c0c0be57d45bb6c02&profile_id=173&oauth2_token_id=57447761",
+	},
+	links: {
+		phone:
+			"https://player.vimeo.com/external/403652508.sd.mp4?s=f6fff2f196fc5899d730fd9af5544b7e6fbc5aa6&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/403652508.hd.mp4?s=619899d6bfc52d8832cad04c0c0be57d45bb6c02&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/403652508.hd.mp4?s=619899d6bfc52d8832cad04c0c0be57d45bb6c02&profile_id=171&oauth2_token_id=57447761",
+		fullHd:
+			"https://player.vimeo.com/external/403652508.hd.mp4?s=619899d6bfc52d8832cad04c0c0be57d45bb6c02&profile_id=173&oauth2_token_id=57447761",
+	},
+};
+
+const drivingInNiceScenery = {
+	user: {
+		name: "Yaroslav Shuraev",
+		url: "https://www.pexels.com/@yaroslav-shuraev",
+		id: 649765,
+	},
+	images: {
+		phone:
+			"https://player.vimeo.com/external/420239207.sd.mp4?s=2b5a6633c37af1a6fb0beb02c06bdc376fdfcce2&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/420239207.hd.mp4?s=9fa34fce5989c66f5edc65fc533f2d91085d7599&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/420239207.hd.mp4?s=9fa34fce5989c66f5edc65fc533f2d91085d7599&profile_id=170&oauth2_token_id=57447761",
+		fullHd:
+			"https://player.vimeo.com/external/420239207.hd.mp4?s=9fa34fce5989c66f5edc65fc533f2d91085d7599&profile_id=172&oauth2_token_id=57447761",
+	},
+	links: {
+		phone:
+			"https://player.vimeo.com/external/420239207.sd.mp4?s=2b5a6633c37af1a6fb0beb02c06bdc376fdfcce2&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/420239207.hd.mp4?s=9fa34fce5989c66f5edc65fc533f2d91085d7599&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/420239207.hd.mp4?s=9fa34fce5989c66f5edc65fc533f2d91085d7599&profile_id=170&oauth2_token_id=57447761",
+		fullHd:
+			"https://player.vimeo.com/external/420239207.hd.mp4?s=9fa34fce5989c66f5edc65fc533f2d91085d7599&profile_id=172&oauth2_token_id=57447761",
+	},
+};
+
 module.exports = {
 	rainyForest,
 	rainingSilent,
@@ -288,7 +696,22 @@ module.exports = {
 	skiing,
 	tropicalBeach2,
 
+	catWalkingOnPiano,
+	PracticingJudo,
+	PlayingBasketball,
+	PlayingSoccer,
 	seaShoreWaves,
+	girlStudying,
+	tastingPancake,
+	cookingSoy,
+	throwingTomatoUp,
+	cleaningAndDancing,
+	dancingYellow,
+	dancingLadies,
+	dancingGuy,
+	girlPlayingWithCat,
+	workingOnComputer,
+	drivingInNiceScenery,
 	flyingThroughClouds: {
 		phone:
 			"https://player.vimeo.com/external/368748183.sd.mp4?s=dfa0c269d289bc12aa9f7d978efe9e07c0f2431a&profile_id=139&oauth2_token_id=57447761",
