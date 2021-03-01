@@ -13,7 +13,7 @@ import Heading from "../../Heading/Heading.js";
 import View from "../../layout/View.jsx";
 import Page from "../Page.js";
 import Text from "../../Text/Text.js";
-import VideoPlayer from "../../VideoPlayer/VideoPlayer.jsx";
+//import VideoPlayer from "../../VideoPlayer/VideoPlayer.jsx";
 //import PropTypes from "prop-types";
 // import clsx from "clsx";
 
@@ -79,8 +79,6 @@ const VideoCentered = (props) => {
 
 	const isSoundOn = useRecoilValue(IsSoundOnState);
 
-	const [isVideoPlaying, setIsVideoPlaying] = useState(false);
-
 	// const { logg, loggError } = useLogg({ label });
 	// const promiseKeeper = usePromiseKeeper({ label });
 
@@ -117,30 +115,6 @@ const VideoCentered = (props) => {
 			</div>
 
 			<CenteredContainer style={{ zIndex: -1 }}>
-				{video && (
-					<VideoPlayer
-						style={{
-							position: "relative",
-							zIndex: -1,
-							height:
-								"calc(100 * var(--vh) - var(--appbar-height))",
-						}}
-						video={video}
-						controls={true}
-						noInteraction={false}
-						light={false}
-						playing={true}
-						loop={true}
-						muted={true}
-						volume={isSoundOn ? 0.25 : 0}
-						scaleToFitViewport={false}
-						startSecond={video.startSecond || 0}
-						stopSecond={video.stopSecond}
-						onPlay={() => {
-							setIsVideoPlaying(true);
-						}}
-					></VideoPlayer>
-				)}
 				<Subtitle
 					paragraphs={paragraphs}
 					variant="footer"

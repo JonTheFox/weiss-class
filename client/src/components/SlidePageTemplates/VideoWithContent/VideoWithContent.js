@@ -110,30 +110,6 @@ const VideoWithContent = (props) => {
 			</CenteredContainer>
 
 			<CenteredContainer style={{ zIndex: -1 }}>
-				{video && (
-					<VideoPlayer
-						style={{
-							position: "relative",
-							zIndex: -1,
-							height:
-								"calc(100 * var(--vh) - var(--appbar-height))",
-						}}
-						video={video}
-						controls={true}
-						noInteraction={false}
-						light={false}
-						playing={true}
-						loop={true}
-						muted={true}
-						volume={isSoundOn ? 0.25 : 0}
-						scaleToFitViewport={false}
-						startSecond={video.startSecond || 0}
-						stopSecond={video.stopSecond}
-						onPlay={() => {
-							setIsVideoPlaying(true);
-						}}
-					></VideoPlayer>
-				)}
 				<Subtitle
 					paragraphs={paragraphs}
 					variant="default"

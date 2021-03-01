@@ -253,6 +253,16 @@ const seaShoreWaves = {
 			"https://player.vimeo.com/external/397754027.hd.mp4?s=8bdedf9ad49d8378b6f2afa56e1319195c2ee7ef&profile_id=175&oauth2_token_id=57447761",
 	},
 };
+
+const flyingByClouds = {
+	user: {},
+	images: {},
+	links: {
+		phone: "https://www.youtube.com/watch?v=6AJl7DsL-1Y",
+	},
+	startSecond: 15,
+	stopSecond: 60 * 5 + 50,
+};
 const tropicalBeach2 = {
 	user: {
 		name: "Charlene White",
@@ -712,6 +722,7 @@ module.exports = {
 	girlPlayingWithCat,
 	workingOnComputer,
 	drivingInNiceScenery,
+	flyingByClouds,
 	flyingThroughClouds: {
 		phone:
 			"https://player.vimeo.com/external/368748183.sd.mp4?s=dfa0c269d289bc12aa9f7d978efe9e07c0f2431a&profile_id=139&oauth2_token_id=57447761",

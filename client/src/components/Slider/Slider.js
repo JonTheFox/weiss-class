@@ -9,11 +9,12 @@ import Slide from "../SlidePageTemplates/Slide.js";
 import CenteredHeadings from "../SlidePageTemplates/CenteredHeadings.js";
 import Text1 from "../SlidePageTemplates/Text1.js";
 import { AppContext } from "../../store/AppContext.js";
+import videoState from "../../store/video.atom.js";
 import clsx from "clsx";
 
 import currentSlideIndexState from "../../store/currentSlideIndex.atom.js";
 
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 
 const SLIDE_TEMPLATES = { CenteredHeadings, Text1 };
 
@@ -26,6 +27,7 @@ const Slider = ({ children, slides }) => {
   const [currentSlideIndex, setCurrentSlideIndex] = useRecoilState(
     currentSlideIndexState
   );
+  const setVideo = useSetRecoilState(videoState);
 
   //these will be populated by HeroSlider
   const nextSlideHandler = useRef();
@@ -60,7 +62,13 @@ const Slider = ({ children, slides }) => {
       onChange={(nextSlide) => {
         console.log("onChange", nextSlide);
       }}
-      onAfterChange={(nextSlide) => console.log("onAfterChange", nextSlide)}
+      onAfterChange={(nextSlideIndex) => {
+        setCurrentSlideIndex(nextSlideIndex);
+
+        setVideo(slides[nextSlideIndex]?.video);
+        console.log("onAfterChange. Moved to slide #", nextSlideIndex);
+        debugger;
+      }}
       style={{
         backgroundColor: "rgba(0, 0, 0, 0.33)",
       }}
@@ -91,7 +99,7 @@ const Slider = ({ children, slides }) => {
               }}
               className={clsx(!bgImage && "gradient")}
             >
-              <Slide {...slide}></Slide>
+              <Slide {...slide} />
             </PresentationSlide>
           );
         })}

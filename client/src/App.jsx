@@ -21,8 +21,6 @@ import { DeviceContextProvider } from "./contexts/DeviceContext.jsx";
 import theme from "./constants/theme.js";
 
 import AppRoutes from "./AppRoutes.js";
-import VideoPlayer from "./components/VideoPlayer/VideoPlayer.jsx";
-import bgVideos from "./constants/bgVideos.js";
 
 import {
 	RecoilRoot,
@@ -49,9 +47,6 @@ const client = new ApolloClient({
 });
 
 const App = (props) => {
-	const [video, setVideo] = useState(bgVideos[0]);
-	const [isPlaying, setIsPlaying] = useState(false);
-
 	return (
 		<ApolloProvider client={client}>
 			<RecoilRoot>
@@ -72,37 +67,6 @@ const App = (props) => {
 															}
 															key="innerView"
 														>
-															<VideoPlayer
-																style={{
-																	position:
-																		"absolute",
-																	zIndex: -1,
-																}}
-																video={video}
-																controls={false}
-																noInteraction={
-																	true
-																}
-																light={false}
-																playing={true}
-																muted={true}
-																volume={0}
-																scaleToFitViewport={
-																	true
-																}
-																startSecond={
-																	video.startSecond ||
-																	0
-																}
-																stopSecond={
-																	video.stopSecond
-																}
-																onPlay={() => {
-																	setIsPlaying(
-																		true
-																	);
-																}}
-															></VideoPlayer>
 															<AppRoutes
 																style={{
 																	overflow:

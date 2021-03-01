@@ -26,8 +26,6 @@ const CLOUD_VIDEOS = [
 	},
 ];
 
-const DEFAULT_VIDEO = CLOUD_VIDEOS[0];
-
 let animationFrame;
 const label = "VideoPlayer";
 
@@ -42,8 +40,6 @@ const VideoPlayer = React.forwardRef((props, ref) => {
 	const [isPlaying, setIsPlaying] = useState(false);
 	const [video, setVideo] = useState(props.video || {});
 
-	// const [url, setUrl] = useState(props.video?.url || DEFAULT_VIDEO.url);
-	//const [pip, setPip] = useState(false);
 	const [playing] = useState(props.playing);
 	const [controls] = useState(props.controls || props.controls === undefined);
 	const [light] = useState(props.light);

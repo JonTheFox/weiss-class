@@ -1,5 +1,5 @@
 const {
-	VideoWithContent,
+	//VideoWithContent,
 	ListMain,
 	CenteredHeadings,
 } = require("../../slideTemplates.js");
@@ -11,7 +11,7 @@ const CoverPage = {
 	bg: "var(--white)",
 	pages: [
 		{
-			templateName: VideoWithContent,
+			templateName: CenteredHeadings,
 			bgClass: "cloud-up",
 			heading: "Present Progressive",
 			subheading: "Living the moment",
@@ -32,7 +32,7 @@ const CoverPage = {
 			bullets: [
 				"The sun is shining. ☀️",
 				"The wind is blowing. 🌬️ ",
-				"I am having a good time.  😎",
+				"I am having a good time. 😎",
 			],
 		},
 	],

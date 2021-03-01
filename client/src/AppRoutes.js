@@ -17,6 +17,12 @@ import ClassroomSelect from "./pages/ClassroomSelect/ClassroomSelect.page.jsx";
 import LogoScreen from "./pages/LogoScreen/LogoScreen.jsx";
 import GlowingLoader from "./components/GlowingLoader/GlowingLoader.jsx";
 
+import recoil, { useRecoilValue } from "recoil";
+import videoState from "./store/video.atom.js";
+import VideoPlayer from "./components/VideoPlayer/VideoPlayer.jsx";
+
+import soundState from "./store/soundState.atom.js";
+
 // import roomsState from "../../store/rooms.atom.js";
 // import roomState from "../../store/room.atom.js";
 // import socketState from "../../store/socket.atom.js";
@@ -55,49 +61,77 @@ const AppRoutes = (props) => {
 	const { route } = props;
 	const { match, location } = route;
 
+	const video = useRecoilValue(videoState);
+	const sound = useRecoilValue(soundState);
+
+	useEffect(() => {}, []);
+
 	return (
-		<Suspense fallback={<GlowingLoader />}>
-			<Switch location={location}>
-				<Route
-					path={`${match.path}client-type-select`}
-					render={(route) => <ClientTypeSelect route={route} />}
-				/>
+		<React.Fragment>
+			<VideoPlayer
+				style={{
+					position: "absolute",
+					zIndex: -1,
+					height: "calc(100 * var(--vh) - var(--appbar-height))",
+				}}
+				video={video}
+				controls={true}
+				noInteraction={false}
+				light={false}
+				playing={true}
+				loop={true}
+				muted={sound.muted}
+				volume={sound.muted ? 0 : 0.25}
+				scaleToFitViewport={false}
+				startSecond={video?.startSecond ?? 0}
+				stopSecond={video?.stopSecond}
+				//onPlay={() => {
+				//	setIsVideoPlaying(true);
+				//}}
+			></VideoPlayer>
+			<Suspense fallback={<GlowingLoader />}>
+				<Switch location={location}>
+					<Route
+						path={`${match.path}client-type-select`}
+						render={(route) => <ClientTypeSelect route={route} />}
+					/>
 
-				<Route
-					path={`${match.path}classroom-select`}
-					render={(route) => <ClassroomSelect route={route} />}
-				/>
-				<Route
-					path={`${match.path}classroom`}
-					render={(route) => <Classroom route={route} />}
-				/>
+					<Route
+						path={`${match.path}classroom-select`}
+						render={(route) => <ClassroomSelect route={route} />}
+					/>
+					<Route
+						path={`${match.path}classroom`}
+						render={(route) => <Classroom route={route} />}
+					/>
 
-				<Route path={`${baseRoute}advice`}>
-					<SageAdvice />
-				</Route>
+					<Route path={`${baseRoute}advice`}>
+						<SageAdvice />
+					</Route>
 
-				<Route
-					path={`${baseRoute}login`}
-					render={(route) => <LazyLogin route={route} />}
-				/>
+					<Route
+						path={`${baseRoute}login`}
+						render={(route) => <LazyLogin route={route} />}
+					/>
 
-				<Route
-					path={`${baseRoute}signup`}
-					render={(route) => <LazySignup route={route} />}
-				/>
+					<Route
+						path={`${baseRoute}signup`}
+						render={(route) => <LazySignup route={route} />}
+					/>
 
-				<Route path={`${baseRoute}loading`}>
-					<GlowingLoader route={route} />
-				</Route>
-				<Route path={`${baseRoute}error`}>
-					<ErrorBoundary debug={true} route={route} />
-				</Route>
-				<Route path={`${baseRoute}`}>
-					<LogoScreen route={route}></LogoScreen>
-				</Route>
-				<Redirect to={`${match.path}client-type-select`} />
-			</Switch>
-		</Suspense>
+					<Route path={`${baseRoute}loading`}>
+						<GlowingLoader route={route} />
+					</Route>
+					<Route path={`${baseRoute}error`}>
+						<ErrorBoundary debug={true} route={route} />
+					</Route>
+					<Route path={`${baseRoute}`}>
+						<LogoScreen route={route}></LogoScreen>
+					</Route>
+					<Redirect to={`${match.path}client-type-select`} />
+				</Switch>
+			</Suspense>
+		</React.Fragment>
 	);
 };
 
