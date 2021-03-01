@@ -3,14 +3,13 @@ const { VideoCentered } = require("../../slideTemplates.js");
 const videoSet = require("./presentProgressiveVideos.js").catsResting;
 
 const CoverPage = {
-	id: 201,
 	//bgImage
 	bg: "var(--white)",
 	pages: [
 		{
 			templateName: VideoCentered,
 			heading: "Present Progressive",
-			subheading: "Living the moment",
+			//subheading: "Living the moment",
 			//title: "I am driving.",
 			videoSet,
 			paragraphs: [{ text: "The cats are resting. " }],

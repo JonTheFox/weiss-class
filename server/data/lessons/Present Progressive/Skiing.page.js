@@ -10,7 +10,7 @@ const CoverPage = {
 		{
 			templateName: VideoCentered,
 			heading: "Present Progressive",
-			subheading: "Living the moment",
+			//subheading: "Living the moment",
 			//title: "I am driving.",
 			videoSet,
 			paragraphs: [{ text: "They are skiing. " }],

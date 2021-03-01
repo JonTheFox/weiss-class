@@ -1,24 +1,23 @@
 const { VideoCentered } = require("../../slideTemplates.js");
 
-const videoSet = require("./presentProgressiveVideos.js").rainyForest;
+const videoSet = require("./presentProgressiveVideos.js").PracticingJudo;
 
-const CoverPage = {
-	id: 201,
-	//bgImage
+const PracticingJudo = {
 	bg: "var(--white)",
 	pages: [
 		{
 			templateName: VideoCentered,
 			heading: "Present Progressive",
 			//subheading: "Living the moment",
-			title: "I am driving.",
+			//title: "I am driving.",
 			videoSet,
-			paragraphs: [{ text: "It's raining. ", className: "caption" }],
+			paragraphs: [{ text: "They are practicing judo. " }],
+			//bgClass: ""
 		},
 	],
 };
 
-module.exports = CoverPage;
+module.exports = PracticingJudo;
 
 /*
 

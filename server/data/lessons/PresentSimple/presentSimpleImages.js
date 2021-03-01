@@ -400,16 +400,12 @@ module.exports = {
 		regular: "",
 		small: "",
 	},
-	fixing_car: {
-		full:
-			"https://images.unsplash.com/photo-1529400971008-f566de0e6dfc?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
-		regular: "",
-		small: "",
-	},
 	studying: {
 		full:
-			"https://images.unsplash.com/photo-1529400971008-f566de0e6dfc?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
+			"https://images.unssplash.com/photo-1529400971008-f566de0e6dfc?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
 		regular: "",
 		small: "",
 	},
+
+	//portrait
 };

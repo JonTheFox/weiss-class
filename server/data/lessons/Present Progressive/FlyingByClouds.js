@@ -1,8 +1,8 @@
 const { VideoCentered } = require("../../slideTemplates.js");
 
-const videoSet = require("./presentProgressiveVideos.js").rainyForest;
+const videoSet = require("./presentProgressiveVideos.js").flyingByClouds;
 
-const CoverPage = {
+const FlyingByClouds = {
 	id: 201,
 	//bgImage
 	bg: "var(--white)",
@@ -11,14 +11,19 @@ const CoverPage = {
 			templateName: VideoCentered,
 			heading: "Present Progressive",
 			//subheading: "Living the moment",
-			title: "I am driving.",
+			//title: "I am driving.",
 			videoSet,
-			paragraphs: [{ text: "It's raining. ", className: "caption" }],
+			paragraphs: [{ text: "We are flying! " }],
 		},
 	],
 };
 
-module.exports = CoverPage;
+module.exports = FlyingByClouds;
+
+/*
+
+"When we are talking about what's  happening at the moment, we are using 'Present Progressive."
+*/
 
 /*
 
