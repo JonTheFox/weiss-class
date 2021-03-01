@@ -263,6 +263,7 @@ const flyingByClouds = {
 	startSecond: 15,
 	stopSecond: 60 * 5 + 50,
 };
+
 const tropicalBeach2 = {
 	user: {
 		name: "Charlene White",
@@ -695,6 +696,32 @@ const drivingInNiceScenery = {
 	},
 };
 
+const flyingThroughClouds = {
+	user: {
+		name: "",
+		url: "",
+		id: 0,
+	},
+	images: {
+		phone: "",
+		tablet: "",
+		hdReady: "",
+		fullHd: "",
+	},
+	links: {
+		phone:
+			"https://player.vimeo.com/external/368748183.sd.mp4?s=dfa0c269d289bc12aa9f7d978efe9e07c0f2431a&profile_id=139&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/368748183.sd.mp4?s=dfa0c269d289bc12aa9f7d978efe9e07c0f2431a&profile_id=165&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/368748183.hd.mp4?s=a08e0776d3956fe948838e92b880e587dbb1020d&profile_id=174&oauth2_token_id=57447761",
+		fullHd:
+			"https://player.vimeo.com/external/368748183.hd.mp4?s=a08e0776d3956fe948838e92b880e587dbb1020d&profile_id=175&oauth2_token_id=57447761",
+		fourK:
+			"https://player.vimeo.com/external/368748183.hd.mp4?s=a08e0776d3956fe948838e92b880e587dbb1020d&profile_id=172&oauth2_token_id=57447761",
+	},
+};
+
 module.exports = {
 	rainyForest,
 	rainingSilent,
@@ -723,18 +750,8 @@ module.exports = {
 	workingOnComputer,
 	drivingInNiceScenery,
 	flyingByClouds,
-	flyingThroughClouds: {
-		phone:
-			"https://player.vimeo.com/external/368748183.sd.mp4?s=dfa0c269d289bc12aa9f7d978efe9e07c0f2431a&profile_id=139&oauth2_token_id=57447761",
-		tablet:
-			"https://player.vimeo.com/external/368748183.sd.mp4?s=dfa0c269d289bc12aa9f7d978efe9e07c0f2431a&profile_id=165&oauth2_token_id=57447761",
-		hdReady:
-			"https://player.vimeo.com/external/368748183.hd.mp4?s=a08e0776d3956fe948838e92b880e587dbb1020d&profile_id=174&oauth2_token_id=57447761",
-		fullHd:
-			"https://player.vimeo.com/external/368748183.hd.mp4?s=a08e0776d3956fe948838e92b880e587dbb1020d&profile_id=175&oauth2_token_id=57447761",
-		fourK:
-			"https://player.vimeo.com/external/368748183.hd.mp4?s=a08e0776d3956fe948838e92b880e587dbb1020d&profile_id=172&oauth2_token_id=57447761",
-	},
+	flyingThroughClouds,
+
 	coupleWalkingOnTheBeach: {
 		phone:
 			"https://player.vimeo.com/external/240988008.sd.mp4?s=90aefd0715300ea411d1328dcf60245e27c99eaf&profile_id=164&oauth2_token_id=57447761",

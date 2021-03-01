@@ -5,14 +5,14 @@ const {
 } = require("../../slideTemplates.js");
 
 const videoSet = require("./presentProgressiveVideos.js").girlStudying;
-
+debugger;
 const girlStudying = {
 	//bgImage
 	bg: "var(--white)",
 	pages: [
 		{
 			templateName: VideoCentered,
-			bgClass: "field-day",
+			//bgClass: "field-day",
 			heading: "Present Progressive",
 			//subheading: "Living the moment",
 			//title: "I am driving.",

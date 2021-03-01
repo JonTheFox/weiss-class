@@ -9,7 +9,7 @@ export default styled.div`
 	z-index: 1000;
 	padding: calc(2 * var(--spacing)) calc(2 * var(--spacing));
 	&.footer {
-		padding-bottom: calc(7 * var(--spacing));
+		padding-bottom: calc(8 * var(--spacing));
 	}
 	&.size--regular {
 		&,

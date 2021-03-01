@@ -114,19 +114,13 @@ const VideoCentered = (props) => {
 				</Heading>
 			</div>
 
-			<CenteredContainer style={{ zIndex: -1 }}>
-				<Subtitle
-					paragraphs={paragraphs}
-					variant="footer"
-					size="regular"
+			<Subtitle paragraphs={paragraphs} variant="footer" size="regular" />
+			{video && (
+				<VideographerCredit
+					name={videoUser.name || ""}
+					url={videoUser.url || ""}
 				/>
-				{video && (
-					<VideographerCredit
-						name={videoUser.name || ""}
-						url={videoUser.url || ""}
-					/>
-				)}
-			</CenteredContainer>
+			)}
 		</StyledPage>
 	);
 };

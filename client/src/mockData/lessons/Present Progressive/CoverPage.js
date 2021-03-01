@@ -8,11 +8,10 @@ const videoSet = require("./presentProgressiveVideos.js").tropicalBeach2;
 
 const CoverPage = {
 	//bgImage
-	bg: "var(--white)",
 	pages: [
 		{
 			templateName: CenteredHeadings,
-			bgClass: "cloud-up",
+			//bgClass: "cloud-up",
 			heading: "Present Progressive",
 			subheading: "Living the moment",
 			//title: "I am driving.",
@@ -24,7 +23,7 @@ const CoverPage = {
 
 		{
 			templateName: ListMain,
-			bgClass: "cloud-up",
+			//bgClass: "cloud-up",
 			p: [
 				"When we are talking about what's happening at the moment, we are using 'Present Progressive'. ",
 				"Here are a few examples: ",

@@ -3,7 +3,6 @@ const { VideoCentered } = require("../../slideTemplates.js");
 const videoSet = require("./presentProgressiveVideos.js").catsResting;
 
 const CoverPage = {
-	id: 201,
 	//bgImage
 	bg: "var(--white)",
 	pages: [

@@ -12,7 +12,7 @@ const WorkingOnComputer = {
 	pages: [
 		{
 			templateName: VideoCentered,
-			bgClass: "cloud-up",
+			//bgClass: "cloud-up",
 			heading: "Present Progressive",
 			//subheading: "Living the moment",
 			//title: "I am driving.",

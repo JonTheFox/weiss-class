@@ -6,6 +6,7 @@ import React, {
 	//useCallback,
 } from "react";
 import { AppContext } from "../../contexts/AppContext.jsx";
+import { DeviceContext } from "../../contexts/DeviceContext.jsx";
 import useLogg from "../../hooks/useLogg.jsx";
 import usePromiseKeeper from "../../hooks/usePromiseKeeper.jsx";
 
@@ -17,24 +18,58 @@ import ReactPlayer from "react-player";
 import View from "../layout/View.jsx";
 import "./_VideoPlayer.scss";
 
-const CLOUD_VIDEOS = [
-	{
-		originalTitle: "Flying Above the Clouds",
-		url: "https://www.youtube.com/watch?v=6AJl7DsL-1Y",
-		startSecond: 15,
-		stopSecond: 60 * 5 + 50,
-	},
-];
-
 let animationFrame;
 const label = "VideoPlayer";
+
+const isValidVideo = (video) => {
+	if (!video) return null;
+	const { links } = video;
+	if (!links) return false;
+	return (
+		links.phone ||
+		links.tablet ||
+		links.hdReady ||
+		links.fullHd ||
+		links.fourK
+	);
+};
+
+const getVideoSize = (device) => {
+	if (!device) return null;
+	let videoSize;
+	switch (device) {
+		case "phone":
+			videoSize = "phone";
+			break;
+		case "tablet":
+			videoSize = "tablet";
+			break;
+		case "largeScreen":
+			videoSize = "hdReady";
+			break;
+		case "xlScreen":
+			videoSize = "fullHd";
+			break;
+		case "fourK":
+			videoSize = "fourK";
+			break;
+		default:
+			videoSize = "phone";
+			break;
+	}
+	return videoSize;
+};
 
 const VideoPlayer = React.forwardRef((props, ref) => {
 	// const { startSecond = 0, stopSecond } = props;
 	const [appUtils] = useContext(AppContext);
 	const { DURATIONS } = appUtils;
+	const deviceState = useContext(DeviceContext);
 	const { loggError } = useLogg({ label });
 	const promiseKeeper = usePromiseKeeper({ label });
+
+	const [videoUrl, setVideoUrl] = useState("");
+	const [videoSize, setVideoSize] = useState("phone");
 
 	const refs = useRef({ videoPlayer: {} });
 	const [isPlaying, setIsPlaying] = useState(false);
@@ -178,14 +213,28 @@ const VideoPlayer = React.forwardRef((props, ref) => {
 	}, []);
 
 	useEffect(() => {
-		const sfx = props?.sfx?.url;
-		if (props.video?.url) {
+		const currentVideoSize = getVideoSize(deviceState.device);
+		if (currentVideoSize !== videoSize) {
+			setVideoSize(currentVideoSize);
+		}
+	}, [deviceState]);
+
+	useEffect(() => {
+		setVideoUrl(video?.links?.[videoSize]);
+	}, [videoSize]);
+
+	useEffect(() => {
+		if (isValidVideo(props.video)) {
 			if (fadeInWhenReady) {
 				setFaded(true);
 			}
 			setVideo(props.video);
 		}
 	}, [props.video]);
+
+	useEffect(() => {
+		setVideoUrl(video?.links?.[getVideoSize(deviceState.device)]);
+	}, [video]);
 
 	return (
 		<View
@@ -205,7 +254,7 @@ const VideoPlayer = React.forwardRef((props, ref) => {
 		>
 			<ReactPlayer
 				className={clsx("react-player")}
-				url={props?.sfx?.url || video.url}
+				url={videoUrl}
 				width="100%"
 				height="100%"
 				playing={playing}

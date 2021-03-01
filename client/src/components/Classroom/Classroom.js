@@ -41,7 +41,7 @@ import clsx from "clsx";
 import "./_classroom.scss";
 
 //use in debugging
-// import PRESENT_PROGRESSIVE_SLIDES from "../../mockData/lessons/Present Progressive/PresentProgressive.index.js";
+import PRESENT_PROGRESSIVE_SLIDES from "../../mockData/lessons/Present Progressive/PresentProgressive.index.js";
 import PRESENT_SIMPLE_SLIDES from "../../mockData/lessons/PresentSimple/PresentSimple.index.js";
 
 const label = "Classroom";
@@ -68,7 +68,7 @@ const Classroom = (props) => {
 
 	const { slides, currentSlideIndex } = room;
 
-	// const _slides = PRESENT_SIMPLE_SLIDES;
+	const _slides = PRESENT_PROGRESSIVE_SLIDES;
 
 	const history = useHistory();
 
@@ -83,7 +83,7 @@ const Classroom = (props) => {
 
 	return (
 		<View className={"classroom"}>
-			<Slider slideIndex={2} slides={slides}></Slider>
+			<Slider slideIndex={2} slides={_slides}></Slider>
 			<SpeedDial></SpeedDial>
 		</View>
 	);

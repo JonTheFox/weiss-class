@@ -12,7 +12,7 @@ const DancingLadies = {
 	pages: [
 		{
 			templateName: VideoCentered,
-			bgClass: "field-day",
+			//bgClass: "field-day",
 			heading: "Present Progressive",
 			//subheading: "Living the moment",
 			//title: "I am driving.",

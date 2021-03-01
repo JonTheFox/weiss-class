@@ -1,5 +1,5 @@
 const {
-	VideoWithContent,
+	VideoCentered,
 	ListMain,
 	CenteredHeadings,
 } = require("../../slideTemplates.js");
@@ -10,8 +10,8 @@ const tastingPancake = {
 	bg: "var(--white)",
 	pages: [
 		{
-			templateName: VideoWithContent,
-			bgClass: "field-day",
+			templateName: VideoCentered,
+			//bgClass: "field-day",
 			heading: "Present Progressive",
 			//subheading: "Living the moment",
 			//title: "I am driving.",

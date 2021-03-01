@@ -22,6 +22,7 @@ import videoState from "./store/video.atom.js";
 import VideoPlayer from "./components/VideoPlayer/VideoPlayer.jsx";
 
 import soundState from "./store/soundState.atom.js";
+// import isVideoPlayingState from "./store/isVideoPlaying.atom.js";
 
 // import roomsState from "../../store/rooms.atom.js";
 // import roomState from "../../store/room.atom.js";
@@ -64,8 +65,6 @@ const AppRoutes = (props) => {
 	const video = useRecoilValue(videoState);
 	const sound = useRecoilValue(soundState);
 
-	useEffect(() => {}, []);
-
 	return (
 		<React.Fragment>
 			<VideoPlayer
@@ -75,7 +74,7 @@ const AppRoutes = (props) => {
 					height: "calc(100 * var(--vh) - var(--appbar-height))",
 				}}
 				video={video}
-				controls={true}
+				controls={false}
 				noInteraction={false}
 				light={false}
 				playing={true}
