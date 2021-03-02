@@ -5,6 +5,8 @@ import React, {
 	useCallback,
 	useRef,
 } from "react";
+import { useSetRecoilState } from "recoil";
+import videoState from "../../store/video.atom.js";
 import { AppContext } from "../../contexts/AppContext.jsx";
 import clsx from "clsx";
 import posed, { PoseGroup } from "react-pose";
@@ -29,6 +31,8 @@ import { Howl, Howler } from "howler";
 import { mainClickSound } from "../../constants/sounds.js";
 import Container from "@material-ui/core/Container";
 import "./_ClientTypeSelect.scss";
+
+import { flyingThroughCloudsOriginal } from "../../mockData/lessons/Present Progressive/presentProgressiveVideos.js";
 
 const scaleInPoses = {
 	enter: {
@@ -189,6 +193,7 @@ const RTEntrance = (props) => {
 		DISCONNECTED,
 	} = CONNECTION_STATES;
 
+	const setVideo = useSetRecoilState(videoState);
 	const user = useRecoilValue(userState);
 	const isSoundOn = useRecoilValue(isSoundOnState);
 
@@ -249,6 +254,8 @@ const RTEntrance = (props) => {
 		promiseKeeper.stall(PIE_ENTER_DURATION).then(() => {
 			setConnectionStatus(CONNECTION_STATES.IDLE);
 		});
+
+		setVideo(flyingThroughCloudsOriginal);
 
 		return () => {
 			window.cancelAnimationFrame(animationFrame);

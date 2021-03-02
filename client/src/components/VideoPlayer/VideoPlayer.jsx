@@ -112,11 +112,10 @@ const VideoPlayer = React.forwardRef((props, ref) => {
 			"opacity",
 			props.video?.opacity || 1
 		);
-		debugger;
 	}, [refs, props.video]);
 
 	useEffect(() => {
-		promiseKeeper.stall(2500, "setVideoOpacity").then(() => {
+		promiseKeeper.stall(200, "setVideoOpacity").then(() => {
 			setVideoOpacity();
 		});
 	}, [video]);
