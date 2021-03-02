@@ -9,7 +9,7 @@ import {
 const recoilState = atom({
 	key: "soundState",
 	default: {
-		//isSoundOn: true,
+		isSoundOn: true,
 		isMuted: false,
 	},
 });

@@ -727,7 +727,7 @@ const flyingThroughCloudsOriginal = {
 	startSecond: 60 * 1 + 38,
 	stopSecond: 60 * 2 + 16,
 	groupName: "Clouds",
-	opacity: 0.3,
+	//opacity: 0.3,
 	scaleToFitViewport: true,
 	user: {
 		name: "",

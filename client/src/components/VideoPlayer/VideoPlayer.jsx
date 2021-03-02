@@ -3,7 +3,7 @@ import React, {
 	useContext,
 	useRef,
 	useEffect,
-	//useCallback,
+	useCallback,
 } from "react";
 import { AppContext } from "../../contexts/AppContext.jsx";
 import { DeviceContext } from "../../contexts/DeviceContext.jsx";
@@ -98,6 +98,20 @@ const VideoPlayer = React.forwardRef((props, ref) => {
 	);
 	const [noInteraction] = useState(props.noInteraction);
 
+	const setVideoOpacity = useCallback(() => {
+		refs.current.videoPlayer.ref.wrapper.style.setProperty(
+			"opacity",
+			props.video?.opacity || 1
+		);
+		debugger;
+	}, []);
+
+	useEffect(() => {
+		promiseKeeper.stall(2500, "setVideoOpacity").then(() => {
+			setVideoOpacity();
+		});
+	}, [video]);
+
 	const handleReady = (reactPlayerComponent) => {
 		//put the current player in a closure
 		const _player = reactPlayerComponent;
@@ -121,14 +135,16 @@ const VideoPlayer = React.forwardRef((props, ref) => {
 						.stall(DURATIONS.enter * 2, "fadeIn")
 						.then(() => {
 							//set the opacity of the current video opacity according to custom setting
-							refs.current.videoPlayer.ref.wrapper.style.setProperty(
-								"opacity",
-								props.video?.opacity || 1
-							);
-							debugger;
-
 							//and now finally show the video
 							setFaded(false);
+
+							promiseKeeper
+								.stall(2500, "setVideoOpacity")
+								.then(() => {
+									setVideoOpacity();
+									debugger;
+								});
+
 							if (props.onReady) props.onReady(_startSecond);
 						})
 						.catch((reason) => {
@@ -288,6 +304,7 @@ const VideoPlayer = React.forwardRef((props, ref) => {
 				ref={(ref) => {
 					if (!ref) return;
 					refs.current.videoPlayer.ref = ref;
+					ref.wrapper.style.setProperty("transform", "all 0.2s");
 				}}
 				onReady={handleReady}
 				onSeek={props.handleSeek}
