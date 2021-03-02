@@ -7,7 +7,7 @@ import React, {
 	useCallback,
 } from "react";
 import { AppContext } from "../../contexts/AppContext.jsx";
-import { DeviceContext } from "../../contexts/DeviceContext.jsx";
+// import { DeviceContext } from "../../contexts/DeviceContext.jsx";
 import Card from "../../components/Card/Card.js";
 import WeissSpinner from "../../components/WeissSpinner/WeissSpinner.jsx";
 //import PropTypes from "prop-types";

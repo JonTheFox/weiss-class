@@ -141,7 +141,7 @@ const Text = ({ children = "" }) => {
 		if (isSoundOn) {
 			attentionSound.play();
 		}
-		debugger;
+		
 		const minimizeIcon = promiseKeeper
 			.stall(2.25 * 1000)
 			.andThen((promise) => {

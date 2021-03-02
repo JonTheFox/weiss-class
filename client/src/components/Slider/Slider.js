@@ -8,7 +8,8 @@ import HeroSlider, {
 import Slide from "../SlidePageTemplates/Slide.js";
 import CenteredHeadings from "../SlidePageTemplates/CenteredHeadings.js";
 import Text1 from "../SlidePageTemplates/Text1.js";
-import { AppContext } from "../../store/AppContext.js";
+import { DeviceContext } from "../../contexts/DeviceContext.jsx";
+
 import videoState from "../../store/video.atom.js";
 import slideSelector from "../../store/slide.selector.js";
 // import clsx from "clsx";
@@ -21,10 +22,9 @@ import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
 const SLIDE_TEMPLATES = { CenteredHeadings, Text1 };
 
 const Slider = ({ children, slides }) => {
-  const AppState = useContext(AppContext);
-  const navBtnsRef = useRef();
+  const deviceState = useContext(DeviceContext);
 
-  // const { getRandomUpTo, asyncForEach } = appUtils;
+  const navBtnsRef = useRef();
   const [currentSlideIndex, setCurrentSlideIndex] = useRecoilState(
     currentSlideIndexState
   );
@@ -63,6 +63,49 @@ const Slider = ({ children, slides }) => {
   }, []);
 
   // const [appUtils] = useContext(AppContext);
+
+  const getSnapshotSize = ({
+    device,
+    // phone,
+    // tablet,
+    // largeScreen,
+    // xlScreen,
+    images,
+    // videoSet,
+  }) => {
+    if (!device || !images) return "";
+    let videoSize;
+
+    switch (device) {
+      case "fourK":
+        if (images.fourK) {
+          videoSize = "fourK";
+          break;
+        }
+
+      case "xlScreen":
+        if (images.xlScreen) {
+          videoSize = "fullHd";
+          break;
+        }
+      case "largeScreen":
+        if (images.largeScreen) {
+          videoSize = "hdReady";
+          break;
+        }
+
+      case "tablet":
+        if (images.tablet) {
+          videoSize = "tablet";
+          break;
+        }
+
+      default:
+        videoSize = "phone";
+        break;
+    }
+    return videoSize;
+  };
 
   return (
     <HeroSlider
@@ -103,8 +146,23 @@ const Slider = ({ children, slides }) => {
         slides.map((slide, slideIndex) => {
           const { pages, id } = slide;
 
-          const bgImage = slide.bgImage || pages?.[0]?.bgImage || "";
-          const isCurrentlyViewed = slideIndex === currentSlideIndex;
+          let bgImage;
+
+          const vidSet = pages?.[0]?.videoSet;
+          if (vidSet) {
+            const size = getSnapshotSize({
+              device: deviceState.device,
+              images: vidSet.images,
+            });
+            bgImage = vidSet?.images?.[size];
+            debugger;
+          } else {
+            bgImage = slide.bgImage || pages?.[0]?.bgImage || "";
+          }
+
+          console.log("bgImage: ", slideIndex, bgImage);
+
+          //const isCurrentlyViewed = slideIndex === currentSlideIndex;
 
           return (
             <PresentationSlide
@@ -117,7 +175,7 @@ const Slider = ({ children, slides }) => {
             >
               <Slide
                 {...slide}
-                isCurrentlyViewed={isCurrentlyViewed}
+                //isCurrentlyViewed={isCurrentlyViewed}
                 slideIndex={slideIndex}
               />
             </PresentationSlide>

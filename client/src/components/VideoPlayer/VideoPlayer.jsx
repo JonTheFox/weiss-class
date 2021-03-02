@@ -6,7 +6,7 @@ import React, {
 	useCallback,
 } from "react";
 import { AppContext } from "../../contexts/AppContext.jsx";
-import { DeviceContext } from "../../contexts/DeviceContext.jsx";
+import { DeviceContext } from "../../store/DeviceContext.js";
 import useLogg from "../../hooks/useLogg.jsx";
 import usePromiseKeeper from "../../hooks/usePromiseKeeper.jsx";
 
@@ -36,34 +36,35 @@ const isValidVideo = (video) => {
 
 const getVideoSize = ({
 	device,
-	phone,
-	tablet,
-	largeScreen,
-	xlScreen,
-	images = {},
+	// phone,
+	// tablet,
+	// largeScreen,
+	// xlScreen,
+	// images = {},
+	videoSet,
 }) => {
-	if (!device || !images) return null;
+	if (!device || !videoSet) return null;
 	let videoSize;
 	switch (device) {
 		case "fourK":
-			if (images.fourK) {
+			if (videoSet.fourK) {
 				videoSize = "fourK";
 				break;
 			}
 
 		case "xlScreen":
-			if (images.xlScreen) {
+			if (videoSet.xlScreen) {
 				videoSize = "fullHd";
 				break;
 			}
 		case "largeScreen":
-			if (images.largeScreen) {
+			if (videoSet.largeScreen) {
 				videoSize = "hdReady";
 				break;
 			}
 
 		case "tablet":
-			if (images.tablet) {
+			if (videoSet.tablet) {
 				videoSize = "tablet";
 				break;
 			}
@@ -238,15 +239,9 @@ const VideoPlayer = React.forwardRef((props, ref) => {
 	};
 
 	useEffect(() => {
-		const { phone, tablet, largeScreen, xlScreen, fourK } = deviceState;
 		const currentVideoSize = getVideoSize({
 			device: deviceState.device,
-			images: video?.images,
-			phone,
-			tablet,
-			largeScreen,
-			xlScreen,
-			fourK,
+			videoSet: video,
 		});
 		if (currentVideoSize !== videoSize) {
 			setVideoSize(currentVideoSize);
@@ -265,24 +260,20 @@ const VideoPlayer = React.forwardRef((props, ref) => {
 			setFaded(true);
 		}
 		setVideo(props.video);
-		promiseKeeper.stall(750, () => {
+		promiseKeeper.stall(200, () => {
 			refs.current.videoPlayer.ref.wrapper.style.opacity =
 				ref.current.video?.opacity || 1;
 		});
 	}, [props.video]);
 
 	useEffect(() => {
-		const { phone, tablet, largeScreen, xlScreen, fourK } = deviceState;
-		setVideoUrl(
+		//i.pinimg.com/originals/1a/60/70/1a6070e136db70744a4103d2c71882c0.png
+		https: setVideoUrl(
 			video?.links?.[
 				getVideoSize({
 					device: deviceState.device,
-					images: video?.images,
-					phone,
-					tablet,
-					largeScreen,
-					xlScreen,
-					fourK,
+					//images: video?.images,
+					videoSet: video,
 				})
 			]
 		);
