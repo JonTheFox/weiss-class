@@ -722,6 +722,33 @@ const flyingThroughClouds = {
 	},
 };
 
+const flyingThroughCloudsOriginal = {
+	id: "flyingThroughCloudsOriginal",
+	startSecond: 60 * 1 + 38,
+	stopSecond: 60 * 2 + 16,
+	groupName: "Clouds",
+	opacity: 0.3,
+	scaleToFitViewport: true,
+	user: {
+		name: "",
+		url: "",
+		id: 0,
+	},
+	images: {
+		phone: "",
+		tablet: "",
+		hdReady: "",
+		fullHd: "",
+	},
+	links: {
+		phone: "https://www.youtube.com/watch?v=VmMYfAR21KY",
+		tablet: "",
+		hdReady: "",
+		fullHd: "",
+		fourK: "",
+	},
+};
+
 module.exports = {
 	rainyForest,
 	rainingSilent,
@@ -751,6 +778,7 @@ module.exports = {
 	drivingInNiceScenery,
 	flyingByClouds,
 	flyingThroughClouds,
+	flyingThroughCloudsOriginal,
 
 	coupleWalkingOnTheBeach: {
 		phone:

@@ -5,7 +5,6 @@ const {
 } = require("../../slideTemplates.js");
 
 const videoSet = require("./presentProgressiveVideos.js").cookingSoy;
-debugger;
 
 const cookingSoy = {
 	//bgImage

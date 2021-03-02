@@ -76,8 +76,9 @@ const Slider = ({ children, slides }) => {
       onAfterChange={(nextSlideIndex, b, c) => {
         // setCurrentSlideIndex(nextSlideIndex);
         const nextVideoSet = slides[nextSlideIndex - 1]?.pages?.[0]?.videoSet;
-        setVideo(nextVideoSet);
+
         setIsVideoPlaying(true);
+        setVideo(nextVideoSet);
       }}
       //style={{
       // backgroundColor: "rgba(0, 0, 0, 0.33)",

@@ -6,11 +6,11 @@ import {
 	// RecoilRoot,
 } from "recoil";
 
-import { flyingThroughClouds } from "../mockData/lessons/Present Progressive/presentProgressiveVideos.js";
+import { flyingThroughCloudsOriginal } from "../mockData/lessons/Present Progressive/presentProgressiveVideos.js";
 
 const recoilState = atom({
 	key: "videoState",
-	default: flyingThroughClouds,
+	default: flyingThroughCloudsOriginal,
 });
 
 export default recoilState;

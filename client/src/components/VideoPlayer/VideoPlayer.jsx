@@ -34,25 +34,31 @@ const isValidVideo = (video) => {
 	);
 };
 
-const getVideoSize = (device) => {
-	if (!device) return null;
+const getVideoSize = ({ device, images = {} }) => {
+	if (!device || !images) return null;
 	let videoSize;
 	switch (device) {
-		case "phone":
-			videoSize = "phone";
-			break;
 		case "tablet":
-			videoSize = "tablet";
-			break;
+			if (images.tablet) {
+				videoSize = "tablet";
+				break;
+			}
+
 		case "largeScreen":
-			videoSize = "hdReady";
-			break;
+			if (images.largeScreen) {
+				videoSize = "hdReady";
+				break;
+			}
 		case "xlScreen":
-			videoSize = "fullHd";
-			break;
+			if (images.xlScreen) {
+				videoSize = "fullHd";
+				break;
+			}
 		case "fourK":
-			videoSize = "fourK";
-			break;
+			if (images.fourK) {
+				videoSize = "fourK";
+				break;
+			}
 		default:
 			videoSize = "phone";
 			break;
@@ -117,8 +123,9 @@ const VideoPlayer = React.forwardRef((props, ref) => {
 							//set the opacity of the current video opacity according to custom setting
 							refs.current.videoPlayer.ref.wrapper.style.setProperty(
 								"opacity",
-								props.video.opacity || 1
+								props.video?.opacity || 1
 							);
+							debugger;
 
 							//and now finally show the video
 							setFaded(false);
@@ -213,7 +220,10 @@ const VideoPlayer = React.forwardRef((props, ref) => {
 	}, []);
 
 	useEffect(() => {
-		const currentVideoSize = getVideoSize(deviceState.device);
+		const currentVideoSize = getVideoSize({
+			device: deviceState.device,
+			images: video?.images,
+		});
 		if (currentVideoSize !== videoSize) {
 			setVideoSize(currentVideoSize);
 		}
@@ -228,12 +238,26 @@ const VideoPlayer = React.forwardRef((props, ref) => {
 			if (fadeInWhenReady) {
 				setFaded(true);
 			}
+			promiseKeeper.stall(750, () => {
+				refs.current.videoPlayer.ref.wrapper.style.setProperty(
+					"opacity",
+					props.video?.opacity || 1
+				);
+			});
+
 			setVideo(props.video);
 		}
 	}, [props.video]);
 
 	useEffect(() => {
-		setVideoUrl(video?.links?.[getVideoSize(deviceState.device)]);
+		setVideoUrl(
+			video?.links?.[
+				getVideoSize({
+					device: deviceState.device,
+					images: video?.images,
+				})
+			]
+		);
 	}, [video]);
 
 	return (
@@ -244,6 +268,7 @@ const VideoPlayer = React.forwardRef((props, ref) => {
 				isPlaying && "react-player--playing",
 				(props.fullHeight === undefined || props.fullHeight) &&
 					"react-player--full-height",
+
 				props.scaleToFitViewport &&
 					"react-player--scale-to-fit-viewport",
 				noInteraction && "react-player--no-interaction",

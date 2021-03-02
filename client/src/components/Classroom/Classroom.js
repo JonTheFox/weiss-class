@@ -72,8 +72,7 @@ const Classroom = (props) => {
 
 	const history = useHistory();
 
-	const bgImage =
-		room?.img?.uprl || room?.teachers?.clients?.[0]?.img?.url || "";
+	//const bgImage = room?.img?.uprl || room?.teachers?.clients?.[0]?.img?.url || "";
 
 	// useEffect(() => {
 	// 	if (!slides || !slides.length) {
