@@ -34,31 +34,40 @@ const isValidVideo = (video) => {
 	);
 };
 
-const getVideoSize = ({ device, images = {} }) => {
+const getVideoSize = ({
+	device,
+	phone,
+	tablet,
+	largeScreen,
+	xlScreen,
+	images = {},
+}) => {
 	if (!device || !images) return null;
 	let videoSize;
 	switch (device) {
+		case "fourK":
+			if (images.fourK) {
+				videoSize = "fourK";
+				break;
+			}
+
+		case "xlScreen":
+			if (images.xlScreen) {
+				videoSize = "fullHd";
+				break;
+			}
+		case "largeScreen":
+			if (images.largeScreen) {
+				videoSize = "hdReady";
+				break;
+			}
+
 		case "tablet":
 			if (images.tablet) {
 				videoSize = "tablet";
 				break;
 			}
 
-		case "largeScreen":
-			if (images.largeScreen) {
-				videoSize = "hdReady";
-				break;
-			}
-		case "xlScreen":
-			if (images.xlScreen) {
-				videoSize = "fullHd";
-				break;
-			}
-		case "fourK":
-			if (images.fourK) {
-				videoSize = "fourK";
-				break;
-			}
 		default:
 			videoSize = "phone";
 			break;
@@ -74,12 +83,12 @@ const VideoPlayer = React.forwardRef((props, ref) => {
 	const { loggError } = useLogg({ label });
 	const promiseKeeper = usePromiseKeeper({ label });
 
+	const [video, setVideo] = useState(props.video || {});
 	const [videoUrl, setVideoUrl] = useState("");
 	const [videoSize, setVideoSize] = useState("phone");
 
 	const refs = useRef({ videoPlayer: {} });
 	const [isPlaying, setIsPlaying] = useState(false);
-	const [video, setVideo] = useState(props.video || {});
 
 	const [playing] = useState(props.playing);
 	const [controls] = useState(props.controls || props.controls === undefined);
@@ -104,7 +113,7 @@ const VideoPlayer = React.forwardRef((props, ref) => {
 			props.video?.opacity || 1
 		);
 		debugger;
-	}, []);
+	}, [refs, props.video]);
 
 	useEffect(() => {
 		promiseKeeper.stall(2500, "setVideoOpacity").then(() => {
@@ -138,12 +147,12 @@ const VideoPlayer = React.forwardRef((props, ref) => {
 							//and now finally show the video
 							setFaded(false);
 
-							promiseKeeper
-								.stall(2500, "setVideoOpacity")
-								.then(() => {
-									setVideoOpacity();
-									debugger;
-								});
+							// promiseKeeper
+							// 	.stall(2500, "setVideoOpacity")
+							// 	.then(() => {
+							// 		setVideoOpacity();
+							// 		debugger;
+							// 	});
 
 							if (props.onReady) props.onReady(_startSecond);
 						})
@@ -230,15 +239,15 @@ const VideoPlayer = React.forwardRef((props, ref) => {
 	};
 
 	useEffect(() => {
-		return () => {
-			window.cancelAnimationFrame(animationFrame);
-		};
-	}, []);
-
-	useEffect(() => {
+		const { phone, tablet, largeScreen, xlScreen, fourK } = deviceState;
 		const currentVideoSize = getVideoSize({
 			device: deviceState.device,
 			images: video?.images,
+			phone,
+			tablet,
+			largeScreen,
+			xlScreen,
+			fourK,
 		});
 		if (currentVideoSize !== videoSize) {
 			setVideoSize(currentVideoSize);
@@ -250,27 +259,31 @@ const VideoPlayer = React.forwardRef((props, ref) => {
 	}, [videoSize]);
 
 	useEffect(() => {
-		if (isValidVideo(props.video)) {
-			if (fadeInWhenReady) {
-				setFaded(true);
-			}
-			promiseKeeper.stall(750, () => {
-				refs.current.videoPlayer.ref.wrapper.style.setProperty(
-					"opacity",
-					props.video?.opacity || 1
-				);
-			});
+		refs.current.video = props.video;
+		if (!isValidVideo(props.video)) return;
 
-			setVideo(props.video);
+		if (fadeInWhenReady) {
+			setFaded(true);
 		}
+		setVideo(props.video);
+		promiseKeeper.stall(750, () => {
+			refs.current.videoPlayer.ref.wrapper.style.opacity =
+				ref.current.video?.opacity || 1;
+		});
 	}, [props.video]);
 
 	useEffect(() => {
+		const { phone, tablet, largeScreen, xlScreen, fourK } = deviceState;
 		setVideoUrl(
 			video?.links?.[
 				getVideoSize({
 					device: deviceState.device,
 					images: video?.images,
+					phone,
+					tablet,
+					largeScreen,
+					xlScreen,
+					fourK,
 				})
 			]
 		);
@@ -304,7 +317,7 @@ const VideoPlayer = React.forwardRef((props, ref) => {
 				ref={(ref) => {
 					if (!ref) return;
 					refs.current.videoPlayer.ref = ref;
-					ref.wrapper.style.setProperty("transform", "all 0.2s");
+					// ref.wrapper.style.setProperty("transform", "all 0.2s");
 				}}
 				onReady={handleReady}
 				onSeek={props.handleSeek}

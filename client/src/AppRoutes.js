@@ -75,7 +75,7 @@ const AppRoutes = (props) => {
 				}}
 				video={video}
 				controls={false}
-				noInteraction={false}
+				noInteraction={true}
 				light={false}
 				playing={true}
 				loop={true}

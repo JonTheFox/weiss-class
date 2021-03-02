@@ -20,8 +20,15 @@ const PAGE_TEMPLATES = {
 
 const label = "Page";
 const Page = (props) => {
-	const { templateName = "" } = props;
+	const { templateName = "", isCurrentlyViewed, pageIndex } = props;
 
+	// if(pageIndex === currentSlideIndex) {
+
+	// }
+
+	if (isCurrentlyViewed) {
+		debugger;
+	}
 	// const [appUtils, appState] = useContext(AppContext);
 	// const { request } = appUtils;
 

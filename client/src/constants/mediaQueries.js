@@ -3,13 +3,14 @@ const widthSizes = {
 	sm: 500,
 	md: 960,
 	lg: 1280,
-	xl: 1920
+	xl: 1920,
+	fourK: 3700,
 };
 
 const createMediaQueryString = ({
 	minWidth = "",
 	maxWidth = "",
-	orientation = ""
+	orientation = "",
 }) => {
 	const minRule = !minWidth ? "" : `(min-width: ${widthSizes[minWidth]}px)`; //add one to prevent adjacent queries from both matching
 	const maxRule = !maxWidth ? "" : `(max-width: ${widthSizes[maxWidth]}px)`;
@@ -25,13 +26,13 @@ const phone = {
 	portrait: createMediaQueryString({
 		minWidth: "xs",
 		maxWidth: "sm",
-		orientation: "portrait"
+		orientation: "portrait",
 	}),
 	landscape: createMediaQueryString({
 		minWidth: "sm",
 		maxWidth: "md",
-		orientation: "landscape"
-	})
+		orientation: "landscape",
+	}),
 };
 // phone.any = phone.portrait || phone.landscape;
 
@@ -39,30 +40,33 @@ const tablet = {
 	portrait: createMediaQueryString({
 		minWidth: "sm",
 		maxWidth: "md",
-		orientation: "portrait"
+		orientation: "portrait",
 	}),
 	landscape: createMediaQueryString({
 		minWidth: "md",
 		maxWidth: "lg",
-		orientation: "landscape"
-	})
+		orientation: "landscape",
+	}),
 };
 // tablet.any = tablet.portrait || tablet.landscape;
 
 const largeScreen = createMediaQueryString({
-	minWidth: "lg"
+	minWidth: "lg",
 });
 const xlScreen = createMediaQueryString({
-	minWidth: "xl"
+	minWidth: "xl",
+});
+const fourK = createMediaQueryString({
+	minWidth: "fourK",
 });
 
 const orientation = {
 	portrait: createMediaQueryString({
-		orientation: "portrait"
+		orientation: "portrait",
 	}),
 	landscape: createMediaQueryString({
-		orientation: "landscape"
-	})
+		orientation: "landscape",
+	}),
 };
 // orientation.type = orientation.portrait ? "portrait" : "landscape";
 //to test if orientation is landscape, you can import only orientation.portrait, and test if it's falsey
@@ -72,7 +76,7 @@ const mediaQueries = {
 	tablet,
 	largeScreen,
 	xlScreen,
-	orientation
+	orientation,
 };
 
 export default mediaQueries;

@@ -22,7 +22,6 @@ const SLIDE_TEMPLATES = { CenteredHeadings, Text1 };
 
 const Slider = ({ children, slides }) => {
   const AppState = useContext(AppContext);
-
   const navBtnsRef = useRef();
 
   // const { getRandomUpTo, asyncForEach } = appUtils;
@@ -44,15 +43,22 @@ const Slider = ({ children, slides }) => {
       return null;
     }
     const navBtns = Array.from(navBtnsNodeList);
-    navBtns[slideIndex - 1].click();
+    navBtns[slideIndex].click();
+  };
+
+  const getVideoSet = (slide) => {
+    return slide?.pages?.[0]?.videoSet;
   };
 
   useEffect(() => {
     goToSlide(currentSlideIndex);
+    const videoSet = getVideoSet(slides?.[currentSlideIndex]);
+    setVideo(videoSet);
+    debugger;
   }, [currentSlideIndex]);
 
   useEffect(() => {
-    const firstVideoSet = slide?.pages?.[0]?.videoSet;
+    const firstVideoSet = getVideoSet(slides[0]);
     setVideo(firstVideoSet);
     setIsVideoPlaying(true);
   }, []);
@@ -74,11 +80,11 @@ const Slider = ({ children, slides }) => {
         console.log("onChange", nextSlide);
       }}
       onAfterChange={(nextSlideIndex, b, c) => {
-        // setCurrentSlideIndex(nextSlideIndex);
-        const nextVideoSet = slides[nextSlideIndex - 1]?.pages?.[0]?.videoSet;
-
+        const newIndex = nextSlideIndex - 1;
+        setCurrentSlideIndex(newIndex);
+        //const nextVideoSet = slides[newIndex]?.pages?.[0]?.videoSet;
         setIsVideoPlaying(true);
-        setVideo(nextVideoSet);
+        //setVideo(nextVideoSet);
       }}
       //style={{
       // backgroundColor: "rgba(0, 0, 0, 0.33)",
@@ -94,12 +100,12 @@ const Slider = ({ children, slides }) => {
       }}
     >
       <OverlayContainer></OverlayContainer>
-
       {slides &&
-        slides.map((slide, i) => {
+        slides.map((slide, slideIndex) => {
           const { pages, id } = slide;
 
           const bgImage = slide.bgImage || pages?.[0]?.bgImage || "";
+          const isCurrentlyViewed = slideIndex === currentSlideIndex;
 
           return (
             <PresentationSlide
@@ -110,7 +116,11 @@ const Slider = ({ children, slides }) => {
               }}
               //className={clsx(!bgImage && "gradient")}
             >
-              <Slide {...slide} />
+              <Slide
+                {...slide}
+                isCurrentlyViewed={isCurrentlyViewed}
+                slideIndex={slideIndex}
+              />
             </PresentationSlide>
           );
         })}
