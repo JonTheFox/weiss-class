@@ -65,8 +65,6 @@ const AppRoutes = (props) => {
 	const video = useRecoilValue(videoState);
 	const sound = useRecoilValue(soundState);
 
-	debugger;
-
 	return (
 		<React.Fragment>
 			<VideoPlayer

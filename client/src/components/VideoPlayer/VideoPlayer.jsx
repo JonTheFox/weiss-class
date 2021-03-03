@@ -6,7 +6,7 @@ import React, {
 	useCallback,
 } from "react";
 import { AppContext } from "../../contexts/AppContext.jsx";
-import { DeviceContext } from "../../store/DeviceContext.js";
+import { DeviceContext } from "../../contexts/DeviceContext.jsx";
 import useLogg from "../../hooks/useLogg.jsx";
 import usePromiseKeeper from "../../hooks/usePromiseKeeper.jsx";
 
@@ -267,16 +267,16 @@ const VideoPlayer = React.forwardRef((props, ref) => {
 	}, [props.video]);
 
 	useEffect(() => {
-		//i.pinimg.com/originals/1a/60/70/1a6070e136db70744a4103d2c71882c0.png
-		https: setVideoUrl(
+		const videoUrl =
 			video?.links?.[
 				getVideoSize({
 					device: deviceState.device,
 					//images: video?.images,
 					videoSet: video,
 				})
-			]
-		);
+			];
+
+		setVideoUrl(videoUrl);
 	}, [video]);
 
 	return (
