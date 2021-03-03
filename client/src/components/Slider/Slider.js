@@ -3,6 +3,8 @@ import React, { useState, useContext, useRef, useEffect } from "react";
 import HeroSlider, {
   Slide as PresentationSlide,
   Nav,
+  MenuNav,
+  SideNav,
   OverlayContainer,
 } from "hero-slider";
 import Slide from "../SlidePageTemplates/Slide.js";
@@ -18,6 +20,7 @@ import currentSlideIndexState from "../../store/currentSlideIndex.atom.js";
 import isVideoPlayingState from "../../store/isVideoPlaying.atom.js";
 
 import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
+import "./Slider.styles.scss";
 
 const SLIDE_TEMPLATES = { CenteredHeadings, Text1 };
 
@@ -154,8 +157,7 @@ const Slider = ({ children, slides }) => {
               device: deviceState.device,
               images: vidSet.images,
             });
-            bgImage = vidSet?.images?.[size];
-            debugger;
+            bgImage = vidSet?.links?.[size];
           } else {
             bgImage = slide.bgImage || pages?.[0]?.bgImage || "";
           }
@@ -191,13 +193,14 @@ const Slider = ({ children, slides }) => {
           width: "100%",
         }}
       />
+
+      <SideNav
+        color="rgba (200 , 215 , 235 , 0.6 )"
+        activeColor="var(--canvas)"
+        className={"side-nav"}
+      />
     </HeroSlider>
   );
 };
 
 export default Slider;
-
-/*background={{
-                backgroundImage: bgImage,
-                backgroundAttachment: "fixed",
-              }}*/

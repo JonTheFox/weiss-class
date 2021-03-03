@@ -44,6 +44,7 @@ class PexelsVideo {
 	video_files;
 	video_pictures;
 	width;
+	links = {};
 	constructor(config = {}) {
 		Object.assign(this, config);
 	}

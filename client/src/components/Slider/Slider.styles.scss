@@ -1,0 +1,11 @@
+.rm-hero-slider {
+	*:not(.Text) {
+		ul:last-of-type:not(.list) {
+			height: calc(100% - calc(var(--spacing) * 14));
+			overflow-y: auto;
+		}
+	}
+	span.slide-side-nav-button-number {
+		width: 20px;
+	}
+}
