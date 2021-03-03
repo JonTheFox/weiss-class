@@ -74,13 +74,13 @@ const AppRoutes = (props) => {
 					height: "calc(100 * var(--vh) - var(--appbar-height))",
 				}}
 				video={video}
-				controls={false}
-				noInteraction={true}
+				controls={true}
+				noInteraction={false}
 				light={false}
 				playing={true}
 				loop={true}
-				muted={sound.muted}
-				volume={sound.muted ? 0 : 0.25}
+				muted={!video.playSound}
+				volume={sound.muted || !video.playSound ? 0 : 0.25}
 				scaleToFitViewport={video?.scaleToFitViewport ?? false}
 				startSecond={video?.startSecond ?? 0}
 				stopSecond={video?.stopSecond}

@@ -22,6 +22,7 @@ import socketState from "../../store/socket.atom.js";
 import socketConnectionState from "../../store/socketConnection.atom.js";
 import clientState from "../../store/client.atom.js";
 import { CONNECTION_STATES } from "../../store/CONNECTION_STATES.js";
+import SplitText from "react-pose-text";
 
 import "./Realtime.entrance.jsx";
 
@@ -31,6 +32,7 @@ import { Howl, Howler } from "howler";
 import { mainClickSound } from "../../constants/sounds.js";
 import Container from "@material-ui/core/Container";
 import "./_ClientTypeSelect.scss";
+import POSES from "../../constants/poses.js";
 
 import { flyingThroughCloudsOriginal } from "../../mockData/lessons/Present Progressive/presentProgressiveVideos.js";
 
@@ -48,7 +50,9 @@ const scaleInPoses = {
 		transition: { duration: 400 },
 	},
 };
-const ScaleIn = posed.div(scaleInPoses);
+
+const charPoses = POSES.char_fadeIn;
+const ScaleIn = posed.div(charPoses);
 
 let animationFrame;
 let logg;
@@ -179,6 +183,7 @@ const RTEntrance = (props) => {
 		CLIENT_ONLY,
 		navigateTo,
 		DEBUGGING,
+		synthVoice,
 	} = appUtils;
 
 	const {
@@ -392,6 +397,21 @@ const RTEntrance = (props) => {
 						<Heading h="1">What are you, exactly?</Heading>
 					</ScaleIn>
 				</Container>
+
+				<SplitText
+					initialPose="exit"
+					pose={showHeading ? "enter" : "exit"}
+					charPoses={POSES.char_fadeIn}
+					speechRate={
+						(synthVoice &&
+							synthVoice.config &&
+							synthVoice.config.rate) ||
+						0
+					}
+					className={`letter stroke`}
+				>
+					What are you, exactly?
+				</SplitText>
 			</div>
 
 			<div className={clsx("section section--pie")}>

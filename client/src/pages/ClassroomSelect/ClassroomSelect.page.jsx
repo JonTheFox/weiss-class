@@ -174,6 +174,10 @@ export default function ClassroomSelect(props) {
 
   const [isLarge, setIsLarge] = useState(false);
 
+  useEffect(() => {
+    setVideo(flyingThroughCloudsOriginal);
+  }, []);
+
   const roomsInfo = rooms.map((room) => {
     return {
       ...room,
