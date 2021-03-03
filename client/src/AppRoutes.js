@@ -79,8 +79,8 @@ const AppRoutes = (props) => {
 				light={false}
 				playing={true}
 				loop={true}
-				muted={sound.muted}
-				volume={sound.muted ? 0 : 0.25}
+				muted={true}
+				volume={sound.muted || !video.playSound ? 0 : 0.25}
 				scaleToFitViewport={video?.scaleToFitViewport ?? false}
 				startSecond={video?.startSecond ?? 0}
 				stopSecond={video?.stopSecond}

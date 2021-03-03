@@ -302,6 +302,7 @@ const VideoPlayer = React.forwardRef((props, ref) => {
 				width="100%"
 				height="100%"
 				playing={playing}
+				controls={controls}
 				loop={loop}
 				onPlay={handlePlay}
 				ref={(ref) => {
@@ -317,7 +318,6 @@ const VideoPlayer = React.forwardRef((props, ref) => {
 				onProgress={handleProgress}
 				light={light} //light player means that it starts with only a thumbnail and await clicking on it
 				//width="100%"
-				controls={controls}
 			>
 				{props.children}
 			</ReactPlayer>
