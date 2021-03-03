@@ -191,6 +191,7 @@ const Slider = ({ children, slides }) => {
           transform: "translateX(-50%)",
           overflow: "auto",
           width: "100%",
+          display: "none",
         }}
       />
 

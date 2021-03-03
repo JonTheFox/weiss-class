@@ -15,7 +15,7 @@ const WorkingOnComputer = require("./WorkingOnComputer.js");
 const GirlPlayingWithCat = require("./GirlPlayingWithCat.js");
 const PlayingBasketball = require("./PlayingBasketball.js");
 const PlayingSoccer = require("./PlayingSoccer.js");
-const FlyingByClouds = require("./FlyingByClouds.js");
+//const FlyingByClouds = require("./FlyingByClouds.js");
 
 const PresentProgressiveSlides = [
 	//portrait
@@ -30,7 +30,7 @@ const PresentProgressiveSlides = [
 	GirlPlayingWithCat,
 	PlayingBasketball,
 	PlayingSoccer,
-	FlyingByClouds,
+	//FlyingByClouds,
 
 	//landscape
 	Raining,

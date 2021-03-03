@@ -1,8 +1,9 @@
 .rm-hero-slider {
 	*:not(.Text) {
 		ul:last-of-type:not(.list) {
-			height: calc(100% - calc(var(--spacing) * 14));
+			height: calc(100% - calc(var(--spacing) * 18));
 			overflow-y: auto;
+			right: var(--spacing) !important;
 		}
 	}
 	span.slide-side-nav-button-number {
