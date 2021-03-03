@@ -7,13 +7,13 @@ import View from "../../components/layout/View.jsx";
 import VideoPlayer from "../../components/VideoPlayer/VideoPlayer.jsx";
 import Card from "../../components/Card/Card.js";
 import "./LogoScreen.scss";
+import videoState from "../../store/video.atom.js";
+import { useSetRecoilState } from "recoil";
+import { flyingThroughCloudsOriginal } from "../../mockData/lessons/Present Progressive/presentProgressiveVideos.js";
 
 const BASE_ROUTE = "/";
 
 const label = "LogoScreen";
-let logg;
-let loggError;
-let promiseKeeper;
 
 // const musicPath = "/music/bensound-goinghigher.mp3";
 
@@ -22,12 +22,10 @@ const LogoScreen = (props) => {
 	const { match } = route;
 	const [appUtils, appState] = useContext(AppContext);
 	const { request, Logger, PromiseKeeper, EMPTY_FUNC } = appUtils;
+	const setVideo = useSetRecoilState(videoState);
 
 	useEffect(() => {
-		const logger = new Logger({ label });
-		logg = logger.logg;
-		loggError = logger.loggError;
-		promiseKeeper = new PromiseKeeper({ label });
+		setVideo(flyingThroughCloudsOriginal);
 	}, []);
 
 	return (

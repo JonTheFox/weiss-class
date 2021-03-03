@@ -21,7 +21,7 @@ const studentActions = {
 	//{ icon: <ShareIcon />, label: "Share" },
 	care: {
 		icon: <FavoriteIcon />,
-		label: "care",
+		label: "Care",
 		name: "care",
 		bodyText: "🤩🤍 This is great!",
 	},

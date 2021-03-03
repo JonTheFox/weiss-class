@@ -34,6 +34,7 @@ import Heading from "../../components/Heading/Heading.js";
 
 import Carousel from "../../components/Carousel/Carousel.js";
 import GlowingLoader from "../../components/GlowingLoader/GlowingLoader.jsx";
+import videoState from "../../store/video.atom.js";
 
 // Import Swiper styles
 import "swiper/swiper.scss";
@@ -56,6 +57,7 @@ import clientState from "../../store/client.atom.js";
 import roomState from "../../store/room.atom.js";
 import isSoundOnState from "../../store/isSoundOn.selector.js";
 import refsState from "../../store/refs.atom.js";
+import { flyingThroughCloudsOriginal } from "../../mockData/lessons/Present Progressive/presentProgressiveVideos.js";
 import * as io from "socket.io-client";
 import { useHistory } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -148,6 +150,8 @@ SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 export default function ClassroomSelect(props) {
   const [appUtils, appState, setAppState] = useContext(AppContext);
 
+  const setVideo = useSetRecoilState(videoState);
+
   const { capitalizeFirstLetter, pickRandomFrom, is, navigateTo } = appUtils;
   const { logg, loggError } = useLogg({ label });
   const promiseKeeper = usePromiseKeeper({ label });
@@ -199,7 +203,7 @@ export default function ClassroomSelect(props) {
     setShowCarousel(false);
     setIsLarge(true);
 
-    promiseKeeper.stall(300 * 1, "nav to classroom").then(() => {
+    promiseKeeper.stall(100 * 1, "nav to classroom").then(() => {
       navigateTo(`/classroom`, history);
     });
   };
@@ -215,7 +219,7 @@ export default function ClassroomSelect(props) {
   };
 
   useEffect(() => {
-    promiseKeeper.stall(0.5 * 1000, "show carousel").then(() => {
+    promiseKeeper.stall(0.25 * 1000, "show carousel").then(() => {
       setShowCarousel(true);
     });
   }, []);
