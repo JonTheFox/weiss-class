@@ -11,9 +11,11 @@ import Slide from "../SlidePageTemplates/Slide.js";
 import CenteredHeadings from "../SlidePageTemplates/CenteredHeadings.js";
 import Text1 from "../SlidePageTemplates/Text1.js";
 import { DeviceContext } from "../../contexts/DeviceContext.jsx";
+import usePromiseKeeper from "../../hooks/usePromiseKeeper.jsx";
 
 import videoState from "../../store/video.atom.js";
 import slideSelector from "../../store/slide.selector.js";
+import showBgState from "../../store/showBg.atom.js";
 // import clsx from "clsx";
 
 import currentSlideIndexState from "../../store/currentSlideIndex.atom.js";
@@ -22,18 +24,26 @@ import isVideoPlayingState from "../../store/isVideoPlaying.atom.js";
 import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
 import "./Slider.styles.scss";
 
+const SLIDING_DURATION = 200;
+
+const label = "Slider";
 const SLIDE_TEMPLATES = { CenteredHeadings, Text1 };
 
 const Slider = ({ children, slides }) => {
   const deviceState = useContext(DeviceContext);
+  // const [appUtils] = useContext(AppContext);
+  const promiseKeeper = usePromiseKeeper({ label });
 
   const navBtnsRef = useRef();
   const [currentSlideIndex, setCurrentSlideIndex] = useRecoilState(
     currentSlideIndexState
   );
-  const setIsVideoPlaying = useSetRecoilState(isVideoPlayingState);
+  const [isVideoPlaying, setIsVideoPlaying] = useRecoilState(
+    isVideoPlayingState
+  );
   const setVideo = useSetRecoilState(videoState);
   const slide = useRecoilValue(slideSelector);
+  const [showBg, setShowBg] = useRecoilState(showBgState);
 
   //these will be populated by HeroSlider
   const nextSlideHandler = useRef();
@@ -63,9 +73,15 @@ const Slider = ({ children, slides }) => {
     const firstVideoSet = getVideoSet(slides?.[0]);
     setVideo(firstVideoSet);
     setIsVideoPlaying(true);
+    setShowBg(true);
+    return () => {
+      window.cancelAnimationFrame();
+    };
   }, []);
 
-  // const [appUtils] = useContext(AppContext);
+  useEffect(() => {
+    setShowBg(!isVideoPlaying);
+  }, [isVideoPlaying]);
 
   const getSnapshotSize = ({
     device,
@@ -120,6 +136,9 @@ const Slider = ({ children, slides }) => {
       onBeforeChange={(previousSlide, nextSlide) => {
         //console.log("onBeforeChange", previousSlide, nextSlide)
         setIsVideoPlaying(false);
+        promiseKeeper.stall(SLIDING_DURATION, "show bg").then(() => {
+          setShowBg(true);
+        });
       }}
       onChange={(nextSlide) => {
         console.log("onChange", nextSlide);
@@ -129,13 +148,15 @@ const Slider = ({ children, slides }) => {
         setCurrentSlideIndex(newIndex);
         //const nextVideoSet = slides[newIndex]?.pages?.[0]?.videoSet;
         setIsVideoPlaying(true);
+        setShowBg(false);
+
         //setVideo(nextVideoSet);
       }}
       //style={{
       // backgroundColor: "rgba(0, 0, 0, 0.33)",
       // }}
       settings={{
-        slidingDuration: 200,
+        slidingDuration: SLIDING_DURATION,
         slidingDelay: 0,
         shouldAutoplay: false,
         shouldSlideOnArrowKeypress: true,
@@ -150,26 +171,23 @@ const Slider = ({ children, slides }) => {
           const { pages, id } = slide;
 
           let bgImage;
-
           const vidSet = pages?.[0]?.videoSet;
           if (vidSet) {
-            const size = getSnapshotSize({
-              device: deviceState.device,
-              images: vidSet.images,
-            });
-            bgImage = vidSet?.links?.[size];
+            // const size = getSnapshotSize({
+            //   device: deviceState.device,
+            //   images: vidSet.images,
+            // });
+            bgImage = vidSet?.image;
           } else {
             bgImage = slide.bgImage || pages?.[0]?.bgImage || "";
           }
-
-          console.log("bgImage: ", slideIndex, bgImage);
 
           //const isCurrentlyViewed = slideIndex === currentSlideIndex;
 
           return (
             <PresentationSlide
               background={{
-                backgroundImage: bgImage,
+                backgroundImage: showBg && bgImage,
 
                 backgroundAttachment: "fixed",
               }}

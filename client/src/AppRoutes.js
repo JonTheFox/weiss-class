@@ -16,12 +16,13 @@ import Card from "./components/Card/Card.js";
 import ClassroomSelect from "./pages/ClassroomSelect/ClassroomSelect.page.jsx";
 import LogoScreen from "./pages/LogoScreen/LogoScreen.jsx";
 import GlowingLoader from "./components/GlowingLoader/GlowingLoader.jsx";
-
-import recoil, { useRecoilValue } from "recoil";
-import videoState from "./store/video.atom.js";
 import VideoPlayer from "./components/VideoPlayer/VideoPlayer.jsx";
 
+import recoil, { useRecoilValue, useSetRecoilState } from "recoil";
+import videoState from "./store/video.atom.js";
 import soundState from "./store/soundState.atom.js";
+import showBgState from "./store/showBg.atom.js";
+
 // import isVideoPlayingState from "./store/isVideoPlaying.atom.js";
 
 // import roomsState from "../../store/rooms.atom.js";
@@ -64,6 +65,7 @@ const AppRoutes = (props) => {
 
 	const video = useRecoilValue(videoState);
 	const sound = useRecoilValue(soundState);
+	const setShowBg = useSetRecoilState(showBgState);
 
 	return (
 		<React.Fragment>
@@ -84,6 +86,9 @@ const AppRoutes = (props) => {
 				scaleToFitViewport={video?.scaleToFitViewport ?? false}
 				startSecond={video?.startSecond ?? 0}
 				stopSecond={video?.stopSecond}
+				onReady={() => {
+					setShowBg(false);
+				}}
 				//onPlay={() => {
 				//	setIsVideoPlaying(true);
 				//}}

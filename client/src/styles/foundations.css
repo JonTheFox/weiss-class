@@ -165,6 +165,12 @@ body {
 	width: 100%;
 	/*overflow: auto;*/
 	overflow: hidden; /*for easy page transitions*/
+	/*
+	background: linear-gradient(
+		to left,
+		var(--color-canvas),
+		var(--color-white)
+	);*/
 }
 
 * {

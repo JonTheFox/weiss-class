@@ -96,15 +96,12 @@ const VideoPlayer = React.forwardRef((props, ref) => {
 	const [light] = useState(props.light);
 	const [volume] = useState(props.volume || 0.8);
 	const [muted] = useState(props.muted || false);
-	//const [played, setPlayed] = useState(0);
-	//const [loaded, setLoaded] = useState(0);
-	//const [duration, setDuration] = useState(0);
 	//const [playbackRate, setPlaybackRate] = useState(1.0);
 	const [loop] = useState(props.loop);
-	const [faded, setFaded] = useState(true);
+	const [faded, setFaded] = useState(props.faded ?? true);
 	const [fadeFromEnd] = useState(props.fadeFromEnd);
 	const [fadeInWhenReady] = useState(
-		props.fadeInWhenReady || props.fadeInWhenReady === undefined
+		(false && props.fadeInWhenReady) || props.fadeInWhenReady === undefined
 	);
 	const [noInteraction] = useState(props.noInteraction);
 
@@ -126,7 +123,7 @@ const VideoPlayer = React.forwardRef((props, ref) => {
 		const _player = reactPlayerComponent;
 		//jump to start position, if one was specified
 		if (!video.startSecond || video.startSecond === 0) {
-			promiseKeeper.stall(DURATIONS.enter * 4, "seekStart").then(() => {
+			promiseKeeper.stall(DURATIONS.enter * 0.5, "seekStart").then(() => {
 				setFaded(false);
 			});
 
@@ -135,32 +132,21 @@ const VideoPlayer = React.forwardRef((props, ref) => {
 
 		const _startSecond = video.startSecond;
 
-		window.requestAnimationFrame(() => {
-			// setFaded(true);
-			promiseKeeper.stall(DURATIONS.enter * 2, "seekStart").then(() => {
-				_player.seekTo(_startSecond, "seconds");
-				animationFrame = window.requestAnimationFrame(() => {
-					promiseKeeper
-						.stall(DURATIONS.enter * 2, "fadeIn")
-						.then(() => {
-							//set the opacity of the current video opacity according to custom setting
-							//and now finally show the video
-							setFaded(false);
-
-							// promiseKeeper
-							// 	.stall(2500, "setVideoOpacity")
-							// 	.then(() => {
-							// 		setVideoOpacity();
-							// 		debugger;
-							// 	});
-
-							if (props.onReady) props.onReady(_startSecond);
-						})
-						.catch((reason) => {
-							// setFaded(false);
-							loggError(reason);
-						});
-				});
+		promiseKeeper.stall(DURATIONS.enter * 2, "seekStart").then(() => {
+			_player.seekTo(_startSecond, "seconds");
+			animationFrame = window.requestAnimationFrame(() => {
+				promiseKeeper
+					.stall(DURATIONS.enter * 1, "fadeIn")
+					.then(() => {
+						//and now finally show the video
+						setFaded(false);
+						debugger;
+						if (props.onReady) props.onReady(_startSecond);
+					})
+					.catch((reason) => {
+						// setFaded(false);
+						loggError(reason);
+					});
 			});
 		});
 	};
@@ -168,26 +154,26 @@ const VideoPlayer = React.forwardRef((props, ref) => {
 	const handleEnded = () => {
 		const { startSecond } = video;
 		if (startSecond) {
-			if (fadeFromEnd) {
-				window.requestAnimationFrame(() => {
-					setFaded(true);
-					promiseKeeper
-						.stall(DURATIONS.enter * 10, "fadeFromEnd")
-						.then(() => {
-							refs.current.videoPlayer.ref.seekTo(
-								startSecond,
-								"seconds"
-							);
-							setFaded(false);
-						})
-						.catch((reason) => {
-							setFaded(false);
-							loggError(reason);
-						});
-				});
+			// if (fadeFromEnd) {
+			// 	window.requestAnimationFrame(() => {
+			// 		setFaded(true);
+			// 		promiseKeeper
+			// 			.stall(DURATIONS.enter * 10, "fadeFromEnd")
+			// 			.then(() => {
+			// 				refs.current.videoPlayer.ref.seekTo(
+			// 					startSecond,
+			// 					"seconds"
+			// 				);
+			// 				setFaded(false);
+			// 			})
+			// 			.catch((reason) => {
+			// 				setFaded(false);
+			// 				loggError(reason);
+			// 			});
+			// 	});
 
-				return;
-			}
+			// 	return;
+			// }
 			refs.current.videoPlayer.ref.seekTo(startSecond, "seconds");
 		}
 	};
@@ -257,7 +243,7 @@ const VideoPlayer = React.forwardRef((props, ref) => {
 		if (!isValidVideo(props.video)) return;
 
 		if (fadeInWhenReady) {
-			setFaded(true);
+			//setFaded(true);
 		}
 		setVideo(props.video);
 		promiseKeeper.stall(200, () => {

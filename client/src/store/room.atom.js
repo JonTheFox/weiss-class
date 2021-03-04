@@ -10,13 +10,11 @@ const recoilState = atom({
 		name: "",
 		title: "",
 		slides: [],
-		img: {},
-		video: {},
-		gif: {},
 		students: [],
 		teachers: [],
 		platforms: [],
 		currentSlideIndex: 0,
+		currentStepIndex: 0,
 	},
 });
 
