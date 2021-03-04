@@ -243,7 +243,7 @@ const VideoPlayer = React.forwardRef((props, ref) => {
 		if (!isValidVideo(props.video)) return;
 
 		if (fadeInWhenReady) {
-			//setFaded(true);
+			setFaded(true);
 		}
 		setVideo(props.video);
 		promiseKeeper.stall(200, () => {

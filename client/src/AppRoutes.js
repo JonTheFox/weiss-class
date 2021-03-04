@@ -81,13 +81,15 @@ const AppRoutes = (props) => {
 				light={false}
 				playing={true}
 				loop={true}
+				faded={false}
 				muted={true}
 				volume={sound.muted || !video.playSound ? 0 : 0.25}
 				scaleToFitViewport={video?.scaleToFitViewport ?? false}
 				startSecond={video?.startSecond ?? 0}
 				stopSecond={video?.stopSecond}
+				fadeInWhenReady={false}
 				onReady={() => {
-					setShowBg(false);
+					//setShowBg(false);
 				}}
 				//onPlay={() => {
 				//	setIsVideoPlaying(true);
