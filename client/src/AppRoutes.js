@@ -70,11 +70,6 @@ const AppRoutes = (props) => {
 	return (
 		<React.Fragment>
 			<VideoPlayer
-				style={{
-					position: "absolute",
-					zIndex: -1,
-					height: "calc(100 * var(--vh) - var(--appbar-height))",
-				}}
 				video={video}
 				controls={false}
 				noInteraction={true}

@@ -5,6 +5,10 @@
 	transition: all 0.3s;
 	padding-top: 56.25%; /* 720 / 1280 = 0.5625 */
 
+	position: absolute;
+	z-index: 0;
+	height: calc(100 * var(--vh) - var(--appbar-height));
+
 	video {
 		height: auto !important;
 	}

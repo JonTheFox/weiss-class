@@ -520,10 +520,8 @@ const cookingSoy = {
 		url: "https://www.pexels.com/@cottonbro",
 		id: 1437723,
 	},
-	images: {
-		fourK:
-			"https://images.pexels.com/videos/3704778/pictures/preview-14.jpg",
-	},
+	image: "https://images.pexels.com/videos/3704778/pictures/preview-14.jpg",
+
 	links: {
 		phone:
 			"https://player.vimeo.com/external/390189146.sd.mp4?s=856aceda389e10dfdc19a139360ff184661d7caa&profile_id=164&oauth2_token_id=57447761",

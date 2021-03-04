@@ -187,7 +187,7 @@ const Slider = ({ children, slides }) => {
           return (
             <PresentationSlide
               background={{
-                // backgroundImage: showBg && bgImage,
+                backgroundImage: showBg && bgImage && slide?.page?.[0]?.showBg,
 
                 backgroundAttachment: "fixed",
               }}
