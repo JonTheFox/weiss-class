@@ -140,7 +140,7 @@ const VideoPlayer = React.forwardRef((props, ref) => {
 					.then(() => {
 						//and now finally show the video
 						setFaded(false);
-						debugger;
+
 						if (props.onReady) props.onReady(_startSecond);
 					})
 					.catch((reason) => {
@@ -283,7 +283,7 @@ const VideoPlayer = React.forwardRef((props, ref) => {
 			{...props}
 		>
 			<ReactPlayer
-				className={clsx("react-player")}
+				className="react-player"
 				url={videoUrl}
 				width="100%"
 				height="100%"

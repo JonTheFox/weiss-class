@@ -16,34 +16,85 @@ import Text from "../Text/Text.js";
 // import { localStorage } from "../../../../lib/issy/index.js";
 import StyledContainer from "./Slide.styles.js";
 import CenteredContainer from "../CenteredContainer/CenteredContainer.js";
+
+import ScrollSnap from "scroll-snap";
+
 const label = "Slide";
+const snapConfig = {
+	/**
+	 * snap-destination for x and y axes
+	 * should be a valid css value expressed as px|%|vw|vh
+	 */
+	snapDestinationX: "0%",
+	snapDestinationY: "90%",
+	/**
+	 * time in ms after which scrolling is considered finished
+	 * [default: 100]
+	 */
+	timeout: 100,
+	/**
+	 * duration in ms for the smooth snap
+	 * [default: 300]
+	 */
+	duration: 300,
+	/**
+	 * threshold to reach before scrolling to next/prev element, expressed as a percentage in the range [0, 1]
+	 * [default: 0.2]
+	 */
+	threshold: 0.2,
+	/**
+	 * when true, the scroll container is not allowed to "pass over" the other snap positions
+	 * [default: false]
+	 */
+	snapStop: false,
+	/**
+	 * custom easing function
+	 * [default: easeInOutQuad]
+	 * for reference: https://gist.github.com/gre/1650294
+	 * @param t normalized time typically in the range [0, 1]
+	 */
+	//easing: "easeInOutQuad",
+};
 
 const Slide = (props) => {
 	// const [appUtils] = useContext(AppContext);
 	// const { PromiseKeeper, Logger } = appUtils;
 
 	const { pages = [], templateName = "", pageProps = [] } = props;
+	const refs = useRef({ slide: {} });
+
+	const snapObject = new ScrollSnap(refs.current, snapConfig);
+
+	function onSnapEnd() {
+		console.log("snap ended");
+	}
+
+	const bindScrollSnap = () => {
+		const slideElemet = refs.current.slide;
+		const snapElement = new ScrollSnap(slideElemet, {
+			snapDestinationY: "100%",
+		});
+
+		snapElement.bind(onSnapEnd);
+	};
+
+	useEffect(() => {
+		bindScrollSnap();
+	}, []);
 
 	// const { logg, loggError } = useLogg({ label });
 	// const promiseKeeper = usePromiseKeeper({ label });
 
 	return (
-		<StyledContainer className={"Slide"} style={{ padding: 0 }}>
+		<StyledContainer
+			className={"Slide"}
+			style={{ padding: 0 }}
+			ref={(ref) => {
+				if (ref) refs.current.slide = ref;
+			}}
+		>
 			{pages &&
 				pages.map((page, i) => {
-					// const {
-					// 	id,
-					// 	templateName,
-					// 	heading = "",
-					// 	subheading = "",
-					// 	p = [""],
-					// 	bgImage = "",
-					// } = page;
-
-					// const PageTemplate =
-					// 	SLIDE_TEMPLATES[templateName] ||
-					// 	SLIDE_TEMPLATES["CenteredHeadings"];
-
 					return (
 						<Page className="Page" {...page} {...pageProps}></Page>
 					);

@@ -1,0 +1,16 @@
+export default {
+	first_name: "Yinon",
+	last_name: "Meuyan",
+	middle_name: "",
+	bday: "01.01.1990",
+	email: "Yinon7@gmail.com",
+	password: "Yinon777",
+	gender: "male",
+	address1: "Yinon",
+	address2: "Yinon",
+	street_name: "Yinon",
+	street_number: 3,
+	city: "Yinon",
+	state: "Yinon",
+	//country: "Yinon",
+};

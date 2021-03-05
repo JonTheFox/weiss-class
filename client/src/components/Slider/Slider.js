@@ -174,7 +174,8 @@ const Slider = ({ children, slides }) => {
             //   device: deviceState.device,
             //   images: vidSet.images,
             // });
-            bgImage = vidSet?.image;
+            // bgImage = vidSet?.image;
+            bgImage = "";
           } else {
             bgImage = slide.bgImage || pages?.[0]?.bgImage || "";
           }
@@ -184,7 +185,7 @@ const Slider = ({ children, slides }) => {
           return (
             <PresentationSlide
               background={{
-                backgroundImage: showBg && bgImage && slide?.page?.[0]?.showBg,
+                backgroundImage: bgImage,
 
                 backgroundAttachment: "fixed",
               }}

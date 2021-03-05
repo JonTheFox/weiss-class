@@ -26,7 +26,12 @@ const BottomThirdCaption = (props) => {
 	// const [appUtils] = useContext(AppContext);
 	// const { PromiseKeeper, Logger } = appUtils;
 
-	const { heading = "", subheading = "", p = [""], bgImage = "" } = props;
+	const {
+		heading = "",
+		subheading = "",
+		paragraphs = [],
+		bgImage = "",
+	} = props;
 
 	// const { logg, loggError } = useLogg({ label });
 	// const promiseKeeper = usePromiseKeeper({ label });
@@ -54,7 +59,7 @@ const BottomThirdCaption = (props) => {
 				</Heading>
 			</div>
 
-			<Subtitle paragraphs={p} />
+			<Subtitle paragraphs={paragraphs} />
 		</StyledPage>
 	);
 };

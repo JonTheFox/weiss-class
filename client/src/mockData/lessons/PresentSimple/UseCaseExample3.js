@@ -12,7 +12,7 @@ const UseCaseExample3 = {
 			templateName: BottomThirdCaption,
 			heading: "Present Simple",
 			subheading: "Hobbies",
-			p: ["Tom and Sharon like to cook together."],
+			paragraphs: [{ text: "Tom and Sharon like to cook together." }],
 		},
 	],
 };

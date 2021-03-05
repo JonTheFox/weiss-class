@@ -28,6 +28,8 @@ const CoverPage = {
 				"When we are talking about what's happening at the moment, we are using 'Present Progressive'. ",
 				"Here are a few examples: ",
 			],
+			bgClass: "cloud-up",
+			opacity: 9,
 			bullets: [
 				"The sun is shining. ☀️",
 				"The wind is blowing. 🌬️ ",

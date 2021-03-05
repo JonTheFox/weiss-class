@@ -68,7 +68,7 @@ const Classroom = (props) => {
 
 	const { slides, currentSlideIndex } = room;
 
-	const _slides = PRESENT_PROGRESSIVE_SLIDES;
+	// const _slides = PRESENT_PROGRESSIVE_SLIDES;
 
 	const history = useHistory();
 
@@ -82,7 +82,7 @@ const Classroom = (props) => {
 
 	return (
 		<View className={"classroom"}>
-			<Slider slideIndex={2} slides={_slides}></Slider>
+			<Slider slideIndex={2} slides={slides}></Slider>
 			<SpeedDial></SpeedDial>
 		</View>
 	);

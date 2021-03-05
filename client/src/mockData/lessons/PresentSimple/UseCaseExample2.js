@@ -11,8 +11,10 @@ const UseCaseExample2 = {
 			templateName: BottomThirdCaption,
 			heading: "Present Simple",
 			subheading: "Facts",
-			p: [
-				"Breakfast is the most important meal of the day. I eat breakfast every morning.",
+			p: [""],
+			paragraphs: [
+				{ text: "Breakfast is the most important meal of the day." },
+				{ text: "I eat breakfast every morning." },
 			],
 		},
 	],

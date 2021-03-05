@@ -9,7 +9,9 @@ const UseCaseExample1 = {
 			templateName: BottomThirdCaption,
 			heading: "Present Simple",
 			subheading: "Facts",
-			p: ["I am a student. I study law at Stanford University."],
+			paragraphs: [
+				{ text: "I am a student. I study law at Stanford University." },
+			],
 		},
 	],
 };

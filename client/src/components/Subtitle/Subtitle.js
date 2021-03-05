@@ -43,6 +43,7 @@ const Subtitle = ({
 							)}
 							variant="cloudy"
 							shadow="dark"
+							key={className + index}
 						>
 							{text}
 						</Text>

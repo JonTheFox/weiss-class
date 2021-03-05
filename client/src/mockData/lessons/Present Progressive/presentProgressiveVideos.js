@@ -690,17 +690,40 @@ const dancingLadies = {
 		url: "https://www.pexels.com/@shvetsa",
 		id: 1984515,
 	},
+	images: {
+		fourK:
+			"https://images.pexels.com/videos/4800576/pictures/preview-14.jpg",
+	},
 	links: {
 		phone:
-			"https://player.vimeo.com/external/435372394.sd.mp4?s=c6426fe9284b84e81fe61a3b7c1a71ef75c6904d&profile_id=164&oauth2_token_id=57447761",
+			"https://player.vimeo.com/external/435373899.sd.mp4?s=8b5067a03b5f02320c8b08823a2056f01b5266c4&profile_id=164&oauth2_token_id=57447761",
 		tablet:
-			"https://player.vimeo.com/external/435372394.hd.mp4?s=3e3020d64ecc0498b4c377daa9eda18aca8f7a39&profile_id=174&oauth2_token_id=57447761",
+			"https://player.vimeo.com/external/435373899.hd.mp4?s=17d13bc3178c2dc3e20c6f2725916e72874a801d&profile_id=174&oauth2_token_id=57447761",
 		hdReady:
-			"https://player.vimeo.com/external/435372394.hd.mp4?s=3e3020d64ecc0498b4c377daa9eda18aca8f7a39&profile_id=170&oauth2_token_id=57447761",
+			"https://player.vimeo.com/external/435373899.hd.mp4?s=17d13bc3178c2dc3e20c6f2725916e72874a801d&profile_id=170&oauth2_token_id=57447761",
 		fullHd:
-			"https://player.vimeo.com/external/435372394.hd.mp4?s=3e3020d64ecc0498b4c377daa9eda18aca8f7a39&profile_id=172&oauth2_token_id=57447761",
+			"https://player.vimeo.com/external/435373899.hd.mp4?s=17d13bc3178c2dc3e20c6f2725916e72874a801d&profile_id=172&oauth2_token_id=57447761",
 	},
-	image: "https://images.pexels.com/videos/4800574/pictures/preview-0.jpg",
+};
+
+const womanDancing = {
+	user: {
+		name: "Polina Tankilevitch",
+		url: "https://www.pexels.com/@polina-tankilevitch",
+		id: 2104565,
+	},
+	images: {
+		fourK:
+			"https://images.pexels.com/videos/5385809/pictures/preview-14.jpg",
+	},
+	links: {
+		phone:
+			"https://player.vimeo.com/external/459365351.sd.mp4?s=ac402cd5c2309ef4207ff7af35d050437ec09127&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/459365351.hd.mp4?s=2afc9bf39e59167d89483d7217460ccefd8d9b73&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/459365351.hd.mp4?s=2afc9bf39e59167d89483d7217460ccefd8d9b73&profile_id=175&oauth2_token_id=57447761",
+	},
 };
 
 const dancingGuy = {

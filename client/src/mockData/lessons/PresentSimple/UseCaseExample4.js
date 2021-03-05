@@ -12,7 +12,8 @@ const UseCaseExample4 = {
 			templateName: BottomThirdCaption,
 			heading: "Present Simple",
 			subheading: "Routine",
-			p: ["I wake up every day at 7 o'clock."],
+
+			paragraphs: [{ text: "I wake up every day at 6 o'clock." }],
 		},
 	],
 };

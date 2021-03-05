@@ -17,7 +17,7 @@ const WorkingOnComputer = {
 			//subheading: "Living the moment",
 			//title: "I am driving.",
 			videoSet,
-			paragraphs: [{ text: "He is working.", className: "caption" }],
+			paragraphs: [{ text: "I am working.", className: "caption" }],
 		},
 	],
 };

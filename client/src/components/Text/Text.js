@@ -14,7 +14,7 @@ const Text = (props) => {
 	const {
 		children,
 		pClassName = "",
-		readable = false,
+		readable = true,
 		variant = "cloudy", // or: "small"
 		style,
 		shadow = "", // One of: "dark"

@@ -5,7 +5,7 @@ const {
 } = require("../../slideTemplates.js");
 
 const videoSet = require("./presentProgressiveVideos.js").girlStudying;
-debugger;
+
 const girlStudying = {
 	//bgImage
 	bg: "var(--white)",
