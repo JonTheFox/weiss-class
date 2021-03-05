@@ -20,7 +20,7 @@ const PAGE_TEMPLATES = {
 
 const label = "Page";
 const Page = (props) => {
-	const { templateName = "", isCurrentlyViewed, pageIndex } = props;
+	const { templateName = "", isCurrentlyViewed, pageIndex, opacity } = props;
 
 	// if(pageIndex === currentSlideIndex) {
 
@@ -39,7 +39,8 @@ const Page = (props) => {
 		<StyledPage
 			className={clsx(
 				"Page-container",
-				props.bgClass && `has-before show-before ${props.bgClass}`
+				props.bgClass &&
+					`has-before show-before ${props.bgClass} before--opacity---0-${props.opacity}`
 			)}
 		>
 			<LessonPage {...props} />

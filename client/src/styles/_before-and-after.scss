@@ -15,7 +15,13 @@
 	transition: opacity var(--enter);
 }
 
-#root .has-after {
+.has-before.show-before.before--opacity---0-9 {
+	&:before {
+		opacity: 0.9;
+	}
+}
+
+.has-after {
 	&:after {
 		@extend .pseudo-element;
 	}
@@ -41,7 +47,7 @@
 		}
 	}
 }
-#root .has-before {
+.has-before {
 	&:before {
 		@extend .pseudo-element;
 		z-index: -1;

@@ -514,23 +514,89 @@ const tastingPancake = {
 	},
 };
 
+const takingSelfie = {
+	user: {
+		name: "Dario Fernandez Ruz",
+		url: "https://www.pexels.com/@dario-fernandez-ruz",
+		id: 6926475,
+	},
+	images: {
+		fourK:
+			"https://images.pexels.com/videos/6876675/pictures/preview-14.jpg",
+	},
+	links: {
+		phone:
+			"https://player.vimeo.com/external/514278617.sd.mp4?s=b95d92ac89bf4460987da155ea2576e537711427&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/514278617.hd.mp4?s=463e83bec0c97pexelsvideoc9c7aa51160f1e889b119e24e1a&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/514278617.hd.mp4?s=463e83bec0c97c9c7aa51160f1e889b119e24e1a&profile_id=170&oauth2_token_id=57447761",
+		fullHd:
+			"https://player.vimeo.com/external/514278617.hd.mp4?s=463e83bec0c97c9c7aa51160f1e889b119e24e1a&profile_id=172&oauth2_token_id=57447761",
+	},
+};
+
+const couplePlayingVideoGames = {
+	user: {
+		name: "Tima Miroshnichenko",
+		url: "https://www.pexels.com/@tima-miroshnichenko",
+		id: 3088726,
+	},
+	images: {
+		fourK:
+			"https://images.pexels.com/videos/5146312/pictures/preview-14.jpg",
+	},
+	links: {
+		phone:
+			"https://player.vimeo.com/external/449569791.sd.mp4?s=d2da48125c04c2d4df56da258d079aeae0587827&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/449569791.hd.mp4?s=1c2c3f6af6208a0ff228a633547a4edfc2af5837&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/449569791.hd.mp4?s=1c2c3f6af6208a0ff228a633547a4edfc2af5837&profile_id=175&oauth2_token_id=57447761",
+	},
+};
+
+const womanPlayingKeyboards = {
+	user: {
+		name: "Tima Miroshnichenko",
+		url: "https://www.pexels.com/@tima-miroshnichenko",
+		id: 3088726,
+	},
+	images: {
+		fourK:
+			"https://images.pexels.com/videos/6670732/pictures/preview-14.jpg",
+	},
+	links: {
+		phone:
+			"https://player.vimeo.com/external/507016387.sd.mp4?s=9116fab1d49424af03dbea543aaf2e3cb5316b37&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/507016387.hd.mp4?s=77592a8f94b5552fe82ceeaaa700b823b1b6b96d&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/507016387.hd.mp4?s=77592a8f94b5552fe82ceeaaa700b823b1b6b96d&profile_id=170&oauth2_token_id=57447761",
+		fullHd:
+			"https://player.vimeo.com/external/507016387.hd.mp4?s=77592a8f94b5552fe82ceeaaa700b823b1b6b96d&profile_id=172&oauth2_token_id=57447761",
+	},
+};
+
 const cookingSoy = {
 	user: {
 		name: "cottonbro",
 		url: "https://www.pexels.com/@cottonbro",
 		id: 1437723,
 	},
-	image: "https://images.pexels.com/videos/3704778/pictures/preview-14.jpg",
-
+	images: {
+		fourK:
+			"https://images.pexels.com/videos/3298720/pictures/preview-14.jpg",
+	},
 	links: {
 		phone:
-			"https://player.vimeo.com/external/390189146.sd.mp4?s=856aceda389e10dfdc19a139360ff184661d7caa&profile_id=164&oauth2_token_id=57447761",
+			"https://player.vimeo.com/external/376214014.sd.mp4?s=08f6031eb4bc5c58dbe1635967468a99a92fe13a&profile_id=164&oauth2_token_id=57447761",
 		tablet:
-			"https://player.vimeo.com/external/390189146.hd.mp4?s=ee9ceba48abb134a5d81464755d02728a0c511a2&profile_id=174&oauth2_token_id=57447761",
+			"https://player.vimeo.com/external/376214014.hd.mp4?s=f7f821b6aac45dab79ee4c299212bd527862c1d4&profile_id=174&oauth2_token_id=57447761",
 		hdReady:
-			"https://player.vimeo.com/external/390189146.hd.mp4?s=ee9ceba48abb134a5d81464755d02728a0c511a2&profile_id=170&oauth2_token_id=57447761",
+			"https://player.vimeo.com/external/376214014.hd.mp4?s=f7f821b6aac45dab79ee4c299212bd527862c1d4&profile_id=170&oauth2_token_id=57447761",
 		fullHd:
-			"https://player.vimeo.com/external/390189146.hd.mp4?s=ee9ceba48abb134a5d81464755d02728a0c511a2&profile_id=173&oauth2_token_id=57447761",
+			"https://player.vimeo.com/external/376214014.hd.mp4?s=f7f821b6aac45dab79ee4c299212bd527862c1d4&profile_id=172&oauth2_token_id=57447761",
 	},
 };
 

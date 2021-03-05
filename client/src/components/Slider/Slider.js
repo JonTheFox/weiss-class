@@ -74,9 +74,6 @@ const Slider = ({ children, slides }) => {
     setVideo(firstVideoSet);
     setIsVideoPlaying(true);
     setShowBg(true);
-    return () => {
-      window.cancelAnimationFrame();
-    };
   }, []);
 
   useEffect(() => {
