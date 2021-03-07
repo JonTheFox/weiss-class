@@ -81,7 +81,7 @@ const Classroom = (props) => {
 	// }, []);
 
 	return (
-		<View className={"classroom"}>
+		<View className={"classroom gradient"}>
 			<Slider slideIndex={2} slides={slides}></Slider>
 			<SpeedDial></SpeedDial>
 		</View>

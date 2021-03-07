@@ -49,13 +49,9 @@ export default styled.div`
 		font-size: 1.5rem;
 		font-family: Nunito;
 		text-align: left;
-		//padding: calc(0.75 * var(--spacing));
-		//padding-right: calc(2 * var(--spacing));
-
+		padding-right: calc(2 * var(--spacing));
 		padding-left: calc(2 * var(--spacing));
 		white-space: pre-wrap;
-		padding-right: 0;
-
 		transform: all 0.2s;
 
 		&:hover {

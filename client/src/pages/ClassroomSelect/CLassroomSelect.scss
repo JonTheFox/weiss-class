@@ -20,6 +20,10 @@
 		margin-left: 0;
 		text-align: left;
 	}
+
+	.DotIndicator-root.-active:after {
+		background-color: var(--secondary-lighter-2);
+	}
 }
 
 .tablet,
