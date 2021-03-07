@@ -652,4 +652,4 @@ const portraitImages = {
 	},
 };
 
-export default portraitImages;
+module.exports = portraitImages;

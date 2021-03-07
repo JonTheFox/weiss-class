@@ -46,11 +46,16 @@ export default styled.div`
 	.text {
 		display: inline;
 		line-height: 2;
-		font-size: 1.2rem;
+		font-size: 1.5rem;
 		font-family: Nunito;
 		text-align: left;
-		padding: calc(0.75 * var(--spacing));
-		padding-right: calc(2 * var(--spacing));
+		//padding: calc(0.75 * var(--spacing));
+		//padding-right: calc(2 * var(--spacing));
+
+		padding-left: calc(2 * var(--spacing));
+		white-space: pre-wrap;
+		padding-right: 0;
+
 		transform: all 0.2s;
 
 		&:hover {

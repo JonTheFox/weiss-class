@@ -8,6 +8,8 @@ export default styled.div`
 	left: 0;
 	z-index: 1000;
 	padding: calc(2 * var(--spacing)) calc(2 * var(--spacing));
+	\padding-left: 0;
+	padding-right: 0;
 	&.footer {
 		padding-bottom: calc(8 * var(--spacing));
 	}

@@ -206,18 +206,22 @@ const Slider = ({ children, slides }) => {
           left: "50%",
           transform: "translateX(-50%)",
           overflow: "auto",
-          width: "100%",
-          display: "none",
+          width: "50%",
+          paddingRight: "calc(2 * var(--spacing)",
+          // display: "none",
         }}
-      />
-
-      <SideNav
-        color="rgba (200 , 215 , 235 , 0.6 )"
-        activeColor="var(--canvas)"
-        className={"side-nav"}
       />
     </HeroSlider>
   );
 };
 
 export default Slider;
+
+/*
+
+<SideNav
+        color="rgba (200 , 215 , 235 , 0.6 )"
+        activeColor="var(--canvas)"
+        className={"side-nav"}
+      />
+*/
