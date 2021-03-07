@@ -150,7 +150,7 @@ SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 export default function ClassroomSelect(props) {
   const [appUtils, appState, setAppState] = useContext(AppContext);
 
-  const setVideo = useSetRecoilState(videoState);
+  const [video, setVideo] = useRecoilState(videoState);
 
   const { capitalizeFirstLetter, pickRandomFrom, is, navigateTo } = appUtils;
   const { logg, loggError } = useLogg({ label });
@@ -222,6 +222,8 @@ export default function ClassroomSelect(props) {
     promiseKeeper.stall(0.25 * 1000, "show carousel").then(() => {
       setShowCarousel(true);
     });
+    if (video?.id !== "flyingThroughCloudsOriginal")
+      setVideo(flyingThroughCloudsOriginal);
   }, []);
 
   return (

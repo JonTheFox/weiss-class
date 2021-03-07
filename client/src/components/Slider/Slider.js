@@ -210,6 +210,7 @@ const Slider = ({ children, slides }) => {
           paddingRight: "calc(2 * var(--spacing)",
           // display: "none",
         }}
+        activeColor={"var(--secondary-lighter-3)"}
       />
     </HeroSlider>
   );
