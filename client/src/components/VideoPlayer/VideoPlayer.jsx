@@ -112,12 +112,6 @@ const VideoPlayer = React.forwardRef((props, ref) => {
 		);
 	}, [refs, props.video]);
 
-	useEffect(() => {
-		promiseKeeper.stall(200, "setVideoOpacity").then(() => {
-			setVideoOpacity();
-		});
-	}, [video]);
-
 	const handleReady = (reactPlayerComponent) => {
 		//put the current player in a closure
 		const _player = reactPlayerComponent;
@@ -132,11 +126,13 @@ const VideoPlayer = React.forwardRef((props, ref) => {
 
 		const _startSecond = video.startSecond;
 
+		const waitTime = video?.longDelay ? 5000 : 200;
+
 		promiseKeeper.stall(DURATIONS.enter * 2, "seekStart").then(() => {
 			_player.seekTo(_startSecond, "seconds");
 			animationFrame = window.requestAnimationFrame(() => {
 				promiseKeeper
-					.stall(DURATIONS.enter * 1, "fadeIn")
+					.stall(waitTime, "fadeIn")
 					.then(() => {
 						//and now finally show the video
 						setFaded(false);
@@ -247,8 +243,7 @@ const VideoPlayer = React.forwardRef((props, ref) => {
 		}
 		setVideo(props.video);
 		promiseKeeper.stall(200, () => {
-			refs.current.videoPlayer.ref.wrapper.style.opacity =
-				ref.current.video?.opacity || 1;
+			setVideoOpacity();
 		});
 	}, [props.video]);
 
@@ -263,6 +258,9 @@ const VideoPlayer = React.forwardRef((props, ref) => {
 			];
 
 		setVideoUrl(videoUrl);
+		promiseKeeper.stall(200, "setVideoOpacity").then(() => {
+			setVideoOpacity();
+		});
 	}, [video]);
 
 	return (

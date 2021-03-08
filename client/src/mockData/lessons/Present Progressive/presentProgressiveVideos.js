@@ -62,6 +62,7 @@ class Video {
 
 const flyingThroughCloudsOriginal = {
 	id: "flyingThroughCloudsOriginal",
+	longDelay: true,
 	startSecond: 60 * 1 + 38,
 	stopSecond: 60 * 2 + 16,
 	groupName: "Clouds",

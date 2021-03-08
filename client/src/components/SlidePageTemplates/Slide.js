@@ -19,6 +19,10 @@ import CenteredContainer from "../CenteredContainer/CenteredContainer.js";
 
 import ScrollSnap from "scroll-snap";
 
+import slideState from "../../store/slide.selector.js";
+
+import { useRecoilValue } from "recoil";
+
 const label = "Slide";
 const snapConfig = {
 	/**
@@ -63,6 +67,8 @@ const Slide = (props) => {
 	const { pages = [], templateName = "", pageProps = [] } = props;
 	const refs = useRef({ slide: {} });
 
+	const slide = useRecoilValue(slideState);
+
 	const snapObject = new ScrollSnap(refs.current, snapConfig);
 
 	function onSnapEnd() {
@@ -80,6 +86,8 @@ const Slide = (props) => {
 
 	useEffect(() => {
 		bindScrollSnap();
+
+		// const videoSet = slide?.pages?.[0]?.videoSet;
 	}, []);
 
 	// const { logg, loggError } = useLogg({ label });

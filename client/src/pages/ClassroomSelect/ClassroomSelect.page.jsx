@@ -12,15 +12,12 @@ import clsx from "clsx";
 import useLogg from "../../hooks/useLogg.jsx";
 import usePromiseKeeper from "../../hooks/usePromiseKeeper.jsx";
 import View from "../../components/layout/View.jsx";
-
 import AppBar from "@material-ui/core/AppBar";
 import Card from "../../components/Card/Card.jsx";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
-
-// import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -28,19 +25,15 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Link from "@material-ui/core/Link";
 import posed, { PoseGroup } from "react-pose";
-
-// import Text from "../../partials/Text/Text.js";
 import Heading from "../../components/Heading/Heading.js";
-
 import Carousel from "../../components/Carousel/Carousel.js";
 import GlowingLoader from "../../components/GlowingLoader/GlowingLoader.jsx";
 import videoState from "../../store/video.atom.js";
-
 // Import Swiper styles
-import "swiper/swiper.scss";
-import "swiper/components/navigation/navigation.scss";
-import "swiper/components/pagination/pagination.scss";
-import "swiper/components/scrollbar/scrollbar.scss";
+// import "swiper/swiper.scss";
+// import "swiper/components/navigation/navigation.scss";
+// import "swiper/components/pagination/pagination.scss";
+// import "swiper/components/scrollbar/scrollbar.scss";
 
 import {
   // RecoilRoot,
@@ -207,17 +200,6 @@ export default function ClassroomSelect(props) {
       navigateTo(`/classroom`, history);
     });
   };
-
-  const renderCarousel = () => {
-    return (
-      <Carousel
-        className={"glass"}
-        onItemSelect={onRoomSelect}
-        items={roomsInfo}
-      />
-    );
-  };
-
   useEffect(() => {
     promiseKeeper.stall(0.25 * 1000, "show carousel").then(() => {
       setShowCarousel(true);
@@ -251,7 +233,11 @@ export default function ClassroomSelect(props) {
                 initialPose="exit"
                 pose={isLarge ? "large" : showCarousel ? "enter" : "exit"}
               >
-                {renderCarousel()}
+                <Carousel
+                  className={"glass"}
+                  onItemSelect={onRoomSelect}
+                  items={roomsInfo}
+                />
               </ScaleIn>
             </Container>
           ))}

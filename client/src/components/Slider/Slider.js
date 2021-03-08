@@ -65,9 +65,15 @@ const Slider = ({ children, slides }) => {
 
   useEffect(() => {
     goToSlide(currentSlideIndex);
-    const videoSet = getVideoSet(slides?.[currentSlideIndex]);
+    const videoSet = slides?.[currentSlideIndex]?.pages?.videoSet;
     setVideo(videoSet);
   }, [currentSlideIndex]);
+
+  const videoSet = getVideoSet(slides[0]);
+
+  if (currentSlideIndex === 0) {
+    setVideo(videoSet);
+  }
 
   useEffect(() => {
     const firstVideoSet = getVideoSet(slides?.[0]);
