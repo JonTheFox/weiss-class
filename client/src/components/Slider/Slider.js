@@ -62,7 +62,8 @@ const Slider = ({ children, slides }) => {
       return null;
     }
     const navBtns = Array.from(navBtnsNodeList);
-    navBtns[slideIndex].click();
+    const currentNavBtn = navBtns?.[slideIndex];
+    if (currentNavBtn) currentNavBtn.click();
   };
 
   const getVideoSet = (slide) => {
@@ -151,7 +152,7 @@ const Slider = ({ children, slides }) => {
         promiseKeeper.stall(SLIDING_DURATION, "show bg").then(() => {
           setShowBg(true);
         });
-        setCurrentSlideIndex(nextSlide);
+        // setCurrentSlideIndex(nextSlide);
       }}
       onChange={(nextSlide) => {
         console.log("onChange", nextSlide);
