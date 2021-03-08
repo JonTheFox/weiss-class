@@ -69,15 +69,19 @@ const Slider = ({ children, slides }) => {
     setVideo(videoSet);
   }, [currentSlideIndex]);
 
-  const videoSet = getVideoSet(slides[0]);
+  const firstVideoSet = getVideoSet(slides?.[0]);
+
+  const setFirstVideoSet = () => {
+    const firstVideoSet = getVideoSet(slides?.[0]);
+    setVideo(firstVideoSet);
+  };
 
   if (currentSlideIndex === 0) {
-    setVideo(videoSet);
+    setFirstVideoSet();
   }
 
   useEffect(() => {
-    const firstVideoSet = getVideoSet(slides?.[0]);
-    setVideo(firstVideoSet);
+    setFirstVideoSet();
     setIsVideoPlaying(true);
     setShowBg(true);
   }, []);
