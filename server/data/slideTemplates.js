@@ -10,3 +10,4 @@ module.exports.BottomThirdCaption = "BottomThirdCaption";
 module.exports.ListMain = "ListMain";
 module.exports.VideoCentered = "VideoCentered";
 module.exports.VideoWithContent = "VideoWithContent";
+module.exports.Quiz = "Quiz";

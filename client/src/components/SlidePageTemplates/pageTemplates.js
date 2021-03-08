@@ -1,9 +1,10 @@
-import CenteredHeadings from "../SlidePageTemplates/CenteredHeadings.js";
-import BottomThirdCaption from "../SlidePageTemplates/BottomThirdCaption.js";
-import Text1 from "../SlidePageTemplates/Text1.js";
-import ListMain from "../SlidePageTemplates/ListMain/ListMain.js";
+import CenteredHeadings from "./CenteredHeadings.js";
+import BottomThirdCaption from "./BottomThirdCaption.js";
+import Text1 from "./Text1.js";
+import ListMain from "./ListMain/ListMain.js";
 import VideoCentered from "./VideoCentered/VideoCentered.js";
 import VideoWithContent from "./VideoWithContent/VideoWithContent.js";
+import Quiz from "./Quiz/Quiz.template.js";
 
 const PAGE_TEMPLATES = {
 	CenteredHeadings,
@@ -12,12 +13,6 @@ const PAGE_TEMPLATES = {
 	ListMain,
 	VideoCentered,
 	VideoWithContent,
+	Quiz,
 };
-export default {
-	CenteredHeadings,
-	Text1,
-	BottomThirdCaption,
-	ListMain,
-	VideoCentered,
-	VideoWithContent,
-};
+export default PAGE_TEMPLATES;

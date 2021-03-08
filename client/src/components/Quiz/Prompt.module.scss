@@ -1,0 +1,52 @@
+.prompt {
+	position: relative;
+	z-index: 1001;
+	bottom: 0; //too easy :)
+	left: 0;
+	width: 100%;
+	padding: var(--spacing) 0;
+	margin: 0;
+	font-size: 1.25rem;
+	line-height: 1;
+	overflow: hidden;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-evenly;
+	align-items: center;
+	align-content: space-around;
+	flex-grow: 1;
+	//background-color: theme.palette.background.paper;
+	background-color: var(--white);
+	user-select: none;
+	height: auto;
+}
+.promptPhoneLandscape {
+	padding: calc(0.5 * var(--spacing)) 0;
+}
+
+.instruction {
+	height: auto;
+	margin: auto;
+	margin-left: 8px;
+	padding: 0;
+	line-height: 1;
+	user-select: none;
+	cursor: pointer;
+	textalign: center;
+	verticalalign: middle;
+	overflow: visible;
+}
+.letter {
+	overflow: hidden;
+	line-height: 1;
+}
+.svg {
+	padding: 0;
+	// marginBottom: `${theme.spacing(0.5)}px`;
+	padding-bottom: calc(0.5 * var(--spacing));
+	box-sizing: border-box;
+	width: 36px;
+	height: 36px;
+	margin: auto;
+	margin-right: 4%;
+}

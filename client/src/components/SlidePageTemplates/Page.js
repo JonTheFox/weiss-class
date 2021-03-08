@@ -6,6 +6,7 @@ import Text1 from "../SlidePageTemplates/Text1.js";
 import ListMain from "../SlidePageTemplates/ListMain/ListMain.js";
 import VideoCentered from "../SlidePageTemplates/VideoCentered/VideoCentered.js";
 import VideoWithContent from "../SlidePageTemplates/VideoWithContent/VideoWithContent.js";
+import Quiz from "../SlidePageTemplates/Quiz/Quiz.template.js";
 import clsx from "clsx";
 // import { AppContext } from "../../contexts/AppContext.jsx";
 
@@ -16,6 +17,7 @@ const PAGE_TEMPLATES = {
 	ListMain,
 	VideoCentered,
 	VideoWithContent,
+	Quiz,
 };
 
 const label = "Page";

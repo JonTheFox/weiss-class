@@ -33,7 +33,6 @@ import "./Slider.styles.scss";
 const SLIDING_DURATION = 200;
 
 const label = "Slider";
-const SLIDE_TEMPLATES = { CenteredHeadings, Text1 };
 
 const Slider = ({ children, slides }) => {
   const deviceState = useContext(DeviceContext);

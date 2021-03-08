@@ -76,8 +76,8 @@ const Slide = (props) => {
 	}
 
 	const bindScrollSnap = () => {
-		const slideElemet = refs.current.slide;
-		const snapElement = new ScrollSnap(slideElemet, {
+		const slideElement = refs.current.slide;
+		const snapElement = new ScrollSnap(slideElement, {
 			snapDestinationY: "100%",
 		});
 

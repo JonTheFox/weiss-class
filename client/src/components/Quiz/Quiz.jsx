@@ -14,126 +14,28 @@ import SplitText from "react-pose-text";
 import ImageCard from "./ImageCard.jsx";
 import Prompt from "./Prompt.jsx";
 import { AppContext } from "../../contexts/AppContext.jsx";
-import useLogg from "../hooks/useLogg.jsx";
-import usePromiseKeeper from "../hooks/usePromiseKeeper.jsx";
-import Spinner from "../partials/WeissSpinner.jsx";
+import useLogg from "../../hooks/useLogg.jsx";
+import usePromiseKeeper from "../../hooks/usePromiseKeeper.jsx";
+// import WeissSpinner from "../UI/WeissSpinner/WeissSpinner.jsx";
+import GlowingLoader from "../GlowingLoader/GlowingLoader.jsx";
 import ENDPOINTS from "../../AJAX/ajax-endpoints.js";
 
-import quizReducer, { initQuizReducer } from "../../reducers/quizReducer.js";
+import quizReducer, { initQuizReducer } from "./quiz.reducer.js";
 import POSES from "../../constants/poses.js";
 import DURATIONS from "../../constants/durations.js";
 import { CONGRATS } from "../../constants/texts.js";
 import clsx from "clsx";
 
-import "react-step-progress-bar/styles.css";
+// import "react-step-progress-bar/styles.css";
 import { ProgressBar, Step } from "react-step-progress-bar";
 
-import DebuggerView from "./DebuggerView.jsx";
+// import DebuggerView from "../UI/DebuggerView/DebuggerView.jsx";
 
 import ReactPlayer from "react-player";
+import styles from "./quiz.module.scss";
 
 const getAorAn = (noun = "") =>
     ["a", "e", "i", "o", "u"].includes(noun?.[0]?.toLowerCase()) ? "an" : "a";
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        height: "100%",
-        padding: 0,
-        zIndex: "unset",
-        margin: "auto",
-        width: "100%",
-        maxWidth: 1000,
-        display: "flex",
-        justifyContent: "center", //x-axis (left and right)
-        alignContent: "space-between", // y-axis (up and down)
-        flexWrap: "wrap",
-        justifyItems: "flex-end",
-        overflow: "hidden",
-    },
-    instruction: {
-        fontSize: 26,
-        height: "auto",
-        margin: "auto",
-        maxWidth: "75%",
-        padding: `${theme.spacing(3)}px ${theme.spacing(3)}px ${theme.spacing(
-            1
-        )}px ${theme.spacing(3)}px`,
-        userSelect: "none",
-        //cursor: "pointer",
-        lineHeight: 1.25,
-        textAlign: "center",
-        verticalAlign: "middle",
-    },
-    letter: {
-        overflow: "hidden",
-        fontSize: "inherit",
-    },
-
-    PosedList: {
-        height: "100%",
-        width: "100%",
-        position: "relative",
-        overflow: "visible",
-        flexDirection: "row",
-        //maxHeight: "82%",
-        listStyle: "none",
-        padding: 0,
-        display: "flex",
-        flexWrap: "wrap",
-        justifyItems: "center",
-        justifyContent: "space-evenly", //X-axis(right/left of row)
-        alignItems: "center", //Y-axis (top/bottom of row)
-        alignContent: "center",
-        flexBasis: "100%",
-        margin: 0,
-    },
-
-    answerItem: {
-        overflow: "hidden",
-        opacity: 1,
-        display: "inline-flex",
-        minHeight: 152,
-        width: "46%",
-        // height: "auto",
-        height: "100%",
-        justifyItems: "center",
-        padding: `${theme.spacing(1)}px 0`,
-    },
-    progressBar: {
-        width: "100%",
-        // height: theme.spacing(1),
-        height: "7.5%",
-        //margin: `${theme.spacing(2)}px ${theme.spacing(4)}px`,
-        padding: `${theme.spacing(2)}px ${theme.spacing(4)}px`,
-        display: "flex",
-    },
-
-    instructionWrapper: {
-        height: "10%",
-    },
-    answerList: {
-        width: "100%",
-        overflow: "visible",
-        position: "relative",
-        listStyle: "none",
-        margin: "auto",
-        padding: `0 ${theme.spacing(1)}px`,
-        display: "flex",
-        flexWrap: "wrap",
-        justifyItems: "center",
-        justifyContent: "space-evenly", //X-axis(right/left of row)
-        alignItems: "center", //Y-axis (top/bottom of row)
-        alignContent: "center",
-        height: "62.5%",
-    },
-    promptSection: {
-        height: "10%",
-    },
-
-    soundPlayer: {
-        display: "none",
-    },
-}));
 
 const SFX = {
     roundComplete: {
@@ -184,6 +86,7 @@ const compLabel = "Quiz";
 let animationFrame;
 
 const Quiz = (props) => {
+    const { screenSize = "phone" } = props;
     const [appUtils, appState] = useContext(AppContext);
 
     const {
@@ -195,11 +98,14 @@ const Quiz = (props) => {
         BACKGROUND_CLASSES,
         DEBUGGING,
         request,
-
+        capitalizeTitle,
         pickRandomFrom,
     } = appUtils;
 
     const [showItems, setShowItems] = useState(false);
+    // const [clientSideItems, setClientSideItems] = useState([]);
+    // const [staticItems, setStaticItems] = useState(props.items || []);
+
     const [instruction, setInstruction] = useState(" ");
     const [promptContent, setPromptContent] = useState(null);
     const [quizIsDone, setQuizIsDone] = useState(false);
@@ -241,7 +147,7 @@ const Quiz = (props) => {
     const $correctSlotIndex = useRef(correctSlotIndex);
 
     const theme = useTheme();
-    const classes = useStyles(theme);
+    // const classes = useStyles(theme);
 
     const { logg, loggError } = useLogg({ label: compLabel });
     const promiseKeeper = usePromiseKeeper({ label: compLabel });
@@ -258,24 +164,47 @@ const Quiz = (props) => {
         return image;
     }, []);
 
-    const initGame = async () => {
-        // const ajaxResult = await request("POST", "images/POST/getAll", {});
+    const initGame = async (config = {}) => {
+        // const ajaxResult = await request("POST", "images/POST/getAll", {})
 
-        const ajaxResult = await request(
-            "POST",
-            ENDPOINTS.foods.POST.getAll.path,
-            { user: appState.user, collectionName: "all" }
-        );
+        // const ajaxResult = await request(
+        //     "POST",
+        //     ENDPOINTS.foods.POST.getAll.path,
+        //     { user: appState.user, collectionName: "all" }
+        // );\
 
-        const { error, data } = ajaxResult;
-        if (error) throw new Error(error);
-        if (!data) throw new Error("No data received");
+        // if(config.items) {
 
-        const participatingItems = Object.values(ajaxResult.data).flat();
+        // }
+
+        // const ajaxResult = await request("POST", "/api/foods", {
+        //     collectionName: "all",
+        // });
+
+        // const { error, data } = ajaxResult;
+        // if (error) {
+        //     loggError(error);
+        //     console.log("error in AJAX ", error);
+        //     debugger;
+        // }
+
+        // if (!data) throw new Error("No data received");
+
+        // const participatingItems = Object.values(ajaxResult.data || {}).flat();
+
+        // const participatingItems = Object.values(
+        //     props.subcategories || {}
+        // ).flat();
+
+        // setClientSideItems(participatingItems);
+
+        // debugger;
+
+        const { items } = config;
 
         dispatch({
             type: "createGame",
-            payload: { items: participatingItems, config: {} },
+            payload: { items, config: { numAnswersRequired: 3 } },
         });
         synthVoice.turnOn();
         synthVoice.wakeUp();
@@ -288,8 +217,10 @@ const Quiz = (props) => {
         );
 
         try {
-            setShowInstruction(false);
-            setShowItems(true);
+            animationFrame = window.requestAnimationFrame(() => {
+                setShowInstruction(false);
+                setShowItems(true);
+            });
 
             if (!quizState.currentRound.numAnswers) {
                 debugger;
@@ -312,7 +243,9 @@ const Quiz = (props) => {
 
             await presentItems;
             const { items } = $quizState.current;
-            const correctItemLabel = items[correctItemIndex]?.label ?? "";
+            const correctItemLabel = capitalizeTitle(
+                items[correctItemIndex]?.label ?? ""
+            );
 
             const instructionMsg = createInstructionMsg(correctItemLabel);
             if (!instructionMsg) {
@@ -354,9 +287,6 @@ const Quiz = (props) => {
     };
 
     useEffect(() => {
-        initGame();
-
-        //do something with the data :)
         if (DEBUGGING) {
             window.resolveLatest = () => promiseKeeper.resolveLatest();
             window.resolveAll = () => promiseKeeper.resolveAll();
@@ -423,6 +353,71 @@ const Quiz = (props) => {
     }, []);
 
     useEffect(() => {
+        // const _clientSideitems = clientSideItems;
+
+        const fetchItems = async () => {
+            //currently take it from the static props
+            // await promiseKeeper.stall(1500);
+            debugger;
+
+            const _items = [
+                {
+                    label: "Sushi",
+                    images: [
+                        {
+                            photographer: undefined,
+                            tags: undefined,
+                            //label: "Sushi",
+                            title: "Sushi",
+                            urls: {
+                                full:
+                                    "https://images.unsplash.com/photo-1583571560096-eb4462cdba30?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
+                                regular:
+                                    "https://images.unsplash.com/photo-1583571560096-eb4462cdba30?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
+                                small:
+                                    "https://images.unsplash.com/photo-1583571560096-eb4462cdba30?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
+                                thumb:
+                                    "https://images.unsplash.com/photo-1583571560096-eb4462cdba30?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
+                            },
+                        },
+                    ],
+                },
+                {
+                    label: "Cookie",
+                    images: [
+                        {
+                            photographer: undefined,
+                            tags: undefined,
+                            //label: "Cookie",
+                            title: "Cookie",
+                            urls: {
+                                raw:
+                                    "https://images.unsplash.com/photo-1464195085758-89f3e55e821e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
+                                full:
+                                    "https://images.unsplash.com/photo-1464195085758-89f3e55e821e?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
+                                regular:
+                                    "https://images.unsplash.com/photo-1464195085758-89f3e55e821e?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
+                                small:
+                                    "https://images.unsplash.com/photo-1464195085758-89f3e55e821e?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
+                                thumb:
+                                    "https://images.unsplash.com/photo-1464195085758-89f3e55e821e?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
+                            },
+                        },
+                    ],
+                },
+            ];
+            // return props.items;
+            return _items;
+        };
+        fetchItems().then((items) => {
+            initGame({ items });
+        });
+
+        // const _serverSideItems = staticItems;
+        // debugger;
+    }, [props.items]);
+
+    useEffect(() => {
         $quizState.current = quizState;
         $currentRound.current = quizState.currentRound;
         $answerSlots.current = quizState.answerSlots;
@@ -451,6 +446,12 @@ const Quiz = (props) => {
         $quizState.current = newState;
         // debugger;
     }, [quizState]);
+
+    // useEffect(() => {
+    //     if (appState.user && quizState.step <= 0) {
+    //         initGame();
+    //     }
+    // }, [appState]);
 
     const goNextBackground = useCallback(() => {
         setBackground((prev) => {
@@ -483,6 +484,14 @@ const Quiz = (props) => {
         });
     }, [quizState.roundIndex]);
 
+    const progressBarRef = useRef({});
+
+    useEffect(() => {
+        if (progressBarRef.current.style) {
+            progressBarRef.current.style.width = progress + "%";
+        }
+    }, [progress]);
+
     const handlePressEnd = useCallback(
         async (ev, selectedAnswerStep, selectedAnswerSlot) => {
             ev.preventDefault();
@@ -513,8 +522,11 @@ const Quiz = (props) => {
 
                 if (wrongAnswer) {
                     // setActive(true);
-                    dispatch({ type: "incorrectAnswer", payload: {} });
-                    setPromptContent({ eventType: "incorrect" });
+                    animationFrame = window.requestAnimationFrame(() => {
+                        dispatch({ type: "incorrectAnswer", payload: {} });
+                        setPromptContent({ eventType: "incorrect" });
+                    });
+
                     return null;
                 }
 
@@ -523,13 +535,20 @@ const Quiz = (props) => {
                 //dispatch({ type: "correctAnswer" });
 
                 const nextStep = step + 1;
-                dispatch({ type: "goNextStep" });
+
+                animationFrame = window.requestAnimationFrame(() => {
+                    dispatch({ type: "goNextStep" });
+                });
+
                 const sayCorrect = promiseKeeper.withRC(
                     synthVoice.say("Correct!!"),
                     { resolveOnError: true, label: "sayCorrect" }
                 );
 
-                setPromptContent({ eventType: "correct" });
+                animationFrame = window.requestAnimationFrame(() => {
+                    setPromptContent({ eventType: "correct" });
+                });
+
                 await sayCorrect;
                 dispatch({ type: "clearCorrect", payload: {} });
 
@@ -551,12 +570,13 @@ const Quiz = (props) => {
                         (answer) => answer.stepIndex === nextStep
                     )[0].itemIndex;
                     const instructionMsg = createInstructionMsg(
-                        items[nextCorrectItemIndex]?.label || "BALAGAN"
+                        capitalizeTitle(items[nextCorrectItemIndex]?.label) ||
+                            "BALAGAN"
                     );
-
-                    setInstruction(instructionMsg);
+                    debugger;
 
                     animationFrame = window.requestAnimationFrame(() => {
+                        setInstruction(instructionMsg);
                         setPromptContent(null);
                         setShowInstruction(true);
                     });
@@ -622,7 +642,10 @@ const Quiz = (props) => {
 
                         if (!nextCorrectAnswer) debugger;
                         const instructionMsg = createInstructionMsg(
-                            quizState.items[nextCorrectAnswer.itemIndex].label
+                            capitalizeTitle(
+                                quizState.items[nextCorrectAnswer.itemIndex]
+                                    .label
+                            )
                         );
 
                         const fadeOutItems = promiseKeeper.stall(
@@ -729,230 +752,285 @@ const Quiz = (props) => {
         [$currentRound, $quizState, quizState.answerSlots, $answerSlots]
     );
 
-    if (!items?.length) {
-        return <Spinner></Spinner>;
+    if (!items) {
+        return (
+            <div>
+                Hmm. It looks like our server is a little tired. Sorry about
+                that. Please try reloading the page soon.
+            </div>
+        );
     }
 
-    if (quizIsDone) {
-        const _url = SFX.gameComplete.url;
-        debugger;
+    // return (
+    //     <div>
+    //         <p>client side items: {clientSideItems.length}</p>
+    //         <p>server side items: {staticItems.length}</p>
+    //     </div>
+    // );
+
+    if (!items.length) {
+        return <GlowingLoader fullpage={true}></GlowingLoader>;
     }
+
+    // if (quizIsDone) {
+    //     const _url = SFX.gameComplete.url;
+    //     debugger;
+    // }
 
     return (
-        <dl
-            className={clsx(
-                classes.root,
-                "quiz",
-                background,
-                "has-before show-before has-after",
-                showOverlay && "show-after white-out"
-            )}
-        >
-            <div
+        <React.Fragment>
+            <dl
                 className={clsx(
-                    classes.progressBar,
-                    "progress-bar",
-                    progressing && "animation--flash"
+                    styles.root,
+                    styles[screenSize],
+                    styles.hasBefore,
+                    styles.showBefore,
+                    styles.hasAfter,
+                    "quiz page",
+                    styles[background],
+                    background,
+                    "has-before show-before has-after",
+                    showOverlay && "show-after white-out",
+                    showOverlay && styles.showAfter,
+                    showOverlay && styles.whiteOut
                 )}
             >
-                <ProgressBar percent={progress}></ProgressBar>
-            </div>
-            <div
-                className={clsx(
-                    "instruction-wrapper",
-                    classes.instructionWrapper
-                )}
-            >
-                <dt
-                    className={`${classes.instruction}} instruction unselectable`}
-                    onClick={(e) => {
-                        e.preventDefault();
-                        active && synthVoice.say(instruction);
-                    }}
+                <div className={clsx(styles.progressContainer)}>
+                    <div className={clsx("progressBar", styles.progressBar)}>
+                        <div
+                            className={clsx(
+                                "progress gradient",
+                                styles.progress,
+                                progressing && "animation--flash",
+                                progressing && styles.animationFlash
+                            )}
+                            ref={(e) => {
+                                progressBarRef.current = e;
+                            }}
+                        />
+                    </div>
+                </div>
+
+                <div
+                    className={clsx(
+                        "instruction-wrapper",
+                        styles.instructionWrapper
+                    )}
                 >
-                    <SplitText
-                        initialPose="exit"
-                        pose={showInstruction ? "enter" : "exit"}
-                        charPoses={POSES.char_fadeIn}
-                        speechRate={
-                            (synthVoice &&
-                                synthVoice.config &&
-                                synthVoice.config.rate) ||
-                            0
-                        }
-                        className={`${classes.letter} letter stroke`}
-                        key={"instruction"}
-                    >
-                        {instruction}
-                    </SplitText>
-                </dt>
-            </div>
-            <dd
-                className={`${classes.answerList} answer-list total--${Math.min(
-                    4,
-                    numAnswers
-                )}`}
-            >
-                {rounds && rounds.length > 0 && (
-                    <PosedList
-                        pose={showItems ? "visible" : "hidden"}
-                        initialPose={"hidden"}
-                        className={`${classes.PosedList} posed-list`}
-                        //animateOnMount={true}
-                        step={currentStepIndex}
-                        overallStep={step}
-                        round={currentRoundIndex}
-                        active={active}
-                        numAnswers={numAnswers}
-                        onPoseComplete={(ev) => {
-                            // debugger;
-                            // $promiseKeeper.current.resolve(
-                            //     "stall_till_present_items"
-                            // );
-                            $promiseKeeper.current.resolveLatest(
-                                "pose complete"
-                            );
-                            // debugger;
-                            // promiseKeeper.resolve("present_items");
-                            // promiseKeeper.resolveLatest(
-                            //     "enter animation finished"
-                            // );
-                            // handlePoseComplete("PosedList");
+                    <dt
+                        className={clsx(
+                            styles.instruction,
+                            styles.unselectable,
+                            "instruction unselectable"
+                        )}
+                        onClick={(e) => {
+                            e.preventDefault();
+                            active && synthVoice.say(instruction);
                         }}
                     >
-                        {answerSlots.map(({ stepIndex, itemIndex }, i) => {
-                            const isCorrectAnswer = stepIndex === step;
+                        <SplitText
+                            initialPose="exit"
+                            pose={showInstruction ? "enter" : "exit"}
+                            charPoses={POSES.char_fadeIn}
+                            speechRate={
+                                (synthVoice &&
+                                    synthVoice.config &&
+                                    synthVoice.config.rate) ||
+                                0
+                            }
+                            className={clsx(styles.letter, "letter stroke")}
+                            key={"instruction"}
+                        >
+                            {instruction}
+                        </SplitText>
+                    </dt>
+                </div>
+                <dd
+                    className={clsx(
+                        styles.answerList,
+                        styles[`total${Math.min(4, numAnswers)}`],
+                        `answer-list total--${Math.min(4, numAnswers)}`
+                    )}
+                >
+                    {rounds && rounds.length > 0 && (
+                        <PosedList
+                            pose={showItems ? "visible" : "hidden"}
+                            initialPose={"hidden"}
+                            className={clsx(styles.posedList, "posed-list")}
+                            //animateOnMount={true}
+                            step={currentStepIndex}
+                            overallStep={step}
+                            round={currentRoundIndex}
+                            active={active}
+                            numAnswers={numAnswers}
+                            onPoseComplete={(ev) => {
+                                // debugger;
+                                // $promiseKeeper.current.resolve(
+                                //     "stall_till_present_items"
+                                // );
+                                $promiseKeeper.current.resolveLatest(
+                                    "pose complete"
+                                );
+                                // debugger;
+                                // promiseKeeper.resolve("present_items");
+                                // promiseKeeper.resolveLatest(
+                                //     "enter animation finished"
+                                // );
+                                // handlePoseComplete("PosedList");
+                            }}
+                        >
+                            {answerSlots.map(({ stepIndex, itemIndex }, i) => {
+                                const isCorrectAnswer = stepIndex === step;
 
-                            const hasBeenAnswered =
-                                step > stepIndex || completed || quizIsDone;
+                                const hasBeenAnswered =
+                                    step > stepIndex || completed || quizIsDone;
 
-                            const hasJustBeenAnswered = i === stepIndex + 1;
-                            const isCardActive = active && !hasBeenAnswered;
+                                const hasJustBeenAnswered = i === stepIndex + 1;
+                                const isCardActive = active && !hasBeenAnswered;
 
-                            const item = items[itemIndex];
-                            const imageItem = getOneImageItem(item);
-                            const image = imageItem?.urls?.small;
+                                const item = items[itemIndex];
+                                const imageItem = getOneImageItem(item);
+                                const image = imageItem?.urls?.small;
 
-                            return (
-                                <PosedCard
-                                    className={clsx(
-                                        classes.answerItem,
-                                        "answer-item",
+                                return (
+                                    <PosedCard
+                                        className={clsx(
+                                            styles.answerItem,
+                                            "answer-item",
 
-                                        isCardActive ? "active" : "disabled",
-                                        isCorrectAnswer &&
-                                            "answer-item--is-correct-answer",
-                                        hasJustBeenAnswered &&
-                                            "answer-item--has-just-been-answered",
-                                        hasBeenAnswered &&
-                                            "answer-item--has-been-answered",
-                                        "unselectable"
-                                    )}
-                                    style={{
-                                        //first should be put on top!
-                                        zIndex: 10 + numAnswers - i,
-                                    }}
-                                    initialPose={"hidden"}
-                                    onPressEnd={(e) =>
-                                        handlePressEnd(e, stepIndex, i)
-                                    }
-                                    pos={numSteps - 1 - i}
-                                    i={i}
-                                    isCorrectItem={isCorrectAnswer}
-                                    hasBeenAnswered={hasBeenAnswered}
-                                    step={step}
-                                    round={roundIndex}
-                                    numAnswers={numAnswers}
-                                    active={isCardActive}
-                                    key={"answer" + i}
-                                >
-                                    <ImageCard
-                                        imgURL={image}
-                                        headerBottom={true}
-                                        urls={imageItem?.urls}
-                                        elevation={2}
-                                        active={isCardActive}
-                                        label={item.label}
-                                        showHeader={hasBeenAnswered}
-                                        showHeaderText={hasBeenAnswered}
-                                        renderHeader={(label) => {
-                                            return (
-                                                <SplitText
-                                                    initialPose="exit"
-                                                    pose={
-                                                        hasBeenAnswered
-                                                            ? "enter"
-                                                            : "exit"
-                                                    }
-                                                    charPoses={
-                                                        POSES.char__stagger
-                                                    }
-                                                    wordPoses={
-                                                        POSES.char_fadeIn__old
-                                                    }
-                                                >
-                                                    {label}
-                                                </SplitText>
-                                            );
+                                            isCardActive
+                                                ? styles.active
+                                                : styles.disabled,
+                                            isCardActive
+                                                ? "active"
+                                                : "disabled",
+
+                                            isCorrectAnswer &&
+                                                styles.answerItemIsCorrectAnswer,
+                                            hasJustBeenAnswered &&
+                                                styles.answerItemHasJustBeenAnswered,
+                                            hasBeenAnswered &&
+                                                styles.answerItemHasBeenAnswered,
+
+                                            isCorrectAnswer &&
+                                                "answer-item--is-correct-answer",
+                                            hasJustBeenAnswered &&
+                                                "answer-item--has-just-been-answered",
+                                            hasBeenAnswered &&
+                                                "answer-item--has-been-answered",
+                                            "unselectable"
+                                        )}
+                                        style={{
+                                            //first should be put on top!
+                                            zIndex: 10 + numAnswers - i,
                                         }}
-                                    />
-                                </PosedCard>
-                            );
-                        })}
-                    </PosedList>
-                )}
-            </dd>
-            <ReactPlayer
-                className={clsx("react-player", classes.soundPlayer)}
-                url={
-                    progressing
-                        ? SFX.roundComplete.url
-                        : isCorrect
-                        ? SFX.correctAnswer.url
-                        : isWrong
-                        ? SFX.wrongAnswer.url
-                        : quizIsDone
-                        ? SFX.gameComplete.url
-                        : ""
-                }
-                playing={progressing || isCorrect || isWrong || quizIsDone}
-                loop={false}
-                ref={(ref) => {
-                    if (!ref) return;
-                }}
-                //onPlay={handlePlay}
-                // onReady={handleReady}
-                // onSeek={props.handleSeek}
-                //onEnded={handleEnded}
-                // muted={muted}
-                //volume={volume}
-                //onProgress={handleProgress}
-                //light={light} //light player means that it starts with only a thumbnail and await clicking on it
-                //width="100%"
-                controls={true}
-            >
-                {props.children}
-            </ReactPlayer>
-            <Prompt
-                content={promptContent}
-                active={active}
-                className={clsx(classes.promptSection, "prompt-section")}
-                key={"key_prompt"}
-            />
-            <DebuggerView
-                show={false}
-                columns={debuggerColumns}
-                data={[
-                    { property: "Round#", value: quizState.roundIndex },
-                    {
-                        property: "Step#",
-                        value: quizState.currentRound.step,
-                    },
-                ]}
-                noHeader={true}
-            />
-        </dl>
+                                        initialPose={"hidden"}
+                                        onPressEnd={(e) =>
+                                            handlePressEnd(e, stepIndex, i)
+                                        }
+                                        pos={numSteps - 1 - i}
+                                        i={i}
+                                        isCorrectItem={isCorrectAnswer}
+                                        hasBeenAnswered={hasBeenAnswered}
+                                        step={step}
+                                        round={roundIndex}
+                                        numAnswers={numAnswers}
+                                        active={isCardActive}
+                                        key={"answer" + i}
+                                    >
+                                        <ImageCard
+                                            className={styles.imageCard}
+                                            imgURL={image}
+                                            headerBottom={true}
+                                            urls={imageItem?.urls}
+                                            elevation={2}
+                                            active={isCardActive}
+                                            label={capitalizeTitle(item.label)}
+                                            showHeader={hasBeenAnswered}
+                                            showHeaderText={hasBeenAnswered}
+                                            renderHeader={(label) => {
+                                                return (
+                                                    <SplitText
+                                                        initialPose="exit"
+                                                        pose={
+                                                            hasBeenAnswered
+                                                                ? "enter"
+                                                                : "exit"
+                                                        }
+                                                        charPoses={
+                                                            POSES.char__stagger
+                                                        }
+                                                        wordPoses={
+                                                            POSES.char_fadeIn__old
+                                                        }
+                                                    >
+                                                        {label}
+                                                    </SplitText>
+                                                );
+                                            }}
+                                        />
+                                    </PosedCard>
+                                );
+                            })}
+                        </PosedList>
+                    )}
+                </dd>
+                <ReactPlayer
+                    className={clsx("react-player", styles.soundPlayer)}
+                    url={
+                        progressing
+                            ? SFX.roundComplete.url
+                            : isCorrect
+                            ? SFX.correctAnswer.url
+                            : isWrong
+                            ? SFX.wrongAnswer.url
+                            : quizIsDone
+                            ? SFX.gameComplete.url
+                            : ""
+                    }
+                    playing={progressing || isCorrect || isWrong || quizIsDone}
+                    loop={false}
+                    ref={(ref) => {
+                        if (!ref) return;
+                    }}
+                    //onPlay={handlePlay}
+                    // onReady={handleReady}
+                    // onSeek={props.handleSeek}
+                    //onEnded={handleEnded}
+                    // muted={muted}
+                    //volume={volume}
+                    //onProgress={handleProgress}
+                    //light={light} //light player means that it starts with only a thumbnail and await clicking on it
+                    //width="100%"
+                    controls={true}
+                >
+                    {props.children}
+                </ReactPlayer>
+                <Prompt
+                    content={promptContent}
+                    active={active}
+                    className={clsx(styles.promptSection, "prompt-section")}
+                    key={"key_prompt"}
+                />
+            </dl>
+        </React.Fragment>
     );
 };
 
 export default Quiz;
+
+/*
+
+<DebuggerView
+                    show={false}
+                    columns={debuggerColumns}
+                    data={[
+                        { property: "Round#", value: quizState.roundIndex },
+                        {
+                            property: "Step#",
+                            value: quizState.currentRound.step,
+                        },
+                    ]}
+                    noHeader={true}
+                />
+*/
