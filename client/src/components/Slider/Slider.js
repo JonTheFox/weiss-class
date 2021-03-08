@@ -1,4 +1,10 @@
-import React, { useState, useContext, useRef, useEffect } from "react";
+import React, {
+  useState,
+  useContext,
+  useRef,
+  useEffect,
+  useCallback,
+} from "react";
 // JSX
 import HeroSlider, {
   Slide as PresentationSlide,
@@ -65,23 +71,22 @@ const Slider = ({ children, slides }) => {
 
   useEffect(() => {
     goToSlide(currentSlideIndex);
-    const videoSet = slides?.[currentSlideIndex]?.pages?.videoSet;
+    const videoSet = getVideoSet(slides?.[currentSlideIndex]);
     setVideo(videoSet);
   }, [currentSlideIndex]);
 
-  const firstVideoSet = getVideoSet(slides?.[0]);
-
-  const setFirstVideoSet = () => {
+  const setFirstVideoSet = useCallback(() => {
     const firstVideoSet = getVideoSet(slides?.[0]);
+
     setVideo(firstVideoSet);
-  };
+  }, [slides, setVideo, getVideoSet]);
 
   if (currentSlideIndex === 0) {
     setFirstVideoSet();
   }
 
   useEffect(() => {
-    setFirstVideoSet();
+    //setFirstVideoSet();
     setIsVideoPlaying(true);
     setShowBg(true);
   }, []);
@@ -146,6 +151,7 @@ const Slider = ({ children, slides }) => {
         promiseKeeper.stall(SLIDING_DURATION, "show bg").then(() => {
           setShowBg(true);
         });
+        setCurrentSlideIndex(nextSlide);
       }}
       onChange={(nextSlide) => {
         console.log("onChange", nextSlide);
@@ -153,6 +159,8 @@ const Slider = ({ children, slides }) => {
       onAfterChange={(nextSlideIndex, b, c) => {
         const newIndex = nextSlideIndex - 1;
         setCurrentSlideIndex(newIndex);
+
+        // debugger;
         //const nextVideoSet = slides[newIndex]?.pages?.[0]?.videoSet;
         setIsVideoPlaying(true);
         setShowBg(false);
