@@ -358,7 +358,6 @@ const Quiz = (props) => {
         const fetchItems = async () => {
             //currently take it from the static props
             // await promiseKeeper.stall(1500);
-            debugger;
 
             const _items = [
                 {
@@ -401,6 +400,29 @@ const Quiz = (props) => {
                                     "https://images.unsplash.com/photo-1464195085758-89f3e55e821e?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
                                 thumb:
                                     "https://images.unsplash.com/photo-1464195085758-89f3e55e821e?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
+                            },
+                        },
+                    ],
+                },
+                {
+                    label: "Muesly",
+                    images: [
+                        {
+                            photographer: undefined,
+                            tags: undefined,
+                            //label: "Muesly",
+                            title: "Muesly",
+                            urls: {
+                                raw:
+                                    "https://images.unsplash.com/photo-1564986021826-50dd9b728a76?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
+                                full:
+                                    "https://images.unsplash.com/photo-1564986021826-50dd9b728a76?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
+                                regular:
+                                    "https://images.unsplash.com/photo-1564986021826-50dd9b728a76?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
+                                small:
+                                    "https://images.unsplash.com/photo-1564986021826-50dd9b728a76?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
+                                thumb:
+                                    "https://images.unsplash.com/photo-1564986021826-50dd9b728a76?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
                             },
                         },
                     ],
@@ -939,13 +961,13 @@ const Quiz = (props) => {
                                         key={"answer" + i}
                                     >
                                         <ImageCard
-                                            className={styles.imageCard}
+                                            className={styles?.imageCard}
                                             imgURL={image}
                                             headerBottom={true}
                                             urls={imageItem?.urls}
                                             elevation={2}
                                             active={isCardActive}
-                                            label={capitalizeTitle(item.label)}
+                                            label={capitalizeTitle(item?.label)}
                                             showHeader={hasBeenAnswered}
                                             showHeaderText={hasBeenAnswered}
                                             renderHeader={(label) => {

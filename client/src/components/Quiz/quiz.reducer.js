@@ -48,6 +48,7 @@ class GameRound {
 	}) {
 		//const _randomItemsIndexes = shuffle(itemsIndexes, 4);
 		const _numAnswers = Math.min(numAnswers, itemsIndexes.length);
+		debugger;
 
 		const answers = [];
 		for (let i = 0; i < _numAnswers; i++) {
@@ -98,9 +99,16 @@ class Game {
 		const numTotalItems = _items.length;
 		const _rounds = [];
 
-		//first round consist of 1 or 2 items
-		const firstRoundNumAnswers = Math.min(2, numAnswers);
-		const firstIndexes = shuffle([0, 1], 3);
+		let firstRoundNumAnswers;
+		if (items.length === 3) {
+			firstRoundNumAnswers = 3;
+		} else {
+			//first round normallyhttps://i.pinimg.com/originals/1a/60/70/1a6070e136db70744a4103d2c71882c0.png consist of 1 or 2 items
+			firstRoundNumAnswers = Math.min(2, numAnswers);
+		}
+
+		const firstRoundAnswerIndexes = items.length === 3 ? [0, 1, 2] : [0, 1];
+		const firstIndexes = shuffle(firstRoundAnswerIndexes, 3);
 		const firstRound = new GameRound({
 			numAnswers: firstRoundNumAnswers,
 			itemsIndexes: firstIndexes,
@@ -127,6 +135,7 @@ class Game {
 				_numAnswers = isShortRound
 					? Math.min(_numAnswers + 1, numAnswers)
 					: numAnswers;
+				debugger;
 				numTotalAnswersRequired += Math.min(
 					_numAnswers,
 					numAnswersRequired

@@ -48,6 +48,7 @@ class GameRound {
 	}) {
 		//const _randomItemsIndexes = shuffle(itemsIndexes, 4);
 		const _numAnswers = Math.min(numAnswers, itemsIndexes.length);
+		debugger;
 
 		const answers = [];
 		for (let i = 0; i < _numAnswers; i++) {
@@ -94,8 +95,6 @@ class Game {
 		});
 		if (numShuffles && is(numShuffles).aNumber)
 			_items = shuffle(_items, numShuffles);
-
-		debugger;
 
 		const numTotalItems = _items.length;
 		const _rounds = [];
