@@ -191,17 +191,9 @@
 }
 
 #root .gradient-secondary {
-	background: var(--color-canvas); /* fallback for old browsers */
-	background: -webkit-linear-gradient(
-		to bottom,
-		var(--color-canvas),
-		var(--color-secondary)
-	);
-	background: linear-gradient(
-		to bottom,
-		var(--color-canvas),
-		var(--color-secondary)
-	);
+	background: var(--secondary); /* fallback for old browsers */
+	background: -webkit-linear-gradient(to top, var(--white), var(--secondary));
+	background: linear-gradient(to bottom, var(--white), var(--secondary));
 }
 #root .gradient-primary {
 	background: var(--color-canvas); /* fallback for old browsers */

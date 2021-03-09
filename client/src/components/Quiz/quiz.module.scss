@@ -93,7 +93,9 @@
 .root {
 	z-index: unset;
 	// height: 100%;
-	height: calc(100 * var(--vh--max) - var(--appbar-height));
+	// height: calc(100 * var(--vh--max) - var(--appbar-height));
+	height: calc(100% - var(--spacing) * 9);
+
 	// width: 100%;
 	max-width: 1000px;
 	padding: 0;

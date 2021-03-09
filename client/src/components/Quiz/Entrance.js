@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useCallback } from "react";
 import clsx from "clsx";
 import Text from "../Text/Text.js";
 import Button from "@material-ui/core/Button";
 
-const Summary = ({
+const Entrance = ({
     header,
     subheader,
     isSoundOn,
@@ -12,16 +12,19 @@ const Summary = ({
     poses,
     styles,
     SplitText,
-    handlePrimaryClick,
+    onStart,
 }) => {
+    const handleStart = useCallback(() => {
+        onStart && onStart();
+    }, [onStart]);
     return (
         <div
-            className={clsx("quiz-summary--page", styles.instructionWrapper)}
+            className={clsx("quiz-entrance--page", styles.instructionWrapper)}
             style={{ height: "100%" }}
         >
             <div
                 className={clsx(
-                    "quiz-summary",
+                    "quiz-entrance",
                     styles.instruction,
                     styles.unselectable,
                     "congratsMsg unselectable"
@@ -49,17 +52,17 @@ const Summary = ({
                     </SplitText>
                 </Text>
                 <Button
-                    className={"gradient-secondary btn-primary"}
+                    className={"gradient-primary btn-primary"}
                     //variant="outlined"
                     //color={showVideo ? "secondary" : "secondary"}
                     size="large"
-                    onClick={handlePrimaryClick}
+                    onClick={handleStart}
                 >
-                    Again
+                    Start!
                 </Button>
             </div>
         </div>
     );
 };
 
-export default Summary;
+export default Entrance;

@@ -31,7 +31,7 @@ const QuizTemplate = (props) => {
 	return (
 		<div
 			className={"Page--centered-headings centered quiz-page"}
-			style={{ height: "100%" }}
+			style={{ height: "100%", display: "flex" }}
 		>
 			<Quiz />
 		</div>

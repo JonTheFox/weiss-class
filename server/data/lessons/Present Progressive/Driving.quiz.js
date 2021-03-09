@@ -12,7 +12,7 @@ const DrivingQuiz = {
 			//subheading: "Living the moment",
 			//title: "I am driving.",
 			//videoSet,
-			bgClass: "beach",
+			bgClass: "cloud-up",
 			//items: [],
 			//paragraphs: [{ text: "They are skiing. " }],
 		},

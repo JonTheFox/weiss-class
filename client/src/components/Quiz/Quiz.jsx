@@ -28,6 +28,7 @@ import { CONGRATS } from "../../constants/texts.js";
 import clsx from "clsx";
 import { useRecoilValue } from "recoil";
 import Summary from "./Summary.jsx";
+import Entrance from "./Entrance.js";
 
 // import "react-step-progress-bar/styles.css";
 import { ProgressBar, Step } from "react-step-progress-bar";
@@ -70,6 +71,126 @@ const createInstructionMsg = (itemName = "", type = "touch") => {
     //     : "";
 };
 
+const fetchItems = async () => {
+    //currently take it from the static props
+    // await promiseKeeper.stall(1500);
+
+    const _items = [
+        {
+            label: "I am driving.",
+            images: [
+                {
+                    photographer: {
+                        name: "Yaroslav Shuraev",
+                        id: 649765,
+                    },
+                    //tags: undefined,
+                    //label: "Sushi",
+                    title: "I am driving.",
+                    urls: {
+                        regular:
+                            " https://images.pexels.com/videos/4434242/pexels-photo-4434242.jpeg?fit=crop&w=1200&h=630&auto=compress&cs=tinysrgb",
+                    },
+                },
+            ],
+        },
+
+        {
+            label: "She is studying.",
+            images: [
+                {
+                    photographer: undefined,
+                    tags: undefined,
+                    //label: "Sushi",
+                    title: "She is studying.",
+                    urls: {
+                        regular:
+                            "https://images.pexels.com/videos/6929087/pictures/preview-14.jpg",
+                    },
+                },
+            ],
+        },
+
+        {
+            label: "The cats are resting.",
+            images: [
+                {
+                    photographer: undefined,
+                    tags: undefined,
+                    //label: "Sushi",
+                    title: "The cats are resting.",
+                    urls: {
+                        regular:
+                            "https://images.pexels.com/videos/6853901/pexels-photo-6853901.jpeg?fit=crop&w=1200&h=630&auto=compress&cs=tinysrgb",
+                    },
+                },
+            ],
+        },
+
+        {
+            label: "The dog is playing.",
+            images: [
+                {
+                    photographer: {
+                        id: 290887,
+                        name: "Free Videos",
+                        url: "https://www.pexels.com/@free-videos",
+                    },
+                    tags: undefined,
+                    //label: "Sushi",
+                    title: "The dog is playing.",
+                    urls: {
+                        regular:
+                            "https://images.pexels.com/videos/853936/free-video-853936.jpg?fit=crop&w=1200&h=630&auto=compress&cs=tinysrgb",
+                    },
+                },
+            ],
+        },
+
+        {
+            label: "I am riding my bike.",
+            images: [
+                {
+                    photographer: {
+                        id: 1179532,
+                        name: "Kelly Lacy",
+                        url: "https://www.pexels.com/@kelly-lacy-1179532",
+                    },
+                    tags: undefined,
+                    //label: "Sushi",
+                    title: "I am riding my bike.",
+                    urls: {
+                        regular:
+                            "https://images.pexels.com/videos/2519660/free-video-2519660.jpg?fit=crop&w=1200&h=630&auto=compress&cs=tinysrgb",
+                    },
+                },
+            ],
+        },
+
+        {
+            label: "We are skiing.",
+            images: [
+                {
+                    photographer: {
+                        id: 2550885,
+                        name: "Adrien JACTA",
+                        url: "https://www.pexels.com/@adrien-jacta-2550885",
+                    },
+                    tags: undefined,
+                    //label: "Sushi",
+                    title: "We are skiing.",
+                    urls: {
+                        regular:
+                            "https://images.pexels.com/videos/4274798/montagne-piste-de-ski-ski-skier-4274798.jpeg?fit=crop&w=1200&h=630&auto=compress&cs=tinysrgb",
+                    },
+                },
+            ],
+        },
+    ];
+    // return props.items;
+    return _items;
+};
+
 const compLabel = "Quiz";
 let animationFrame;
 
@@ -86,9 +207,11 @@ const Quiz = (props) => {
         BACKGROUND_CLASSES,
         DEBUGGING,
         request,
-        capitalizeTitle,
+        capitalizeFirstLetter,
         pickRandomFrom,
     } = appUtils;
+
+    const [gameStarted, setGameStarted] = useState(false);
 
     const isSoundOn = useRecoilValue(isSoundOnState);
 
@@ -158,42 +281,7 @@ const Quiz = (props) => {
     }, []);
 
     const initGame = async (config = {}) => {
-        // const ajaxResult = await request("POST", "images/POST/getAll", {})
-
-        // const ajaxResult = await request(
-        //     "POST",
-        //     ENDPOINTS.foods.POST.getAll.path,
-        //     { user: appState.user, collectionName: "all" }
-        // );\
-
-        // if(config.items) {
-
-        // }
-
-        // const ajaxResult = await request("POST", "/api/foods", {
-        //     collectionName: "all",
-        // });
-
-        // const { error, data } = ajaxResult;
-        // if (error) {
-        //     loggError(error);
-        //     console.log("error in AJAX ", error);
-        //     debugger;
-        // }
-
-        // if (!data) throw new Error("No data received");
-
-        // const participatingItems = Object.values(ajaxResult.data || {}).flat();
-
-        // const participatingItems = Object.values(
-        //     props.subcategories || {}
-        // ).flat();
-
-        // setClientSideItems(participatingItems);
-
-        // debugger;
-
-        const { items } = config;
+        const { restart, items } = config;
 
         dispatch({
             type: "createGame",
@@ -204,6 +292,8 @@ const Quiz = (props) => {
 
         setActive(false);
         $active.current = false;
+
+        setGameStarted(true);
 
         const gameCreated = await promiseKeeper.withRC(
             promiseKeeper.stall(100, "game created")
@@ -220,7 +310,7 @@ const Quiz = (props) => {
             }
 
             const delay =
-                DURATIONS.enter * 5 * quizState.currentRound.numAnswers + 800;
+                DURATIONS.enter * 3 * quizState.currentRound.numAnswers + 0;
 
             const presentItems = promiseKeeper.stall(delay, "present_items");
             logg(
@@ -236,7 +326,7 @@ const Quiz = (props) => {
 
             await presentItems;
             const { items } = $quizState.current;
-            const correctItemLabel = capitalizeTitle(
+            const correctItemLabel = capitalizeFirstLetter(
                 items[correctItemIndex]?.label ?? ""
             );
 
@@ -348,82 +438,7 @@ const Quiz = (props) => {
     useEffect(() => {
         // const _clientSideitems = clientSideItems;
 
-        const fetchItems = async () => {
-            //currently take it from the static props
-            // await promiseKeeper.stall(1500);
-
-            const _items = [
-                {
-                    label: "Sushi",
-                    images: [
-                        {
-                            photographer: undefined,
-                            tags: undefined,
-                            //label: "Sushi",
-                            title: "Sushi",
-                            urls: {
-                                full:
-                                    "https://images.unsplash.com/photo-1583571560096-eb4462cdba30?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
-                                regular:
-                                    "https://images.unsplash.com/photo-1583571560096-eb4462cdba30?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
-                                small:
-                                    "https://images.unsplash.com/photo-1583571560096-eb4462cdba30?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
-                                thumb:
-                                    "https://images.unsplash.com/photo-1583571560096-eb4462cdba30?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
-                            },
-                        },
-                    ],
-                },
-                {
-                    label: "Cookie",
-                    images: [
-                        {
-                            photographer: undefined,
-                            tags: undefined,
-                            //label: "Cookie",
-                            title: "Cookie",
-                            urls: {
-                                raw:
-                                    "https://images.unsplash.com/photo-1464195085758-89f3e55e821e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
-                                full:
-                                    "https://images.unsplash.com/photo-1464195085758-89f3e55e821e?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
-                                regular:
-                                    "https://images.unsplash.com/photo-1464195085758-89f3e55e821e?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
-                                small:
-                                    "https://images.unsplash.com/photo-1464195085758-89f3e55e821e?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
-                                thumb:
-                                    "https://images.unsplash.com/photo-1464195085758-89f3e55e821e?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
-                            },
-                        },
-                    ],
-                },
-                // {
-                //     label: "Muesly",
-                //     images: [
-                //         {
-                //             photographer: undefined,
-                //             tags: undefined,
-                //             //label: "Muesly",
-                //             title: "Muesly",
-                //             urls: {
-                //                 raw:
-                //                     "https://images.unsplash.com/photo-1564986021826-50dd9b728a76?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
-                //                 full:
-                //                     "https://images.unsplash.com/photo-1564986021826-50dd9b728a76?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
-                //                 regular:
-                //                     "https://images.unsplash.com/photo-1564986021826-50dd9b728a76?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
-                //                 small:
-                //                     "https://images.unsplash.com/photo-1564986021826-50dd9b728a76?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
-                //                 thumb:
-                //                     "https://images.unsplash.com/photo-1564986021826-50dd9b728a76?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
-                //             },
-                //         },
-                //     ],
-                // },
-            ];
-            // return props.items;
-            return _items;
-        };
+        if (!gameStarted) return;
         fetchItems().then((items) => {
             initGame({ items });
         });
@@ -502,7 +517,7 @@ const Quiz = (props) => {
     const progressBarRef = useRef({});
 
     useEffect(() => {
-        if (progressBarRef.current.style) {
+        if (progressBarRef.current?.style) {
             progressBarRef.current.style.width = progress + "%";
         }
     }, [progress]);
@@ -585,8 +600,9 @@ const Quiz = (props) => {
                         (answer) => answer.stepIndex === nextStep
                     )[0].itemIndex;
                     const instructionMsg = createInstructionMsg(
-                        capitalizeTitle(items[nextCorrectItemIndex]?.label) ||
-                            "BALAGAN"
+                        capitalizeFirstLetter(
+                            items[nextCorrectItemIndex]?.label
+                        ) || "BALAGAN"
                     );
 
                     animationFrame = window.requestAnimationFrame(() => {
@@ -656,7 +672,7 @@ const Quiz = (props) => {
 
                         if (!nextCorrectAnswer) debugger;
                         const instructionMsg = createInstructionMsg(
-                            capitalizeTitle(
+                            capitalizeFirstLetter(
                                 quizState.items[nextCorrectAnswer.itemIndex]
                                     .label
                             )
@@ -775,6 +791,16 @@ const Quiz = (props) => {
         [$currentRound, $quizState, quizState.answerSlots, $answerSlots]
     );
 
+    const handleRetry = useCallback(
+        (ev) => {
+            initGame({ restart: true, items });
+            setQuizIsDone(false);
+            setPromptContent("");
+            setShowSummary(false);
+        },
+        [items, initGame, setShowSummary]
+    );
+
     if (!items) {
         return (
             <div>
@@ -790,6 +816,28 @@ const Quiz = (props) => {
     //         <p>server side items: {staticItems.length}</p>
     //     </div>
     // );
+
+    if (!gameStarted) {
+        return (
+            <Entrance
+                header="Quiz time!"
+                subheader={summary}
+                isSoundOn={isSoundOn}
+                synthVoice={synthVoice}
+                active={active}
+                poses={POSES.char_fadeIn}
+                styles={styles}
+                SplitText={SplitText}
+                className={"page"}
+                handlePrimaryClick={handleRetry}
+                onStart={() => {
+                    fetchItems().then((items) => {
+                        initGame({ items });
+                    });
+                }}
+            />
+        );
+    }
 
     if (!items.length) {
         return <GlowingLoader fullpage={true}></GlowingLoader>;
@@ -812,6 +860,7 @@ const Quiz = (props) => {
                 styles={styles}
                 SplitText={SplitText}
                 className={"page"}
+                handlePrimaryClick={handleRetry}
             />
         );
     }
@@ -826,8 +875,9 @@ const Quiz = (props) => {
                     styles.showBefore,
                     styles.hasAfter,
                     "quiz page",
+                    "cancal-white-canvas",
                     styles[background],
-                    background,
+                    //background,
                     "has-before show-before has-after",
                     showOverlay && "show-after white-out",
                     showOverlay && styles.showAfter,
@@ -928,7 +978,9 @@ const Quiz = (props) => {
 
                                 const item = items[itemIndex];
                                 const imageItem = getOneImageItem(item);
-                                const image = imageItem?.urls?.small;
+                                const imgURL =
+                                    imageItem?.urls?.small ??
+                                    imageItem?.urls?.regular;
 
                                 return (
                                     <PosedCard
@@ -978,12 +1030,14 @@ const Quiz = (props) => {
                                     >
                                         <ImageCard
                                             className={styles?.imageCard}
-                                            imgURL={image}
+                                            imgURL={imgURL}
                                             headerBottom={true}
                                             urls={imageItem?.urls}
                                             elevation={2}
                                             active={isCardActive}
-                                            label={capitalizeTitle(item?.label)}
+                                            label={capitalizeFirstLetter(
+                                                item?.label
+                                            )}
                                             showHeader={hasBeenAnswered}
                                             showHeaderText={hasBeenAnswered}
                                             renderHeader={(label) => {
@@ -1048,7 +1102,6 @@ const Quiz = (props) => {
                     content={promptContent}
                     active={active}
                     className={clsx(styles.promptSection, "prompt-section")}
-                    key={"key_prompt"}
                 />
             </dl>
         </React.Fragment>

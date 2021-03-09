@@ -86,7 +86,7 @@ class Game {
 		//progress=0
 	}) {
 		//make sure that numAnswersRequired is not (accidently) greater than numAnswers
-		debugger;
+
 		numAnswersRequired =
 			numAnswersRequired > numAnswers ? numAnswers : numAnswersRequired;
 
@@ -266,9 +266,23 @@ const quizReducer = (state, action) => {
 				items: payload.items,
 				numShuffles: 3,
 			});
+			debugger;
 			logg("Initialized Game: ", game);
 			return game; //this will be the new state
 			break;
+
+		case "restartGame":
+			//go to first round, first step.
+			const { config = {}, items } = payload;
+			const game = new Game({
+				...DEFAULT_CONFIG,
+				numShuffles: 3,
+				...config, //give precedence
+				items,
+			});
+			debugger;
+			logg("Initialized Game: ", game);
+			return game; //this
 
 		case "goNextStep":
 			// rounds[roundIndex].answers[step].completed = true;
@@ -488,15 +502,7 @@ const quizReducer = (state, action) => {
 						rounds[action.payload].numSteps - 1
 					],
 			};
-		case "restartQuiz":
-			//go to first round, first step.
-			return {
-				...state,
-				roundIndex: 0,
-				currentRound: rounds[0],
-				step: 0,
-				currentStep: rounds[0].answers[0],
-			};
+
 		case "goToLastRound":
 			//for easy debugging, go straight to the final step of the final round
 			return {
