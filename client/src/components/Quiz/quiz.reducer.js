@@ -48,7 +48,6 @@ class GameRound {
 	}) {
 		//const _randomItemsIndexes = shuffle(itemsIndexes, 4);
 		const _numAnswers = Math.min(numAnswers, itemsIndexes.length);
-		debugger;
 
 		const answers = [];
 		for (let i = 0; i < _numAnswers; i++) {
@@ -135,7 +134,7 @@ class Game {
 				_numAnswers = isShortRound
 					? Math.min(_numAnswers + 1, numAnswers)
 					: numAnswers;
-				debugger;
+
 				numTotalAnswersRequired += Math.min(
 					_numAnswers,
 					numAnswersRequired
@@ -312,11 +311,7 @@ const quizReducer = (state, action) => {
 					isCorrect: true,
 					isWrong: false,
 				};
-
-				debugger;
 			}
-
-			debugger;
 
 			//bug
 			return {
@@ -410,8 +405,6 @@ const quizReducer = (state, action) => {
 			break;
 
 		case "goNextRound":
-			// debugger;
-
 			const nextRoundIndex = roundIndex + 1;
 			if (nextRoundIndex >= numTotalRounds) {
 				//currently in final round. Stay in current state (prevent an unnecessary re-render)

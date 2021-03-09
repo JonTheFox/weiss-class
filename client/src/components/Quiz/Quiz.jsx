@@ -14,6 +14,7 @@ import SplitText from "react-pose-text";
 import ImageCard from "./ImageCard.jsx";
 import Prompt from "./Prompt.jsx";
 import { AppContext } from "../../contexts/AppContext.jsx";
+import isSoundOnState from "../../store/isSoundOn.selector.js";
 import useLogg from "../../hooks/useLogg.jsx";
 import usePromiseKeeper from "../../hooks/usePromiseKeeper.jsx";
 // import WeissSpinner from "../UI/WeissSpinner/WeissSpinner.jsx";
@@ -25,6 +26,8 @@ import POSES from "../../constants/poses.js";
 import DURATIONS from "../../constants/durations.js";
 import { CONGRATS } from "../../constants/texts.js";
 import clsx from "clsx";
+import { useRecoilValue } from "recoil";
+import Summary from "./Summary.jsx";
 
 // import "react-step-progress-bar/styles.css";
 import { ProgressBar, Step } from "react-step-progress-bar";
@@ -58,8 +61,8 @@ const PosedList = posed.ul(POSES.list);
 const PosedCard = posed.li(POSES.card__pressable___sans_shadow);
 // const PosedOverlay = posed.li(POSES.card__pressable);
 
-const createInstructionMsg = (animalName = "", type = "touch") => {
-    return animalName || "";
+const createInstructionMsg = (itemName = "", type = "touch") => {
+    return itemName || "";
     // type === "touch"
     //     ? `Touch a picture of ${getAorAn(animalName)} ${animalName}`
     //     : type === "say"
@@ -67,22 +70,7 @@ const createInstructionMsg = (animalName = "", type = "touch") => {
     //     : "";
 };
 
-// const backgroundClasses = [
-//     "cloud-up",
-//     "cloud-left",
-//     "beach",
-//     "fun-gumi",
-//     "great-fragrance",
-//     "field-day",
-//     "squares--primary",
-//     "squares--3-colors",
-//     "squares--multi-direction",
-//     "squares",
-//     "stairs",
-//     "space"
-// ];
 const compLabel = "Quiz";
-// let promiseKeeper;
 let animationFrame;
 
 const Quiz = (props) => {
@@ -102,11 +90,16 @@ const Quiz = (props) => {
         pickRandomFrom,
     } = appUtils;
 
+    const isSoundOn = useRecoilValue(isSoundOnState);
+
     const [showItems, setShowItems] = useState(false);
     // const [clientSideItems, setClientSideItems] = useState([]);
     // const [staticItems, setStaticItems] = useState(props.items || []);
 
-    const [instruction, setInstruction] = useState(" ");
+    const [instruction, setInstruction] = useState(" "); //to occupy letter height
+
+    const [summary, setSummary] = useState(" "); //see above
+    const [showSummary, setShowSummary] = useState(false); //see above
     const [promptContent, setPromptContent] = useState(null);
     const [quizIsDone, setQuizIsDone] = useState(false);
     const [background, setBackground] = useState(BACKGROUND_CLASSES[0]);
@@ -404,29 +397,29 @@ const Quiz = (props) => {
                         },
                     ],
                 },
-                {
-                    label: "Muesly",
-                    images: [
-                        {
-                            photographer: undefined,
-                            tags: undefined,
-                            //label: "Muesly",
-                            title: "Muesly",
-                            urls: {
-                                raw:
-                                    "https://images.unsplash.com/photo-1564986021826-50dd9b728a76?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
-                                full:
-                                    "https://images.unsplash.com/photo-1564986021826-50dd9b728a76?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
-                                regular:
-                                    "https://images.unsplash.com/photo-1564986021826-50dd9b728a76?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
-                                small:
-                                    "https://images.unsplash.com/photo-1564986021826-50dd9b728a76?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
-                                thumb:
-                                    "https://images.unsplash.com/photo-1564986021826-50dd9b728a76?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
-                            },
-                        },
-                    ],
-                },
+                // {
+                //     label: "Muesly",
+                //     images: [
+                //         {
+                //             photographer: undefined,
+                //             tags: undefined,
+                //             //label: "Muesly",
+                //             title: "Muesly",
+                //             urls: {
+                //                 raw:
+                //                     "https://images.unsplash.com/photo-1564986021826-50dd9b728a76?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
+                //                 full:
+                //                     "https://images.unsplash.com/photo-1564986021826-50dd9b728a76?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
+                //                 regular:
+                //                     "https://images.unsplash.com/photo-1564986021826-50dd9b728a76?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
+                //                 small:
+                //                     "https://images.unsplash.com/photo-1564986021826-50dd9b728a76?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
+                //                 thumb:
+                //                     "https://images.unsplash.com/photo-1564986021826-50dd9b728a76?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjMxMjYzfQ",
+                //             },
+                //         },
+                //     ],
+                // },
             ];
             // return props.items;
             return _items;
@@ -595,7 +588,6 @@ const Quiz = (props) => {
                         capitalizeTitle(items[nextCorrectItemIndex]?.label) ||
                             "BALAGAN"
                     );
-                    debugger;
 
                     animationFrame = window.requestAnimationFrame(() => {
                         setInstruction(instructionMsg);
@@ -727,18 +719,16 @@ const Quiz = (props) => {
                         //Quiz is complete
 
                         logg("quiz is complete");
-                        const preMsg = "You are all done!";
 
                         const finalCongratsMsg =
-                            preMsg +
-                            " " +
                             CONGRATS.roundComplete[
                                 getRandomUpTo(
                                     CONGRATS.roundComplete.length - 1,
                                     3
                                 )
                             ];
-                        setShowInstruction(false);
+
+                        //setShowInstruction(false);
 
                         dispatch({ type: "goNextRound" });
 
@@ -751,17 +741,31 @@ const Quiz = (props) => {
                         // pendingRCPromise = fadeOutOldItems;
                         await fadeOutOldItems;
 
-                        setShowInstruction(true);
+                        setSummary(congratsMsg);
+                        setShowSummary(true);
 
-                        setInstruction(finalCongratsMsg);
-                        setShowInstruction(true);
+                        // setShowInstruction(true);
+
+                        //setInstruction(congratsMsg);
+                        // setShowInstruction(true);
                         setQuizIsDone(true);
 
                         setPromptContent({ eventType: "allDone" });
-                        promiseKeeper.withRC(synthVoice.say(finalCongratsMsg), {
-                            resolveOnError: true,
-                            label: "sayFinalCongrats",
-                        });
+
+                        const joinedCongratsMsgs =
+                            "Congratulations, you have passed the test!" +
+                            " " +
+                            finalCongratsMsg;
+
+                        setSummary(finalCongratsMsg);
+
+                        promiseKeeper.withRC(
+                            synthVoice.say(joinedCongratsMsgs),
+                            {
+                                resolveOnError: true,
+                                label: "sayFinalCongrats",
+                            }
+                        );
                         setActive(false);
                         $active.current = false;
                     }
@@ -798,6 +802,22 @@ const Quiz = (props) => {
     //     const _url = SFX.gameComplete.url;
     //     debugger;
     // }
+
+    if (showSummary) {
+        return (
+            <Summary
+                header="Congratulations, you have passed the test!"
+                subheader={summary}
+                isSoundOn={isSoundOn}
+                synthVoice={synthVoice}
+                active={active}
+                poses={POSES.char_fadeIn}
+                styles={styles}
+                SplitText={SplitText}
+                className={"page"}
+            />
+        );
+    }
 
     return (
         <React.Fragment>
@@ -861,7 +881,6 @@ const Quiz = (props) => {
                                 0
                             }
                             className={clsx(styles.letter, "letter stroke")}
-                            key={"instruction"}
                         >
                             {instruction}
                         </SplitText>

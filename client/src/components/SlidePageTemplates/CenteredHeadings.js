@@ -11,7 +11,7 @@ import View from "../layout/View.jsx";
 import Page from "../SlidePageTemplates/Page.js";
 import Text from "../Text/Text.js";
 import StyledPage from "./Slide.styles.js";
-
+import clsx from "clsx";
 const label = "CenteredHeadings";
 
 const CenteredHeadings = (props) => {
@@ -23,13 +23,19 @@ const CenteredHeadings = (props) => {
 		p = [""],
 		bgImage = "",
 		pages = [],
+		className = "",
 	} = props;
 
 	// const { logg, loggError } = useLogg({ label });
 	// const promiseKeeper = usePromiseKeeper({ label });
 
 	return (
-		<StyledPage className={"Page--centered-headings centered"}>
+		<StyledPage
+			className={clsx(
+				"Page--centered-headings centered",
+				className && className
+			)}
+		>
 			<Heading h="1">{heading}</Heading>
 			<Heading h="2">{subheading}</Heading>
 		</StyledPage>

@@ -29,9 +29,10 @@ const QuizTemplate = (props) => {
 	// const { logg, loggError } = useLogg({ label });
 	// const promiseKeeper = usePromiseKeeper({ label });
 	return (
-		<div className={"Page--centered-headings centered"}>
-			<Heading h="1">{heading}</Heading>
-			<Heading h="2">{subheading}</Heading>
+		<div
+			className={"Page--centered-headings centered quiz-page"}
+			style={{ height: "100%" }}
+		>
 			<Quiz />
 		</div>
 	);

@@ -86,6 +86,7 @@ class Game {
 		//progress=0
 	}) {
 		//make sure that numAnswersRequired is not (accidently) greater than numAnswers
+		debugger;
 		numAnswersRequired =
 			numAnswersRequired > numAnswers ? numAnswers : numAnswersRequired;
 
@@ -100,8 +101,11 @@ class Game {
 		const _rounds = [];
 
 		//first round consist of 1 or 2 items
-		const firstRoundNumAnswers = Math.min(2, numAnswers);
-		const firstIndexes = shuffle([0, 1], 3);
+		const firstRoundNumAnswers = Math.min(1, numAnswers);
+
+		const firstIndexes =
+			firstRoundNumAnswers === 1 ? [0] : shuffle([0, 1], 3);
+		debugger;
 		const firstRound = new GameRound({
 			numAnswers: firstRoundNumAnswers,
 			itemsIndexes: firstIndexes,
@@ -217,6 +221,7 @@ const initQuizReducer = ({
 	});
 
 	logg("Initialized Game: ", game);
+	debugger;
 	return game;
 };
 

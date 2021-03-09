@@ -82,4 +82,9 @@ export default styled.div`
 		line-height: 0.5;
 		text-align: left;
 	}
+
+	.quiz-summary {
+		height: auto;
+		margin: auto;
+	}
 `;
