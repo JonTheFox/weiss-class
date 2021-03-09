@@ -21,6 +21,15 @@ export default styled.div`
 		overflow: visible;
 	}
 
+	.btn-primary {
+		transition: all 0.5s ease-in-out;
+		transform: scale(1);
+		color: var(--white);
+		padding: calc(1 * var(--spacing)) calc(8 * var(--spacing));
+		border-radius: 1.5rem;
+		font-size: 1.25rem;
+	}
+
 	.marquee {
 		text-align: left;
 		width: auto;
@@ -81,10 +90,5 @@ export default styled.div`
 		// margin-top: 1rem;
 		line-height: 0.5;
 		text-align: left;
-	}
-
-	.quiz-summary {
-		height: auto;
-		margin: auto;
 	}
 `;

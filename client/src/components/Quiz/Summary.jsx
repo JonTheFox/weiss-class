@@ -1,6 +1,8 @@
 import React from "react";
 import clsx from "clsx";
 import Text from "../Text/Text.js";
+import Button from "@material-ui/core/Button";
+
 const Summary = ({
     header,
     subheader,
@@ -13,22 +15,23 @@ const Summary = ({
 }) => {
     return (
         <div
-            className={clsx("quiz-summary", styles.instructionWrapper)}
+            className={clsx("quiz-summary--page", styles.instructionWrapper)}
             style={{ height: "100%" }}
         >
-            <dt
+            <div
                 className={clsx(
+                    "quiz-summary",
                     styles.instruction,
                     styles.unselectable,
                     "congratsMsg unselectable"
                 )}
-                onClick={(e) => {
-                    debugger;
-                    e.preventDefault();
-                    isSoundOn && synthVoice.say(header + " " + subheader);
-                }}
             >
-                <Text>
+                <Text
+                    onClick={(e) => {
+                        e.preventDefault();
+                        isSoundOn && synthVoice.say(header + " " + subheader);
+                    }}
+                >
                     <SplitText
                         initialPose="exit"
                         pose="enter"
@@ -44,24 +47,15 @@ const Summary = ({
                         {header}
                     </SplitText>
                 </Text>
-                <Text>
-                    <SplitText
-                        initialPose="exit"
-                        pose="enter"
-                        charPoses={poses}
-                        speechRate={
-                            (synthVoice &&
-                                synthVoice.config &&
-                                synthVoice.config.rate) ||
-                            0
-                        }
-                        delay={2000}
-                        className={clsx(styles.letter, "letter stroke")}
-                    >
-                        {subheader}
-                    </SplitText>
-                </Text>
-            </dt>
+                <Button
+                    className={"gradient-mix btn-primary"}
+                    //variant="outlined"
+                    //color={showVideo ? "secondary" : "secondary"}
+                    size="large"
+                >
+                    Again
+                </Button>
+            </div>
         </div>
     );
 };

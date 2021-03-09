@@ -720,13 +720,13 @@ const Quiz = (props) => {
 
                         logg("quiz is complete");
 
-                        const finalCongratsMsg =
-                            CONGRATS.roundComplete[
-                                getRandomUpTo(
-                                    CONGRATS.roundComplete.length - 1,
-                                    3
-                                )
-                            ];
+                        // const finalCongratsMsg =
+                        //     CONGRATS.roundComplete[
+                        //         getRandomUpTo(
+                        //             CONGRATS.roundComplete.length - 1,
+                        //             3
+                        //         )
+                        //     ];
 
                         //setShowInstruction(false);
 
@@ -741,7 +741,6 @@ const Quiz = (props) => {
                         // pendingRCPromise = fadeOutOldItems;
                         await fadeOutOldItems;
 
-                        setSummary(congratsMsg);
                         setShowSummary(true);
 
                         // setShowInstruction(true);
@@ -752,20 +751,18 @@ const Quiz = (props) => {
 
                         setPromptContent({ eventType: "allDone" });
 
-                        const joinedCongratsMsgs =
-                            "Congratulations, you have passed the test!" +
-                            " " +
-                            finalCongratsMsg;
+                        // const joinedCongratsMsgs =
+                        //     "Congratulations, you have passed the test!" +
+                        //     " " +
+                        //     finalCongratsMsg;
+                        const congratsMsg =
+                            "Congratulations, you have passed the test!";
+                        setSummary(congratsMsg);
 
-                        setSummary(finalCongratsMsg);
-
-                        promiseKeeper.withRC(
-                            synthVoice.say(joinedCongratsMsgs),
-                            {
-                                resolveOnError: true,
-                                label: "sayFinalCongrats",
-                            }
-                        );
+                        promiseKeeper.withRC(synthVoice.say(congratsMsg), {
+                            resolveOnError: true,
+                            label: "sayFinalCongrats",
+                        });
                         setActive(false);
                         $active.current = false;
                     }

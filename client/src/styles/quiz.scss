@@ -212,6 +212,16 @@
 	}
 }
 
+#root .quiz-summary--page .quiz-summary {
+	height: calc(100% - 12 * var(--spacing));
+	display: flex;
+	flex-flow: column;
+
+	.btn-primary {
+		margin-bottom: 0;
+	}
+}
+
 #root .phone.landscape:not(*.mobile) .quiz {
 	& .instruction {
 		// font-size: 26px;
