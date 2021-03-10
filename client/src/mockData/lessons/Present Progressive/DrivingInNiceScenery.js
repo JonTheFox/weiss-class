@@ -17,7 +17,7 @@ const drivingInNiceScenery = {
 			//subheading: "Living the moment",
 			//title: "I am driving.",
 			videoSet,
-			paragraphs: [{ text: "We are driving. ", className: "caption" }],
+			paragraphs: [{ text: "I am driving. ", className: "caption" }],
 		},
 	],
 };
