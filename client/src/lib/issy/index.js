@@ -248,6 +248,7 @@ var timing = (function() {
             let promiseEntry = this.promises[sanitizedLabel];
             if (!promiseEntry) {
                 ultimatePromise.numTimesSet = 1;
+                ultimatePromise.numTimesSet = 1;
             } else {
                 //an UltimatePromise with the provided (sanitized) label already exists.
                 ultimatePromise.numTimesSet = promiseEntry.numTimesSet + 1;

@@ -151,6 +151,7 @@ class Game {
 					numAnswers:
 						rounds[roundIndex]?.numAnswers ?? numAnswers ?? 2,
 				});
+				debugger;
 				_rounds.push(round);
 				numItemsLeft -= _numAnswers;
 				isShortRound = false;

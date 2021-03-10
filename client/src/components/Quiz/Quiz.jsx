@@ -307,7 +307,8 @@ const Quiz = (props) => {
         setGameStarted(true);
 
         const gameCreated = await promiseKeeper.withRC(
-            promiseKeeper.stall(100, "game created")
+            promiseKeeper.stall(100, "game created"),
+            { resolveOnError: true, label: "game created" }
         );
 
         try {
@@ -382,7 +383,12 @@ const Quiz = (props) => {
 
     useEffect(() => {
         if (DEBUGGING) {
-            window.resolveLatest = () => promiseKeeper.resolveLatest();
+            window.resolveLatest = () => {
+                if ($promiseKeeper.current.resolveLatest) {
+                    debugger;
+                    $promiseKeeper.current.resolveLatest();
+                }
+            };
             window.resolveAll = () => promiseKeeper.resolveAll();
             window.getLatest = () => promiseKeeper.latestPromise;
             handlePress(
