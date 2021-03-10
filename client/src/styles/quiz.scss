@@ -93,14 +93,16 @@
 		> div {
 			padding: 0 calc(1 * var(--spacing));
 			border-radius: calc(1 * var(--spacing));
+			font-weight: bold;
+			letter-spacing: calc(0.5 * var(--spacing));
 
 			&:last-of-type {
 				// background-color: var(--white);
-				display: block !important;
 
-				font-size: calc(1.2 * var(--instruction--font-size));
+				// font-size: calc(1.2 * var(--instruction--font-size));
+				// font-size: 1.5rem;
 
-				font-weight: bolder;
+				// font-weight: bolder;
 
 				> div {
 					letter-spacing: calc(0.5 * var(--spacing));

@@ -59,7 +59,7 @@ const BottomThirdCaption = (props) => {
 				</Heading>
 			</div>
 
-			<Subtitle paragraphs={paragraphs} />
+			<Subtitle paragraphs={paragraphs} size="large" />
 		</StyledPage>
 	);
 };

@@ -20,9 +20,11 @@ const Subtitle = ({
 	children = "",
 	className = "",
 	variant = "footer",
-	size = "small", //or: "regular"
+	size = "small", //or: "regular" or "large"
 }) => {
 	if (!paragraphs.length || !paragraphs[0]) return null;
+
+	console.log("size: ", size);
 
 	return (
 		<StyledSubtitle

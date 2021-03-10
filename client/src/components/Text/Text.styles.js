@@ -46,13 +46,14 @@ export default styled.div`
 	.text {
 		display: inline;
 		line-height: 2;
-		font-size: 1.5rem;
+		font-size: 1.35rem;
 		font-family: Nunito;
 		text-align: left;
 		padding-right: calc(2 * var(--spacing));
 		padding-left: calc(2 * var(--spacing));
 		white-space: pre-wrap;
 		transform: all 0.2s;
+
 
 		&:hover {
 			transform: scale(1.2) !important;
@@ -105,17 +106,36 @@ export default styled.div`
 				rgba(0, 0, 0, 0) 100%
 			);
 		}
+		&:hover {
+				font-weight: bold;
+			}
 		&.small {
-			color: var(--black);
-			transition: all 0.2s;
+			// color: var(--black);
 			font-size: 0.75rem;
+			padding: 0;
+			padding-right: var(--spacing);
+
+			
+		}
+		
+
+		&.large {
+			// color: var(--black);
+			font-size: 2rem;
 
 			padding: 0;
 			padding-right: var(--spacing);
 
-			&:hover {
-				font-weight: bold;
-			}
+			
 		}
 	}
+
+	.size--regular {
+			// color: var(--black);
+			font-size: 2rem;
+			padding: 0;
+			padding-right: var(--spacing);
+
+			
+		}
 `;
