@@ -285,7 +285,18 @@ const Quiz = (props) => {
 
         dispatch({
             type: "createGame",
-            payload: { items, config: { numAnswersRequired: 3 } },
+            payload: {
+                items,
+                config: { numAnswersRequired: 3, numAnswers: 2 },
+                rounds: [
+                    {
+                        numAnswers: 2,
+                    },
+                    {
+                        numAnswers: 2,
+                    },
+                ],
+            },
         });
         synthVoice.turnOn();
         synthVoice.wakeUp();

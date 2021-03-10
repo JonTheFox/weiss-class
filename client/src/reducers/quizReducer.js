@@ -112,6 +112,7 @@ class Game {
 			roundIndex: 0,
 			numAnswersRequired,
 		});
+
 		_rounds.push(firstRound);
 
 		const init = () => {
@@ -147,6 +148,8 @@ class Game {
 				const round = new GameRound({
 					itemsIndexes: itemsIndexes,
 					roundIndex,
+					numAnswers:
+						rounds[roundIndex]?.numAnswers ?? numAnswers ?? 2,
 				});
 				_rounds.push(round);
 				numItemsLeft -= _numAnswers;
@@ -259,14 +262,16 @@ const quizReducer = (state, action) => {
 
 	switch (action.type) {
 		case "createGame":
-			const { config = {} } = payload;
+			const { config = {}, rounds = [] } = payload;
 			const game = new Game({
 				...DEFAULT_CONFIG,
 				...config, //give precedence
 				items: payload.items,
+				rounds,
 				numShuffles: 3,
 			});
 			debugger;
+
 			logg("Initialized Game: ", game);
 			return game; //this will be the new state
 			break;

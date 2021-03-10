@@ -198,12 +198,12 @@
 #root .gradient-primary {
 	background: var(--color-canvas); /* fallback for old browsers */
 	background: -webkit-linear-gradient(
-		to right,
+		to top,
 		var(--color-canvas),
 		var(--color-primary)
 	);
 	background: linear-gradient(
-		to right,
+		to top,
 		var(--color-canvas),
 		var(--color-primary)
 	);
