@@ -1,5 +1,6 @@
 import { shuffle, is, pickRandomFrom } from "../../lib/issy/index.js";
 import Logger from "../../lib/logg.js";
+import ROUND_TYPES from "./roundTypes.js";
 
 const label = "quizReducer";
 const logg = new Logger({ label }).logg;
@@ -40,11 +41,13 @@ class GameRound {
 	//step;
 	itemsIndexes;
 	roundIndex;
+	type;
 	constructor({
 		itemsIndexes = [],
 		numAnswers = 4,
 		numAnswersRequired = 4,
 		roundIndex = 0,
+		type = ROUND_TYPES.SAY__REPEAT,
 	}) {
 		//const _randomItemsIndexes = shuffle(itemsIndexes, 4);
 		const _numAnswers = Math.min(numAnswers, itemsIndexes.length);
@@ -55,8 +58,8 @@ class GameRound {
 			//stepIndex is the step within the current round. E.g. stepIndex=== 0 when a question hasn't been answered yet. stepIndex===1 when the first question has been answered. stepIndex===2 when the first two questions have been answers, etc.
 			answers.push(
 				new AnswerItem({
-					stepIndex: i,
-					itemIndex: itemsIndexes[i],
+					stepIndex: i, //the step in which this answer is the correct one
+					itemIndex: itemsIndexes[i], //index in items list
 				})
 			);
 		}
@@ -69,6 +72,7 @@ class GameRound {
 		this.lastStep = _numAnswers - 1;
 		this.itemsIndexes = itemsIndexes;
 		this.roundIndex = roundIndex;
+		this.type = type;
 	}
 }
 
@@ -82,6 +86,7 @@ class Game {
 		startRound = 0,
 		startStep = 0,
 		numShuffles = 3,
+		rounds = [],
 		//progress=0
 	}) {
 		//make sure that numAnswersRequired is not (accidently) greater than numAnswers
@@ -102,7 +107,7 @@ class Game {
 		if (items.length === 3) {
 			firstRoundNumAnswers = 3;
 		} else {
-			//first round normallyhttps://i.pinimg.com/originals/1a/60/70/1a6070e136db70744a4103d2c71882c0.png consist of 1 or 2 items
+			//first round normally consist of 1 or 2 items
 			firstRoundNumAnswers = Math.min(2, numAnswers);
 		}
 
@@ -112,6 +117,7 @@ class Game {
 			numAnswers: firstRoundNumAnswers,
 			itemsIndexes: firstIndexes,
 			roundIndex: 0,
+			type: rounds[0]?.type,
 			numAnswersRequired,
 		});
 		_rounds.push(firstRound);
@@ -158,6 +164,7 @@ class Game {
 			}
 
 			this.rounds = _rounds;
+
 			this.currentRound = _rounds[startRound];
 			this.roundIndex = startRound;
 
@@ -265,6 +272,7 @@ const quizReducer = (state, action) => {
 				...config, //give precedence
 				items: payload.items,
 				numShuffles: 3,
+				rounds,
 			});
 			logg("Initialized Game: ", game);
 			return game; //this will be the new state

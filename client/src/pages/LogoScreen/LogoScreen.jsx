@@ -4,7 +4,6 @@ import clsx from "clsx";
 import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import View from "../../components/layout/View.jsx";
-import VideoPlayer from "../../components/VideoPlayer/VideoPlayer.jsx";
 import Card from "../../components/Card/Card.js";
 import "./LogoScreen.scss";
 import videoState from "../../store/video.atom.js";

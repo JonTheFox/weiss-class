@@ -15,6 +15,8 @@ import ImageCard from "./ImageCard.jsx";
 import Prompt from "./Prompt.jsx";
 import { AppContext } from "../../contexts/AppContext.jsx";
 import isSoundOnState from "../../store/isSoundOn.selector.js";
+import showBgState from "../../store/showBg.atom.js";
+import videoState from "../../store/video.atom.js";
 import useLogg from "../../hooks/useLogg.jsx";
 import usePromiseKeeper from "../../hooks/usePromiseKeeper.jsx";
 // import WeissSpinner from "../UI/WeissSpinner/WeissSpinner.jsx";
@@ -26,9 +28,19 @@ import POSES from "../../constants/poses.js";
 import DURATIONS from "../../constants/durations.js";
 import { CONGRATS } from "../../constants/texts.js";
 import clsx from "clsx";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useRecoilState } from "recoil";
 import Summary from "./Summary.jsx";
 import Entrance from "./Entrance.js";
+import ROUND_TYPES from "./roundTypes.js";
+import VideoCard, { CustomCard } from "../VideoCard/VideoCard.jsx";
+import Grid from "@material-ui/core/Grid";
+import MicIcon from "@material-ui/icons/Mic";
+import Color from "color";
+import { Row, Item } from "@mui-treasury/components/flex";
+import { useCoverCardMediaStyles } from "@mui-treasury/styles/cardMedia/cover";
+import Avatar from "@material-ui/core/Avatar";
+import Box from "@material-ui/core/Box";
+import VideoPlayer from "../VideoPlayer/VideoPlayer.jsx";
 
 // import "react-step-progress-bar/styles.css";
 //import { ProgressBar, Step } from "react-step-progress-bar";
@@ -54,16 +66,129 @@ const SFX = {
         url: "/sfx/app_alert_tone_remove_delete_001.mp3",
     },
     gameComplete: {
+        url: "/app_alert_tone_034",
+    },
+    msgSent: {
         url: "/sfx/app_alert_tone_024.mp3",
     },
 };
 
+const useGridStyles = makeStyles(({ breakpoints }) => ({
+    root: {
+        overflow: "auto",
+        [breakpoints.only("xs")]: {
+            "& > *:not(:first-child)": {
+                paddingLeft: 0,
+            },
+        },
+        [breakpoints.up("sm")]: {
+            justifyContent: "center",
+        },
+    },
+}));
+
+const useStyles = makeStyles(({ palette }) => ({
+    color: ({ color }: { color: string }) => ({
+        "&:before": {
+            backgroundColor: Color(color)
+                .darken(0.3)
+                .desaturate(0.2)
+                .toString(),
+        },
+    }),
+    root: {
+        position: "relative",
+        borderRadius: "1rem",
+        minWidth: 320,
+        "&:before": {
+            transition: "0.2s",
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            content: '""',
+            display: "block",
+            borderRadius: "1rem",
+            zIndex: 0,
+            bottom: 0,
+        },
+        "&:hover": {
+            "&:before": {
+                bottom: -6,
+            },
+            "& $logo": {
+                transform: "scale(1.1)",
+                boxShadow: "0 6px 20px 0 rgba(0,0,0,0.38)",
+            },
+        },
+    },
+    cover: {
+        borderRadius: "1rem",
+    },
+    content: ({ color }: { color: string }) => ({
+        position: "relative",
+        zIndex: 1,
+        borderRadius: "1rem",
+        boxShadow: `0 6px 16px 0 ${Color(color).fade(0.5)}`,
+        "&:before": {
+            content: '""',
+            display: "block",
+            position: "absolute",
+            left: 0,
+            top: 0,
+            zIndex: 0,
+            width: "100%",
+            height: "100%",
+            clipPath:
+                "polygon(0% 100%, 0% 35%, 0.3% 33%, 1% 31%, 1.5% 30%, 2% 29%, 2.5% 28.4%, 3% 27.9%, 3.3% 27.6%, 5% 27%,95% 0%,100% 0%, 100% 100%)",
+            borderRadius: "1rem",
+            background: `linear-gradient(to top, ${color}, ${Color(color)
+                .rotate(24)
+                .lighten(0.12)})`,
+        },
+    }),
+    title: {
+        fontFamily: "Fjalla One",
+        fontSize: "1.25rem",
+        color: "#fff",
+        margin: 0,
+    },
+    logo: {
+        transition: "0.3s",
+        width: 100,
+        height: 100,
+        boxShadow: "0 4px 12px 0 rgba(0,0,0,0.24)",
+        borderRadius: "1rem",
+    },
+    team: {
+        fontFamily: "Sen",
+        fontSize: "0.75rem",
+        color: palette.text.hint,
+    },
+    date: {
+        fontFamily: "Sen",
+        color: "#fff",
+        backgroundColor: palette.text.hint,
+        opacity: 0.72,
+        fontSize: "0.75rem",
+        padding: "0 0.5rem",
+        borderRadius: 12,
+    },
+}));
+
 const PosedList = posed.ul(POSES.list);
 const PosedCard = posed.li(POSES.card__pressable___sans_shadow);
+const { MULTIPLE_ANSWER_CARDS, SAY__REPEAT } = ROUND_TYPES;
+
 // const PosedOverlay = posed.li(POSES.card__pressable);
 
 const createInstructionMsg = (itemName = "", type = "touch") => {
+    if (type === SAY__REPEAT) {
+        return `Say: \n"${itemName}"`;
+    }
+    //  if(type === MULTIPLE_ANSWER_CARDS) {
     return itemName || "";
+    // }
+
     // type === "touch"
     //     ? `Touch a picture of ${getAorAn(animalName)} ${animalName}`
     //     : type === "say"
@@ -78,114 +203,149 @@ const fetchItems = async () => {
     const _items = [
         {
             label: "I am driving.",
+            photographer: {
+                name: "Yaroslav Shuraev",
+                id: 649765,
+            },
+            //tags: undefined,
+            //label: "Sushi",
+            title: "I am driving.",
             images: [
                 {
-                    photographer: {
-                        name: "Yaroslav Shuraev",
-                        id: 649765,
-                    },
-                    //tags: undefined,
-                    //label: "Sushi",
-                    title: "I am driving.",
                     urls: {
                         regular:
-                            " https://images.pexels.com/videos/4434242/pexels-photo-4434242.jpeg?fit=crop&w=1200&h=630&auto=compress&cs=tinysrgb",
+                            "https://images.pexels.com/videos/4434242/pexels-photo-4434242.jpeg?fit=crop&w=1200&h=630&auto=compress&cs=tinysrgb",
                     },
                 },
             ],
+            videoSet: {
+                phone:
+                    "https://player.vimeo.com/external/420239207.sd.mp4?s=2b5a6633c37af1a6fb0beb02c06bdc376fdfcce2&profile_id=164&oauth2_token_id=57447761",
+                tablet:
+                    "https://player.vimeo.com/external/420239207.hd.mp4?s=9fa34fce5989c66f5edc65fc533f2d91085d7599&profile_id=174&oauth2_token_id=57447761",
+                hdReady:
+                    "https://player.vimeo.com/external/420239207.hd.mp4?s=9fa34fce5989c66f5edc65fc533f2d91085d7599&profile_id=170&oauth2_token_id=57447761",
+                fullHd:
+                    "https://player.vimeo.com/external/420239207.hd.mp4?s=9fa34fce5989c66f5edc65fc533f2d91085d7599&profile_id=172&oauth2_token_id=57447761",
+            },
+            image:
+                "https://images.pexels.com/videos/4434242/pictures/preview-0.jpg",
         },
 
-        {
-            label: "She is studying.",
-            images: [
-                {
-                    photographer: undefined,
-                    tags: undefined,
-                    //label: "Sushi",
-                    title: "She is studying.",
-                    urls: {
-                        regular:
-                            "https://images.pexels.com/videos/6929087/pictures/preview-14.jpg",
-                    },
-                },
-            ],
-        },
+        // {
+        //     label: "She is studying.",
+        //     title: "She is studying.",
+        //     photographer: undefined,
+        //     tags: undefined,
+        //     images: [
+        //         {
+        //             urls: {
+        //                 regular:
+        //                     "https://images.pexels.com/videos/6929087/pictures/preview-14.jpg",
+        //             },
+
+        //             //label: "Sushi",
+        //         },
+        //     ],
+        // },
 
         {
-            label: "The cats are resting.",
-            images: [
-                {
-                    photographer: undefined,
-                    tags: undefined,
-                    //label: "Sushi",
-                    title: "The cats are resting.",
-                    urls: {
-                        regular:
-                            "https://images.pexels.com/videos/6853901/pexels-photo-6853901.jpeg?fit=crop&w=1200&h=630&auto=compress&cs=tinysrgb",
-                    },
-                },
-            ],
+            title: "I am working.",
+            label: "I am working.",
+            user: {
+                name: "cottonbro",
+                url: "https://www.pexels.com/@cottonbro",
+                id: 1437723,
+            },
+            videoSet: {
+                phone:
+                    "https://player.vimeo.com/external/403652508.sd.mp4?s=f6fff2f196fc5899d730fd9af5544b7e6fbc5aa6&profile_id=164&oauth2_token_id=57447761",
+                tablet:
+                    "https://player.vimeo.com/external/403652508.hd.mp4?s=619899d6bfc52d8832cad04c0c0be57d45bb6c02&profile_id=174&oauth2_token_id=57447761",
+                hdReady:
+                    "https://player.vimeo.com/external/403652508.hd.mp4?s=619899d6bfc52d8832cad04c0c0be57d45bb6c02&profile_id=171&oauth2_token_id=57447761",
+                fullHd:
+                    "https://player.vimeo.com/external/403652508.hd.mp4?s=619899d6bfc52d8832cad04c0c0be57d45bb6c02&profile_id=173&oauth2_token_id=57447761",
+            },
+            image:
+                "https://images.pexels.com/videos/4065630/pictures/preview-0.jpg",
         },
 
-        {
-            label: "The dog is playing.",
-            images: [
-                {
-                    photographer: {
-                        id: 290887,
-                        name: "Free Videos",
-                        url: "https://www.pexels.com/@free-videos",
-                    },
-                    tags: undefined,
-                    //label: "Sushi",
-                    title: "The dog is playing.",
-                    urls: {
-                        regular:
-                            "https://images.pexels.com/videos/853936/free-video-853936.jpg?fit=crop&w=1200&h=630&auto=compress&cs=tinysrgb",
-                    },
-                },
-            ],
-        },
+        // {
+        //     label: "The cats are resting.",
+        //     images: [
+        //         {
+        //             photographer: undefined,
+        //             tags: undefined,
+        //             //label: "Sushi",
+        //             title: "The cats are resting.",
+        //             urls: {
+        //                 regular:
+        //                     "https://images.pexels.com/videos/6853901/pexels-photo-6853901.jpeg?fit=crop&w=1200&h=630&auto=compress&cs=tinysrgb",
+        //             },
+        //         },
+        //     ],
+        // },
 
-        {
-            label: "I am riding my bike.",
-            images: [
-                {
-                    photographer: {
-                        id: 1179532,
-                        name: "Kelly Lacy",
-                        url: "https://www.pexels.com/@kelly-lacy-1179532",
-                    },
-                    tags: undefined,
-                    //label: "Sushi",
-                    title: "I am riding my bike.",
-                    urls: {
-                        regular:
-                            "https://images.pexels.com/videos/2519660/free-video-2519660.jpg?fit=crop&w=1200&h=630&auto=compress&cs=tinysrgb",
-                    },
-                },
-            ],
-        },
+        // {
+        //     label: "The dog is playing.",
+        //     images: [
+        //         {
+        //             photographer: {
+        //                 id: 290887,
+        //                 name: "Free Videos",
+        //                 url: "https://www.pexels.com/@free-videos",
+        //             },
+        //             tags: undefined,
+        //             //label: "Sushi",
+        //             title: "The dog is playing.",
+        //             urls: {
+        //                 regular:
+        //                     "https://images.pexels.com/videos/853936/free-video-853936.jpg?fit=crop&w=1200&h=630&auto=compress&cs=tinysrgb",
+        //             },
+        //         },
+        //     ],
+        // },
 
-        {
-            label: "We are skiing.",
-            images: [
-                {
-                    photographer: {
-                        id: 2550885,
-                        name: "Adrien JACTA",
-                        url: "https://www.pexels.com/@adrien-jacta-2550885",
-                    },
-                    tags: undefined,
-                    //label: "Sushi",
-                    title: "We are skiing.",
-                    urls: {
-                        regular:
-                            "https://images.pexels.com/videos/4274798/montagne-piste-de-ski-ski-skier-4274798.jpeg?fit=crop&w=1200&h=630&auto=compress&cs=tinysrgb",
-                    },
-                },
-            ],
-        },
+        // {
+        //     label: "I am riding my bike.",
+        //     images: [
+        //         {
+        //             photographer: {
+        //                 id: 1179532,
+        //                 name: "Kelly Lacy",
+        //                 url: "https://www.pexels.com/@kelly-lacy-1179532",
+        //             },
+        //             tags: undefined,
+        //             //label: "Sushi",
+        //             title: "I am riding my bike.",
+        //             urls: {
+        //                 regular:
+        //                     "https://images.pexels.com/videos/2519660/free-video-2519660.jpg?fit=crop&w=1200&h=630&auto=compress&cs=tinysrgb",
+        //             },
+        //         },
+        //     ],
+        // },
+
+        // {
+        //     label: "We are skiing.",
+        //     images: [
+        //         {
+        //             photographer: {
+        //                 id: 2550885,
+        //                 name: "Adrien JACTA",
+        //                 url: "https://www.pexels.com/@adrien-jacta-2550885",
+        //             },
+        //             tags: undefined,
+        //             //label: "Sushi",
+        //             title: "We are skiing.",
+        //             urls: {
+        //                 regular:
+        //                     "https://images.pexels.com/videos/4274798/montagne-piste-de-ski-ski-skier-4274798.jpeg?fit=crop&w=1200&h=630&auto=compress&cs=tinysrgb",
+        //             },
+        //         },
+        //     ],
+        // },
     ];
     // return props.items;
     return _items;
@@ -214,6 +374,11 @@ const Quiz = (props) => {
     const [gameStarted, setGameStarted] = useState(false);
 
     const isSoundOn = useRecoilValue(isSoundOnState);
+    const [video, setVideo] = useRecoilState(videoState);
+
+    const styles1 = useStyles({ color: "#fc7944" });
+    const styles2 = useStyles({ color: "#5357ce" });
+    const gridStyles = useGridStyles();
 
     const [showItems, setShowItems] = useState(false);
     // const [clientSideItems, setClientSideItems] = useState([]);
@@ -229,6 +394,7 @@ const Quiz = (props) => {
     const [showOverlay, setShowOverlay] = useState(false);
     const [active, setActive] = useState(false);
     const $active = useRef(false);
+    const mediaStyles = useCoverCardMediaStyles();
 
     const [quizState, dispatch] = useReducer(
         quizReducer,
@@ -240,6 +406,7 @@ const Quiz = (props) => {
     );
 
     const [showInstruction, setShowInstruction] = useState(false);
+    const [showBg, setShowBg] = useRecoilState(showBgState);
 
     const {
         items,
@@ -280,6 +447,41 @@ const Quiz = (props) => {
         return image;
     }, []);
 
+    const SoundPlayer = React.useCallback(
+        () => (
+            <ReactPlayer
+                className={clsx("react-player", styles.soundPlayer)}
+                url={
+                    progressing
+                        ? SFX.roundComplete.url
+                        : isCorrect
+                        ? SFX.correctAnswer.url
+                        : isWrong
+                        ? SFX.wrongAnswer.url
+                        : quizIsDone
+                        ? SFX.gameComplete.url
+                        : ""
+                }
+                playing={progressing || isCorrect || isWrong || quizIsDone}
+                loop={false}
+                ref={(ref) => {
+                    if (!ref) return;
+                }}
+                //onPlay={handlePlay}
+                // onReady={handleReady}
+                // onSeek={props.handleSeek}
+                //onEnded={handleEnded}
+                // muted={muted}
+                //volume={volume}
+                //onProgress={handleProgress}
+                //light={light} //light player means that it starts with only a thumbnail and await clicking on it
+                //width="100%"
+                controls={true}
+            />
+        ),
+        [progressing, isCorrect, isWrong, quizIsDone]
+    );
+
     const initGame = async (config = {}) => {
         const { restart, items } = config;
 
@@ -290,11 +492,11 @@ const Quiz = (props) => {
                 config: { numAnswersRequired: 3, numAnswers: 2 },
                 rounds: [
                     {
-                        type: "multipleAnswerCards",
+                        type: MULTIPLE_ANSWER_CARDS,
                         numAnswers: 2,
                     },
                     {
-                        type: "say",
+                        type: SAY__REPEAT,
                         numTimes: 3,
                     },
                 ],
@@ -344,9 +546,12 @@ const Quiz = (props) => {
                 items[correctItemIndex]?.label ?? ""
             );
 
-            const instructionMsg = createInstructionMsg(correctItemLabel);
+            const instructionMsg = createInstructionMsg(
+                correctItemLabel,
+                rounds[0].type
+            );
             if (!instructionMsg) {
-                logg("NO INSTRUCTION MSG???");
+                loggError("NO INSTRUCTION MSG???");
             }
             setInstruction(instructionMsg);
 
@@ -413,7 +618,7 @@ const Quiz = (props) => {
     });
 
     const handlePressEnd = useCallback(
-        async (ev, selectedAnswerStep, selectedAnswerSlot) => {
+        async (ev, selectedAnswerStep, selectedAnswerSlot, currentRound) => {
             ev.preventDefault();
             if (!$active.current || selectedAnswerStep < $currentRound.step) {
                 return null;
@@ -576,17 +781,17 @@ const Quiz = (props) => {
 
                         await fadeOutItems;
 
-                        if (roundIndex > 0) {
-                            setShowOverlay(true);
-                            const whiteOut = promiseKeeper.withRC(
-                                promiseKeeper.stall(750),
-                                {
-                                    resolveOnError: true,
-                                    label: "whiteOut-after-round",
-                                }
-                            );
-                            await whiteOut;
-                        }
+                        // if (roundIndex > 0) {
+                        //     setShowOverlay(true);
+                        //     const whiteOut = promiseKeeper.withRC(
+                        //         promiseKeeper.stall(750),
+                        //         {
+                        //             resolveOnError: true,
+                        //             label: "whiteOut-after-round",
+                        //         }
+                        //     );
+                        //     await whiteOut;
+                        // }
 
                         dispatch({ type: "goNextRound" });
 
@@ -740,144 +945,257 @@ const Quiz = (props) => {
         </div>
     );
 
-    const Answers = () => (
-        <dd
-            className={clsx(
-                styles.answerList,
-                styles[`total${Math.min(4, numAnswers)}`],
-                `answer-list total--${Math.min(4, numAnswers)}`
-            )}
-        >
-            {rounds && rounds.length > 0 && (
-                <PosedList
-                    pose={showItems ? "visible" : "hidden"}
-                    initialPose={"hidden"}
-                    className={clsx(styles.posedList, "posed-list")}
-                    //animateOnMount={true}
-                    step={currentStepIndex}
-                    overallStep={step}
-                    round={currentRoundIndex}
-                    active={active}
-                    numAnswers={numAnswers}
-                    onPoseComplete={(ev) => {
-                        // debugger;
-                        // $promiseKeeper.current.resolve(
-                        //     "stall_till_present_items"
-                        // );
-                        $promiseKeeper.current.resolveLatest("pose complete");
-                        // debugger;
-                        // promiseKeeper.resolve("present_items");
-                        // promiseKeeper.resolveLatest(
-                        //     "enter animation finished"
-                        // );
-                        // handlePoseComplete("PosedList");
-                    }}
+    const Answers = ({
+        styles,
+        cover,
+        logo,
+        title,
+        brand,
+        date,
+        currentRound,
+    }) => {
+        const { answers } = currentRound;
+        if (!answers || !answers.length) return null;
+
+        const currentRoundType = currentRound.type;
+
+        if (currentRoundType === SAY__REPEAT) {
+            return null;
+        }
+
+        if (currentRoundType === SAY__REPEAT) {
+            const answer = currentRound.correctAnswer;
+            const videoSet = items?.[answer.itemIndex];
+            return (
+                <Box
+                    className={clsx(styles.root, styles.color)}
+                    pt={20}
+                    key={answer?.stepIndex}
                 >
-                    {answerSlots.map(({ stepIndex, itemIndex }, i) => {
-                        const isCorrectAnswer = stepIndex === step;
+                    <VideoPlayer
+                        video={videoSet}
+                        style={{ width: "40%" }}
+                        controls={false}
+                        noInteraction={true}
+                        light={false}
+                        playing={true}
+                        loop={true}
+                        faded={false}
+                        muted={true}
+                        volume={0}
+                        scaleToFitViewport={false}
+                        startSecond={video?.startSecond ?? 0}
+                        stopSecond={video?.stopSecond}
+                        fadeInWhenReady={false}
+                        onReady={() => {
+                            //setShowBg(false);
+                        }}
+                        //onPlay={() => {
+                        //  setIsVideoPlaying(true);
+                        //}}
+                    />
+                    <Box className={styles.content} p={2}>
+                        <Box position={"relative"} zIndex={1}>
+                            <Row p={0} gap={2}>
+                                <Item>
+                                    <Avatar
+                                        className={styles.logo}
+                                        src={logo}
+                                    />
+                                </Item>
+                                <Item position={"bottom"}>
+                                    <h2 className={styles.title}>{title}</h2>
+                                </Item>
+                            </Row>
+                            <Row mt={4} alignItems={"center"}>
+                                <Item>
+                                    <div className={styles.team}>{brand}</div>
+                                </Item>
+                                <Item position={"right"}>
+                                    <div className={styles.date}>{date}</div>
+                                </Item>
+                            </Row>
+                        </Box>
+                    </Box>
+                </Box>
+            );
+            return (
+                <Grid item>
+                    <CustomCard
+                        styles={styles1}
+                        brand={"Overwatch Official"}
+                        date={"02.04.2020"}
+                        cover={
+                            "https://cdn.vox-cdn.com/thumbor/C6_-SDnnoFdS19XRH4XvAYN1BT8=/148x0:1768x1080/1400x1400/filters:focal(148x0:1768x1080):format(jpeg)/cdn.vox-cdn.com/uploads/chorus_image/image/49641465/tracer_overwatch.0.0.jpg"
+                        }
+                        logo={
+                            "https://d3fa68hw0m2vcc.cloudfront.net/bf4/156511609.jpeg"
+                        }
+                        title={
+                            <React.Fragment>
+                                Astronomy Binoculars
+                                <br />A Great Alternative
+                            </React.Fragment>
+                        }
+                    />
+                </Grid>
+            );
+        }
+        if (currentRoundType === MULTIPLE_ANSWER_CARDS) {
+            return (
+                <div
+                    className={clsx(
+                        styles.answerList,
+                        styles[`total${Math.min(4, numAnswers)}`],
+                        `answer-list total--${Math.min(4, numAnswers)}`
+                    )}
+                >
+                    {rounds && rounds.length > 0 && (
+                        <PosedList
+                            pose={showItems ? "visible" : "hidden"}
+                            initialPose={"hidden"}
+                            className={clsx(styles.posedList, "posed-list")}
+                            //animateOnMount={true}
+                            step={currentStepIndex}
+                            overallStep={step}
+                            round={currentRoundIndex}
+                            active={active}
+                            numAnswers={numAnswers}
+                            onPoseComplete={(ev) => {
+                                // debugger;
+                                // $promiseKeeper.current.resolve(
+                                //     "stall_till_present_items"
+                                // );
+                                $promiseKeeper.current.resolveLatest(
+                                    "pose complete"
+                                );
+                                // debugger;
+                                // promiseKeeper.resolve("present_items");
+                                // promiseKeeper.resolveLatest(
+                                //     "enter animation finished"
+                                // );
+                                // handlePoseComplete("PosedList");
+                            }}
+                        >
+                            {answerSlots.map(({ stepIndex, itemIndex }, i) => {
+                                const isCorrectAnswer = stepIndex === step;
 
-                        const hasBeenAnswered =
-                            step > stepIndex || completed || quizIsDone;
+                                const hasBeenAnswered =
+                                    step > stepIndex || completed || quizIsDone;
 
-                        const hasJustBeenAnswered = i === stepIndex + 1;
-                        const isCardActive = active && !hasBeenAnswered;
+                                const hasJustBeenAnswered = i === stepIndex + 1;
+                                const isCardActive = active && !hasBeenAnswered;
 
-                        const item = items[itemIndex];
-                        const imageItem = getOneImageItem(item);
-                        const imgURL =
-                            imageItem?.urls?.small ?? imageItem?.urls?.regular;
+                                const item = items[itemIndex];
+                                const imageItem = getOneImageItem(item);
+                                const imgURL =
+                                    imageItem?.urls?.small ??
+                                    imageItem?.urls?.regular;
 
-                        return (
-                            <PosedCard
-                                className={clsx(
-                                    styles.answerItem,
-                                    "answer-item",
+                                return (
+                                    <PosedCard
+                                        className={clsx(
+                                            styles.answerItem,
+                                            "answer-item",
 
-                                    isCardActive
-                                        ? styles.active
-                                        : styles.disabled,
-                                    isCardActive ? "active" : "disabled",
+                                            isCardActive
+                                                ? styles.active
+                                                : styles.disabled,
+                                            isCardActive
+                                                ? "active"
+                                                : "disabled",
 
-                                    isCorrectAnswer &&
-                                        styles.answerItemIsCorrectAnswer,
-                                    hasJustBeenAnswered &&
-                                        styles.answerItemHasJustBeenAnswered,
-                                    hasBeenAnswered &&
-                                        styles.answerItemHasBeenAnswered,
+                                            isCorrectAnswer &&
+                                                styles.answerItemIsCorrectAnswer,
+                                            hasJustBeenAnswered &&
+                                                styles.answerItemHasJustBeenAnswered,
+                                            hasBeenAnswered &&
+                                                styles.answerItemHasBeenAnswered,
 
-                                    isCorrectAnswer &&
-                                        "answer-item--is-correct-answer",
-                                    hasJustBeenAnswered &&
-                                        "answer-item--has-just-been-answered",
-                                    hasBeenAnswered &&
-                                        "answer-item--has-been-answered",
-                                    "unselectable"
-                                )}
-                                style={{
-                                    //first should be put on top!
-                                    zIndex: 10 + numAnswers - i,
-                                }}
-                                initialPose={"hidden"}
-                                onPressEnd={(e) =>
-                                    handlePressEnd(e, stepIndex, i)
-                                }
-                                pos={numSteps - 1 - i}
-                                i={i}
-                                isCorrectItem={isCorrectAnswer}
-                                hasBeenAnswered={hasBeenAnswered}
-                                step={step}
-                                round={roundIndex}
-                                numAnswers={numAnswers}
-                                active={isCardActive}
-                                key={"answer" + i}
-                            >
-                                <ImageCard
-                                    className={styles?.imageCard}
-                                    imgURL={imgURL}
-                                    headerBottom={true}
-                                    urls={imageItem?.urls}
-                                    elevation={2}
-                                    active={isCardActive}
-                                    label={capitalizeFirstLetter(item?.label)}
-                                    showHeader={hasBeenAnswered}
-                                    showHeaderText={hasBeenAnswered}
-                                    renderHeader={(label) => {
-                                        return (
-                                            <SplitText
-                                                initialPose="exit"
-                                                pose={
-                                                    hasBeenAnswered
-                                                        ? "enter"
-                                                        : "exit"
-                                                }
-                                                charPoses={POSES.char__stagger}
-                                                wordPoses={
-                                                    POSES.char_fadeIn__old
-                                                }
-                                            >
-                                                {label}
-                                            </SplitText>
-                                        );
-                                    }}
-                                />
-                            </PosedCard>
-                        );
-                    })}
-                </PosedList>
-            )}
-        </dd>
-    );
+                                            isCorrectAnswer &&
+                                                "answer-item--is-correct-answer",
+                                            hasJustBeenAnswered &&
+                                                "answer-item--has-just-been-answered",
+                                            hasBeenAnswered &&
+                                                "answer-item--has-been-answered",
+                                            "unselectable"
+                                        )}
+                                        style={{
+                                            //first should be put on top!
+                                            zIndex: 10 + numAnswers - i,
+                                        }}
+                                        initialPose={"hidden"}
+                                        onPressEnd={(e) =>
+                                            handlePressEnd(
+                                                e,
+                                                stepIndex,
+                                                i,
+                                                currentRound
+                                            )
+                                        }
+                                        pos={numSteps - 1 - i}
+                                        i={i}
+                                        isCorrectItem={isCorrectAnswer}
+                                        hasBeenAnswered={hasBeenAnswered}
+                                        step={step}
+                                        round={roundIndex}
+                                        numAnswers={numAnswers}
+                                        active={isCardActive}
+                                        key={"answer" + i}
+                                    >
+                                        <ImageCard
+                                            className={styles?.imageCard}
+                                            imgURL={imgURL}
+                                            headerBottom={true}
+                                            urls={imageItem?.urls}
+                                            elevation={2}
+                                            active={isCardActive}
+                                            label={capitalizeFirstLetter(
+                                                item?.label
+                                            )}
+                                            showHeader={hasBeenAnswered}
+                                            showHeaderText={hasBeenAnswered}
+                                            renderHeader={(label) => {
+                                                return (
+                                                    <SplitText
+                                                        initialPose="exit"
+                                                        pose={
+                                                            hasBeenAnswered
+                                                                ? "enter"
+                                                                : "exit"
+                                                        }
+                                                        charPoses={
+                                                            POSES.char__stagger
+                                                        }
+                                                        wordPoses={
+                                                            POSES.char_fadeIn__old
+                                                        }
+                                                    >
+                                                        {label}
+                                                    </SplitText>
+                                                );
+                                            }}
+                                        />
+                                    </PosedCard>
+                                );
+                            })}
+                        </PosedList>
+                    )}
+                </div>
+            );
+        }
+    };
 
     useEffect(() => {
         if (DEBUGGING) {
             window.resolveLatest = () => {
                 if ($promiseKeeper.current.resolveLatest) {
-                    debugger;
                     $promiseKeeper.current.resolveLatest();
                 }
             };
             window.resolveAll = () => promiseKeeper.resolveAll();
             window.getLatest = () => promiseKeeper.latestPromise;
+
             handlePress(
                 {
                     key: " ",
@@ -948,8 +1266,19 @@ const Quiz = (props) => {
         });
 
         // const _serverSideItems = staticItems;
-        // debugger;
+        debugger;
     }, [props.items]);
+
+    useEffect(() => {
+        if (currentRound.type === SAY__REPEAT) {
+            setShowBg(false);
+            const answerVideo =
+                items?.[currentRound.correctAnswer?.itemIndex]?.videoSet ??
+                items?.[currentRound.correctAnswer?.itemIndex]?.links;
+            return setVideo(answerVideo);
+        }
+        setShowBg(false);
+    }, [currentRound]);
 
     useEffect(() => {
         $quizState.current = quizState;
@@ -997,11 +1326,6 @@ const Quiz = (props) => {
         }
     }, [progress]);
 
-    if (quizIsDone) {
-        const _url = SFX.gameComplete.url;
-        debugger;
-    }
-
     if (!items) {
         return (
             <div>
@@ -1039,24 +1363,27 @@ const Quiz = (props) => {
 
     if (showSummary) {
         return (
-            <Summary
-                header="Congratulations, you have passed the test!"
-                subheader={summary}
-                isSoundOn={isSoundOn}
-                synthVoice={synthVoice}
-                active={active}
-                poses={POSES.char_fadeIn}
-                styles={styles}
-                SplitText={SplitText}
-                className={"page"}
-                handlePrimaryClick={handleRetry}
-            />
+            <React.Fragment>
+                <SoundPlayer />
+                <Summary
+                    header="Congratulations, you have passed the test!"
+                    subheader={summary}
+                    isSoundOn={isSoundOn}
+                    synthVoice={synthVoice}
+                    active={active}
+                    poses={POSES.char_fadeIn}
+                    styles={styles}
+                    SplitText={SplitText}
+                    className={"page"}
+                    handlePrimaryClick={handleRetry}
+                />
+            </React.Fragment>
         );
     }
 
     return (
         <React.Fragment>
-            <dl
+            <div
                 className={clsx(
                     styles.root,
                     styles[screenSize],
@@ -1067,7 +1394,7 @@ const Quiz = (props) => {
                     "cancal-white-canvas",
                     styles[background],
                     //background,
-                    "has-before show-before has-after",
+                    showBg && "has-before show-before has-after",
                     showOverlay && "show-after white-out",
                     showOverlay && styles.showAfter,
                     showOverlay && styles.whiteOut
@@ -1075,45 +1402,15 @@ const Quiz = (props) => {
             >
                 {ProgressBarContainer()}
                 {Instructions()}
-                {Answers()}
+                {Answers({ styles, currentRound })}
 
-                <ReactPlayer
-                    className={clsx("react-player", styles.soundPlayer)}
-                    url={
-                        progressing
-                            ? SFX.roundComplete.url
-                            : isCorrect
-                            ? SFX.correctAnswer.url
-                            : isWrong
-                            ? SFX.wrongAnswer.url
-                            : quizIsDone
-                            ? SFX.gameComplete.url
-                            : ""
-                    }
-                    playing={progressing || isCorrect || isWrong || quizIsDone}
-                    loop={false}
-                    ref={(ref) => {
-                        if (!ref) return;
-                    }}
-                    //onPlay={handlePlay}
-                    // onReady={handleReady}
-                    // onSeek={props.handleSeek}
-                    //onEnded={handleEnded}
-                    // muted={muted}
-                    //volume={volume}
-                    //onProgress={handleProgress}
-                    //light={light} //light player means that it starts with only a thumbnail and await clicking on it
-                    //width="100%"
-                    controls={true}
-                >
-                    {props.children}
-                </ReactPlayer>
+                <SoundPlayer />
                 <Prompt
                     content={promptContent}
                     active={active}
                     className={clsx(styles.promptSection, "prompt-section")}
                 />
-            </dl>
+            </div>
         </React.Fragment>
     );
 };

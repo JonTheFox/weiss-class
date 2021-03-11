@@ -37,7 +37,6 @@ import socketConnectionState from "../../store/socketConnection.atom.js";
 import { CONNECTION_STATES } from "../../store/CONNECTION_STATES.js";
 import * as io from "socket.io-client";
 import { localStorage } from "../../lib/issy/index.js";
-import VideoPlayer from "../VideoPlayer/VideoPlayer.jsx";
 import LOCAL_STORAGE_KEY from "../../constants/localStorageKey.js";
 import LogoScreen from "../../pages/LogoScreen/LogoScreen.jsx";
 import ErrorBoundary from "../../pages/ErrorPage/ErrorPage.jsx";
