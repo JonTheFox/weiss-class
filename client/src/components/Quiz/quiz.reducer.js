@@ -25,9 +25,11 @@ class AnswerItem {
 	numMistakes = 0;
 	itemIndex;
 	stepIndex;
-	constructor({ stepIndex = 0, itemIndex = 0 }) {
+	item;
+	constructor({ stepIndex = 0, itemIndex = 0, item }) {
 		this.stepIndex = stepIndex;
 		this.itemIndex = itemIndex;
+		this.item = item;
 	}
 }
 
@@ -48,6 +50,7 @@ class GameRound {
 		numAnswersRequired = 4,
 		roundIndex = 0,
 		type = ROUND_TYPES.SAY__REPEAT,
+		items,
 	}) {
 		//const _randomItemsIndexes = shuffle(itemsIndexes, 4);
 		const _numAnswers = Math.min(numAnswers, itemsIndexes.length);
@@ -56,10 +59,15 @@ class GameRound {
 		for (let i = 0; i < _numAnswers; i++) {
 			// const stepIndex = pickRandomFrom(slotIndexes, 1, [])
 			//stepIndex is the step within the current round. E.g. stepIndex=== 0 when a question hasn't been answered yet. stepIndex===1 when the first question has been answered. stepIndex===2 when the first two questions have been answers, etc.
+
+			const itemIndex = itemsIndexes[i];
+			const item = items[itemIndex];
+
 			answers.push(
 				new AnswerItem({
+					item,
+					itemIndex, //index in items list
 					stepIndex: i, //the step in which this answer is the correct one
-					itemIndex: itemsIndexes[i], //index in items list
 				})
 			);
 		}
@@ -94,7 +102,9 @@ class Game {
 			numAnswersRequired > numAnswers ? numAnswers : numAnswersRequired;
 
 		let _items = items.map((_item) => {
-			_item.usedImage = pickRandomFrom(_item.images);
+			_item.usedImage = pickRandomFrom(_item.images) ?? {
+				urls: { regular: _item.image },
+			};
 			return _item;
 		});
 		if (numShuffles && is(numShuffles).aNumber)
@@ -103,22 +113,23 @@ class Game {
 		const numTotalItems = _items.length;
 		const _rounds = [];
 
-		let firstRoundNumAnswers;
-		if (items.length === 3) {
-			firstRoundNumAnswers = 3;
-		} else {
-			//first round normally consist of 1 or 2 items
-			firstRoundNumAnswers = Math.min(2, numAnswers);
+		//first round consists of 1,  2 or 3 items
+		const firstRoundNumAnswers = Math.min(3, numAnswers);
+
+		const firstRoundAnswerIndexes = [];
+		for (let i = 0; i < items.length; i++) {
+			firstRoundAnswerIndexes.push(i);
 		}
 
-		const firstRoundAnswerIndexes = items.length === 3 ? [0, 1, 2] : [0, 1];
-		const firstIndexes = shuffle(firstRoundAnswerIndexes, 3);
+		const firstIndexes = shuffle(firstRoundAnswerIndexes, numShuffles);
+
 		const firstRound = new GameRound({
 			numAnswers: firstRoundNumAnswers,
 			itemsIndexes: firstIndexes,
 			roundIndex: 0,
 			type: rounds[0]?.type,
 			numAnswersRequired,
+			items,
 		});
 		_rounds.push(firstRound);
 
@@ -131,6 +142,7 @@ class Game {
 			let numTotalAnswersRequired = numAnswersRequired === 1 ? 1 : 2;
 			let isShortRound = false;
 			let roundIndex = 1;
+
 			for (
 				let i = round2StartIndex;
 				i < numTotalItems;
@@ -153,11 +165,17 @@ class Game {
 				}
 				// const shuffledItemsIndexes = shuffle(itemsIndexes, 1);
 
+				const roundItems = itemsIndexes.map((itemIndex) => {
+					return items[itemIndex];
+				});
+
 				const round = new GameRound({
-					itemsIndexes: itemsIndexes,
+					itemsIndexes,
 					roundIndex,
+					items: roundItems,
 				});
 				_rounds.push(round);
+
 				numItemsLeft -= _numAnswers;
 				isShortRound = false;
 				roundIndex++;
@@ -179,9 +197,10 @@ class Game {
 				startStep
 			);
 			this.correctSlotIndex = _correctSlotIndex;
-			const _correctItemIndex = _answerSlots[_correctSlotIndex].itemIndex;
+			const _correctItemIndex =
+				_answerSlots?.[_correctSlotIndex]?.itemIndex;
 			this.correctItemIndex = _correctItemIndex;
-			this.correctItem = _items[_correctItemIndex];
+			this.correctItem = _items?.[_correctItemIndex];
 
 			this.step = startStep;
 			this.lastStep = numTotalAnswersRequired - 1;
@@ -272,8 +291,9 @@ const quizReducer = (state, action) => {
 				...config, //give precedence
 				items: payload.items,
 				numShuffles: 3,
-				rounds,
+				rounds: payload.rounds || state.rounds,
 			});
+
 			logg("Initialized Game: ", game);
 			return game; //this will be the new state
 			break;
@@ -282,6 +302,7 @@ const quizReducer = (state, action) => {
 			// rounds[roundIndex].answers[step].completed = true;
 
 			//const { step, lastStep } = currentRound;
+			const isSingleStep = currentRound?.items?.length;
 			const nextStep = Math.min(
 				currentRound.step + 1,
 				currentRound.lastStep + 1

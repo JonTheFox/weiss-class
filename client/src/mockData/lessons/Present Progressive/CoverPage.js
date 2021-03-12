@@ -26,7 +26,7 @@ const CoverPage = {
 			//bgClass: "cloud-up",
 			p: [
 				"When we are talking about what's happening at the moment, we are using 'Present Progressive'. ",
-				"Here arhttps://i.pinimg.com/originals/1a/60/70/1a6070e136db70744a4103d2c71882c0.pnge a few examples: ",
+				"Here are a few examples: ",
 			],
 			bgClass: "cloud-up",
 			opacity: 9,

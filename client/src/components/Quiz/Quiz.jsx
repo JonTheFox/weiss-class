@@ -41,6 +41,8 @@ import { useCoverCardMediaStyles } from "@mui-treasury/styles/cardMedia/cover";
 import Avatar from "@material-ui/core/Avatar";
 import Box from "@material-ui/core/Box";
 import VideoPlayer from "../VideoPlayer/VideoPlayer.jsx";
+import Fab from "@material-ui/core/Fab";
+import Mic from "@material-ui/icons/Mic";
 
 // import "react-step-progress-bar/styles.css";
 //import { ProgressBar, Step } from "react-step-progress-bar";
@@ -49,6 +51,8 @@ import VideoPlayer from "../VideoPlayer/VideoPlayer.jsx";
 
 import ReactPlayer from "react-player";
 import styles from "./quiz.module.scss";
+
+let speechRecognizer;
 
 const getAorAn = (noun = "") =>
     ["a", "e", "i", "o", "u"].includes(noun?.[0]?.toLowerCase()) ? "an" : "a";
@@ -203,13 +207,14 @@ const fetchItems = async () => {
     const _items = [
         {
             label: "I am driving.",
+            title: "I am driving.",
             photographer: {
                 name: "Yaroslav Shuraev",
                 id: 649765,
             },
             //tags: undefined,
             //label: "Sushi",
-            title: "I am driving.",
+
             images: [
                 {
                     urls: {
@@ -369,9 +374,12 @@ const Quiz = (props) => {
         request,
         capitalizeFirstLetter,
         pickRandomFrom,
+        SpeechRecognizer,
     } = appUtils;
 
     const [gameStarted, setGameStarted] = useState(false);
+
+    const recognizerRef = useRef();
 
     const isSoundOn = useRecoilValue(isSoundOnState);
     const [video, setVideo] = useRecoilState(videoState);
@@ -443,7 +451,9 @@ const Quiz = (props) => {
 
     const getOneImageItem = useCallback((item) => {
         // const image = item?.images?.[0];
-        const image = item && (item.usedImage || item.images[0]);
+        if (!item) return null;
+        const image = item.usedImage ||
+            item.images[0] || { urls: { regular: item.image } };
         return image;
     }, []);
 
@@ -482,6 +492,78 @@ const Quiz = (props) => {
         [progressing, isCorrect, isWrong, quizIsDone]
     );
 
+    const createSpeechRecognizer = useCallback(
+        (phrases = [], { onCorrect }) => {
+            const newSpeechRecognizer = new SpeechRecognizer(phrases, {
+                interimResults: false,
+                continuous: true,
+                refs: recognizerRef,
+                onResult: ({ transcript, confidence }) => {
+                    // const _transcript = transcript.toLowerCase();
+                    const _transcript = transcript.trim();
+
+                    if (phrases.includes(_transcript) || confidence > 0.8) {
+                        //correctly said
+                        logg(`Recognized: "${_transcript}"`);
+                        onCorrect && onCorrect({ transcript, confidence });
+                        return;
+                    }
+                    logg(
+                        `Did not recognize the phrases which are being listened to.`
+                    );
+                },
+                onError: (recognition, errReason, err) => {
+                    loggError(err);
+                },
+                onSpeechStart: (recognition) => {
+                    // const msg =
+                    //  "SpeechRecognizer has started to recognize speech.";
+                    // logg("onSpeechStart():", msg);
+                },
+                onSpeechEnd: (recognition) => {
+                    // const msg = "User stopped speaking";
+                    // logg("onSpeechEnd(): ", msg);
+                },
+                onEnd: (recognition) => {
+                    // const msg = "SpeechRecognizer has stopped listening.";
+                    // logg("onEnd(): ", msg);
+                },
+            });
+
+            return newSpeechRecognizer;
+        }
+    );
+
+    const getPhrases = (answer, items) => {
+        const itemIndex = answer.itemIndex;
+        const item = items[itemIndex];
+        const text = item?.label;
+        return [text];
+    };
+
+    const startRecognition = useCallback(
+        (ev) => {
+            const phrases = getPhrases(currentRound.correctAnswer, items);
+            speechRecognizer = createSpeechRecognizer(phrases, {
+                onCorrect: async () => {
+                    const sayCorrect = promiseKeeper.withRC(
+                        synthVoice.say("Correct!!"),
+                        {
+                            resolveOnError: true,
+                            label: "sayCorrect",
+                        }
+                    );
+                    handleCorrectAnswer();
+                    await sayCorrect;
+                    dispatch({ type: "clearCorrect", payload: {} });
+                },
+            });
+            speechRecognizer.listen();
+            // speechRecognizer.listenFor(phrases);
+        },
+        [currentRound, items, getPhrases, createSpeechRecognizer]
+    );
+
     const initGame = async (config = {}) => {
         const { restart, items } = config;
 
@@ -495,10 +577,12 @@ const Quiz = (props) => {
                         type: MULTIPLE_ANSWER_CARDS,
                         numAnswers: 2,
                     },
-                    {
-                        type: SAY__REPEAT,
-                        numTimes: 3,
-                    },
+                    //  {
+                    //     type: SAY__REPEAT,
+                    //     numTimes: 3,
+                    //     numAnswersRequired: 1,
+                    //     numAnswers: 1,
+                    // },
                 ],
             },
         });
@@ -521,12 +605,11 @@ const Quiz = (props) => {
                 setShowItems(true);
             });
 
-            if (!quizState.currentRound.numAnswers) {
-                debugger;
-            }
-
             const delay =
-                DURATIONS.enter * 3 * quizState.currentRound.numAnswers + 0;
+                DURATIONS.enter *
+                    1 *
+                    (!$quizState.current?.currentRound?.numAnswers ?? 1) +
+                0;
 
             const presentItems = promiseKeeper.stall(delay, "present_items");
             logg(
@@ -538,6 +621,7 @@ const Quiz = (props) => {
                 correctSlotIndex,
                 correctItemIndex,
                 correctItem,
+                rounds,
             } = $quizState.current;
 
             await presentItems;
@@ -550,6 +634,7 @@ const Quiz = (props) => {
                 correctItemLabel,
                 rounds[0].type
             );
+
             if (!instructionMsg) {
                 loggError("NO INSTRUCTION MSG???");
             }
@@ -580,10 +665,20 @@ const Quiz = (props) => {
                 //round 1 starts
                 logg("Round 1 starts!");
                 setActive(true);
-                setPromptContent({ eventType: "touch" });
+                const eventType =
+                    items?.[0]?.type === MULTIPLE_ANSWER_CARDS
+                        ? MULTIPLE_ANSWER_CARDS
+                        : "touch";
+
+                if (eventType === SAY__REPEAT) {
+                    speechRecognizer.listenFor();
+                }
+
+                setPromptContent({ eventType });
             });
         } catch (err) {
             loggError(err);
+            debugger;
             promiseKeeper.resolveLatest();
         }
     };
@@ -616,6 +711,18 @@ const Quiz = (props) => {
             return BACKGROUND_CLASSES[prevIndex];
         });
     });
+
+    const handleCorrectAnswer = useCallback(async () => {
+        animationFrame = window.requestAnimationFrame(() => {
+            dispatch({ type: "goNextStep" });
+        });
+
+        animationFrame = window.requestAnimationFrame(() => {
+            setPromptContent({ eventType: "correct" });
+        });
+
+        return true;
+    }, [promiseKeeper, setPromptContent]);
 
     const handlePressEnd = useCallback(
         async (ev, selectedAnswerStep, selectedAnswerSlot, currentRound) => {
@@ -661,19 +768,14 @@ const Quiz = (props) => {
 
                 const nextStep = step + 1;
 
-                animationFrame = window.requestAnimationFrame(() => {
-                    dispatch({ type: "goNextStep" });
-                });
-
                 const sayCorrect = promiseKeeper.withRC(
                     synthVoice.say("Correct!!"),
-                    { resolveOnError: true, label: "sayCorrect" }
+                    {
+                        resolveOnError: true,
+                        label: "sayCorrect",
+                    }
                 );
-
-                animationFrame = window.requestAnimationFrame(() => {
-                    setPromptContent({ eventType: "correct" });
-                });
-
+                handleCorrectAnswer();
                 await sayCorrect;
                 dispatch({ type: "clearCorrect", payload: {} });
 
@@ -724,7 +826,8 @@ const Quiz = (props) => {
                         CONGRATS.roundComplete[
                             getRandomUpTo(CONGRATS.roundComplete.length - 1, 5)
                         ];
-                    await sayCorrect;
+                    //await sayCorrect; //THIS COMMIENT IS RISKY
+
                     dispatch({ type: "advanceProgress" });
 
                     const progressBarHasAdvanced = promiseKeeper.stall(
@@ -945,6 +1048,8 @@ const Quiz = (props) => {
         </div>
     );
 
+    useEffect(() => {}, []);
+
     const Answers = ({
         styles,
         cover,
@@ -960,84 +1065,26 @@ const Quiz = (props) => {
         const currentRoundType = currentRound.type;
 
         if (currentRoundType === SAY__REPEAT) {
-            return null;
-        }
-
-        if (currentRoundType === SAY__REPEAT) {
-            const answer = currentRound.correctAnswer;
-            const videoSet = items?.[answer.itemIndex];
-            return (
-                <Box
-                    className={clsx(styles.root, styles.color)}
-                    pt={20}
-                    key={answer?.stepIndex}
-                >
-                    <VideoPlayer
-                        video={videoSet}
-                        style={{ width: "40%" }}
-                        controls={false}
-                        noInteraction={true}
-                        light={false}
-                        playing={true}
-                        loop={true}
-                        faded={false}
-                        muted={true}
-                        volume={0}
-                        scaleToFitViewport={false}
-                        startSecond={video?.startSecond ?? 0}
-                        stopSecond={video?.stopSecond}
-                        fadeInWhenReady={false}
-                        onReady={() => {
-                            //setShowBg(false);
-                        }}
-                        //onPlay={() => {
-                        //  setIsVideoPlaying(true);
-                        //}}
-                    />
-                    <Box className={styles.content} p={2}>
-                        <Box position={"relative"} zIndex={1}>
-                            <Row p={0} gap={2}>
-                                <Item>
-                                    <Avatar
-                                        className={styles.logo}
-                                        src={logo}
-                                    />
-                                </Item>
-                                <Item position={"bottom"}>
-                                    <h2 className={styles.title}>{title}</h2>
-                                </Item>
-                            </Row>
-                            <Row mt={4} alignItems={"center"}>
-                                <Item>
-                                    <div className={styles.team}>{brand}</div>
-                                </Item>
-                                <Item position={"right"}>
-                                    <div className={styles.date}>{date}</div>
-                                </Item>
-                            </Row>
-                        </Box>
-                    </Box>
-                </Box>
-            );
             return (
                 <Grid item>
-                    <CustomCard
-                        styles={styles1}
-                        brand={"Overwatch Official"}
-                        date={"02.04.2020"}
-                        cover={
-                            "https://cdn.vox-cdn.com/thumbor/C6_-SDnnoFdS19XRH4XvAYN1BT8=/148x0:1768x1080/1400x1400/filters:focal(148x0:1768x1080):format(jpeg)/cdn.vox-cdn.com/uploads/chorus_image/image/49641465/tracer_overwatch.0.0.jpg"
-                        }
-                        logo={
-                            "https://d3fa68hw0m2vcc.cloudfront.net/bf4/156511609.jpeg"
-                        }
-                        title={
-                            <React.Fragment>
-                                Astronomy Binoculars
-                                <br />A Great Alternative
-                            </React.Fragment>
-                        }
-                    />
+                    <Fab
+                        aria-label={"record-btn"}
+                        className={clsx(styles.recordBtn, "record-btn")}
+                        color="primary"
+                        onClick={() => startRecognition()}
+                        style={{
+                            background:
+                                "linear-gradient(75deg, var(--red-1), var(--red-3",
+                        }}
+                    >
+                        <Mic
+                            className={clsx(
+                                "record-icon",
+                                styles.recordIcon,
+                                speechRecognizer?.state
+                            )}
+                        />
+                    </Fab>
                 </Grid>
             );
         }
@@ -1088,6 +1135,7 @@ const Quiz = (props) => {
 
                                 const item = items[itemIndex];
                                 const imageItem = getOneImageItem(item);
+
                                 const imgURL =
                                     imageItem?.urls?.small ??
                                     imageItem?.urls?.regular;
@@ -1271,13 +1319,15 @@ const Quiz = (props) => {
 
     useEffect(() => {
         if (currentRound.type === SAY__REPEAT) {
-            setShowBg(false);
-            const answerVideo =
-                items?.[currentRound.correctAnswer?.itemIndex]?.videoSet ??
-                items?.[currentRound.correctAnswer?.itemIndex]?.links;
-            return setVideo(answerVideo);
+            const correctItem = items?.[currentRound.correctAnswer?.itemIndex];
+            const answerVideo = correctItem?.videoSet ?? correctItem?.links;
+            setVideo(answerVideo);
+            if (correctItem?.completed) {
+                debugger;
+                setShowBg(false);
+            }
+            return;
         }
-        setShowBg(false);
     }, [currentRound]);
 
     useEffect(() => {

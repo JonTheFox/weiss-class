@@ -35,6 +35,8 @@ const Entrance = ({
                         e.preventDefault();
                         isSoundOn && synthVoice.say(header + " " + subheader);
                     }}
+                    //size="large"
+                    pStyle={{ fontSize: "1.75rem" }}
                 >
                     <SplitText
                         initialPose="exit"

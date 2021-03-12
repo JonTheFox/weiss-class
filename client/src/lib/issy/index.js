@@ -141,8 +141,8 @@ const getIntBetween = (min, max) => {
     return Math.floor(Math.random() * (max - min)) + min;
 };
 
-const pickRandomFrom = (arr = [], numItems = 1, excludedIndexes = []) => {
-    if (our(arr).isNot.anArray) {
+const pickRandomFrom = (arr, numItems = 1, excludedIndexes = []) => {
+    if (!our(arr).anArray) {
         return null;
     }
     const ln = arr.length;

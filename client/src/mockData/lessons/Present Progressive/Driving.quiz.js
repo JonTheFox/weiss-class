@@ -1,23 +1,25 @@
-const { VideoCentered } = require("../../slideTemplates.js");
+const { Quiz } = require("../../slideTemplates.js");
 
-const videoSet = require("./presentProgressiveVideos.js").bikeRidingFirstPerson;
+// const videoSet = require("./presentProgressiveVideos.js").skiing;
 
-const CoverPage = {
+const DrivingQuiz = {
 	//bgImage
 	bg: "var(--white)",
 	pages: [
 		{
-			templateName: VideoCentered,
+			templateName: Quiz,
 			heading: "Present Progressive",
 			//subheading: "Living the moment",
 			//title: "I am driving.",
-			videoSet,
-			paragraphs: [{ text: "I am riding my motorcycle. " }],
+			//videoSet,
+			bgClass: "cloud-up",
+			//items: [],
+			//paragraphs: [{ text: "They are skiing. " }],
 		},
 	],
 };
 
-module.exports = CoverPage;
+module.exports = DrivingQuiz;
 
 /*
 

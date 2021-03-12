@@ -27,7 +27,8 @@ export default styled.div`
 		color: var(--white);
 		padding: calc(1 * var(--spacing)) calc(8 * var(--spacing));
 		border-radius: 1.5rem;
-		font-size: 1.25rem;
+		//font-size: 1.25rem;
+		font-size: 1.75rem;
 	}
 
 	.marquee {

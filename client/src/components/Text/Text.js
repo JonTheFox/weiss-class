@@ -17,7 +17,9 @@ const Text = (props) => {
 		readable = true,
 		variant = "cloudy", // or: "small"
 		style,
-		shadow = "", // One of: "dark"
+		shadow = "",
+		textStyle = {}, // One of: "dark"
+		pStyle = {},
 	} = props;
 
 	const _style = { ...style, padding: "var(--spacing)" };
@@ -34,6 +36,7 @@ const Text = (props) => {
 					pClassName,
 					shadow && `shadow--${shadow}`
 				)}
+				style={pStyle}
 			>
 				{children}
 			</p>

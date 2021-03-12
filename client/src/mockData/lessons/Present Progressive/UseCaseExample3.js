@@ -1,18 +1,18 @@
 const { BottomThirdCaption } = require("../../slideTemplates.js");
 
-const imageSet = require("./presentSimpleImages.js").alarm_clock;
+const videoSet = require("./presentProgressiveVideos.js").raining;
 
 const imageSize = "regular";
 
 const UseCaseExample4 = {
-	id: 6,
-	bgImage: imageSet[imageSize],
+	id: 203,
+	bgImage: videoSet[imageSize],
 	pages: [
 		{
 			templateName: BottomThirdCaption,
 			heading: "Present Simple",
 			subheading: "Routine",
-			paragraphs: [{ text: "I wake up every day at 7 o'clock." }],
+			p: ["I wake up every day at 7 o'clock."],
 		},
 	],
 };

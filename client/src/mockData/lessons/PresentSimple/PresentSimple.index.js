@@ -4,10 +4,12 @@ const UseCaseExample2 = require("./UseCaseExample2.js");
 const UseCaseExample3 = require("./UseCaseExample3.js");
 const UseCaseExample4 = require("./UseCaseExample4.js");
 
+const Breakfast = require("./examples/Breakfast.slide.js");
+
 const presentSimpleSlides = [
 	CoverPage,
 	UseCaseExample1,
-	UseCaseExample2,
+	Breakfast,
 	UseCaseExample3,
 	UseCaseExample4,
 ];

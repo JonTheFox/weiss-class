@@ -21,7 +21,7 @@ import usePromiseKeeper from "../../hooks/usePromiseKeeper.jsx";
 
 import videoState from "../../store/video.atom.js";
 import slideSelector from "../../store/slide.selector.js";
-import showBgState from "../../store/showBg.atom.js";
+// import showBgState from "../../store/showBg.atom.js";
 // import clsx from "clsx";
 
 import currentSlideIndexState from "../../store/currentSlideIndex.atom.js";
@@ -48,7 +48,7 @@ const Slider = ({ children, slides }) => {
   );
   const setVideo = useSetRecoilState(videoState);
   const slide = useRecoilValue(slideSelector);
-  const [showBg, setShowBg] = useRecoilState(showBgState);
+  //const [showBg, setShowBg] = useRecoilState(showBgState);
 
   //these will be populated by HeroSlider
   const nextSlideHandler = useRef();
@@ -88,12 +88,12 @@ const Slider = ({ children, slides }) => {
   useEffect(() => {
     //setFirstVideoSet();
     setIsVideoPlaying(true);
-    setShowBg(true);
+    //setShowBg(true);
   }, []);
 
-  useEffect(() => {
-    setShowBg(!isVideoPlaying);
-  }, [isVideoPlaying]);
+  // useEffect(() => {
+  //   setShowBg(!isVideoPlaying);
+  // }, [isVideoPlaying]);
 
   const getSnapshotSize = ({
     device,
@@ -148,9 +148,9 @@ const Slider = ({ children, slides }) => {
       onBeforeChange={(previousSlide, nextSlide) => {
         //console.log("onBeforeChange", previousSlide, nextSlide)
         setIsVideoPlaying(false);
-        promiseKeeper.stall(SLIDING_DURATION, "show bg").then(() => {
-          setShowBg(true);
-        });
+        // promiseKeeper.stall(SLIDING_DURATION, "show bg").then(() => {
+        //   setShowBg(true);
+        // });
         // setCurrentSlideIndex(nextSlide);
       }}
       onChange={(nextSlide) => {
@@ -163,7 +163,7 @@ const Slider = ({ children, slides }) => {
         // debugger;
         //const nextVideoSet = slides[newIndex]?.pages?.[0]?.videoSet;
         setIsVideoPlaying(true);
-        setShowBg(false);
+        // setShowBg(false);
 
         //setVideo(nextVideoSet);
       }}
