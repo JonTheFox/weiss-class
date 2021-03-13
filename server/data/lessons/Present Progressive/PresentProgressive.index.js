@@ -22,9 +22,9 @@ const PresentProgressiveSlides = [
 	//portrait
 	CoverPage,
 	DrivingInNiceScenery,
+	WorkingOnComputer,
 	DrivingQuiz,
 	GirlStudying,
-	WorkingOnComputer,
 	CookingSoy,
 	TastingPancake,
 	DancingLadies,

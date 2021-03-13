@@ -4,7 +4,7 @@ const {
 	CenteredHeadings,
 } = require("../../slideTemplates.js");
 
-const videoSet = require("./presentProgressiveVideos.js").tropicalBeach2;
+const videoSet = require("./presentProgressiveVideos.js").wavingCrashing;
 
 const CoverPage = {
 	//bgImage
@@ -28,7 +28,7 @@ const CoverPage = {
 				"When we are talking about what's happening at the moment, we are using 'Present Progressive'. ",
 				"Here are a few examples: ",
 			],
-			bgClass: "cloud-up",
+			bgClass: "glass",
 			opacity: 9,
 			bullets: [
 				"The sun is shining. ☀️",

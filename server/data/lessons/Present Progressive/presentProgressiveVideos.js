@@ -312,6 +312,23 @@ const tropicalBeach2 = {
 	playSound: true,
 };
 
+const wavingCrashing = {
+	user: {
+		name: "João Delicado",
+		url: "https://www.pexels.com/@joaodelicado",
+		id: 3121881,
+	},
+	links: {
+		phone:
+			"https://player.vimeo.com/external/433023696.sd.mp4?s=1bd3eb14192da2c6c2f97dc80285fe139c11380d&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/433023696.hd.mp4?s=bec802121a532aea3ed744a39b8a85c9a3ecaeb9&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/433023696.hd.mp4?s=bec802121a532aea3ed744a39b8a85c9a3ecaeb9&profile_id=175&oauth2_token_id=57447761",
+	},
+	image: "https://images.pexels.com/videos/4738429/pictures/preview-0.jpg",
+};
+
 const catWalkingOnPiano = {
 	user: {
 		name: "cottonbro",
@@ -959,6 +976,7 @@ module.exports = {
 	bikeRidingFirstPerson,
 	skiing,
 	tropicalBeach2,
+	wavingCrashing,
 
 	catWalkingOnPiano,
 	PracticingJudo,
