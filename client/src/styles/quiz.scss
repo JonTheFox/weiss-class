@@ -2,6 +2,12 @@
 	z-index: -200;
 }
 
+#root .quiz-page {
+	.size--large {
+		font-size: 2rem;
+	}
+}
+
 #root .quiz {
 	// height: 100%;
 	margin: 0;

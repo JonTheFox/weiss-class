@@ -71,8 +71,8 @@ const Slider = ({ children, slides }) => {
 
   useEffect(() => {
     goToSlide(currentSlideIndex);
-    const videoSet = getVideoSet(slides?.[currentSlideIndex]);
-    setVideo(videoSet);
+    // const videoSet = getVideoSet(slides?.[currentSlideIndex]);
+    // setVideo(videoSet);
   }, [currentSlideIndex]);
 
   const setFirstVideoSet = useCallback(() => {
@@ -198,7 +198,7 @@ const Slider = ({ children, slides }) => {
             bgImage = slide.bgImage || pages?.[0]?.bgImage || "";
           }
 
-          //const isCurrentlyViewed = slideIndex === currentSlideIndex;
+          const isCurrentlyViewed = slideIndex === currentSlideIndex;
 
           return (
             <PresentationSlide
@@ -213,6 +213,7 @@ const Slider = ({ children, slides }) => {
                 {...slide}
                 //isCurrentlyViewed={isCurrentlyViewed}
                 slideIndex={slideIndex}
+                isCurrentlyViewed={isCurrentlyViewed}
               />
             </PresentationSlide>
           );

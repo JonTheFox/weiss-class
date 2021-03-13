@@ -28,7 +28,7 @@ export default styled.div`
 		padding: calc(1 * var(--spacing)) calc(8 * var(--spacing));
 		border-radius: 1.5rem;
 		//font-size: 1.25rem;
-		font-size: 1.75rem;
+		font-size: 1.5rem;
 	}
 
 	.marquee {
@@ -44,7 +44,7 @@ export default styled.div`
 		margin-left: 0;
 
 		.letter {
-			font-size: 1.25rem;
+			font-size: 1rem;
 			margin: 0;
 			font-family: Nunito;
 			font-weight: bold;

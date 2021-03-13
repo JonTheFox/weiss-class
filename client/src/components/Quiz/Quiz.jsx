@@ -605,11 +605,10 @@ const Quiz = (props) => {
                 setShowItems(true);
             });
 
-            const delay =
-                DURATIONS.enter *
-                    1 *
-                    (!$quizState.current?.currentRound?.numAnswers ?? 1) +
-                0;
+            const _currentRound = $quizState.current?.currentRound;
+            const enterDuration = DURATIONS.enter;
+
+            const delay = enterDuration * 3 * _currentRound?.numAnswers;
 
             const presentItems = promiseKeeper.stall(delay, "present_items");
             logg(
@@ -1396,7 +1395,7 @@ const Quiz = (props) => {
                 poses={POSES.char_fadeIn}
                 styles={styles}
                 SplitText={SplitText}
-                className={"page"}
+                className={"page quiz-page"}
                 handlePrimaryClick={handleRetry}
                 onStart={() => {
                     fetchItems().then((items) => {

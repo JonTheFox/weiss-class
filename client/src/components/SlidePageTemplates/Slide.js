@@ -21,7 +21,8 @@ import ScrollSnap from "scroll-snap";
 
 import slideState from "../../store/slide.selector.js";
 
-import { useRecoilValue } from "recoil";
+import videoState from "../../store/video.atom.js";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
 const label = "Slide";
 const snapConfig = {
@@ -64,8 +65,15 @@ const Slide = (props) => {
 	// const [appUtils] = useContext(AppContext);
 	// const { PromiseKeeper, Logger } = appUtils;
 
-	const { pages = [], templateName = "", pageProps = [] } = props;
+	const {
+		pages = [],
+		templateName = "",
+		pageProps = [],
+		isCurrentlyViewed = false,
+	} = props;
 	const refs = useRef({ slide: {} });
+
+	const setVideo = useSetRecoilState(videoState);
 
 	const slide = useRecoilValue(slideState);
 
@@ -86,12 +94,20 @@ const Slide = (props) => {
 
 	useEffect(() => {
 		bindScrollSnap();
-
-		// const videoSet = slide?.pages?.[0]?.videoSet;
 	}, []);
 
-	// const { logg, loggError } = useLogg({ label });
-	// const promiseKeeper = usePromiseKeeper({ label });
+	useEffect(() => {
+		if (!isCurrentlyViewed) return;
+		const videoSet = pages?.[0]?.videoSet;
+		setVideo(videoSet);
+	}, [isCurrentlyViewed]);
+
+	// useEffect(() => {
+	// 	if (!isCurrentlyViewed) return;
+	// 	const videoSet = pages?.[0]?.videoSet;
+	// 	setVideo(videoSet);
+	// 	debugger;
+	// }, [slide]);
 
 	return (
 		<StyledContainer
