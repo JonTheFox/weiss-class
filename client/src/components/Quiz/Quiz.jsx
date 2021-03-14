@@ -419,7 +419,7 @@ const Quiz = (props) => {
     const {
         items,
         rounds,
-        currentRound,
+        currentRound = {},
         answerSlots,
         correctSlotIndex,
         currentStepIndex,
@@ -535,6 +535,10 @@ const Quiz = (props) => {
     );
 
     const getPhrases = (answer, items) => {
+        if (!answer) {
+            debugger;
+            return null;
+        }
         const itemIndex = answer.itemIndex;
         const item = items[itemIndex];
         const text = item?.label;
@@ -543,7 +547,8 @@ const Quiz = (props) => {
 
     const startRecognition = useCallback(
         (ev) => {
-            const phrases = getPhrases(currentRound.correctAnswer, items);
+            debugger;
+            const phrases = getPhrases(currentRound.correctItem, items);
             speechRecognizer = createSpeechRecognizer(phrases, {
                 onCorrect: async () => {
                     const sayCorrect = promiseKeeper.withRC(
@@ -571,19 +576,19 @@ const Quiz = (props) => {
             type: "createGame",
             payload: {
                 items,
-                config: { numAnswersRequired: 3, numAnswers: 2 },
-                rounds: [
-                    {
-                        type: MULTIPLE_ANSWER_CARDS,
-                        numAnswers: 2,
-                    },
-                    //  {
-                    //     type: SAY__REPEAT,
-                    //     numTimes: 3,
-                    //     numAnswersRequired: 1,
-                    //     numAnswers: 1,
-                    // },
-                ],
+                config: { numAnswersRequired: 1, numAnswers: 2 },
+                // rounds: [
+                //     {
+                //         type: MULTIPLE_ANSWER_CARDS,
+                //         numAnswers: 2,
+                //     },
+                //     //  {
+                //     //     type: SAY__REPEAT,
+                //     //     numTimes: 3,
+                //     //     numAnswersRequired: 1,
+                //     //     numAnswers: 1,
+                //     // },
+                // ],
             },
         });
         synthVoice.turnOn();
@@ -631,7 +636,7 @@ const Quiz = (props) => {
 
             const instructionMsg = createInstructionMsg(
                 correctItemLabel,
-                rounds[0].type
+                rounds[0]?.type
             );
 
             if (!instructionMsg) {

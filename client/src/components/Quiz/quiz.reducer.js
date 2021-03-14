@@ -35,9 +35,9 @@ class AnswerItem {
 
 class GameRound {
 	answers;
-	numAnswers;
+	numAnswers; //in a single question
 	numAnswersRequired;
-	correctAnswer;
+	correctItem;
 	step;
 	lastStep;
 	//step;
@@ -51,29 +51,41 @@ class GameRound {
 		roundIndex = 0,
 		type = ROUND_TYPES.SAY__REPEAT,
 		items,
+		correctItem,
 	}) {
 		//const _randomItemsIndexes = shuffle(itemsIndexes, 4);
-		const _numAnswers = Math.min(numAnswers, itemsIndexes.length);
+		const _numAnswers = Math.min(numAnswers, items.length);
 
 		const answers = [];
-		for (let i = 0; i < _numAnswers; i++) {
+		for (let stepIndex = 0; stepIndex < _numAnswers; stepIndex++) {
 			// const stepIndex = pickRandomFrom(slotIndexes, 1, [])
 			//stepIndex is the step within the current round. E.g. stepIndex=== 0 when a question hasn't been answered yet. stepIndex===1 when the first question has been answered. stepIndex===2 when the first two questions have been answers, etc.
+			let itemIndex;
+			let item;
+			let isCorrectItem;
 
-			const itemIndex = itemsIndexes[i];
-			const item = items[itemIndex];
+			if (stepIndex === 0) {
+				item = correctItem;
+				itemIndex = items?.indexOf(item);
+				isCorrectItem = true;
+			} else {
+				item = items?.[stepIndex];
+				itemIndex = items?.indexOf(item);
+				isCorrectItem = false;
+			}
 
 			answers.push(
 				new AnswerItem({
 					item,
 					itemIndex, //index in items list
-					stepIndex: i, //the step in which this answer is the correct one
+					stepIndex, //the step in which this answer is the correct one
+					isCorrectItem,
 				})
 			);
 		}
 
 		this.answers = answers;
-		this.correctAnswer = answers[0];
+		this.correctItem = answers[0];
 		this.numAnswers = _numAnswers;
 		this.numAnswersRequired = Math.min(numAnswersRequired, _numAnswers);
 		this.step = 0;
@@ -93,7 +105,7 @@ class Game {
 		numAnswersRequired = 4,
 		startRound = 0,
 		startStep = 0,
-		numShuffles = 3,
+		numShuffles = 0, //by default, order of items is not random
 		rounds = [],
 		//progress=0
 	}) {
@@ -107,117 +119,178 @@ class Game {
 			};
 			return _item;
 		});
-		if (numShuffles && is(numShuffles).aNumber)
-			_items = shuffle(_items, numShuffles);
+		//shuffle the items if desired
+		const shuffledItems =
+			numShuffles && is(numShuffles).aNumber
+				? shuffle(_items, numShuffles)
+				: _items;
 
-		const numTotalItems = _items.length;
+		const numTotalItems = shuffledItems.length;
 		const _rounds = [];
 
 		//first round consists of 1,  2 or 3 items
-		const firstRoundNumAnswers = Math.min(3, numAnswers);
+		// const firstRoundNumAnswers = Math.min(3, numAnswers);
 
-		const firstRoundAnswerIndexes = [];
-		for (let i = 0; i < items.length; i++) {
-			firstRoundAnswerIndexes.push(i);
-		}
+		// const firstRoundAnswerIndexes = [];
+		// for (let i = 0; i < items.length; i++) {
+		// 	firstRoundAnswerIndexes.push(i);
+		// }
 
-		const firstIndexes = shuffle(firstRoundAnswerIndexes, numShuffles);
+		let numTotalAnswersRequired = 0;
+		const flatGameRounds = shuffledItems
+			.map((item, itemIndex) => {
+				if (!item) return null;
+				const { numShuffles } = item;
+				//start easy
+				const numAnswers = itemIndex < 2 ? 2 : itemIndex < 6 ? 3 : 4;
+				const correctItem = item;
+				const roundItems = [correctItem];
+				//pick the wrong answers at random
+				for (let i = 0; i < numAnswers - 1; i++) {
+					/* Skip the current iteration by using the `continue` keyword.
+					 * Break out of the loop entirely by using the `break` keyword. */
 
-		const firstRound = new GameRound({
-			numAnswers: firstRoundNumAnswers,
-			itemsIndexes: firstIndexes,
-			roundIndex: 0,
-			type: rounds[0]?.type,
-			numAnswersRequired,
-			items,
-		});
-		_rounds.push(firstRound);
+					if (!shuffledItems) {
+						debugger;
+					}
 
-		const init = () => {
-			//if the total number of remaining items can't be divided wholly by #numAnswers, then make it a short round. A short round consists of less items than specified in numAnswers.
-			//The very first round is the shortest round possible: it consists of 2 answers (with either 1 or 2 of them being required for completing the round). The second round consists of 3 answers, and the following one consists of 4.
-			const round2StartIndex = firstRoundNumAnswers;
-			let numItemsLeft = numTotalItems - round2StartIndex;
-			let _numAnswers = 2;
-			let numTotalAnswersRequired = numAnswersRequired === 1 ? 1 : 2;
-			let isShortRound = false;
-			let roundIndex = 1;
+					let randomUniqueItem = pickRandomFrom(shuffledItems);
+					let j = 0;
+					while (
+						roundItems.includes(randomUniqueItem) &&
+						j < _items.length * 4
+					) {
+						randomUniqueItem = pickRandomFrom(shuffledItems);
+						j++;
+					}
 
-			for (
-				let i = round2StartIndex;
-				i < numTotalItems;
-				i += _numAnswers
-			) {
-				isShortRound = isShortRound || numItemsLeft % _numAnswers > 0;
-				_numAnswers = isShortRound
-					? Math.min(_numAnswers + 1, numAnswers)
-					: numAnswers;
+					roundItems.push(randomUniqueItem);
+				}
 
-				numTotalAnswersRequired += Math.min(
-					_numAnswers,
-					numAnswersRequired
+				const numAnswersRequired = 1;
+				numTotalAnswersRequired += numAnswersRequired;
+
+				const allItemRounds = Object.values(ROUND_TYPES).map(
+					(roundType, k) => {
+						const round = new GameRound({
+							type: roundType,
+							numAnswers, //for multiple-answer cards
+							numRepeats: 3, // for say__repeat
+							items: roundItems,
+							correctItem: item,
+							roundIndex: itemIndex,
+							numAnswersRequired: 1, //for multiple-answer cards,
+							numShuffles,
+						});
+
+						return round;
+					}
 				);
 
-				//get the indexes for the round
-				const itemsIndexes = [];
-				for (let j = 0; j < _numAnswers; j++) {
-					itemsIndexes.push(i + j);
-				}
-				// const shuffledItemsIndexes = shuffle(itemsIndexes, 1);
+				return allItemRounds;
+			})
+			.flat();
 
-				const roundItems = itemsIndexes.map((itemIndex) => {
-					return items[itemIndex];
-				});
+		const shuffledGameRounds =
+			numShuffles && is(numShuffles).aNumber
+				? shuffle(flatGameRounds, numShuffles)
+				: flatGameRounds;
 
-				const round = new GameRound({
-					itemsIndexes,
-					roundIndex,
-					items: roundItems,
-				});
-				_rounds.push(round);
+		logg("game rounds: ", shuffledGameRounds);
 
-				numItemsLeft -= _numAnswers;
-				isShortRound = false;
-				roundIndex++;
-			}
+		// const firstIndexes = shuffle(firstRoundAnswerIndexes, numShuffles);
 
-			this.rounds = _rounds;
+		// const firstRound = new GameRound({
+		// 	numAnswers: firstRoundNumAnswers,
+		// 	itemsIndexes: firstIndexes,
+		// 	roundIndex: 0,
+		// 	type: rounds[0]?.type,
+		// 	numAnswersRequired,
+		// 	items,
+		// });
+		// _rounds.push(firstRound);
 
-			this.currentRound = _rounds[startRound];
-			this.roundIndex = startRound;
+		//if the total number of remaining items can't be divided wholly by #numAnswers, then make it a short round. A short round consists of less items than specified in numAnswers.
+		//The very first round is the shortest round possible: it consists of 2 answers (with either 1 or 2 of them being required for completing the round). The second round consists of 3 answers, and the following one consists of 4.
+		// const round2StartIndex = firstRoundNumAnswers;
+		// let numItemsLeft = numTotalItems - round2StartIndex;
+		// let _numAnswers = 2;
+		// let numTotalAnswersRequired = numAnswersRequired === 1 ? 1 : 2;
+		// let isShortRound = false;
+		// let roundIndex = 1;
 
-			const _answerSlots = shuffle(
-				_rounds[startRound].answers,
-				_numAnswers
-			);
+		// for (let i = round2StartIndex; i < numTotalItems; i += _numAnswers) {
+		// 	isShortRound = isShortRound || numItemsLeft % _numAnswers > 0;
+		// 	_numAnswers = isShortRound
+		// 		? Math.min(_numAnswers + 1, numAnswers)
+		// 		: numAnswers;
 
-			this.answerSlots = _answerSlots;
-			const _correctSlotIndex = getCorrectSlotIndex(
-				_answerSlots,
-				startStep
-			);
-			this.correctSlotIndex = _correctSlotIndex;
-			const _correctItemIndex =
-				_answerSlots?.[_correctSlotIndex]?.itemIndex;
-			this.correctItemIndex = _correctItemIndex;
-			this.correctItem = _items?.[_correctItemIndex];
+		// 	numTotalAnswersRequired += Math.min(
+		// 		_numAnswers,
+		// 		numAnswersRequired
+		// 	);
 
-			this.step = startStep;
-			this.lastStep = numTotalAnswersRequired - 1;
-			this.numAnswersRequired = numAnswersRequired;
-			this.numAnswers = _numAnswers;
+		// 	//get the indexes for the round
+		// 	const itemsIndexes = [];
+		// 	for (let j = 0; j < _numAnswers; j++) {
+		// 		itemsIndexes.push(i + j);
+		// 	}
+		// 	// const shuffledItemsIndexes = shuffle(itemsIndexes, 1);
 
-			this.items = _items;
-			this.numTotalItems = numTotalItems;
-			this.numTotalAnswersRequired = numTotalAnswersRequired;
-			this.numTotalRounds = _rounds.length;
-			this.numTotalMistakes = 0;
+		// 	const roundItems = itemsIndexes.map((itemIndex) => {
+		// 		return items[itemIndex];
+		// 	});
 
-			this.progress =
-				parseInt(this.roundIndex / this.rounds.length) * 100;
-		};
+		// 	const round = new GameRound({
+		// 		itemsIndexes,
+		// 		roundIndex,
+		// 		items: roundItems,
+		// 	});
+		// 	_rounds.push(round);
 
-		init();
+		// 	numItemsLeft -= _numAnswers;
+		// 	isShortRound = false;
+		// 	roundIndex++;
+		// }
+
+		this.rounds = shuffledGameRounds;
+		//todo: make sure that this works. Mark previous rounds as completed
+		const firstRound = shuffledGameRounds[0];
+		this.currentRound = firstRound;
+		this.roundIndex = firstRound?.roundIndex;
+
+		//shuffle the answer slots
+		const answerSlotsRandomOrder = shuffle(
+			shuffledGameRounds[startRound]?.answers,
+			numAnswers * 2
+		);
+
+		debugger;
+
+		this.answerSlots = answerSlotsRandomOrder;
+		const _correctSlotIndex = getCorrectSlotIndex(
+			answerSlotsRandomOrder,
+			startStep
+		);
+		this.correctSlotIndex = _correctSlotIndex;
+		const _correctItemIndex =
+			answerSlotsRandomOrder?.[_correctSlotIndex]?.itemIndex;
+		this.correctItemIndex = _correctItemIndex;
+		this.correctItem = _items?.[_correctItemIndex];
+
+		this.step = startStep;
+
+		this.lastStep = numTotalAnswersRequired - 1;
+
+		this.numAnswersRequired = numAnswersRequired;
+		this.numAnswers = shuffledItems.length;
+		this.items = _items;
+		this.numTotalItems = numTotalItems;
+		this.numTotalAnswersRequired = numTotalAnswersRequired;
+		this.numTotalRounds = shuffledGameRounds.length;
+		this.numTotalMistakes = 0;
+
+		this.progress = parseInt(this.roundIndex / this.rounds.length) * 100;
 	}
 }
 
@@ -268,7 +341,7 @@ const quizReducer = (state, action) => {
 		currentRound,
 		roundIndex,
 		step,
-		correctAnswer,
+		correctItem,
 
 		answerSlots,
 		//correctSlotIndex
@@ -410,7 +483,7 @@ const quizReducer = (state, action) => {
 				isCorrect: false,
 			};
 			break;
-		case "correctAnswer":
+		case "correctItem":
 			return {
 				...state,
 				isWrong: false,
@@ -447,6 +520,9 @@ const quizReducer = (state, action) => {
 					rounds[roundIndex].completed = true;
 				}
 				const nextRound = rounds[nextRoundIndex];
+				if (!nextRound.answers) {
+					debugger;
+				}
 				const nextSlots = shuffle(
 					nextRound.answers,
 					nextRound.numAnswers
@@ -542,7 +618,7 @@ const quizReducer = (state, action) => {
 		// 		currentStep: rounds[roundIndex].answers[step]
 		// 	};
 		case "markMistake":
-			const markedAnswer = correctAnswer;
+			const markedAnswer = correctItem;
 			markedAnswer.numMistakes++;
 			return {
 				...state,
