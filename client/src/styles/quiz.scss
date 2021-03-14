@@ -34,6 +34,16 @@
 		z-index: 1000;
 	}
 
+	.record-btn {
+		width: 5rem;
+		height: 5rem;
+
+		svg {
+			width: calc(5rem - var(--spacing) * 4);
+			height: calc(5rem - var(--spacing) * 4);
+		}
+	}
+
 	--instruction--font-size: 1.5rem;
 
 	// z-index: 1;

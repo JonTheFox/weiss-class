@@ -35,12 +35,12 @@ const PresentProgressiveSlides = [
 	//FlyingByClouds,
 
 	//landscape
-	Raining,
-	BikeRidingFirstPerson,
-	Skiing,
-	FlyingAboveMountain,
-	CatsResting,
-	DogPlaying,
+	// Raining,
+	// BikeRidingFirstPerson,
+	// Skiing,
+	// FlyingAboveMountain,
+	// CatsResting,
+	// DogPlaying,
 ];
 
 module.exports = PresentProgressiveSlides;

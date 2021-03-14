@@ -44,6 +44,7 @@ class GameRound {
 	itemsIndexes;
 	roundIndex;
 	type;
+	numRepeats;
 	constructor({
 		itemsIndexes = [],
 		numAnswers = 4,
@@ -52,6 +53,7 @@ class GameRound {
 		type = ROUND_TYPES.SAY__REPEAT,
 		items,
 		correctItem,
+		numRepeats = 1,
 	}) {
 		//const _randomItemsIndexes = shuffle(itemsIndexes, 4);
 		const _numAnswers = Math.min(numAnswers, items.length);
@@ -93,6 +95,7 @@ class GameRound {
 		this.itemsIndexes = itemsIndexes;
 		this.roundIndex = roundIndex;
 		this.type = type;
+		this.numRepeats = numRepeats;
 	}
 }
 
@@ -147,9 +150,6 @@ class Game {
 				const roundItems = [correctItem];
 				//pick the wrong answers at random
 				for (let i = 0; i < numAnswers - 1; i++) {
-					/* Skip the current iteration by using the `continue` keyword.
-					 * Break out of the loop entirely by using the `break` keyword. */
-
 					if (!shuffledItems) {
 						debugger;
 					}
@@ -172,9 +172,14 @@ class Game {
 
 				const allItemRounds = Object.values(ROUND_TYPES).map(
 					(roundType, k) => {
+						const _numAnswers =
+							roundType === ROUND_TYPES.SAY__REPEAT
+								? 1
+								: numAnswers;
+
 						const round = new GameRound({
 							type: roundType,
-							numAnswers, //for multiple-answer cards
+							numAnswers: _numAnswers, //for multiple-answer cards
 							numRepeats: 3, // for say__repeat
 							items: roundItems,
 							correctItem: item,
@@ -265,8 +270,6 @@ class Game {
 			numAnswers * 2
 		);
 
-		debugger;
-
 		this.answerSlots = answerSlotsRandomOrder;
 		const _correctSlotIndex = getCorrectSlotIndex(
 			answerSlotsRandomOrder,
@@ -293,6 +296,61 @@ class Game {
 		this.progress = parseInt(this.roundIndex / this.rounds.length) * 100;
 	}
 }
+
+const goNextRound = ({
+	currentRoundIndex,
+	rounds,
+	state,
+	step,
+	numTotalRounds,
+	skipping,
+}) => {
+	const nextRoundIndex = currentRoundIndex + 1;
+	debugger;
+	if (nextRoundIndex >= numTotalRounds) {
+		//Already in final round.
+		// return { ...state, progress: 100 };
+		return state;
+	} else {
+		//More rounds to go. Proceed to the next one
+		//mark the current round as completed or skipped (default is completed)
+		if (skipping) {
+			rounds[currentRoundIndex].skipped = true;
+		} else {
+			rounds[currentRoundIndex].completed = true;
+		}
+		const nextRound = rounds[nextRoundIndex];
+		if (!nextRound.answers) {
+			debugger;
+		}
+		const nextSlots = shuffle(nextRound.answers, nextRound.numAnswers);
+		const nextCorrectSlotIndex = getCorrectSlotIndex(nextSlots, 0);
+		const nextCorrectItemIndex = nextSlots[nextCorrectSlotIndex].itemIndex;
+		const nextCorrectItem = state.items[nextCorrectItemIndex];
+
+		const progress = getPercent(nextRoundIndex, rounds.length);
+
+		logg("Quiz progress: ", progress);
+
+		debugger;
+
+		return {
+			...state,
+			rounds,
+			roundIndex: nextRoundIndex,
+			currentRound: nextRound,
+			answerSlots: nextSlots,
+			step: step + 1, //overall quiz step
+
+			correctSlotIndex: nextCorrectSlotIndex,
+			correctItemIndex: nextCorrectItemIndex,
+			correctItem: nextCorrectItem,
+			progress,
+			progressing: false,
+			type: nextRound.type,
+		};
+	}
+};
 
 const DEFAULT_CONFIG = {
 	items: [],
@@ -375,6 +433,7 @@ const quizReducer = (state, action) => {
 			// rounds[roundIndex].answers[step].completed = true;
 
 			//const { step, lastStep } = currentRound;
+			debugger;
 			const isSingleStep = currentRound?.items?.length;
 			const nextStep = Math.min(
 				currentRound.step + 1,
@@ -385,7 +444,20 @@ const quizReducer = (state, action) => {
 				return state; //already completed, no need for a re-render
 			}
 
-			const roundIsNowComplete = nextStep > currentRound.lastStep;
+			const roundIsNowComplete =
+				nextStep > currentRound.lastStep ||
+				nextStep + 1 > currentRound.numAnswersRequired;
+
+			// if (roundIsNowComplete) {
+			// 	return goNextRound({
+			// 		roundIndex,
+			// 		rounds,
+			// 		state,
+			// 		step,
+			// 		numTotalRounds,
+			// 		skipping: payload?.skipping,
+			// 	});
+			// }
 
 			_updatedRound.step = nextStep;
 			rounds[roundIndex] = _updatedRound;
@@ -399,9 +471,9 @@ const quizReducer = (state, action) => {
 			if (typeof state.items !== "undefined") {
 				const _items = state.items;
 				const nextCorrectItem = roundIsNowComplete
-					? {}
+					? null
 					: _items[nextCorrectItemIndex];
-
+				debugger;
 				return {
 					...state,
 					rounds,
@@ -507,50 +579,16 @@ const quizReducer = (state, action) => {
 			break;
 
 		case "goNextRound":
-			const nextRoundIndex = roundIndex + 1;
-			if (nextRoundIndex >= numTotalRounds) {
-				//currently in final round. Stay in current state (prevent an unnecessary re-render)
-				return { ...state, progress: 100 };
-			} else {
-				//More rounds to go. Proceed to the next one
-				//mark the current round as completed or skipped (default is completed)
-				if (action.skipping) {
-					rounds[roundIndex].skipped = true;
-				} else {
-					rounds[roundIndex].completed = true;
-				}
-				const nextRound = rounds[nextRoundIndex];
-				if (!nextRound.answers) {
-					debugger;
-				}
-				const nextSlots = shuffle(
-					nextRound.answers,
-					nextRound.numAnswers
-				);
-				const nextCorrectSlotIndex = getCorrectSlotIndex(nextSlots, 0);
-				const nextCorrectItemIndex =
-					nextSlots[nextCorrectSlotIndex].itemIndex;
-				const nextCorrectItem = state.items[nextCorrectItemIndex];
+			debugger;
+			return goNextRound({
+				currentRoundIndex: roundIndex,
+				rounds,
+				state,
+				step,
+				skipping: action.skipping,
+				numTotalRounds,
+			});
 
-				const progress = getPercent(nextRoundIndex, rounds.length);
-
-				logg("Quiz progress: ", progress);
-
-				return {
-					...state,
-					rounds,
-					roundIndex: nextRoundIndex,
-					currentRound: nextRound,
-					answerSlots: nextSlots,
-					step: step + 1, //overall quiz step
-
-					correctSlotIndex: nextCorrectSlotIndex,
-					correctItemIndex: nextCorrectItemIndex,
-					correctItem: nextCorrectItem,
-					progress,
-					progressing: false,
-				};
-			}
 		case "goBackRound":
 			if (roundIndex <= 0) {
 				//currently in first round. stay in place

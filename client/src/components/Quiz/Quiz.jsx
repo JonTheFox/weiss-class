@@ -186,6 +186,7 @@ const { MULTIPLE_ANSWER_CARDS, SAY__REPEAT } = ROUND_TYPES;
 // const PosedOverlay = posed.li(POSES.card__pressable);
 
 const createInstructionMsg = (itemName = "", type = "touch") => {
+    debugger;
     if (type === SAY__REPEAT) {
         return `Say: \n"${itemName}"`;
     }
@@ -545,29 +546,21 @@ const Quiz = (props) => {
         return [text];
     };
 
-    const startRecognition = useCallback(
-        (ev) => {
-            debugger;
-            const phrases = getPhrases(currentRound.correctItem, items);
-            speechRecognizer = createSpeechRecognizer(phrases, {
-                onCorrect: async () => {
-                    const sayCorrect = promiseKeeper.withRC(
-                        synthVoice.say("Correct!!"),
-                        {
-                            resolveOnError: true,
-                            label: "sayCorrect",
-                        }
-                    );
-                    handleCorrectAnswer();
-                    await sayCorrect;
-                    dispatch({ type: "clearCorrect", payload: {} });
-                },
-            });
-            speechRecognizer.listen();
-            // speechRecognizer.listenFor(phrases);
-        },
-        [currentRound, items, getPhrases, createSpeechRecognizer]
-    );
+    const startRecognition = useCallback(() => {
+        const phrases = getPhrases(currentRound.correctItem, items);
+        speechRecognizer = createSpeechRecognizer(phrases, {
+            onCorrect: async ({ transricpt }) => {
+                processAnswer({
+                    selectedStepIndex: 0,
+                    selectedAnswerSlot: answerSlots[0],
+                    currentRound,
+                    selectedSlotIndex: 0,
+                });
+            },
+        });
+        speechRecognizer.listen();
+        // speechRecognizer.listenFor(phrases);
+    }, [currentRound, items, getPhrases, createSpeechRecognizer]);
 
     const initGame = async (config = {}) => {
         const { restart, items } = config;
@@ -577,18 +570,18 @@ const Quiz = (props) => {
             payload: {
                 items,
                 config: { numAnswersRequired: 1, numAnswers: 2 },
-                // rounds: [
-                //     {
-                //         type: MULTIPLE_ANSWER_CARDS,
-                //         numAnswers: 2,
-                //     },
-                //     //  {
-                //     //     type: SAY__REPEAT,
-                //     //     numTimes: 3,
-                //     //     numAnswersRequired: 1,
-                //     //     numAnswers: 1,
-                //     // },
-                // ],
+                rounds: [
+                    {
+                        type: MULTIPLE_ANSWER_CARDS,
+                        numAnswers: 2,
+                    },
+                    //  {
+                    //     type: SAY__REPEAT,
+                    //     numTimes: 3,
+                    //     numAnswersRequired: 1,
+                    //     numAnswers: 1,
+                    // },
+                ],
             },
         });
         synthVoice.turnOn();
@@ -616,10 +609,6 @@ const Quiz = (props) => {
             const delay = enterDuration * 3 * _currentRound?.numAnswers;
 
             const presentItems = promiseKeeper.stall(delay, "present_items");
-            logg(
-                "initGame: After stall(), promiseKeeper.promises",
-                promiseKeeper.promises
-            );
 
             const {
                 correctSlotIndex,
@@ -630,6 +619,7 @@ const Quiz = (props) => {
 
             await presentItems;
             const { items } = $quizState.current;
+            debugger;
             const correctItemLabel = capitalizeFirstLetter(
                 items[correctItemIndex]?.label ?? ""
             );
@@ -638,7 +628,6 @@ const Quiz = (props) => {
                 correctItemLabel,
                 rounds[0]?.type
             );
-
             if (!instructionMsg) {
                 loggError("NO INSTRUCTION MSG???");
             }
@@ -661,7 +650,7 @@ const Quiz = (props) => {
             if (!sayInstruction.resolved) {
                 debugger;
                 logg(
-                    "sayInstruction did not really resolve, but resolveOnError flag was passed to PromiseKeeper.withRC :)"
+                    "sayInstruction did not really resolve, but resolveOnError flag had been passed to PromiseKeeper.withRC :)"
                 );
             }
 
@@ -728,28 +717,27 @@ const Quiz = (props) => {
         return true;
     }, [promiseKeeper, setPromptContent]);
 
-    const handlePressEnd = useCallback(
-        async (ev, selectedAnswerStep, selectedAnswerSlot, currentRound) => {
-            ev.preventDefault();
-            if (!$active.current || selectedAnswerStep < $currentRound.step) {
-                return null;
-            }
-
-            ev.preventDefault && ev.preventDefault();
-            ev.stopPropagation && ev.stopPropagation();
-
-            dispatch({ type: "clearCorrect", payload: {} });
-
-            const { step, roundIndex } = $currentRound.current;
-
-            if (!step === $quizState.current.step) {
-                debugger;
-            }
-
-            let wrongAnswer =
-                selectedAnswerSlot !== $quizState.current.correctSlotIndex;
-
+    const processAnswer = useCallback(
+        async ({
+            selectedStepIndex,
+            selectedSlotIndex,
+            selectedAnswerSlot,
+            currentRound,
+        }) => {
             try {
+                dispatch({ type: "clearCorrect", payload: {} });
+
+                const { step, roundIndex } = $currentRound.current;
+
+                if (!step === $quizState.current.step) {
+                    debugger;
+                }
+
+                const wrongAnswer =
+                    selectedSlotIndex !== $quizState.current.correctSlotIndex;
+
+                debugger;
+
                 if (quizIsDone) {
                     return "quiz is done";
                 }
@@ -768,10 +756,7 @@ const Quiz = (props) => {
 
                 //correct answer
                 setActive(false);
-                //dispatch({ type: "correctAnswer" });
-
                 const nextStep = step + 1;
-
                 const sayCorrect = promiseKeeper.withRC(
                     synthVoice.say("Correct!!"),
                     {
@@ -781,12 +766,17 @@ const Quiz = (props) => {
                 );
                 handleCorrectAnswer();
                 await sayCorrect;
+
                 dispatch({ type: "clearCorrect", payload: {} });
 
                 const { lastStep, answers } = $currentRound.current;
                 const { items } = $quizState.current;
 
-                if (nextStep <= lastStep) {
+                if (
+                    nextStep <= lastStep &&
+                    nextStep < currentRound.numAnswersRequired
+                ) {
+                    debugger;
                     //There are still some items left to match. Prepare for the next step
 
                     const isLastStep = nextStep === lastStep;
@@ -800,10 +790,10 @@ const Quiz = (props) => {
                     const nextCorrectItemIndex = answers.filter(
                         (answer) => answer.stepIndex === nextStep
                     )[0].itemIndex;
+                    const nextCorrectItem = items[nextCorrectItemIndex];
                     const instructionMsg = createInstructionMsg(
-                        capitalizeFirstLetter(
-                            items[nextCorrectItemIndex]?.label
-                        ) || "BALAGAN"
+                        capitalizeFirstLetter(nextCorrectItem?.label) || "",
+                        $quizState.current?.currentRound?.type
                     );
 
                     animationFrame = window.requestAnimationFrame(() => {
@@ -852,7 +842,6 @@ const Quiz = (props) => {
                         synthVoice.say(congratsMsg),
                         { resolveOnError: true, label: "sayCongrats" }
                     );
-
                     await sayCongrats;
 
                     //fade out items
@@ -861,6 +850,8 @@ const Quiz = (props) => {
                     });
 
                     const nextRoundIndex = roundIndex + 1;
+
+                    debugger;
 
                     if (nextRoundIndex < quizState.numTotalRounds) {
                         //More rounds left to go. Advance to the next round.
@@ -877,7 +868,8 @@ const Quiz = (props) => {
                             capitalizeFirstLetter(
                                 quizState.items[nextCorrectAnswer.itemIndex]
                                     .label
-                            )
+                            ),
+                            nextRound.type
                         );
 
                         const fadeOutItems = promiseKeeper.stall(
@@ -948,6 +940,8 @@ const Quiz = (props) => {
 
                         //setShowInstruction(false);
 
+                        debugger;
+
                         dispatch({ type: "goNextRound" });
 
                         const fadeOutOldItems = promiseKeeper.stall(
@@ -991,6 +985,30 @@ const Quiz = (props) => {
             }
         },
         [$currentRound, $quizState, quizState.answerSlots, $answerSlots]
+    );
+
+    const handlePressEnd = useCallback(
+        async ({
+            event,
+            selectedStepIndex,
+            selectedSlotIndex,
+            currentRound,
+            selectedSlot,
+        }) => {
+            event.preventDefault && event.preventDefault();
+            event.stopPropagation && event.stopPropagation();
+            if (!$active.current || selectedStepIndex < $currentRound.step) {
+                return null;
+            }
+
+            processAnswer({
+                selectedStepIndex,
+                currentRound,
+                selectedSlotIndex,
+                selectedSlot,
+            });
+        },
+        [processAnswer, $active.current]
     );
 
     const handleRetry = useCallback(
@@ -1051,8 +1069,6 @@ const Quiz = (props) => {
             </dt>
         </div>
     );
-
-    useEffect(() => {}, []);
 
     const Answers = ({
         styles,
@@ -1128,7 +1144,8 @@ const Quiz = (props) => {
                                 // handlePoseComplete("PosedList");
                             }}
                         >
-                            {answerSlots.map(({ stepIndex, itemIndex }, i) => {
+                            {answerSlots.map((answerSlot, i) => {
+                                const { stepIndex, itemIndex } = answerSlot;
                                 const isCorrectAnswer = stepIndex === step;
 
                                 const hasBeenAnswered =
@@ -1178,12 +1195,14 @@ const Quiz = (props) => {
                                         }}
                                         initialPose={"hidden"}
                                         onPressEnd={(e) =>
-                                            handlePressEnd(
-                                                e,
-                                                stepIndex,
-                                                i,
-                                                currentRound
-                                            )
+                                            handlePressEnd({
+                                                event: e,
+                                                selectedStepIndex: stepIndex,
+                                                selectedSlotIndex: i,
+                                                currentRound,
+
+                                                selectedSlot: answerSlot,
+                                            })
                                         }
                                         pos={numSteps - 1 - i}
                                         i={i}
@@ -1323,7 +1342,7 @@ const Quiz = (props) => {
 
     useEffect(() => {
         if (currentRound.type === SAY__REPEAT) {
-            const correctItem = items?.[currentRound.correctAnswer?.itemIndex];
+            const correctItem = items?.[currentRound.correctItem?.itemIndex];
             const answerVideo = correctItem?.videoSet ?? correctItem?.links;
             setVideo(answerVideo);
             if (correctItem?.completed) {
@@ -1340,13 +1359,13 @@ const Quiz = (props) => {
         $answerSlots.current = quizState.answerSlots;
         $correctSlotIndex.current = quizState.correctSlotIndex;
 
-        logg(
-            "$correctSlotIndex.current: " +
-                $correctSlotIndex.current +
-                " Also updated: $quizState, $currentRound, $answerSlots, $correctSlotIndex. ",
-            $currentRound.current,
-            $answerSlots.current
-        );
+        // logg(
+        //     "$correctSlotIndex.current: " +
+        //         $correctSlotIndex.current +
+        //         " Also updated: $quizState, $currentRound, $answerSlots, $correctSlotIndex. ",
+        //     $currentRound.current,
+        //     $answerSlots.current
+        // );
     }, [
         quizState.currentRound,
         quizState.answerSlots,
@@ -1355,7 +1374,6 @@ const Quiz = (props) => {
 
     useEffect(() => {
         $active.current = active;
-        logg("active: ", active);
     }, [active]);
 
     useEffect(() => {
