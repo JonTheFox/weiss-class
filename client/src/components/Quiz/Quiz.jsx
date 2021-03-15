@@ -43,6 +43,7 @@ import Box from "@material-ui/core/Box";
 import VideoPlayer from "../VideoPlayer/VideoPlayer.jsx";
 import Fab from "@material-ui/core/Fab";
 import Mic from "@material-ui/icons/Mic";
+import DraggableBall from "../DraggableBall/DraggableBall.jsx";
 
 // import "react-step-progress-bar/styles.css";
 //import { ProgressBar, Step } from "react-step-progress-bar";
@@ -177,10 +178,14 @@ const useStyles = makeStyles(({ palette }) => ({
         padding: "0 0.5rem",
         borderRadius: 12,
     },
+    recordBtnContainer: {
+        listStyle: "none",
+    },
 }));
 
 const PosedList = posed.ul(POSES.list);
 const PosedCard = posed.li(POSES.card__pressable___sans_shadow);
+const PosedContainer = posed.div(POSES.card__pressable___sans_shadow);
 const { MULTIPLE_ANSWER_CARDS, SAY__REPEAT } = ROUND_TYPES;
 
 // const PosedOverlay = posed.li(POSES.card__pressable);
@@ -503,7 +508,7 @@ const Quiz = (props) => {
                     // const _transcript = transcript.toLowerCase();
                     const _transcript = transcript.trim();
 
-                    if (phrases.includes(_transcript) || confidence > 0.8) {
+                    if (phrases.includes(_transcript) && confidence > 0.8) {
                         //correctly said
                         logg(`Recognized: "${_transcript}"`);
                         onCorrect && onCorrect({ transcript, confidence });
@@ -857,7 +862,8 @@ const Quiz = (props) => {
                         //More rounds left to go. Advance to the next round.
 
                         //advance to the next round manually (since useReducer does not provide up-to-date quizState in callbacks)
-                        const nextRound = quizState.rounds[nextRoundIndex];
+                        const nextRound =
+                            $quizState.current?.rounds?.[nextRoundIndex];
 
                         const nextCorrectAnswer = nextRound.answers.filter(
                             (answer) => answer.stepIndex === 0
@@ -1083,28 +1089,49 @@ const Quiz = (props) => {
         if (!answers || !answers.length) return null;
 
         const currentRoundType = currentRound.type;
+        const hasBeenAnswered = currentRound.completed || currentRound.skipped;
+        const isCardActive = active;
 
-        if (currentRoundType === SAY__REPEAT) {
+        if (currentRoundType === SAY__REPEAT && showItems) {
             return (
                 <Grid item>
-                    <Fab
-                        aria-label={"record-btn"}
-                        className={clsx(styles.recordBtn, "record-btn")}
-                        color="primary"
-                        onClick={() => startRecognition()}
-                        style={{
-                            background:
-                                "linear-gradient(75deg, var(--red-1), var(--red-3",
-                        }}
+                    <PosedContainer
+                        initialPose="hidden"
+                        pose={"visible"}
+                        className={clsx(
+                            styles.recordBtnContainer,
+                            "record-btn--container"
+                        )}
+                        pos={currentRound.numSteps - 1 - 0}
+                        i={0}
+                        //isCorrectItem={isCorrectAnswer}
+                        hasBeenAnswered={hasBeenAnswered}
+                        step={step}
+                        round={roundIndex}
+                        numAnswers={numAnswers}
+                        active={isCardActive}
                     >
-                        <Mic
-                            className={clsx(
-                                "record-icon",
-                                styles.recordIcon,
-                                speechRecognizer?.state
-                            )}
-                        />
-                    </Fab>
+                        <DraggableBall>
+                            <Fab
+                                aria-label={"record-btn"}
+                                className={clsx(styles.recordBtn, "record-btn")}
+                                color="primary"
+                                onClick={() => startRecognition()}
+                                style={{
+                                    background:
+                                        "linear-gradient(75deg, var(--red-1), var(--red-3",
+                                }}
+                            >
+                                <Mic
+                                    className={clsx(
+                                        "record-icon",
+                                        styles.recordIcon,
+                                        speechRecognizer?.state
+                                    )}
+                                />
+                            </Fab>
+                        </DraggableBall>
+                    </PosedContainer>
                 </Grid>
             );
         }
