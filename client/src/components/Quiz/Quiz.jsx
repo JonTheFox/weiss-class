@@ -508,7 +508,20 @@ const Quiz = (props) => {
                     // const _transcript = transcript.toLowerCase();
                     const _transcript = transcript.trim();
 
-                    if (phrases.includes(_transcript) && confidence > 0.8) {
+                    logg(
+                        "phrases.includes(_transcript) : ",
+                        phrases.includes(_transcript)
+                    );
+
+                    logg(
+                        "Number(confidence) > 0.8: ",
+                        Number(confidence) > 0.8
+                    );
+
+                    if (
+                        phrases.includes(_transcript) &&
+                        Number(confidence) > 0.8
+                    ) {
                         //correctly said
                         logg(`Recognized: "${_transcript}"`);
                         onCorrect && onCorrect({ transcript, confidence });
@@ -548,7 +561,12 @@ const Quiz = (props) => {
         const itemIndex = answer.itemIndex;
         const item = items[itemIndex];
         const text = item?.label;
-        return [text];
+        const withoutPunctuations = text.replace(/[.,?;]/gi, " ");
+        const trimmed = withoutPunctuations.trim();
+        logg("origianl text: ", text);
+        logg("replaced: ", withoutPunctuations);
+        logg("trimmed: ", trimmed);
+        return [trimmed];
     };
 
     const startRecognition = useCallback(() => {
@@ -854,9 +872,8 @@ const Quiz = (props) => {
                         setShowItems(false);
                     });
 
-                    const nextRoundIndex = roundIndex + 1;
-
-                    debugger;
+                    const nextRoundIndex =
+                        ($quizState.current?.currentRound?.roundIndex ?? 0) + 1;
 
                     if (nextRoundIndex < quizState.numTotalRounds) {
                         //More rounds left to go. Advance to the next round.
@@ -1019,6 +1036,7 @@ const Quiz = (props) => {
 
     const handleRetry = useCallback(
         (ev) => {
+            debugger;
             initGame({ restart: true, items });
             setQuizIsDone(false);
             setPromptContent("");

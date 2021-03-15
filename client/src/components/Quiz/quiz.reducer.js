@@ -93,6 +93,7 @@ class GameRound {
 		this.step = 0;
 		this.lastStep = _numAnswers - 1;
 		this.itemsIndexes = itemsIndexes;
+
 		this.roundIndex = roundIndex;
 		this.type = type;
 		this.numRepeats = numRepeats;
@@ -110,6 +111,7 @@ class Game {
 		startStep = 0,
 		numShuffles = 0, //by default, order of items is not random
 		rounds = [],
+
 		//progress=0
 	}) {
 		//make sure that numAnswersRequired is not (accidently) greater than numAnswers
@@ -143,7 +145,8 @@ class Game {
 		const flatGameRounds = shuffledItems
 			.map((item, itemIndex) => {
 				if (!item) return null;
-				const { numShuffles } = item;
+				const { numShuffles, numRepeats } = item;
+
 				//start easy
 				const numAnswers = itemIndex < 2 ? 2 : itemIndex < 6 ? 3 : 4;
 				const correctItem = item;
@@ -171,7 +174,7 @@ class Game {
 				numTotalAnswersRequired += numAnswersRequired;
 
 				const allItemRounds = Object.values(ROUND_TYPES).map(
-					(roundType, k) => {
+					(roundType) => {
 						const _numAnswers =
 							roundType === ROUND_TYPES.SAY__REPEAT
 								? 1
@@ -180,10 +183,9 @@ class Game {
 						const round = new GameRound({
 							type: roundType,
 							numAnswers: _numAnswers, //for multiple-answer cards
-							numRepeats: 3, // for say__repeat
+							numRepeats, // for say__repeat
 							items: roundItems,
 							correctItem: item,
-							roundIndex: itemIndex,
 							numAnswersRequired: 1, //for multiple-answer cards,
 							numShuffles,
 						});
@@ -200,6 +202,10 @@ class Game {
 			numShuffles && is(numShuffles).aNumber
 				? shuffle(flatGameRounds, numShuffles)
 				: flatGameRounds;
+
+		shuffledGameRounds.map((round, roundIndex) => {
+			round.roundIndex = roundIndex;
+		});
 
 		logg("game rounds: ", shuffledGameRounds);
 
@@ -416,7 +422,6 @@ const quizReducer = (state, action) => {
 	switch (action.type) {
 		case "createGame":
 			const { config = {} } = payload;
-
 			const game = new Game({
 				...DEFAULT_CONFIG,
 				...config, //give precedence
@@ -424,8 +429,8 @@ const quizReducer = (state, action) => {
 				numShuffles: 3,
 				rounds: payload.rounds || state.rounds,
 			});
-
 			logg("Initialized Game: ", game);
+			debugger;
 			return game; //this will be the new state
 			break;
 
