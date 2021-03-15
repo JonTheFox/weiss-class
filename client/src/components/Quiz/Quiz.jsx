@@ -55,8 +55,8 @@ import styles from "./quiz.module.scss";
 
 let speechRecognizer;
 
-const getAorAn = (noun = "") =>
-    ["a", "e", "i", "o", "u"].includes(noun?.[0]?.toLowerCase()) ? "an" : "a";
+// const getAorAn = (noun = "") =>
+//     ["a", "e", "i", "o", "u"].includes(noun?.[0]?.toLowerCase()) ? "an" : "a";
 
 const SFX = {
     roundComplete: {
@@ -191,7 +191,6 @@ const { MULTIPLE_ANSWER_CARDS, SAY__REPEAT } = ROUND_TYPES;
 // const PosedOverlay = posed.li(POSES.card__pressable);
 
 const createInstructionMsg = (itemName = "", type = "touch") => {
-    debugger;
     if (type === SAY__REPEAT) {
         return `Say: \n"${itemName}"`;
     }
@@ -207,9 +206,6 @@ const createInstructionMsg = (itemName = "", type = "touch") => {
 };
 
 const fetchItems = async () => {
-    //currently take it from the static props
-    // await promiseKeeper.stall(1500);
-
     const _items = [
         {
             label: "I am driving.",
@@ -563,9 +559,6 @@ const Quiz = (props) => {
         const text = item?.label;
         const withoutPunctuations = text.replace(/[.,?;]/gi, " ");
         const trimmed = withoutPunctuations.trim();
-        logg("origianl text: ", text);
-        logg("replaced: ", withoutPunctuations);
-        logg("trimmed: ", trimmed);
         return [trimmed];
     };
 
@@ -629,7 +622,10 @@ const Quiz = (props) => {
             const _currentRound = $quizState.current?.currentRound;
             const enterDuration = DURATIONS.enter;
 
-            const delay = enterDuration * 3 * _currentRound?.numAnswers;
+            const delay =
+                rounds?.[0]?.type === SAY__REPEAT
+                    ? 0
+                    : enterDuration * 3 * _currentRound?.numAnswers;
 
             const presentItems = promiseKeeper.stall(delay, "present_items");
 
@@ -1110,12 +1106,12 @@ const Quiz = (props) => {
         const hasBeenAnswered = currentRound.completed || currentRound.skipped;
         const isCardActive = active;
 
-        if (currentRoundType === SAY__REPEAT && showItems) {
+        if (currentRoundType === SAY__REPEAT) {
             return (
                 <Grid item>
                     <PosedContainer
                         initialPose="hidden"
-                        pose={"visible"}
+                        pose={showItems ? "visible" : "hidden"}
                         className={clsx(
                             styles.recordBtnContainer,
                             "record-btn--container"
@@ -1508,7 +1504,6 @@ const Quiz = (props) => {
                     styles.showBefore,
                     styles.hasAfter,
                     "quiz page",
-                    "cancal-white-canvas",
                     styles[background],
                     //background,
                     showBg && "has-before show-before has-after",

@@ -145,6 +145,7 @@ class Game {
 		const flatGameRounds = shuffledItems
 			.map((item, itemIndex) => {
 				if (!item) return null;
+				debugger;
 				const { numShuffles, numRepeats } = item;
 
 				//start easy
@@ -338,8 +339,6 @@ const goNextRound = ({
 
 		logg("Quiz progress: ", progress);
 
-		debugger;
-
 		return {
 			...state,
 			rounds,
@@ -435,11 +434,6 @@ const quizReducer = (state, action) => {
 			break;
 
 		case "goNextStep":
-			// rounds[roundIndex].answers[step].completed = true;
-
-			//const { step, lastStep } = currentRound;
-			debugger;
-			const isSingleStep = currentRound?.items?.length;
 			const nextStep = Math.min(
 				currentRound.step + 1,
 				currentRound.lastStep + 1
@@ -584,7 +578,6 @@ const quizReducer = (state, action) => {
 			break;
 
 		case "goNextRound":
-			debugger;
 			return goNextRound({
 				currentRoundIndex: roundIndex,
 				rounds,
