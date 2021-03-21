@@ -94,6 +94,8 @@ export default function SignIn(props) {
 
 			const { error, wrongCredentials, loggedIn, user } = ajaxResult;
 
+			debugger;
+
 			if (error) throw new Error(error);
 			if (wrongCredentials) {
 				throw new Error(
@@ -103,13 +105,14 @@ export default function SignIn(props) {
 			if (!loggedIn) {
 				throw new Error("Login failed for an unknown reason.");
 			}
-			const { first_name, last_name, role } = user;
+			const { first_name, last_name, role, profile_pic_url } = user;
 			const loggedInUser = {
 				email,
 				password,
 				role,
 				first_name,
 				last_name,
+				profile_pic_url,
 			};
 			// appState.setUser(loggedInUser, rememberMe);
 			setUser(loggedInUser);

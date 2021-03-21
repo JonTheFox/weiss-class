@@ -14,6 +14,7 @@ import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
 import IconButton from "@material-ui/core/IconButton";
+import Avatar from "@material-ui/core/Avatar";
 import Home from "@material-ui/icons/Home";
 import Refresh from "@material-ui/icons/Refresh";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -43,15 +44,7 @@ import { withRouter } from "react-router";
 import { AppContext } from "../../contexts/AppContext.jsx";
 import { DeviceContext } from "../../contexts/DeviceContext.jsx";
 import userState from "../../store/user.atom.js";
-import {
-  // atom,
-  // selector,
-  useRecoilState,
-  useRecoilValue,
-  useSetRecoilState,
-} from "recoil";
-
-import ENDPOINTS from "../../AJAX/ajax-endpoints.js";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 
 import "./_Appbar.scss";
 
@@ -90,7 +83,7 @@ const useStyles = makeStyles((theme) => ({
   // },
   title: {
     flexGrow: 1,
-    display: "none",
+
     [theme.breakpoints.up("sm")]: {
       display: "block",
     },
@@ -200,10 +193,10 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "0.75rem",
   },
   avatar: {
-    marginRight: "calc(2 * var(--spacing))",
-    backgroundColor: "var(--secondary)",
-    width: "24px",
-    height: "24px",
+    // marginRight: "calc(2 * var(--spacing))",
+    // backgroundColor: "var(--secondary)",
+    width: "32px",
+    height: "32px",
   },
 }));
 
@@ -398,6 +391,9 @@ const ResponsiveDrawer = (props) => {
     </div>
   );
 
+  debugger;
+
+  console.log("user: ", user);
   return (
     <div className={clsx("appbar-container unselectable")}>
       <AppBar className={`${classes.appBar} appbar`} elevation={1}>
@@ -420,57 +416,8 @@ const ResponsiveDrawer = (props) => {
             noWrap
             onClick={() => handleLinkClick(`${match.path}${APP_ROUTE}`)}
           >
-            Weiss English
+            Weiss
           </Typography>
-
-          <div className={clsx("search", classes.search)}>
-            <Autocomplete
-              className={clsx(classes.autoComplete, "auto-complete")}
-              classes={{
-                root: classes.inputRoot,
-              }}
-              options={searchOptions}
-              groupBy={appState.searchables.groupBy}
-              //defaultValue={appState.searchables.list[0]}
-              getOptionsLabel={(option) => {
-                return option.title || option.name || option.v1;
-              }}
-              //TODO: fix this.. it doesnt get the updated getOptionLabel after appState.setSearchables()
-              autoComplete={true}
-              placeholder={searchOptions.placeholder || "Search…"}
-              autoHighlight={true}
-              autoSelect={true}
-              clearOnEscape={false}
-              disableClearable={false}
-              disableCloseOnSelect={false}
-              disabled={false}
-              loading={false}
-              loadingText={"working.."}
-              noOptionsText={"Nothing was found."}
-              renderInput={(params) => (
-                <React.Fragment>
-                  <div className={clsx("search-icon", classes.searchIcon)}>
-                    <SearchIcon />
-                  </div>
-
-                  <TextField
-                    {...params}
-                    // label="search-term"
-                    variant="outlined"
-                    fullWidth
-                  />
-                </React.Fragment>
-              )}
-              onChange={(ev, searchable) => {
-                sharedRefs.current.selectedSearchable = searchable;
-                logg("selected searchable: ", searchable);
-                if (appState.searchables.onChange) {
-                  appState.searchables.onChange(searchable);
-                }
-              }}
-              aria-label="search"
-            ></Autocomplete>
-          </div>
 
           {user ? (
             <div>
@@ -478,10 +425,18 @@ const ResponsiveDrawer = (props) => {
                 aria-label="user account"
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
-                onClick={handleUserMenuClick}
+                //  onClick={handleUserMenuClick}
                 color="inherit"
               >
-                <AccountCircle />
+                <div
+                  className={clsx("settings_bar", classes.settings_bar)}
+                ></div>
+                <Avatar
+                  alt={user?.first_name}
+                  src={user?.profile_pic_url}
+                  className={classes.avatar}
+                  onClick={() => handleLinkClick("/login")}
+                />
               </IconButton>
               <Menu
                 id="menu-appbar"

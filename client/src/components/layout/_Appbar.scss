@@ -124,3 +124,9 @@
 	> div {
 	padding: 0;
 }
+
+#root .appbar--toolbar {
+	display: flex;
+	justify-content: space-between;
+	flex-flow: row;
+}

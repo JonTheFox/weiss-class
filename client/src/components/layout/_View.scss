@@ -14,6 +14,7 @@
 	position: relative;
 	overflow: hidden;
 	display: flex;
+	height: 100%;
 }
 
 #root .view:not(*.view--responsive) {
