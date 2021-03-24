@@ -192,7 +192,7 @@ const { MULTIPLE_ANSWER_CARDS, SAY__REPEAT } = ROUND_TYPES;
 
 const createInstructionMsg = (itemName = "", type = "touch") => {
     if (type === SAY__REPEAT) {
-        return `Say: \n"${itemName}"`;
+        return `Say: "${itemName}"`;
     }
     //  if(type === MULTIPLE_ANSWER_CARDS) {
     return itemName || "";
@@ -603,10 +603,8 @@ const Quiz = (props) => {
         });
         synthVoice.turnOn();
         synthVoice.wakeUp();
-
         setActive(false);
         $active.current = false;
-
         setGameStarted(true);
 
         const gameCreated = await promiseKeeper.withRC(
@@ -624,9 +622,11 @@ const Quiz = (props) => {
             const enterDuration = DURATIONS.enter;
 
             const delay =
-                rounds?.[0]?.type === SAY__REPEAT
+                $quizState.current?.rounds?.[0]?.type === SAY__REPEAT
                     ? 0
                     : enterDuration * 3 * _currentRound?.numAnswers;
+
+            debugger;
 
             const presentItems = promiseKeeper.stall(delay, "present_items");
 
@@ -637,6 +637,7 @@ const Quiz = (props) => {
                 rounds,
                 currentRound,
                 items,
+                answerSlots,
             } = $quizState.current;
 
             await presentItems;
@@ -653,7 +654,7 @@ const Quiz = (props) => {
                 correctItemLabel,
                 rounds[0]?.type
             );
-            debugger;
+
             if (!instructionMsg) {
                 loggError("NO INSTRUCTION MSG???");
             }
@@ -683,13 +684,24 @@ const Quiz = (props) => {
                 //round 1 starts
                 logg("Round 1 starts!");
                 setActive(true);
-                const eventType =
-                    items?.[0]?.type === MULTIPLE_ANSWER_CARDS
-                        ? MULTIPLE_ANSWER_CARDS
-                        : "touch";
+
+                const roundType = $quizState.current.currentRound?.type;
+
+                let eventType;
+                switch (roundType) {
+                    case MULTIPLE_ANSWER_CARDS:
+                        eventType = "touch";
+                        break;
+                    case SAY__REPEAT:
+                        eventType = "say";
+                        break;
+                    default:
+                        eventType = "touch";
+                        break;
+                }
 
                 if (eventType === SAY__REPEAT) {
-                    speechRecognizer.listenFor();
+                    speechRecognizer.listen();
                 }
 
                 setPromptContent({ eventType });
@@ -761,8 +773,6 @@ const Quiz = (props) => {
 
                 const wrongAnswer = selectedSlot?.item !== correctItem;
 
-                debugger;
-
                 if (quizIsDone) {
                     return "quiz is done";
                 }
@@ -801,7 +811,6 @@ const Quiz = (props) => {
                     nextStep <= lastStep &&
                     nextStep < currentRound.numAnswersRequired
                 ) {
-                    debugger;
                     //There are still some items left to match. Prepare for the next step
 
                     const isLastStep = nextStep === lastStep;
@@ -820,10 +829,10 @@ const Quiz = (props) => {
                         capitalizeFirstLetter(nextCorrectItem?.label) || "",
                         $quizState.current?.currentRound?.type
                     );
-                    debugger;
 
                     animationFrame = window.requestAnimationFrame(() => {
                         setInstruction(instructionMsg);
+
                         setPromptContent(null);
                         setShowInstruction(true);
                     });
@@ -894,7 +903,6 @@ const Quiz = (props) => {
                             ),
                             nextRound.type
                         );
-                        debugger;
 
                         const fadeOutItems = promiseKeeper.stall(
                             DURATIONS.exit * $currentRound.current.numAnswers +
@@ -963,8 +971,6 @@ const Quiz = (props) => {
                         //     ];
 
                         //setShowInstruction(false);
-
-                        debugger;
 
                         dispatch({ type: "goNextRound" });
 
@@ -1037,7 +1043,6 @@ const Quiz = (props) => {
 
     const handleRetry = useCallback(
         (ev) => {
-            debugger;
             initGame({ restart: true, items });
             setQuizIsDone(false);
             setPromptContent("");
@@ -1179,6 +1184,7 @@ const Quiz = (props) => {
                                 // $promiseKeeper.current.resolve(
                                 //     "stall_till_present_items"
                                 // );
+                                //this might cause a bug when the latestPromise is not the one whose animation has just ended
                                 $promiseKeeper.current.resolveLatest(
                                     "pose complete"
                                 );
@@ -1375,15 +1381,10 @@ const Quiz = (props) => {
     }, []);
 
     useEffect(() => {
-        // const _clientSideitems = clientSideItems;
-
         if (!gameStarted) return;
         fetchItems().then((items) => {
             initGame({ items });
         });
-
-        // const _serverSideItems = staticItems;
-        debugger;
     }, [props.items]);
 
     useEffect(() => {
@@ -1425,7 +1426,6 @@ const Quiz = (props) => {
     useEffect(() => {
         const newState = quizState;
         $quizState.current = newState;
-        // debugger;
     }, [quizState]);
 
     useEffect(() => {

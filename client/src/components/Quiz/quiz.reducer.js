@@ -18,7 +18,6 @@ const getCorrectSlotIndex = (slots, step) => {
 
 		return accumulator;
 	}, -1);
-	debugger;
 	return slotIndex;
 };
 
@@ -70,9 +69,6 @@ class GameRound {
 			// const stepIndex = pickRandomFrom(slotIndexes, 1, [])
 			//stepIndex is the step within the current round. E.g. stepIndex=== 0 when a question hasn't been answered yet. stepIndex===1 when the first question has been answered. stepIndex===2 when the first two questions have been answers, etc.
 			const item = items?.[stepIndex];
-			if (!item) {
-				debugger;
-			}
 			const isCorrectItem = correctItem === item;
 
 			const itemIndex = items?.indexOf(item);
@@ -157,12 +153,8 @@ class Game {
 				const numAnswers = itemIndex < 2 ? 2 : itemIndex < 6 ? 3 : 4;
 				const correctItem = item;
 				const roundItems = [correctItem];
-				//pick the wrong answers at random
+				//pick wrong answers at random
 				for (let i = 0; i < numAnswers - 1; i++) {
-					if (!shuffledItems) {
-						debugger;
-					}
-
 					let randomUniqueItem = pickRandomFrom(shuffledItems);
 					let j = 0;
 					while (
@@ -214,61 +206,6 @@ class Game {
 		});
 
 		logg("game rounds: ", shuffledGameRounds);
-
-		// const firstIndexes = shuffle(firstRoundAnswerIndexes, numShuffles);
-
-		// const firstRound = new GameRound({
-		// 	numAnswers: firstRoundNumAnswers,
-		// 	itemsIndexes: firstIndexes,
-		// 	roundIndex: 0,
-		// 	type: rounds[0]?.type,
-		// 	numAnswersRequired,
-		// 	items,
-		// });
-		// _rounds.push(firstRound);
-
-		//if the total number of remaining items can't be divided wholly by #numAnswers, then make it a short round. A short round consists of less items than specified in numAnswers.
-		//The very first round is the shortest round possible: it consists of 2 answers (with either 1 or 2 of them being required for completing the round). The second round consists of 3 answers, and the following one consists of 4.
-		// const round2StartIndex = firstRoundNumAnswers;
-		// let numItemsLeft = numTotalItems - round2StartIndex;
-		// let _numAnswers = 2;
-		// let numTotalAnswersRequired = numAnswersRequired === 1 ? 1 : 2;
-		// let isShortRound = false;
-		// let roundIndex = 1;
-
-		// for (let i = round2StartIndex; i < numTotalItems; i += _numAnswers) {
-		// 	isShortRound = isShortRound || numItemsLeft % _numAnswers > 0;
-		// 	_numAnswers = isShortRound
-		// 		? Math.min(_numAnswers + 1, numAnswers)
-		// 		: numAnswers;
-
-		// 	numTotalAnswersRequired += Math.min(
-		// 		_numAnswers,
-		// 		numAnswersRequired
-		// 	);
-
-		// 	//get the indexes for the round
-		// 	const itemsIndexes = [];
-		// 	for (let j = 0; j < _numAnswers; j++) {
-		// 		itemsIndexes.push(i + j);
-		// 	}
-		// 	// const shuffledItemsIndexes = shuffle(itemsIndexes, 1);
-
-		// 	const roundItems = itemsIndexes.map((itemIndex) => {
-		// 		return items[itemIndex];
-		// 	});
-
-		// 	const round = new GameRound({
-		// 		itemsIndexes,
-		// 		roundIndex,
-		// 		items: roundItems,
-		// 	});
-		// 	_rounds.push(round);
-
-		// 	numItemsLeft -= _numAnswers;
-		// 	isShortRound = false;
-		// 	roundIndex++;
-		// }
 
 		this.rounds = shuffledGameRounds;
 		//todo: make sure that this works. Mark previous rounds as completed
@@ -333,7 +270,6 @@ const goNextRound = ({
 		const nextRound = rounds[nextRoundIndex];
 		const nextSlots = shuffle(nextRound.answers, nextRound.numAnswers);
 		const nextCorrectSlotIndex = getCorrectSlotIndex(nextSlots, 0);
-		debugger;
 		const nextCorrectAnswer = nextSlots[nextCorrectSlotIndex]; // a Slot contains a single  AnswerItem, so we can treat them as one and the same
 		const nextCorrectItemIndex = nextCorrectAnswer?.itemIndex;
 		const nextCorrectItem = nextCorrectAnswer?.item;
@@ -475,7 +411,7 @@ const quizReducer = (state, action) => {
 				const nextCorrectItem = roundIsNowComplete
 					? null
 					: _items[nextCorrectItemIndex];
-				debugger;
+
 				return {
 					...state,
 					rounds,

@@ -76,6 +76,10 @@ const EVENT_TYPES = {
 		iconName: "touch",
 		instruction: "Touch your answer!",
 	},
+	say: {
+		iconName: "micIcon",
+		instruction: "Touch the record button and speak!",
+	},
 	listen: {
 		iconName: "listen",
 		instruction: "Listen",
@@ -91,7 +95,7 @@ const EVENT_TYPES = {
 };
 
 const svgPaths = {
-	//names correspond to those find in Material UI icons.
+	//names correspond to those found in Material UI icons.
 	// round, 24px x 24px
 	check:
 		"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM9.29 16.29L5.7 12.7c-.39-.39-.39-1.02 0-1.41.39-.39 1.02-.39 1.41 0L10 14.17l6.88-6.88c.39-.39 1.02-.39 1.41 0 .39.39.39 1.02 0 1.41l-7.59 7.59c-.38.39-1.02.39-1.41 0z",
@@ -106,6 +110,8 @@ const svgPaths = {
 	done:
 		"M20.47 5.63c.39.39.39 1.01 0 1.4L9.13 18.37c-.39.39-1.01.39-1.4 0l-4.2-4.2c-.39-.39-.39-1.01 0-1.4.39-.39 1.01-.39 1.4 0l3.5 3.5L19.07 5.63c.39-.39 1.01-.39 1.4 0zm-2.11-2.12l-9.93 9.93-2.79-2.79c-.78-.78-2.05-.78-2.83 0l-1.4 1.4c-.78.78-.78 2.05 0 2.83l5.6 5.6c.78.78 2.05.78 2.83 0L22.59 7.74c.78-.78.78-2.05 0-2.83l-1.4-1.4c-.79-.78-2.05-.78-2.83 0z",
 	*/
+	micIcon:
+		"M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z",
 	star:
 		"M9 11.3l2.46 1.79c.39.29.92-.1.77-.56l-.94-2.89 2.43-1.73c.4-.28.2-.91-.29-.91h-2.98l-.97-3.02c-.15-.46-.8-.46-.95 0L7.55 7H4.57c-.49 0-.69.63-.29.91l2.43 1.73-.94 2.89c-.15.46.38.84.77.56L9 11.3z",
 	touch:
@@ -327,11 +333,7 @@ const Prompt = (props) => {
 					height={`24px`}
 					viewBox={"0 0 24 24"}
 				>
-					<MorphingIcon
-						pose={iconName}
-						initialPose={"listen"}
-						key={"icon"}
-					/>
+					<MorphingIcon pose={iconName} initialPose={"listen"} />
 				</svg>
 			)}
 
