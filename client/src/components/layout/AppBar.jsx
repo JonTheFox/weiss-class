@@ -391,9 +391,6 @@ const ResponsiveDrawer = (props) => {
     </div>
   );
 
-  debugger;
-
-  console.log("user: ", user);
   return (
     <div className={clsx("appbar-container unselectable")}>
       <AppBar className={`${classes.appBar} appbar`} elevation={1}>
@@ -425,7 +422,7 @@ const ResponsiveDrawer = (props) => {
                 aria-label="user account"
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
-                //  onClick={handleUserMenuClick}
+                onClick={handleUserMenuClick}
                 color="inherit"
               >
                 <div
@@ -435,7 +432,7 @@ const ResponsiveDrawer = (props) => {
                   alt={user?.first_name}
                   src={user?.profile_pic_url}
                   className={classes.avatar}
-                  onClick={() => handleLinkClick("/login")}
+                  // onClick={() => handleLinkClick("/login")}
                 />
               </IconButton>
               <Menu

@@ -257,9 +257,8 @@ class SpeechRecognizer {
   //public API methods
   listen = () => {
     //this function is defined as an arrow function, so that its *this* value will point to the SpeechRecognizer instance
-    if (!this.listening) {
+    if (!this.listening && this.recognition) {
       //start listening to the configured grammar/words
-
       this.recognition.start();
     }
   };

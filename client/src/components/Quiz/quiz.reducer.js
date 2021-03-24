@@ -10,6 +10,7 @@ const getPercent = (index, total) => {
 };
 
 const getCorrectSlotIndex = (slots, step) => {
+	if (!slots) return null;
 	const slotIndex = slots.reduce((accumulator, slot, i) => {
 		if (step === slot.stepIndex) {
 			accumulator = i;
@@ -17,6 +18,7 @@ const getCorrectSlotIndex = (slots, step) => {
 
 		return accumulator;
 	}, -1);
+	debugger;
 	return slotIndex;
 };
 
@@ -25,11 +27,13 @@ class AnswerItem {
 	numMistakes = 0;
 	itemIndex;
 	stepIndex;
+	slotIndex;
 	item;
-	constructor({ stepIndex = 0, itemIndex = 0, item }) {
+	constructor({ stepIndex = 0, itemIndex = 0, item, slotIndex = 0 }) {
 		this.stepIndex = stepIndex;
 		this.itemIndex = itemIndex;
 		this.item = item;
+		this.slotIndex = slotIndex;
 	}
 }
 
@@ -54,40 +58,49 @@ class GameRound {
 		items,
 		correctItem,
 		numRepeats = 1,
+		numShuffles = 1,
 	}) {
 		//const _randomItemsIndexes = shuffle(itemsIndexes, 4);
 		const _numAnswers = Math.min(numAnswers, items.length);
 
 		const answers = [];
+		let correctAnswer;
+		// const _correctItem = pickRandomFrom(items);
 		for (let stepIndex = 0; stepIndex < _numAnswers; stepIndex++) {
 			// const stepIndex = pickRandomFrom(slotIndexes, 1, [])
 			//stepIndex is the step within the current round. E.g. stepIndex=== 0 when a question hasn't been answered yet. stepIndex===1 when the first question has been answered. stepIndex===2 when the first two questions have been answers, etc.
-			let itemIndex;
-			let item;
-			let isCorrectItem;
-
-			if (stepIndex === 0) {
-				item = correctItem;
-				itemIndex = items?.indexOf(item);
-				isCorrectItem = true;
-			} else {
-				item = items?.[stepIndex];
-				itemIndex = items?.indexOf(item);
-				isCorrectItem = false;
+			const item = items?.[stepIndex];
+			if (!item) {
+				debugger;
 			}
+			const isCorrectItem = correctItem === item;
 
-			answers.push(
-				new AnswerItem({
-					item,
-					itemIndex, //index in items list
-					stepIndex, //the step in which this answer is the correct one
-					isCorrectItem,
-				})
-			);
+			const itemIndex = items?.indexOf(item);
+
+			const answerItem = new AnswerItem({
+				item,
+				itemIndex, //index in items list
+				stepIndex, //the step in which this answer is the correct one
+				isCorrectItem,
+				//not sure if this is correct:
+				slotIndex: stepIndex,
+			});
+
+			if (isCorrectItem) correctAnswer = answerItem;
+
+			answers.push(answerItem);
 		}
 
-		this.answers = answers;
-		this.correctItem = answers[0];
+		const shuffledAnswers = shuffle(answers, numShuffles);
+		const answersWithSlotIndexes = shuffledAnswers.map((ans, i) => {
+			ans.slotIndex = i;
+			return ans;
+		});
+
+		this.answers = answersWithSlotIndexes;
+		this.correctItem = correctItem;
+		this.correctAnswer = correctAnswer;
+
 		this.numAnswers = _numAnswers;
 		this.numAnswersRequired = Math.min(numAnswersRequired, _numAnswers);
 		this.step = 0;
@@ -133,19 +146,11 @@ class Game {
 		const numTotalItems = shuffledItems.length;
 		const _rounds = [];
 
-		//first round consists of 1,  2 or 3 items
-		// const firstRoundNumAnswers = Math.min(3, numAnswers);
-
-		// const firstRoundAnswerIndexes = [];
-		// for (let i = 0; i < items.length; i++) {
-		// 	firstRoundAnswerIndexes.push(i);
-		// }
-
 		let numTotalAnswersRequired = 0;
 		const flatGameRounds = shuffledItems
 			.map((item, itemIndex) => {
 				if (!item) return null;
-				debugger;
+
 				const { numShuffles, numRepeats } = item;
 
 				//start easy
@@ -271,20 +276,20 @@ class Game {
 		this.currentRound = firstRound;
 		this.roundIndex = firstRound?.roundIndex;
 
-		//shuffle the answer slots
-		const answerSlotsRandomOrder = shuffle(
-			shuffledGameRounds[startRound]?.answers,
-			numAnswers * 2
-		);
+		const answerSlots = shuffledGameRounds[startRound]?.answers;
+		answerSlots &&
+			answerSlots.map((ans, i) => {
+				ans.slotIndex = i;
+				return ans;
+			});
 
-		this.answerSlots = answerSlotsRandomOrder;
-		const _correctSlotIndex = getCorrectSlotIndex(
-			answerSlotsRandomOrder,
-			startStep
-		);
+		this.answerSlots = answerSlots;
+		const _correctSlotIndex = getCorrectSlotIndex(answerSlots, startStep);
+
 		this.correctSlotIndex = _correctSlotIndex;
-		const _correctItemIndex =
-			answerSlotsRandomOrder?.[_correctSlotIndex]?.itemIndex;
+		const correctAnswer = answerSlots?.[_correctSlotIndex];
+		this.correctAnswer = correctAnswer;
+		const _correctItemIndex = answerSlots?.[_correctSlotIndex]?.itemIndex;
 		this.correctItemIndex = _correctItemIndex;
 		this.correctItem = _items?.[_correctItemIndex];
 
@@ -313,7 +318,6 @@ const goNextRound = ({
 	skipping,
 }) => {
 	const nextRoundIndex = currentRoundIndex + 1;
-	debugger;
 	if (nextRoundIndex >= numTotalRounds) {
 		//Already in final round.
 		// return { ...state, progress: 100 };
@@ -327,13 +331,12 @@ const goNextRound = ({
 			rounds[currentRoundIndex].completed = true;
 		}
 		const nextRound = rounds[nextRoundIndex];
-		if (!nextRound.answers) {
-			debugger;
-		}
 		const nextSlots = shuffle(nextRound.answers, nextRound.numAnswers);
 		const nextCorrectSlotIndex = getCorrectSlotIndex(nextSlots, 0);
-		const nextCorrectItemIndex = nextSlots[nextCorrectSlotIndex].itemIndex;
-		const nextCorrectItem = state.items[nextCorrectItemIndex];
+		debugger;
+		const nextCorrectAnswer = nextSlots[nextCorrectSlotIndex]; // a Slot contains a single  AnswerItem, so we can treat them as one and the same
+		const nextCorrectItemIndex = nextCorrectAnswer?.itemIndex;
+		const nextCorrectItem = nextCorrectAnswer?.item;
 
 		const progress = getPercent(nextRoundIndex, rounds.length);
 
@@ -346,7 +349,7 @@ const goNextRound = ({
 			currentRound: nextRound,
 			answerSlots: nextSlots,
 			step: step + 1, //overall quiz step
-
+			correctAnswer: nextCorrectAnswer,
 			correctSlotIndex: nextCorrectSlotIndex,
 			correctItemIndex: nextCorrectItemIndex,
 			correctItem: nextCorrectItem,
@@ -429,7 +432,7 @@ const quizReducer = (state, action) => {
 				rounds: payload.rounds || state.rounds,
 			});
 			logg("Initialized Game: ", game);
-			debugger;
+
 			return game; //this will be the new state
 			break;
 

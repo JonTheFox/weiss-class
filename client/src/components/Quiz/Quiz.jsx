@@ -504,19 +504,21 @@ const Quiz = (props) => {
                     // const _transcript = transcript.toLowerCase();
                     const _transcript = transcript.trim();
 
+                    logg("transcript: ", _transcript);
+
                     logg(
                         "phrases.includes(_transcript) : ",
                         phrases.includes(_transcript)
                     );
 
                     logg(
-                        "Number(confidence) > 0.8: ",
-                        Number(confidence) > 0.8
+                        "Number(confidence) > 0.75: ",
+                        Number(confidence) > 0.75
                     );
 
                     if (
                         phrases.includes(_transcript) &&
-                        Number(confidence) > 0.8
+                        Number(confidence) > 0.75
                     ) {
                         //correctly said
                         logg(`Recognized: "${_transcript}"`);
@@ -549,17 +551,15 @@ const Quiz = (props) => {
         }
     );
 
-    const getPhrases = (answer, items) => {
-        if (!answer) {
+    const getPhrases = (item, items) => {
+        if (!item) {
             debugger;
             return null;
         }
-        const itemIndex = answer.itemIndex;
-        const item = items[itemIndex];
         const text = item?.label;
-        const withoutPunctuations = text.replace(/[.,?;]/gi, " ");
-        const trimmed = withoutPunctuations.trim();
-        return [trimmed];
+        const withoutPunctuations = text?.replace?.(/[.,?;]/gi, " ");
+        const trimmed = withoutPunctuations?.trim?.();
+        return trimmed ? [trimmed] : [];
     };
 
     const startRecognition = useCallback(() => {
@@ -568,7 +568,8 @@ const Quiz = (props) => {
             onCorrect: async ({ transricpt }) => {
                 processAnswer({
                     selectedStepIndex: 0,
-                    selectedAnswerSlot: answerSlots[0],
+
+                    selectedSlot: answerSlots[0],
                     currentRound,
                     selectedSlotIndex: 0,
                 });
@@ -631,22 +632,28 @@ const Quiz = (props) => {
 
             const {
                 correctSlotIndex,
-                correctItemIndex,
-                correctItem,
+                //correctItemIndex,
+                //correctItem,
                 rounds,
+                currentRound,
+                items,
             } = $quizState.current;
 
             await presentItems;
-            const { items } = $quizState.current;
-            debugger;
+
+            const correctAnswer = currentRound?.correctAnswer;
+
+            const correctItemIndex = correctAnswer?.itemIndex;
+            const correctItem = correctAnswer.item;
             const correctItemLabel = capitalizeFirstLetter(
-                items[correctItemIndex]?.label ?? ""
+                correctItem?.label ?? ""
             );
 
             const instructionMsg = createInstructionMsg(
                 correctItemLabel,
                 rounds[0]?.type
             );
+            debugger;
             if (!instructionMsg) {
                 loggError("NO INSTRUCTION MSG???");
             }
@@ -667,7 +674,6 @@ const Quiz = (props) => {
 
             await sayInstruction;
             if (!sayInstruction.resolved) {
-                debugger;
                 logg(
                     "sayInstruction did not really resolve, but resolveOnError flag had been passed to PromiseKeeper.withRC :)"
                 );
@@ -690,7 +696,6 @@ const Quiz = (props) => {
             });
         } catch (err) {
             loggError(err);
-            debugger;
             promiseKeeper.resolveLatest();
         }
     };
@@ -740,20 +745,21 @@ const Quiz = (props) => {
         async ({
             selectedStepIndex,
             selectedSlotIndex,
-            selectedAnswerSlot,
+            selectedSlot,
             currentRound,
         }) => {
             try {
                 dispatch({ type: "clearCorrect", payload: {} });
 
-                const { step, roundIndex } = $currentRound.current;
+                const { currentRound = {} } = $quizState.current;
+                const { step, roundIndex, correctItem } = currentRound;
 
-                if (!step === $quizState.current.step) {
-                    debugger;
-                }
+                // const wrongAnswer =
+                //     selectedSlotIndex !==
+                //         $quizState.current.currentRound?.correctAnswer
+                //             ?.slotIndex ?? false;
 
-                const wrongAnswer =
-                    selectedSlotIndex !== $quizState.current.correctSlotIndex;
+                const wrongAnswer = selectedSlot?.item !== correctItem;
 
                 debugger;
 
@@ -814,6 +820,7 @@ const Quiz = (props) => {
                         capitalizeFirstLetter(nextCorrectItem?.label) || "",
                         $quizState.current?.currentRound?.type
                     );
+                    debugger;
 
                     animationFrame = window.requestAnimationFrame(() => {
                         setInstruction(instructionMsg);
@@ -873,7 +880,6 @@ const Quiz = (props) => {
 
                     if (nextRoundIndex < quizState.numTotalRounds) {
                         //More rounds left to go. Advance to the next round.
-
                         //advance to the next round manually (since useReducer does not provide up-to-date quizState in callbacks)
                         const nextRound =
                             $quizState.current?.rounds?.[nextRoundIndex];
@@ -882,14 +888,13 @@ const Quiz = (props) => {
                             (answer) => answer.stepIndex === 0
                         )[0];
 
-                        if (!nextCorrectAnswer) debugger;
                         const instructionMsg = createInstructionMsg(
                             capitalizeFirstLetter(
-                                quizState.items[nextCorrectAnswer.itemIndex]
-                                    .label
+                                nextCorrectAnswer?.item?.label
                             ),
                             nextRound.type
                         );
+                        debugger;
 
                         const fadeOutItems = promiseKeeper.stall(
                             DURATIONS.exit * $currentRound.current.numAnswers +
@@ -1195,15 +1200,16 @@ const Quiz = (props) => {
                                 const hasJustBeenAnswered = i === stepIndex + 1;
                                 const isCardActive = active && !hasBeenAnswered;
 
-                                const item = items[itemIndex];
+                                //todo: figure out why itemIndex is wrong
+                                const item = answerSlot.item;
                                 const imageItem = getOneImageItem(item);
-
                                 const imgURL =
                                     imageItem?.urls?.small ??
                                     imageItem?.urls?.regular;
 
                                 return (
                                     <PosedCard
+                                        key={`${stepIndex}${itemIndex}${imgURL}`}
                                         className={clsx(
                                             styles.answerItem,
                                             "answer-item",
@@ -1253,7 +1259,6 @@ const Quiz = (props) => {
                                         round={roundIndex}
                                         numAnswers={numAnswers}
                                         active={isCardActive}
-                                        key={"answer" + i}
                                     >
                                         <ImageCard
                                             className={styles?.imageCard}
