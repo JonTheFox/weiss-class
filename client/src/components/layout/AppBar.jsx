@@ -432,6 +432,7 @@ const ResponsiveDrawer = (props) => {
                   alt={user?.first_name}
                   src={user?.profile_pic_url}
                   className={classes.avatar}
+                  style={{ paddingTop: 0, paddingBottom: 0 }}
                   // onClick={() => handleLinkClick("/login")}
                 />
               </IconButton>

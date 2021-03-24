@@ -15,16 +15,16 @@ export default styled.div`
 	}
 	&.size--regular {
 		&,
-		p {
+		& .text {
 			font-size: 1.7rem;
 		}
 	}
 	&.size--small,
-	& p {
+	& .text {
 		font-size: 1.25rem;
 	}
 	&.size--large,
-	& p {
+	& .text {
 		font-size: 1.75rem;
 	}
 `;
