@@ -655,6 +655,7 @@ const POSES = {
 			numAnswers: 2,
 		},
 	},
+
 	card__pressable: {
 		hidden: {
 			opacity: 0,

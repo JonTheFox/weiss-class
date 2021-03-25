@@ -68,7 +68,8 @@ const Classroom = (props) => {
 
 	const { slides, currentSlideIndex } = room;
 
-	const _slides = slides || PRESENT_PROGRESSIVE_SLIDES;
+	// const _slides = slides;
+	const _slides = PRESENT_PROGRESSIVE_SLIDES;
 
 	const history = useHistory();
 

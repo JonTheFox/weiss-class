@@ -239,23 +239,6 @@ const fetchItems = async () => {
                 "https://images.pexels.com/videos/4434242/pictures/preview-0.jpg",
         },
 
-        // {
-        //     label: "She is studying.",
-        //     title: "She is studying.",
-        //     photographer: undefined,
-        //     tags: undefined,
-        //     images: [
-        //         {
-        //             urls: {
-        //                 regular:
-        //                     "https://images.pexels.com/videos/6929087/pictures/preview-14.jpg",
-        //             },
-
-        //             //label: "Sushi",
-        //         },
-        //     ],
-        // },
-
         {
             title: "I am working.",
             label: "I am working.",
@@ -277,82 +260,6 @@ const fetchItems = async () => {
             image:
                 "https://images.pexels.com/videos/4065630/pictures/preview-0.jpg",
         },
-
-        // {
-        //     label: "The cats are resting.",
-        //     images: [
-        //         {
-        //             photographer: undefined,
-        //             tags: undefined,
-        //             //label: "Sushi",
-        //             title: "The cats are resting.",
-        //             urls: {
-        //                 regular:
-        //                     "https://images.pexels.com/videos/6853901/pexels-photo-6853901.jpeg?fit=crop&w=1200&h=630&auto=compress&cs=tinysrgb",
-        //             },
-        //         },
-        //     ],
-        // },
-
-        // {
-        //     label: "The dog is playing.",
-        //     images: [
-        //         {
-        //             photographer: {
-        //                 id: 290887,
-        //                 name: "Free Videos",
-        //                 url: "https://www.pexels.com/@free-videos",
-        //             },
-        //             tags: undefined,
-        //             //label: "Sushi",
-        //             title: "The dog is playing.",
-        //             urls: {
-        //                 regular:
-        //                     "https://images.pexels.com/videos/853936/free-video-853936.jpg?fit=crop&w=1200&h=630&auto=compress&cs=tinysrgb",
-        //             },
-        //         },
-        //     ],
-        // },
-
-        // {
-        //     label: "I am riding my bike.",
-        //     images: [
-        //         {
-        //             photographer: {
-        //                 id: 1179532,
-        //                 name: "Kelly Lacy",
-        //                 url: "https://www.pexels.com/@kelly-lacy-1179532",
-        //             },
-        //             tags: undefined,
-        //             //label: "Sushi",
-        //             title: "I am riding my bike.",
-        //             urls: {
-        //                 regular:
-        //                     "https://images.pexels.com/videos/2519660/free-video-2519660.jpg?fit=crop&w=1200&h=630&auto=compress&cs=tinysrgb",
-        //             },
-        //         },
-        //     ],
-        // },
-
-        // {
-        //     label: "We are skiing.",
-        //     images: [
-        //         {
-        //             photographer: {
-        //                 id: 2550885,
-        //                 name: "Adrien JACTA",
-        //                 url: "https://www.pexels.com/@adrien-jacta-2550885",
-        //             },
-        //             tags: undefined,
-        //             //label: "Sushi",
-        //             title: "We are skiing.",
-        //             urls: {
-        //                 regular:
-        //                     "https://images.pexels.com/videos/4274798/montagne-piste-de-ski-ski-skier-4274798.jpeg?fit=crop&w=1200&h=630&auto=compress&cs=tinysrgb",
-        //             },
-        //         },
-        //     ],
-        // },
     ];
     // return props.items;
     return _items;
@@ -626,8 +533,6 @@ const Quiz = (props) => {
                     ? 0
                     : enterDuration * 3 * _currentRound?.numAnswers;
 
-            debugger;
-
             const presentItems = promiseKeeper.stall(delay, "present_items");
 
             const {
@@ -845,7 +750,9 @@ const Quiz = (props) => {
                     await sayInstruction;
 
                     animationFrame = window.requestAnimationFrame(() => {
-                        setPromptContent({ eventType: "touch" });
+                        setPromptContent({
+                            eventType: $quizState.current.currentRound?.type,
+                        });
                         setActive(true);
                     });
                 } else {
@@ -954,7 +861,10 @@ const Quiz = (props) => {
                         await sayInstruction_newRound;
 
                         animationFrame = window.requestAnimationFrame(() => {
-                            setPromptContent({ eventType: "touch" });
+                            setPromptContent({
+                                eventType:
+                                    $quizState.current.currentRound?.type,
+                            });
                             setActive(true);
                         });
                     } else {
@@ -1045,7 +955,7 @@ const Quiz = (props) => {
         (ev) => {
             initGame({ restart: true, items });
             setQuizIsDone(false);
-            setPromptContent("");
+            setPromptContent(null);
             setShowSummary(false);
         },
         [items, initGame, setShowSummary]
