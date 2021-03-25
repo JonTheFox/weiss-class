@@ -16,7 +16,7 @@ const GirlPlayingWithCat = require("./GirlPlayingWithCat.js");
 const PlayingBasketball = require("./PlayingBasketball.js");
 const PlayingSoccer = require("./PlayingSoccer.js");
 const DrivingQuiz = require("./Driving.quiz.js");
-const GenericQuiz = require("./generic.quiz.js");
+const GenericQuiz = require("./Generic.quiz.js");
 //const FlyingByClouds = require("./FlyingByClouds.js");
 
 const PresentProgressiveSlides = [

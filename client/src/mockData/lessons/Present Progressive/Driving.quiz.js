@@ -1,4 +1,12 @@
 const { Quiz } = require("../../slideTemplates.js");
+const {
+	drivingInNiceScenery,
+	workingOnComputer,
+} = require("./presentProgressiveVideos.js");
+const mapVideoObjectToQuizItem = require("../../../components/Quiz/mapVideoObjectToQuizItem.js");
+const videoObjects = [drivingInNiceScenery, workingOnComputer];
+
+const items = videoObjects.map(mapVideoObjectToQuizItem);
 
 // const videoSet = require("./presentProgressiveVideos.js").skiing;
 
@@ -13,7 +21,7 @@ const DrivingQuiz = {
 			//title: "I am driving.",
 			//videoSet,
 			bgClass: "gradient",
-			//items: [],
+			items,
 			//paragraphs: [{ text: "They are skiing. " }],
 		},
 	],

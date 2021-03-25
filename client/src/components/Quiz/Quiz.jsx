@@ -1292,7 +1292,7 @@ const Quiz = (props) => {
 
     useEffect(() => {
         if (!gameStarted) return;
-        fetchItems().then((items) => {
+        fetchItems(props.items).then((items) => {
             initGame({ items });
         });
     }, [props.items]);
@@ -1377,7 +1377,7 @@ const Quiz = (props) => {
                 className={"page quiz-page"}
                 handlePrimaryClick={handleRetry}
                 onStart={() => {
-                    fetchItems().then((items) => {
+                    fetchItems(props.items).then((items) => {
                         initGame({ items });
                     });
                 }}
