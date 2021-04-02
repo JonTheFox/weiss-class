@@ -68,18 +68,9 @@ const Classroom = (props) => {
 
 	const { slides, currentSlideIndex } = room;
 
-	// const _slides = slides;
-	const _slides = PRESENT_PROGRESSIVE_SLIDES;
-
+	const _slides = slides;
+	// const _slides = PRESENT_PROGRESSIVE_SLIDES;
 	const history = useHistory();
-
-	//const bgImage = room?.img?.uprl || room?.teachers?.clients?.[0]?.img?.url || "";
-
-	// useEffect(() => {
-	// 	if (!slides || !slides.length) {
-	// 		navigateTo("/classroom-select", history);
-	// 	}
-	// }, []);
 
 	return (
 		<View className={"classroom gradient"}>

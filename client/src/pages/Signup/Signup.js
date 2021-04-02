@@ -74,6 +74,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	stepper: {
 		padding: theme.spacing(3, 0, 5),
+		backgroundColor: "unset",
 	},
 	buttons: {
 		display: "flex",
@@ -112,9 +113,8 @@ const useStyles = makeStyles((theme) => ({
 			},
 		},
 	},
-	searchIcon: {
+	searchIconContainer: {
 		width: theme.spacing(7),
-
 		height: "100%",
 		position: "absolute",
 		pointerEvents: "none",
@@ -131,6 +131,12 @@ const useStyles = makeStyles((theme) => ({
 	},
 	fileUploaderGrid: {
 		width: "100%",
+		background: "unset",
+	},
+	imageUploader: {
+		"& .fileContainer": {
+			background: "unset",
+		},
 	},
 	profilePic: {
 		//position: "absolute",
@@ -498,6 +504,7 @@ export default function Signup(props) {
 									className={classes.fileUploaderGrid}
 								>
 									<ImageUploader
+										className={classes.imageUploader}
 										withIcon={false}
 										label={
 											"Accepted types: jpeg, jpg and png"
@@ -528,8 +535,6 @@ export default function Signup(props) {
 											root: classes.inputRoot,
 										}}
 										options={options}
-										//groupBy={appState.searchables.groupBy}
-										//defaultValue={appState.searchables.list[0]}
 										getOptionsLabel={(option) =>
 											option.label
 										}
@@ -551,23 +556,11 @@ export default function Signup(props) {
 											"Imagine there's no countries.."
 										}
 										renderInput={(params) => (
-											<React.Fragment>
-												<div
-													className={clsx(
-														"search-icon",
-														classes.searchIcon
-													)}
-												>
-													<SearchIcon />
-												</div>
-
-												<TextField
-													{...params}
-													// label="search-term"
-													variant="standard"
-													label="Country"
-												/>
-											</React.Fragment>
+											<TextField
+												{...params}
+												variant="standard"
+												label="Country"
+											/>
 										)}
 										onChange={(ev) => {
 											const value = ev.target.innerText;
@@ -601,6 +594,10 @@ export default function Signup(props) {
 										shrink: true,
 									}}
 									select={type === "select"}
+									helperText={
+										name === "password" &&
+										"Password must be at least 8 characters long and contain a lowercase letter, an uppercase letter and a digit."
+									}
 									type={type}
 									required={required}
 									id={name}
@@ -712,41 +709,38 @@ export default function Signup(props) {
 	};
 
 	return (
-		<React.Fragment>
-			<main className={classes.layout}>
-				<Paper className={classes.paper}>
-					<Typography component="h1" variant="h4" align="center">
-						Sign Up
-					</Typography>
-					<Stepper
-						activeStep={activeStep}
-						className={clsx(
-							classes.stepper,
-							showFeedback &&
-								feedback.type === "error" &&
-								classes.error
-						)}
-					>
-						{FORMS.map(({ label }) => (
-							<Step key={label}>
-								<StepLabel>{label}</StepLabel>
-							</Step>
-						))}
-					</Stepper>
-					<React.Fragment>
-						{showFeedback ? (
-							<FeedbackMessage
-								heading={heading}
-								btnText={btnText}
-								bodyText={bodyText}
-								onBtnClick={handleBtnClick}
-							></FeedbackMessage>
-						) : (
-							getFormComponent(activeStep, refs)
-						)}
-					</React.Fragment>
-				</Paper>
-			</main>
-		</React.Fragment>
+		<main className={classes.layout}>
+			<div className={"glass"}>
+				<Typography component="h1" variant="h4" align="center">
+					Sign Up
+				</Typography>
+				<Stepper
+					activeStep={activeStep}
+					className={clsx(
+						classes.stepper,
+						showFeedback &&
+							feedback.type === "error" &&
+							classes.error
+					)}
+				>
+					{FORMS.map(({ label }) => (
+						<Step key={label}>
+							<StepLabel>{label}</StepLabel>
+						</Step>
+					))}
+				</Stepper>
+
+				{showFeedback ? (
+					<FeedbackMessage
+						heading={heading}
+						btnText={btnText}
+						bodyText={bodyText}
+						onBtnClick={handleBtnClick}
+					></FeedbackMessage>
+				) : (
+					getFormComponent(activeStep, refs)
+				)}
+			</div>
+		</main>
 	);
 }

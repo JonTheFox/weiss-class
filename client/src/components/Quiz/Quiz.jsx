@@ -44,16 +44,26 @@ import VideoPlayer from "../VideoPlayer/VideoPlayer.jsx";
 import Fab from "@material-ui/core/Fab";
 import Mic from "@material-ui/icons/Mic";
 import DraggableBall from "../DraggableBall/DraggableBall.jsx";
-
-// import "react-step-progress-bar/styles.css";
-//import { ProgressBar, Step } from "react-step-progress-bar";
-
-// import DebuggerView from "../UI/DebuggerView/DebuggerView.jsx";
-
 import ReactPlayer from "react-player";
 import styles from "./quiz.module.scss";
 
 let speechRecognizer;
+
+const getEventTypeByRoundType = (roundType) => {
+    let eventType;
+    switch (roundType) {
+        case MULTIPLE_ANSWER_CARDS:
+            eventType = "touch";
+            break;
+        case SAY__REPEAT:
+            eventType = "say";
+            break;
+        default:
+            eventType = "touch";
+            break;
+    }
+    return eventType;
+};
 
 // const getAorAn = (noun = "") =>
 //     ["a", "e", "i", "o", "u"].includes(noun?.[0]?.toLowerCase()) ? "an" : "a";
@@ -196,73 +206,6 @@ const createInstructionMsg = (itemName = "", type = "touch") => {
     }
     //  if(type === MULTIPLE_ANSWER_CARDS) {
     return itemName || "";
-    // }
-
-    // type === "touch"
-    //     ? `Touch a picture of ${getAorAn(animalName)} ${animalName}`
-    //     : type === "say"
-    //     ? `Say "${animalName}!"`
-    //     : "";
-};
-
-const fetchItems = async () => {
-    const _items = [
-        {
-            label: "I am driving.",
-            title: "I am driving.",
-            photographer: {
-                name: "Yaroslav Shuraev",
-                id: 649765,
-            },
-            //tags: undefined,
-            //label: "Sushi",
-
-            images: [
-                {
-                    urls: {
-                        regular:
-                            "https://images.pexels.com/videos/4434242/pexels-photo-4434242.jpeg?fit=crop&w=1200&h=630&auto=compress&cs=tinysrgb",
-                    },
-                },
-            ],
-            videoSet: {
-                phone:
-                    "https://player.vimeo.com/external/420239207.sd.mp4?s=2b5a6633c37af1a6fb0beb02c06bdc376fdfcce2&profile_id=164&oauth2_token_id=57447761",
-                tablet:
-                    "https://player.vimeo.com/external/420239207.hd.mp4?s=9fa34fce5989c66f5edc65fc533f2d91085d7599&profile_id=174&oauth2_token_id=57447761",
-                hdReady:
-                    "https://player.vimeo.com/external/420239207.hd.mp4?s=9fa34fce5989c66f5edc65fc533f2d91085d7599&profile_id=170&oauth2_token_id=57447761",
-                fullHd:
-                    "https://player.vimeo.com/external/420239207.hd.mp4?s=9fa34fce5989c66f5edc65fc533f2d91085d7599&profile_id=172&oauth2_token_id=57447761",
-            },
-            image:
-                "https://images.pexels.com/videos/4434242/pictures/preview-0.jpg",
-        },
-
-        {
-            title: "I am working.",
-            label: "I am working.",
-            user: {
-                name: "cottonbro",
-                url: "https://www.pexels.com/@cottonbro",
-                id: 1437723,
-            },
-            videoSet: {
-                phone:
-                    "https://player.vimeo.com/external/403652508.sd.mp4?s=f6fff2f196fc5899d730fd9af5544b7e6fbc5aa6&profile_id=164&oauth2_token_id=57447761",
-                tablet:
-                    "https://player.vimeo.com/external/403652508.hd.mp4?s=619899d6bfc52d8832cad04c0c0be57d45bb6c02&profile_id=174&oauth2_token_id=57447761",
-                hdReady:
-                    "https://player.vimeo.com/external/403652508.hd.mp4?s=619899d6bfc52d8832cad04c0c0be57d45bb6c02&profile_id=171&oauth2_token_id=57447761",
-                fullHd:
-                    "https://player.vimeo.com/external/403652508.hd.mp4?s=619899d6bfc52d8832cad04c0c0be57d45bb6c02&profile_id=173&oauth2_token_id=57447761",
-            },
-            image:
-                "https://images.pexels.com/videos/4065630/pictures/preview-0.jpg",
-        },
-    ];
-    // return props.items;
-    return _items;
 };
 
 const compLabel = "Quiz";
@@ -339,6 +282,7 @@ const Quiz = (props) => {
         isWrong,
         isCorrect,
     } = quizState;
+
     const { numAnswers, step, completed, numSteps, roundIndex } = currentRound;
 
     const $quizState = useRef(quizState);
@@ -353,10 +297,9 @@ const Quiz = (props) => {
     const promiseKeeper = usePromiseKeeper({ label: compLabel });
     const $promiseKeeper = useRef(promiseKeeper);
 
-    const debuggerColumns = [
-        { title: "Property", field: "property" },
-        { title: "Value", field: "value" },
-    ];
+    const fetchItems = useCallback(async () => {
+        return props.items;
+    }, [props.items]);
 
     const getOneImageItem = useCallback((item) => {
         // const image = item?.images?.[0];
@@ -591,19 +534,7 @@ const Quiz = (props) => {
                 setActive(true);
 
                 const roundType = $quizState.current.currentRound?.type;
-
-                let eventType;
-                switch (roundType) {
-                    case MULTIPLE_ANSWER_CARDS:
-                        eventType = "touch";
-                        break;
-                    case SAY__REPEAT:
-                        eventType = "say";
-                        break;
-                    default:
-                        eventType = "touch";
-                        break;
-                }
+                const eventType = getEventTypeByRoundType(roundType);
 
                 if (eventType === SAY__REPEAT) {
                     speechRecognizer.listen();
@@ -750,9 +681,12 @@ const Quiz = (props) => {
                     await sayInstruction;
 
                     animationFrame = window.requestAnimationFrame(() => {
+                        const roundType = $quizState.current.currentRound?.type;
+                        const eventType = getEventTypeByRoundType(roundType);
                         setPromptContent({
-                            eventType: $quizState.current.currentRound?.type,
+                            eventType,
                         });
+                        debugger;
                         setActive(true);
                     });
                 } else {
@@ -861,9 +795,17 @@ const Quiz = (props) => {
                         await sayInstruction_newRound;
 
                         animationFrame = window.requestAnimationFrame(() => {
+                            const roundType =
+                                $quizState.current.currentRound?.type;
+                            const eventType = getEventTypeByRoundType(
+                                roundType
+                            );
                             setPromptContent({
-                                eventType:
-                                    $quizState.current.currentRound?.type,
+                                eventType,
+                            });
+
+                            setPromptContent({
+                                eventType,
                             });
                             setActive(true);
                         });
@@ -1292,10 +1234,10 @@ const Quiz = (props) => {
 
     useEffect(() => {
         if (!gameStarted) return;
-        fetchItems(props.items).then((items) => {
+        fetchItems().then((items) => {
             initGame({ items });
         });
-    }, [props.items]);
+    }, []);
 
     useEffect(() => {
         if (currentRound.type === SAY__REPEAT) {
@@ -1377,7 +1319,7 @@ const Quiz = (props) => {
                 className={"page quiz-page"}
                 handlePrimaryClick={handleRetry}
                 onStart={() => {
-                    fetchItems(props.items).then((items) => {
+                    fetchItems().then((items) => {
                         initGame({ items });
                     });
                 }}
@@ -1443,19 +1385,3 @@ const Quiz = (props) => {
 };
 
 export default Quiz;
-
-/*
-
-<DebuggerView
-                    show={false}
-                    columns={debuggerColumns}
-                    data={[
-                        { property: "Round#", value: quizState.roundIndex },
-                        {
-                            property: "Step#",
-                            value: quizState.currentRound.step,
-                        },
-                    ]}
-                    noHeader={true}
-                />
-*/

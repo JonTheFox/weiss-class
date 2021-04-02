@@ -1,5 +1,4 @@
 const mapVideoObjectToQuizItem = (videoObj) => {
-	debugger;
 	const { user, images = [], links, image, label, title, tags } = videoObj;
 	const _images = Object.entries(images)?.reduce((accumulator, image, i) => {
 		return { urls: image.urls };

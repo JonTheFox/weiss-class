@@ -801,6 +801,8 @@ const girlPlayingWithCat = {
 };
 
 const workingOnComputer = {
+	title: "I am working",
+	label: "I am working",
 	user: {
 		name: "cottonbro",
 		url: "https://www.pexels.com/@cottonbro",
@@ -922,6 +924,8 @@ const pillowFighting = {
 };
 
 const drivingInNiceScenery = {
+	title: "I am driving",
+	label: "I am driving",
 	user: {
 		name: "Yaroslav Shuraev",
 		url: "https://www.pexels.com/@yaroslav-shuraev",
