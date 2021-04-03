@@ -46,6 +46,8 @@ import "file-upload-with-preview/dist/file-upload-with-preview.min.css";
 import firebase from "firebase/app";
 import "firebase/storage";
 import { storage } from "../../firebase/firebase.js";
+const PASSWORD_REQUIREMENTS =
+	"Password must be at least 8 characters long and contain a lowercase letter (a-z), an uppercase letter (A-Z) and a digit (0-9).";
 
 const useStyles = makeStyles((theme) => ({
 	appBar: {
@@ -601,6 +603,10 @@ export default function Signup(props) {
 										shrink: true,
 									}}
 									select={type === "select"}
+									helperText={
+										name === "password" &&
+										PASSWORD_REQUIREMENTS
+									}
 									type={type}
 									required={required}
 									id={name}
