@@ -80,6 +80,10 @@ const EVENT_TYPES = {
 		iconName: "micIcon",
 		instruction: "Touch the record button and speak!",
 	},
+	SAY__REPEAT: {
+		iconName: "micIcon",
+		instruction: "Touch the record button and speak!",
+	},
 	listen: {
 		iconName: "listen",
 		instruction: "Listen",
