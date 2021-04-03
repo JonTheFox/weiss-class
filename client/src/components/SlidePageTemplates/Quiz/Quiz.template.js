@@ -8,7 +8,9 @@ import React, {
 import CenteredContainer from "../../CenteredContainer/CenteredContainer.js";
 import Heading from "../../Heading/Heading.js";
 import View from "../../layout/View.jsx";
+// import Page from "../Page.js";
 import Text from "../../Text/Text.js";
+//import StyledPage from "./Quiz.template.scss";
 import Quiz from "../../Quiz/Quiz.jsx";
 
 const label = "QuizTemplate";
@@ -22,13 +24,7 @@ const QuizTemplate = (props) => {
 		p = [""],
 		bgImage = "",
 		pages = [],
-		items,
 	} = props;
-
-	// const _items = items?.map((item, i)=>{
-	// 	const {} = item;
-	// 	return {}
-	// });
 
 	// const { logg, loggError } = useLogg({ label });
 	// const promiseKeeper = usePromiseKeeper({ label });
@@ -37,7 +33,7 @@ const QuizTemplate = (props) => {
 			className={"Page--centered-headings centered quiz-page"}
 			style={{ height: "100%", display: "flex" }}
 		>
-			<Quiz items={items} />
+			<Quiz />
 		</div>
 	);
 };

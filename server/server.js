@@ -16,7 +16,7 @@ const {
 	getRandomUpTo,
 	getUniqueString,
 } = require("./lib/issy.js");
-
+//
 global.is = is;
 global.our = our;
 global.request = request;
@@ -31,7 +31,7 @@ global.fetch = fetch;
 const mainLogger = new ServerLogger({
 	label: "Weiss",
 	stylePreset: "sky",
-	logInProduction: true,
+	logInProduction: false,
 });
 const { logg, loggError } = mainLogger;
 global.logger = mainLogger;

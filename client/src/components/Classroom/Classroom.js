@@ -73,6 +73,14 @@ const Classroom = (props) => {
 
 	const history = useHistory();
 
+	//const bgImage = room?.img?.uprl || room?.teachers?.clients?.[0]?.img?.url || "";
+
+	// useEffect(() => {
+	// 	if (!slides || !slides.length) {
+	// 		navigateTo("/classroom-select", history);
+	// 	}
+	// }, []);
+
 	return (
 		<View className={"classroom gradient"}>
 			<Slider slideIndex={2} slides={_slides}></Slider>
