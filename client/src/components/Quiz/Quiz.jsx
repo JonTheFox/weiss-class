@@ -540,7 +540,11 @@ const Quiz = (props) => {
                     speechRecognizer.listen();
                 }
 
-                setPromptContent({ eventType });
+                setPromptContent({
+                    eventType: getPromptEventTypeByRoundType(
+                        $quizState.current.currentRound?.type
+                    ),
+                });
             });
         } catch (err) {
             loggError(err);
@@ -588,6 +592,25 @@ const Quiz = (props) => {
 
         return true;
     }, [promiseKeeper, setPromptContent]);
+
+    const getPromptEventTypeByRoundType = useCallback(
+        (roundType) => {
+            let promptEventType;
+            switch (roundType) {
+                case MULTIPLE_ANSWER_CARDS:
+                    promptEventType = "touch";
+                    break;
+                case SAY__REPEAT:
+                    promptEventType = "say";
+                    break;
+                default:
+                    promptEventType = "touch";
+                    break;
+            }
+            return promptEventType;
+        },
+        [MULTIPLE_ANSWER_CARDS, SAY__REPEAT]
+    );
 
     const processAnswer = useCallback(
         async ({
@@ -684,7 +707,9 @@ const Quiz = (props) => {
                         const roundType = $quizState.current.currentRound?.type;
                         const eventType = getEventTypeByRoundType(roundType);
                         setPromptContent({
-                            eventType,
+                            eventType: getPromptEventTypeByRoundType(
+                                $quizState.current.currentRound?.type
+                            ),
                         });
                         debugger;
                         setActive(true);
@@ -805,7 +830,9 @@ const Quiz = (props) => {
                             });
 
                             setPromptContent({
-                                eventType,
+                                eventType: getPromptEventTypeByRoundType(
+                                    $quizState.current.currentRound?.type
+                                ),
                             });
                             setActive(true);
                         });
