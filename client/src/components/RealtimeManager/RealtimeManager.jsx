@@ -77,7 +77,7 @@ const Realtime = (props) => {
 		request,
 	} = appUtils;
 
-	const { logg, loggError } = useLogg({ label });
+	const { logg, loggError } = useLogg({ label, logInProduction: true });
 	const promiseKeeper = usePromiseKeeper({ label });
 
 	const refs = useRef({ viewRef: {} });

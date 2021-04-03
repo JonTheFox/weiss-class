@@ -31,7 +31,7 @@ global.fetch = fetch;
 const mainLogger = new ServerLogger({
 	label: "Weiss",
 	stylePreset: "sky",
-	logInProduction: false,
+	logInProduction: true,
 });
 const { logg, loggError } = mainLogger;
 global.logger = mainLogger;
