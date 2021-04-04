@@ -68,6 +68,7 @@ const ImageCard = (props) => {
     overlayActions = [],
     active = true,
     //iconActions = []
+    showBgImage = true,
   } = props;
 
   const [appUtils] = useContext(AppContext);
@@ -182,7 +183,9 @@ const ImageCard = (props) => {
 
       <CardMedia
         className="card--media"
-        image={selected && highResLoaded ? regular : small || imgURL}
+        image={
+          selected && highResLoaded && showBgImage ? regular : small || imgURL
+        }
         //title={label}
       />
     </React.Fragment>
@@ -273,6 +276,7 @@ ImageCard.propTypes = {
   showHeader: PropTypes.bool,
   actions: PropTypes.arrayOf(PropTypes.object),
   active: PropTypes.bool,
+  showBgImage: PropTypes.bool,
 };
 
 export default ImageCard;

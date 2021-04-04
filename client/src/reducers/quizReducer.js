@@ -98,6 +98,8 @@ class Game {
 			_items = shuffle(_items, numShuffles);
 
 		const numTotalItems = _items.length;
+
+		debugger;
 		const _rounds = [];
 
 		//first round consist of 1 or 2 items
@@ -105,7 +107,7 @@ class Game {
 
 		const firstIndexes =
 			firstRoundNumAnswers === 1 ? [0] : shuffle([0, 1], 3);
-		debugger;
+
 		const firstRound = new GameRound({
 			numAnswers: firstRoundNumAnswers,
 			itemsIndexes: firstIndexes,
@@ -143,7 +145,6 @@ class Game {
 				for (let j = 0; j < _numAnswers; j++) {
 					itemsIndexes.push(i + j);
 				}
-				// const shuffledItemsIndexes = shuffle(itemsIndexes, 1);
 
 				const round = new GameRound({
 					itemsIndexes: itemsIndexes,

@@ -45,6 +45,14 @@ import Fab from "@material-ui/core/Fab";
 import Mic from "@material-ui/icons/Mic";
 import DraggableBall from "../DraggableBall/DraggableBall.jsx";
 
+import Card from "@material-ui/core/Card";
+import CardActionArea from "@material-ui/core/CardActionArea";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+
 // import "react-step-progress-bar/styles.css";
 //import { ProgressBar, Step } from "react-step-progress-bar";
 
@@ -186,7 +194,11 @@ const useStyles = makeStyles(({ palette }) => ({
 const PosedList = posed.ul(POSES.list);
 const PosedCard = posed.li(POSES.card__pressable___sans_shadow);
 const PosedContainer = posed.div(POSES.card__pressable___sans_shadow);
-const { MULTIPLE_ANSWER_CARDS, SAY__REPEAT } = ROUND_TYPES;
+const {
+    MULTIPLE_ANSWER_CARDS,
+    SAY__REPEAT,
+    MULTIPLE_ANSWER_TEXT_CARDS,
+} = ROUND_TYPES;
 
 // const PosedOverlay = posed.li(POSES.card__pressable);
 
@@ -574,9 +586,14 @@ const Quiz = (props) => {
                 }
             );
 
-            animationFrame = window.requestAnimationFrame(() => {
-                setShowInstruction(true);
-            });
+            if (
+                MULTIPLE_ANSWER_TEXT_CARDS !==
+                $quizState.current.currentRound?.type
+            ) {
+                animationFrame = window.requestAnimationFrame(() => {
+                    setShowInstruction(true);
+                });
+            }
 
             await sayInstruction;
             if (!sayInstruction.resolved) {
@@ -667,6 +684,9 @@ const Quiz = (props) => {
             let promptEventType;
             switch (roundType) {
                 case MULTIPLE_ANSWER_CARDS:
+                    promptEventType = "touch";
+                    break;
+                case MULTIPLE_ANSWER_TEXT_CARDS:
                     promptEventType = "touch";
                     break;
                 case SAY__REPEAT:
@@ -760,9 +780,14 @@ const Quiz = (props) => {
 
                     animationFrame = window.requestAnimationFrame(() => {
                         setInstruction(instructionMsg);
-
                         setPromptContent(null);
-                        setShowInstruction(true);
+
+                        if (
+                            MULTIPLE_ANSWER_TEXT_CARDS !==
+                            $quizState.current.currentRound?.type
+                        ) {
+                            setShowInstruction(true);
+                        }
                     });
 
                     const sayInstruction = promiseKeeper.withRC(
@@ -882,7 +907,13 @@ const Quiz = (props) => {
                             }
                         );
 
-                        setShowInstruction(true);
+                        if (
+                            MULTIPLE_ANSWER_TEXT_CARDS !==
+                            $quizState.current.currentRound?.type
+                        ) {
+                            setShowInstruction(true);
+                        }
+
                         await sayInstruction_newRound;
 
                         animationFrame = window.requestAnimationFrame(() => {
@@ -1095,6 +1126,138 @@ const Quiz = (props) => {
                 </Grid>
             );
         }
+
+        if (currentRoundType === MULTIPLE_ANSWER_TEXT_CARDS) {
+            return (
+                <div
+                    className={clsx(
+                        styles.answerList,
+                        styles[`total${Math.min(4, numAnswers)}`],
+                        `answer-list total--${Math.min(4, numAnswers)}`
+                    )}
+                >
+                    {rounds && rounds.length > 0 && (
+                        <PosedList
+                            pose={showItems ? "visible" : "hidden"}
+                            initialPose={"hidden"}
+                            className={clsx(styles.posedList, "posed-list")}
+                            //animateOnMount={true}
+                            step={currentStepIndex}
+                            overallStep={step}
+                            round={currentRoundIndex}
+                            active={active}
+                            numAnswers={numAnswers}
+                            onPoseComplete={(ev) => {
+                                // debugger;
+                                // $promiseKeeper.current.resolve(
+                                //     "stall_till_present_items"
+                                // );
+                                //this might cause a bug when the latestPromise is not the one whose animation has just ended
+                                $promiseKeeper.current.resolveLatest(
+                                    "pose complete"
+                                );
+                                // debugger;
+                                // promiseKeeper.resolve("present_items");
+                                // promiseKeeper.resolveLatest(
+                                //     "enter animation finished"
+                                // );
+                                // handlePoseComplete("PosedList");
+                            }}
+                        >
+                            {answerSlots.map((answerSlot, i) => {
+                                const { stepIndex, itemIndex } = answerSlot;
+                                const isCorrectAnswer = stepIndex === step;
+
+                                const hasBeenAnswered =
+                                    step > stepIndex || completed || quizIsDone;
+
+                                const hasJustBeenAnswered = i === stepIndex + 1;
+                                const isCardActive = active && !hasBeenAnswered;
+
+                                //todo: figure out why itemIndex is wrong
+                                const item = answerSlot.item;
+                                const imageItem = getOneImageItem(item);
+                                const imgURL =
+                                    imageItem?.urls?.small ??
+                                    imageItem?.urls?.regular;
+
+                                return (
+                                    <PosedCard
+                                        key={`${stepIndex}${itemIndex}${imgURL}`}
+                                        className={clsx(
+                                            styles.answerItem,
+                                            "answer-item",
+
+                                            isCardActive
+                                                ? styles.active
+                                                : styles.disabled,
+                                            isCardActive
+                                                ? "active"
+                                                : "disabled",
+
+                                            isCorrectAnswer &&
+                                                styles.answerItemIsCorrectAnswer,
+                                            hasJustBeenAnswered &&
+                                                styles.answerItemHasJustBeenAnswered,
+                                            hasBeenAnswered &&
+                                                styles.answerItemHasBeenAnswered,
+
+                                            isCorrectAnswer &&
+                                                "answer-item--is-correct-answer",
+                                            hasJustBeenAnswered &&
+                                                "answer-item--has-just-been-answered",
+                                            hasBeenAnswered &&
+                                                "answer-item--has-been-answered",
+                                            "unselectable"
+                                        )}
+                                        style={{
+                                            //first should be put on top!
+                                            zIndex: 10 + numAnswers - i,
+                                        }}
+                                        initialPose={"hidden"}
+                                        onPressEnd={(e) =>
+                                            handlePressEnd({
+                                                event: e,
+                                                selectedStepIndex: stepIndex,
+                                                selectedSlotIndex: i,
+                                                currentRound,
+                                                selectedSlot: answerSlot,
+                                            })
+                                        }
+                                        pos={numSteps - 1 - i}
+                                        i={i}
+                                        isCorrectItem={isCorrectAnswer}
+                                        hasBeenAnswered={hasBeenAnswered}
+                                        step={step}
+                                        round={roundIndex}
+                                        numAnswers={numAnswers}
+                                        active={isCardActive}
+                                    >
+                                        <Card
+                                            className={"text-card"}
+                                            elevation={3}
+                                        >
+                                            <CardContent>
+                                                <Typography
+                                                    gutterBottom
+                                                    variant="h5"
+                                                    component="h2"
+                                                >
+                                                    {capitalizeFirstLetter(
+                                                        item?.label
+                                                    )}
+                                                </Typography>
+                                            </CardContent>
+                                        </Card>
+                                    </PosedCard>
+                                );
+                            })}
+                        </PosedList>
+                    )}
+                </div>
+            );
+        }
+
         if (currentRoundType === MULTIPLE_ANSWER_CARDS) {
             return (
                 <div
@@ -1207,6 +1370,7 @@ const Quiz = (props) => {
                                             imgURL={imgURL}
                                             headerBottom={true}
                                             urls={imageItem?.urls}
+                                            showBgImage={true}
                                             elevation={2}
                                             active={isCardActive}
                                             label={capitalizeFirstLetter(
