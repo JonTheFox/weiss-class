@@ -609,27 +609,25 @@ const Quiz = (props) => {
 
                 const roundType = $quizState.current.currentRound?.type;
 
-                let eventType;
-                switch (roundType) {
-                    case MULTIPLE_ANSWER_CARDS:
-                        eventType = "touch";
-                        break;
-                    case SAY__REPEAT:
-                        eventType = "say";
-                        break;
-                    default:
-                        eventType = "touch";
-                        break;
-                }
+                const eventType = getPromptEventTypeByRoundType(
+                    $quizState.current.currentRound?.type
+                );
 
                 if (eventType === SAY__REPEAT) {
                     speechRecognizer.listen();
+                    //for fast-forwarding purposes, add a promise to promiseKeeper. This will allow us to resolve the promise upon a key press, for example
+                    promiseKeeper.withRC(() => {
+                        return new Promise((resolve, reject) => {
+                            advanceRound({
+                                nextRoundIndex:
+                                    $quizState.current.currentRound?.roundIndex,
+                            });
+                        });
+                    });
                 }
 
                 setPromptContent({
-                    eventType: getPromptEventTypeByRoundType(
-                        $quizState.current.currentRound?.type
-                    ),
+                    eventType,
                 });
             });
         } catch (err) {
@@ -701,6 +699,73 @@ const Quiz = (props) => {
         [MULTIPLE_ANSWER_CARDS, SAY__REPEAT]
     );
 
+    const advanceRound = useCallback(
+        async ({ nextRoundIndex }) => {
+            const nextRound = $quizState.current?.rounds?.[nextRoundIndex];
+            const nextCorrectAnswer = nextRound.answers.filter(
+                (answer) => answer.stepIndex === 0
+            )[0];
+
+            const instructionMsg = createInstructionMsg(
+                capitalizeFirstLetter(nextCorrectAnswer?.item?.label),
+                nextRound.type
+            );
+
+            const fadeOutItems = promiseKeeper.stall(
+                DURATIONS.exit * $currentRound.current.numAnswers + 700,
+                "fadeout-old-items"
+            );
+
+            await fadeOutItems;
+            dispatch({
+                type: "goNextRound",
+                payload: { completed: true },
+            });
+
+            animationFrame = window.requestAnimationFrame(() => {
+                setInstruction(instructionMsg);
+                setShowOverlay(false);
+                setShowItems(true);
+
+                setPromptContent(null);
+            });
+
+            const numAnswers = $currentRound?.current.answers?.length ?? 0;
+
+            const newItemsAppeared = await promiseKeeper.stall(
+                DURATIONS.enter * (numAnswers + 1) * 2,
+                "newItemsAppeared"
+            );
+
+            const sayInstruction_newRound = promiseKeeper.withRC(
+                synthVoice.say(instructionMsg),
+                {
+                    resolveOnError: true,
+                    label: "sayInstruction_newRound",
+                }
+            );
+
+            if (
+                MULTIPLE_ANSWER_TEXT_CARDS !==
+                $quizState.current.currentRound?.type
+            ) {
+                setShowInstruction(true);
+            }
+
+            await sayInstruction_newRound;
+
+            animationFrame = window.requestAnimationFrame(() => {
+                setPromptContent({
+                    eventType: getPromptEventTypeByRoundType(
+                        $quizState.current.currentRound?.type
+                    ),
+                });
+                setActive(true);
+            });
+        },
+        [rounds]
+    );
+
     const processAnswer = useCallback(
         async ({
             selectedStepIndex,
@@ -732,6 +797,22 @@ const Quiz = (props) => {
                     animationFrame = window.requestAnimationFrame(() => {
                         dispatch({ type: "incorrectAnswer", payload: {} });
                         setPromptContent({ eventType: "incorrect" });
+                        setActive(false);
+
+                        promiseKeeper
+                            .stall(DURATIONS.exit, "proceed to next round")
+                            .then(() => {
+                                animationFrame = window.requestAnimationFrame(
+                                    () => {
+                                        setShowItems(false);
+                                        advanceRound({
+                                            nextRoundIndex:
+                                                $quizState.current.currentRound
+                                                    .roundIndex + 1,
+                                        });
+                                    }
+                                );
+                            });
                     });
 
                     return null;
@@ -846,29 +927,6 @@ const Quiz = (props) => {
 
                     if (nextRoundIndex < quizState.numTotalRounds) {
                         //More rounds left to go. Advance to the next round.
-                        //advance to the next round manually (since useReducer does not provide up-to-date quizState in callbacks)
-                        const nextRound =
-                            $quizState.current?.rounds?.[nextRoundIndex];
-
-                        const nextCorrectAnswer = nextRound.answers.filter(
-                            (answer) => answer.stepIndex === 0
-                        )[0];
-
-                        const instructionMsg = createInstructionMsg(
-                            capitalizeFirstLetter(
-                                nextCorrectAnswer?.item?.label
-                            ),
-                            nextRound.type
-                        );
-
-                        const fadeOutItems = promiseKeeper.stall(
-                            DURATIONS.exit * $currentRound.current.numAnswers +
-                                700,
-                            "fadeout-old-items"
-                        );
-
-                        await fadeOutItems;
-
                         // if (roundIndex > 0) {
                         //     setShowOverlay(true);
                         //     const whiteOut = promiseKeeper.withRC(
@@ -880,50 +938,7 @@ const Quiz = (props) => {
                         //     );
                         //     await whiteOut;
                         // }
-
-                        dispatch({ type: "goNextRound" });
-
-                        animationFrame = window.requestAnimationFrame(() => {
-                            setInstruction(instructionMsg);
-                            setShowOverlay(false);
-                            setShowItems(true);
-
-                            setPromptContent(null);
-                        });
-
-                        const numAnswers =
-                            $currentRound?.current.answers?.length ?? 0;
-
-                        const newItemsAppeared = await promiseKeeper.stall(
-                            DURATIONS.enter * (numAnswers + 1) * 2,
-                            "newItemsAppeared"
-                        );
-
-                        const sayInstruction_newRound = promiseKeeper.withRC(
-                            synthVoice.say(instructionMsg),
-                            {
-                                resolveOnError: true,
-                                label: "sayInstruction_newRound",
-                            }
-                        );
-
-                        if (
-                            MULTIPLE_ANSWER_TEXT_CARDS !==
-                            $quizState.current.currentRound?.type
-                        ) {
-                            setShowInstruction(true);
-                        }
-
-                        await sayInstruction_newRound;
-
-                        animationFrame = window.requestAnimationFrame(() => {
-                            setPromptContent({
-                                eventType: getPromptEventTypeByRoundType(
-                                    $quizState.current.currentRound?.type
-                                ),
-                            });
-                            setActive(true);
-                        });
+                        return advanceRound({ nextRoundIndex });
                     } else {
                         //Quiz is complete
 

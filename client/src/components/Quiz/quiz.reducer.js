@@ -106,6 +106,7 @@ class GameRound {
 		this.roundIndex = roundIndex;
 		this.type = type;
 		this.numRepeats = numRepeats;
+		this.numMistakes = 0;
 	}
 }
 
@@ -253,6 +254,7 @@ const goNextRound = ({
 	step,
 	numTotalRounds,
 	skipping,
+	completed = true,
 }) => {
 	const nextRoundIndex = currentRoundIndex + 1;
 	if (nextRoundIndex >= numTotalRounds) {
@@ -265,7 +267,7 @@ const goNextRound = ({
 		if (skipping) {
 			rounds[currentRoundIndex].skipped = true;
 		} else {
-			rounds[currentRoundIndex].completed = true;
+			rounds[currentRoundIndex].completed = completed || false;
 		}
 		const nextRound = rounds[nextRoundIndex];
 		const nextSlots = shuffle(nextRound.answers, nextRound.numAnswers);
@@ -493,6 +495,20 @@ const quizReducer = (state, action) => {
 				isCorrect: false,
 			};
 			break;
+
+		case "revertProgress":
+			const progress = getPercent(
+				Math.max(roundIndex - 1, 0),
+				rounds.length
+			);
+			debugger;
+			return {
+				...state,
+				progress,
+				progressing: false,
+				isWrong: false,
+				isCorrect: false,
+			};
 		case "correctItem":
 			return {
 				...state,
@@ -501,11 +517,33 @@ const quizReducer = (state, action) => {
 			};
 			break;
 		case "incorrectAnswer":
+			currentRound.numMistakes++;
+			const itemsIndexes = currentRound.answers.map((answer) => {
+				return answer.itemIndex;
+			});
+			const roundItems = currentRound.answers.map((answer) => {
+				return answer.item;
+			});
+			const newRound = new GameRound({
+				itemsIndexes,
+				numAnswers: currentRound.numAnswers,
+				numAnswersRequired: currentRound.numAnswersRequired,
+				roundIndex: currentRound.roundIndex,
+				type: currentRound.type,
+				items: roundItems,
+				correctItem: currentRound.correctItem,
+				numRepeats: currentRound.numRepeats,
+			});
+
+			const supplementedRounds = [...rounds, newRound];
+
 			return {
 				...state,
+				rounds: supplementedRounds,
 				isWrong: true,
 				isCorrect: false,
 			};
+
 			break;
 
 		case "clearCorrect":
@@ -522,8 +560,9 @@ const quizReducer = (state, action) => {
 				rounds,
 				state,
 				step,
-				skipping: action.skipping,
+				skipping: action.payload?.skipping,
 				numTotalRounds,
+				completed: action.payload?.completed || false,
 			});
 
 		case "goBackRound":
