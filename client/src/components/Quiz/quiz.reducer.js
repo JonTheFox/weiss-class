@@ -22,20 +22,15 @@ const getCorrectSlotIndex = (slots, step) => {
 };
 
 const getProgress = (_rounds) => {
-	const numCompletedRounds = _rounds.reduce((accumulator, round, i) => {
-		if (round.completed) {
+	const numPassedRounds = _rounds.reduce((accumulator, round, i) => {
+		if (round.completed || round.skipped) {
 			accumulator++;
-			debugger;
 		}
 
 		return accumulator;
 	}, 0);
 
-	const progress = getPercent(
-		Math.max(numCompletedRounds, 0),
-		_rounds.length
-	);
-	debugger;
+	const progress = getPercent(Math.max(numPassedRounds, 0), _rounds.length);
 	return progress;
 };
 
@@ -277,7 +272,6 @@ const goNextRound = ({
 	const nextRoundIndex = currentRoundIndex + 1;
 	if (nextRoundIndex >= numTotalRounds) {
 		//Already in final round.
-		// return { ...state, progress: 100 };
 		return state;
 	} else {
 		//More rounds to go. Proceed to the next one
@@ -288,6 +282,8 @@ const goNextRound = ({
 			rounds[currentRoundIndex].completed = completed || false;
 		}
 		const nextRound = rounds[nextRoundIndex];
+		const _nextRoundCurrentStep = nextRound.step;
+
 		const nextSlots = shuffle(nextRound.answers, nextRound.numAnswers);
 		const nextCorrectSlotIndex = getCorrectSlotIndex(nextSlots, 0);
 		const nextCorrectAnswer = nextSlots[nextCorrectSlotIndex]; // a Slot contains a single  AnswerItem, so we can treat them as one and the same
@@ -540,8 +536,6 @@ const quizReducer = (state, action) => {
 		//alias
 		case "correctAnswer":
 			currentRound.completed = true;
-			const _state = state;
-			debugger;
 			return {
 				...state,
 				isWrong: false,
@@ -552,6 +546,7 @@ const quizReducer = (state, action) => {
 		case "incorrectAnswer":
 			currentRound.numMistakes++;
 			currentRound.completed = false;
+			currentRound.skipped = true;
 			const itemsIndexes = currentRound.answers.map((answer) => {
 				return answer.itemIndex;
 			});
@@ -593,8 +588,6 @@ const quizReducer = (state, action) => {
 				isWrong: true,
 				isCorrect: false,
 			});
-
-			debugger;
 
 			return {
 				...state,

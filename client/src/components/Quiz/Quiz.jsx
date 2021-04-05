@@ -717,7 +717,7 @@ const Quiz = (props) => {
             await fadeOutItems;
             dispatch({
                 type: "goNextRound",
-                payload: { completed },
+                payload: { completed, skipping: !completed },
             });
 
             animationFrame = window.requestAnimationFrame(() => {
@@ -791,7 +791,6 @@ const Quiz = (props) => {
                 logg("correct answer selected:  ", !wrongAnswer);
 
                 if (wrongAnswer) {
-                    // setActive(true);
                     animationFrame = window.requestAnimationFrame(() => {
                         dispatch({ type: "incorrectAnswer", payload: {} });
                         setPromptContent({ eventType: "incorrect" });
@@ -841,13 +840,12 @@ const Quiz = (props) => {
                 ) {
                     //There are still some items left to match. Prepare for the next step
 
-                    const isLastStep = nextStep === lastStep;
-
-                    if (isLastStep) {
-                        //time to do something special for the last item
-                        // debugger;
-                        // const sta = $quizState.current;
-                    }
+                    // const isLastStep = nextStep === lastStep;
+                    // if (isLastStep) {
+                    //     //time to do something special for the last item
+                    //     // debugger;
+                    //     // const sta = $quizState.current;
+                    // }
 
                     const nextCorrectItemIndex = answers.filter(
                         (answer) => answer.stepIndex === nextStep
@@ -903,7 +901,6 @@ const Quiz = (props) => {
                     await progressBarHasAdvanced;
                     animationFrame = window.requestAnimationFrame(() => {
                         setShowInstruction(false);
-                        // setInstruction("");
                         setPromptContent({
                             eventType: "done",
                             text: congratsMsg,
@@ -1180,7 +1177,8 @@ const Quiz = (props) => {
                         >
                             {answerSlots.map((answerSlot, i) => {
                                 const { stepIndex, itemIndex } = answerSlot;
-                                const isCorrectAnswer = stepIndex === step;
+                                const isCorrectAnswer =
+                                    stepIndex === currentRound.step;
 
                                 const hasBeenAnswered =
                                     step > stepIndex || completed || quizIsDone;
@@ -1311,6 +1309,8 @@ const Quiz = (props) => {
                         >
                             {answerSlots.map((answerSlot, i) => {
                                 const { stepIndex, itemIndex } = answerSlot;
+
+                                //bug below!
                                 const isCorrectAnswer = stepIndex === step;
 
                                 const hasBeenAnswered =
@@ -1320,6 +1320,7 @@ const Quiz = (props) => {
                                 const isCardActive = active && !hasBeenAnswered;
 
                                 //todo: figure out why itemIndex is wrong
+                                //update: is it?
                                 const item = answerSlot.item;
                                 const imageItem = getOneImageItem(item);
                                 const imgURL =
@@ -1390,8 +1391,14 @@ const Quiz = (props) => {
                                             label={capitalizeFirstLetter(
                                                 item?.label
                                             )}
-                                            showHeader={hasBeenAnswered}
-                                            showHeaderText={hasBeenAnswered}
+                                            showHeader={
+                                                hasJustBeenAnswered &&
+                                                hasBeenAnswered
+                                            }
+                                            showHeaderText={
+                                                hasJustBeenAnswered &&
+                                                hasBeenAnswered
+                                            }
                                             renderHeader={(label) => {
                                                 return (
                                                     <SplitText
@@ -1556,8 +1563,11 @@ const Quiz = (props) => {
         if (progressBarRef.current?.style) {
             progressBarRef.current.style.width = progress + "%";
         }
-        debugger;
     }, [progress]);
+
+    useEffect(() => {
+        logg("step: ", step);
+    }, [step]);
 
     if (!items) {
         return (
