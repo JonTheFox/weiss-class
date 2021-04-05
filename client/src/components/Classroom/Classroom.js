@@ -54,6 +54,7 @@ const Classroom = (props) => {
 		getUniqueString,
 		CLIENT_ONLY,
 		navigateTo,
+		DEBUGGING,
 	} = appUtils;
 
 	const { logg, loggError } = useLogg({ label });
@@ -68,8 +69,7 @@ const Classroom = (props) => {
 
 	const { slides, currentSlideIndex } = room;
 
-	// const _slides = slides;
-	const _slides = PRESENT_PROGRESSIVE_SLIDES;
+	const _slides = DEBUGGING ? PRESENT_PROGRESSIVE_SLIDES : slides;
 
 	const history = useHistory();
 
