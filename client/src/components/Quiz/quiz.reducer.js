@@ -21,6 +21,24 @@ const getCorrectSlotIndex = (slots, step) => {
 	return slotIndex;
 };
 
+const getProgress = (_rounds) => {
+	const numCompletedRounds = _rounds.reduce((accumulator, round, i) => {
+		if (round.completed) {
+			accumulator++;
+			debugger;
+		}
+
+		return accumulator;
+	}, 0);
+
+	const progress = getPercent(
+		Math.max(numCompletedRounds, 0),
+		_rounds.length
+	);
+	debugger;
+	return progress;
+};
+
 class AnswerItem {
 	completed = false;
 	numMistakes = 0;
@@ -276,7 +294,7 @@ const goNextRound = ({
 		const nextCorrectItemIndex = nextCorrectAnswer?.itemIndex;
 		const nextCorrectItem = nextCorrectAnswer?.item;
 
-		const progress = getPercent(nextRoundIndex, rounds.length);
+		const progress = getProgress(rounds);
 
 		logg("Quiz progress: ", progress);
 
@@ -330,7 +348,8 @@ const initQuizReducer = ({
 const quizReducer = (state, action) => {
 	const {
 		//numAnswers,
-		//numAnswersRequired,
+		// numAnswersRequired,
+		numTotalAnswersRequired,
 		//startStep,
 		//startRound,
 
@@ -366,9 +385,10 @@ const quizReducer = (state, action) => {
 				...DEFAULT_CONFIG,
 				...config, //give precedence
 				items: payload.items,
-				numShuffles: 3,
+				numShuffles: payload.numShuffles ?? 3,
 				rounds: payload.rounds || state.rounds,
 			});
+
 			logg("Initialized Game: ", game);
 
 			return game; //this will be the new state
@@ -489,7 +509,10 @@ const quizReducer = (state, action) => {
 		case "advanceProgress":
 			return {
 				...state,
-				progress: getPercent(roundIndex + 1, rounds.length),
+				//not sure that this is correct
+				progress: getProgress(rounds),
+				//
+				//progress: getPercent(roundIndex + 1, rounds.length),
 				progressing: true,
 				isWrong: false,
 				isCorrect: false,
@@ -497,14 +520,11 @@ const quizReducer = (state, action) => {
 			break;
 
 		case "revertProgress":
-			const progress = getPercent(
-				Math.max(roundIndex - 1, 0),
-				rounds.length
-			);
-			debugger;
+			//todo FIX this
+			const newProgress = getProgress(rounds);
 			return {
 				...state,
-				progress,
+				progress: newProgress,
 				progressing: false,
 				isWrong: false,
 				isCorrect: false,
@@ -516,14 +536,33 @@ const quizReducer = (state, action) => {
 				isCorrect: true,
 			};
 			break;
+
+		//alias
+		case "correctAnswer":
+			currentRound.completed = true;
+			const _state = state;
+			debugger;
+			return {
+				...state,
+				isWrong: false,
+				isCorrect: true,
+			};
+			break;
+
 		case "incorrectAnswer":
 			currentRound.numMistakes++;
+			currentRound.completed = false;
 			const itemsIndexes = currentRound.answers.map((answer) => {
 				return answer.itemIndex;
 			});
 			const roundItems = currentRound.answers.map((answer) => {
 				return answer.item;
 			});
+
+			// const roundItems = currentRound.answers.map((answer) => {
+			// 	return answer.item;
+			// });
+
 			const newRound = new GameRound({
 				itemsIndexes,
 				numAnswers: currentRound.numAnswers,
@@ -537,9 +576,34 @@ const quizReducer = (state, action) => {
 
 			const supplementedRounds = [...rounds, newRound];
 
+			const newNumTotalAnswersRequired =
+				numTotalAnswersRequired + newRound.numAnswersRequired;
+			const newLastStep = newNumTotalAnswersRequired;
+			const newNumTotalRounds = numTotalRounds + 1;
+			const newNumTotalMistakes = numTotalMistakes + 1;
+
+			logg({
+				...state,
+				rounds: supplementedRounds,
+				numTotalAnswersRequired: newNumTotalAnswersRequired,
+				lastStep: newLastStep, // make sure that is correct
+				numTotalRounds: newNumTotalRounds,
+				numTotalMistakes: newNumTotalMistakes,
+				progress: getProgress(supplementedRounds),
+				isWrong: true,
+				isCorrect: false,
+			});
+
+			debugger;
+
 			return {
 				...state,
 				rounds: supplementedRounds,
+				numAnswersRequired: newNumTotalAnswersRequired,
+				lastStep: newLastStep, // make sure that is correct
+				numTotalRounds: newNumTotalRounds,
+				numTotalMistakes: newNumTotalMistakes,
+				progress: getProgress(supplementedRounds),
 				isWrong: true,
 				isCorrect: false,
 			};

@@ -668,10 +668,8 @@ const Quiz = (props) => {
     const handleCorrectAnswer = useCallback(async () => {
         animationFrame = window.requestAnimationFrame(() => {
             dispatch({ type: "goNextStep" });
-        });
-
-        animationFrame = window.requestAnimationFrame(() => {
             setPromptContent({ eventType: "correct" });
+            dispatch({ type: "correctAnswer", payload: {} });
         });
 
         return true;
@@ -700,7 +698,7 @@ const Quiz = (props) => {
     );
 
     const advanceRound = useCallback(
-        async ({ nextRoundIndex }) => {
+        async ({ nextRoundIndex, completed = false }) => {
             const nextRound = $quizState.current?.rounds?.[nextRoundIndex];
             const nextCorrectAnswer = nextRound.answers.filter(
                 (answer) => answer.stepIndex === 0
@@ -719,7 +717,7 @@ const Quiz = (props) => {
             await fadeOutItems;
             dispatch({
                 type: "goNextRound",
-                payload: { completed: true },
+                payload: { completed },
             });
 
             animationFrame = window.requestAnimationFrame(() => {
@@ -809,6 +807,7 @@ const Quiz = (props) => {
                                             nextRoundIndex:
                                                 $quizState.current.currentRound
                                                     .roundIndex + 1,
+                                            completed: false,
                                         });
                                     }
                                 );
@@ -1557,6 +1556,7 @@ const Quiz = (props) => {
         if (progressBarRef.current?.style) {
             progressBarRef.current.style.width = progress + "%";
         }
+        debugger;
     }, [progress]);
 
     if (!items) {
