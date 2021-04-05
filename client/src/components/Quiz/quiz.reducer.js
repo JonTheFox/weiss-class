@@ -271,14 +271,18 @@ const goNextRound = ({
 }) => {
 	const nextRoundIndex = currentRoundIndex + 1;
 	if (nextRoundIndex >= numTotalRounds) {
+		//maybe >= like it used to be until the bug fix
 		//Already in final round.
+		debugger;
 		return state;
 	} else {
 		//More rounds to go. Proceed to the next one
 		//mark the current round as completed or skipped (default is completed)
+		debugger;
 		if (skipping) {
 			rounds[currentRoundIndex].skipped = true;
 		} else {
+			//bug!!
 			rounds[currentRoundIndex].completed = completed || false;
 		}
 		const nextRound = rounds[nextRoundIndex];
@@ -575,6 +579,8 @@ const quizReducer = (state, action) => {
 				numTotalAnswersRequired + newRound.numAnswersRequired;
 			const newLastStep = newNumTotalAnswersRequired;
 			const newNumTotalRounds = numTotalRounds + 1;
+			const numRounds = supplementedRounds.length;
+			debugger;
 			const newNumTotalMistakes = numTotalMistakes + 1;
 
 			logg({
@@ -582,7 +588,7 @@ const quizReducer = (state, action) => {
 				rounds: supplementedRounds,
 				numTotalAnswersRequired: newNumTotalAnswersRequired,
 				lastStep: newLastStep, // make sure that is correct
-				numTotalRounds: newNumTotalRounds,
+				numTotalRounds: numRounds, //verify this
 				numTotalMistakes: newNumTotalMistakes,
 				progress: getProgress(supplementedRounds),
 				isWrong: true,
@@ -612,6 +618,7 @@ const quizReducer = (state, action) => {
 			break;
 
 		case "goNextRound":
+			debugger;
 			return goNextRound({
 				currentRoundIndex: roundIndex,
 				rounds,

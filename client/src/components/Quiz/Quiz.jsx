@@ -608,17 +608,16 @@ const Quiz = (props) => {
                 setActive(true);
 
                 const roundType = $quizState.current.currentRound?.type;
-
                 const eventType = getPromptEventTypeByRoundType(
                     $quizState.current.currentRound?.type
                 );
-
                 if (eventType === SAY__REPEAT) {
                     speechRecognizer.listen();
                     //for fast-forwarding purposes, add a promise to promiseKeeper. This will allow us to resolve the promise upon a key press, for example
                     promiseKeeper.withRC(() => {
                         return new Promise((resolve, reject) => {
                             advanceRound({
+                                //may cause a bug
                                 nextRoundIndex:
                                     $quizState.current.currentRound?.roundIndex,
                             });
@@ -802,12 +801,27 @@ const Quiz = (props) => {
                                 animationFrame = window.requestAnimationFrame(
                                     () => {
                                         setShowItems(false);
-                                        advanceRound({
-                                            nextRoundIndex:
-                                                $quizState.current.currentRound
-                                                    .roundIndex + 1,
-                                            completed: false,
-                                        });
+                                        promiseKeeper
+                                            .stall(
+                                                DURATIONS.exit,
+                                                "skip to next round"
+                                            )
+                                            .then(() => {
+                                                animationFrame = window.requestAnimationFrame(
+                                                    () => {
+                                                        advanceRound({
+                                                            nextRoundIndex:
+                                                                $quizState
+                                                                    .current
+                                                                    .currentRound
+                                                                    .roundIndex +
+                                                                1,
+                                                            completed: false,
+                                                            skipping: true, //effectively the same as !completed. It's here just for clarity
+                                                        });
+                                                    }
+                                                );
+                                            });
                                     }
                                 );
                             });
@@ -934,7 +948,10 @@ const Quiz = (props) => {
                         //     );
                         //     await whiteOut;
                         // }
-                        return advanceRound({ nextRoundIndex });
+                        return advanceRound({
+                            nextRoundIndex,
+                            completed: true,
+                        });
                     } else {
                         //Quiz is complete
 
@@ -950,7 +967,10 @@ const Quiz = (props) => {
 
                         //setShowInstruction(false);
 
-                        dispatch({ type: "goNextRound" });
+                        dispatch({
+                            type: "goNextRound",
+                            payload: { completed: true },
+                        });
 
                         const fadeOutOldItems = promiseKeeper.stall(
                             DURATIONS.exit +
@@ -1309,8 +1329,6 @@ const Quiz = (props) => {
                         >
                             {answerSlots.map((answerSlot, i) => {
                                 const { stepIndex, itemIndex } = answerSlot;
-
-                                //bug below!
                                 const isCorrectAnswer = stepIndex === step;
 
                                 const hasBeenAnswered =
