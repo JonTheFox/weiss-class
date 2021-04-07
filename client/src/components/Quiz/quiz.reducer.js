@@ -269,20 +269,18 @@ const goNextRound = ({
 	skipping,
 	completed = true,
 }) => {
-	const nextRoundIndex = currentRoundIndex + 1;
+	const _currentRound = rounds[currentRoundIndex];
+	const nextRoundIndex = _currentRound.roundIndex + 1;
+
 	if (nextRoundIndex >= numTotalRounds) {
-		//maybe >= like it used to be until the bug fix
 		//Already in final round.
-		debugger;
 		return state;
 	} else {
 		//More rounds to go. Proceed to the next one
 		//mark the current round as completed or skipped (default is completed)
-		debugger;
 		if (skipping) {
 			rounds[currentRoundIndex].skipped = true;
 		} else {
-			//bug!!
 			rounds[currentRoundIndex].completed = completed || false;
 		}
 		const nextRound = rounds[nextRoundIndex];
@@ -290,13 +288,11 @@ const goNextRound = ({
 
 		const nextSlots = shuffle(nextRound.answers, nextRound.numAnswers);
 		const nextCorrectSlotIndex = getCorrectSlotIndex(nextSlots, 0);
+		debugger;
 		const nextCorrectAnswer = nextSlots[nextCorrectSlotIndex]; // a Slot contains a single  AnswerItem, so we can treat them as one and the same
 		const nextCorrectItemIndex = nextCorrectAnswer?.itemIndex;
 		const nextCorrectItem = nextCorrectAnswer?.item;
-
 		const progress = getProgress(rounds);
-
-		logg("Quiz progress: ", progress);
 
 		return {
 			...state,
@@ -395,29 +391,19 @@ const quizReducer = (state, action) => {
 			break;
 
 		case "goNextStep":
+			const _currentRound = currentRound || {};
 			const nextStep = Math.min(
-				currentRound.step + 1,
-				currentRound.lastStep + 1
+				(_currentRound?.step ?? 0) + 1,
+				(_currentRound?.lastStep ?? 0) + 1
 			);
 
-			if (nextStep > currentRound.lastStep + 1) {
+			if (nextStep > (_currentRound?.lastStep ?? 0) + 1) {
 				return state; //already completed, no need for a re-render
 			}
 
 			const roundIsNowComplete =
-				nextStep > currentRound.lastStep ||
-				nextStep + 1 > currentRound.numAnswersRequired;
-
-			// if (roundIsNowComplete) {
-			// 	return goNextRound({
-			// 		roundIndex,
-			// 		rounds,
-			// 		state,
-			// 		step,
-			// 		numTotalRounds,
-			// 		skipping: payload?.skipping,
-			// 	});
-			// }
+				nextStep > _currentRound.lastStep ||
+				nextStep + 1 > _currentRound.numAnswersRequired;
 
 			_updatedRound.step = nextStep;
 			rounds[roundIndex] = _updatedRound;
@@ -427,6 +413,8 @@ const quizReducer = (state, action) => {
 			const nextCorrectItemIndex = roundIsNowComplete
 				? -1
 				: answerSlots[nextCorrectSlotIndex].itemIndex;
+
+			debugger;
 
 			if (typeof state.items !== "undefined") {
 				const _items = state.items;
@@ -562,17 +550,17 @@ const quizReducer = (state, action) => {
 			// 	return answer.item;
 			// });
 
+			//clone the failed round
 			const newRound = new GameRound({
 				itemsIndexes,
 				numAnswers: currentRound.numAnswers,
 				numAnswersRequired: currentRound.numAnswersRequired,
-				roundIndex: currentRound.roundIndex,
+				roundIndex: rounds.length, //make it the last round
 				type: currentRound.type,
 				items: roundItems,
 				correctItem: currentRound.correctItem,
 				numRepeats: currentRound.numRepeats,
 			});
-
 			const supplementedRounds = [...rounds, newRound];
 
 			const newNumTotalAnswersRequired =
@@ -580,7 +568,6 @@ const quizReducer = (state, action) => {
 			const newLastStep = newNumTotalAnswersRequired;
 			const newNumTotalRounds = numTotalRounds + 1;
 			const numRounds = supplementedRounds.length;
-			debugger;
 			const newNumTotalMistakes = numTotalMistakes + 1;
 
 			logg({

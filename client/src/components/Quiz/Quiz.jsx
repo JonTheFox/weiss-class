@@ -351,6 +351,7 @@ const Quiz = (props) => {
         isWrong,
         isCorrect,
     } = quizState;
+
     const { numAnswers, step, completed, numSteps, roundIndex } = currentRound;
 
     const $quizState = useRef(quizState);
@@ -364,11 +365,6 @@ const Quiz = (props) => {
     const { logg, loggError } = useLogg({ label: compLabel });
     const promiseKeeper = usePromiseKeeper({ label: compLabel });
     const $promiseKeeper = useRef(promiseKeeper);
-
-    const debuggerColumns = [
-        { title: "Property", field: "property" },
-        { title: "Value", field: "value" },
-    ];
 
     const getOneImageItem = useCallback((item) => {
         // const image = item?.images?.[0];
@@ -487,7 +483,6 @@ const Quiz = (props) => {
             onCorrect: async ({ transricpt }) => {
                 processAnswer({
                     selectedStepIndex: 0,
-
                     selectedSlot: answerSlots[0],
                     currentRound,
                     selectedSlotIndex: 0,
@@ -572,6 +567,8 @@ const Quiz = (props) => {
                 rounds[0]?.type
             );
 
+            debugger;
+
             if (!instructionMsg) {
                 loggError("NO INSTRUCTION MSG???");
             }
@@ -634,12 +631,6 @@ const Quiz = (props) => {
             promiseKeeper.resolveLatest();
         }
     };
-
-    // useEffect(() => {
-    //     if (appState.user && quizState.step <= 0) {
-    //         initGame();
-    //     }
-    // }, [appState]);
 
     const goNextBackground = useCallback(() => {
         setBackground((prev) => {
@@ -707,6 +698,7 @@ const Quiz = (props) => {
                 capitalizeFirstLetter(nextCorrectAnswer?.item?.label),
                 nextRound.type
             );
+            debugger;
 
             const fadeOutItems = promiseKeeper.stall(
                 DURATIONS.exit * $currentRound.current.numAnswers + 700,
@@ -782,6 +774,7 @@ const Quiz = (props) => {
                 //             ?.slotIndex ?? false;
 
                 const wrongAnswer = selectedSlot?.item !== correctItem;
+                debugger;
 
                 if (quizIsDone) {
                     return "quiz is done";
@@ -869,6 +862,7 @@ const Quiz = (props) => {
                         capitalizeFirstLetter(nextCorrectItem?.label) || "",
                         $quizState.current?.currentRound?.type
                     );
+                    debugger;
 
                     animationFrame = window.requestAnimationFrame(() => {
                         setInstruction(instructionMsg);
@@ -935,6 +929,8 @@ const Quiz = (props) => {
                     const nextRoundIndex =
                         ($quizState.current?.currentRound?.roundIndex ?? 0) + 1;
 
+                    debugger;
+
                     if (nextRoundIndex < quizState.numTotalRounds) {
                         //More rounds left to go. Advance to the next round.
                         // if (roundIndex > 0) {
@@ -980,21 +976,10 @@ const Quiz = (props) => {
 
                         // pendingRCPromise = fadeOutOldItems;
                         await fadeOutOldItems;
-
                         setShowSummary(true);
-
-                        // setShowInstruction(true);
-
-                        //setInstruction(congratsMsg);
-                        // setShowInstruction(true);
                         setQuizIsDone(true);
-
                         setPromptContent({ eventType: "allDone" });
 
-                        // const joinedCongratsMsgs =
-                        //     "Congratulations, you have passed the test!" +
-                        //     " " +
-                        //     finalCongratsMsg;
                         const congratsMsg =
                             "Congratulations, you have passed the test!";
                         setSummary(congratsMsg);
@@ -1111,7 +1096,7 @@ const Quiz = (props) => {
         if (!answers || !answers.length) return null;
 
         const currentRoundType = currentRound.type;
-        const hasBeenAnswered = currentRound.completed || currentRound.skipped;
+        const hasBeenAnswered = currentRound.completed;
         const isCardActive = active;
 
         if (currentRoundType === SAY__REPEAT) {
@@ -1199,11 +1184,9 @@ const Quiz = (props) => {
                                 const { stepIndex, itemIndex } = answerSlot;
                                 const isCorrectAnswer =
                                     stepIndex === currentRound.step;
-
-                                const hasBeenAnswered =
-                                    step > stepIndex || completed || quizIsDone;
-
-                                const hasJustBeenAnswered = i === stepIndex + 1;
+                                const hasBeenAnswered = completed;
+                                const hasJustBeenAnswered =
+                                    completed && i === stepIndex + 1;
                                 const isCardActive = active && !hasBeenAnswered;
 
                                 //todo: figure out why itemIndex is wrong
@@ -1329,16 +1312,16 @@ const Quiz = (props) => {
                         >
                             {answerSlots.map((answerSlot, i) => {
                                 const { stepIndex, itemIndex } = answerSlot;
+                                //todo: figure out why itemIndex is wrong
+                                //update: is it?
+
                                 const isCorrectAnswer = stepIndex === step;
 
-                                const hasBeenAnswered =
-                                    step > stepIndex || completed || quizIsDone;
+                                const hasBeenAnswered = completed || quizIsDone; //consider adding "skipping"
 
                                 const hasJustBeenAnswered = i === stepIndex + 1;
                                 const isCardActive = active && !hasBeenAnswered;
 
-                                //todo: figure out why itemIndex is wrong
-                                //update: is it?
                                 const item = answerSlot.item;
                                 const imageItem = getOneImageItem(item);
                                 const imgURL =
@@ -1409,14 +1392,8 @@ const Quiz = (props) => {
                                             label={capitalizeFirstLetter(
                                                 item?.label
                                             )}
-                                            showHeader={
-                                                hasJustBeenAnswered &&
-                                                hasBeenAnswered
-                                            }
-                                            showHeaderText={
-                                                hasJustBeenAnswered &&
-                                                hasBeenAnswered
-                                            }
+                                            showHeader={hasBeenAnswered}
+                                            showHeaderText={hasBeenAnswered}
                                             renderHeader={(label) => {
                                                 return (
                                                     <SplitText
@@ -1464,9 +1441,15 @@ const Quiz = (props) => {
                     on: "keyup",
                 },
                 (keyEvent) => {
-                    logg(keyEvent);
-                    logg("Latest promise: ", promiseKeeper.latestPromise);
+                    //  logg("Latest promise: ", promiseKeeper.latestPromise);
                     promiseKeeper.resolveLatest();
+                    debugger;
+                    processAnswer({
+                        selectedStepIndex: 0, //to mark it as a correct answer
+                        selectedSlotIndex: 0,
+                        selectedSlot: $quizState.current.answerSlots?.[0],
+                        currentRound: $quizState.current.currentRound,
+                    });
                 }
             );
             handlePress(
@@ -1494,7 +1477,7 @@ const Quiz = (props) => {
                     on: "keyup",
                 },
                 (keyEvent) => {
-                    logg(keyEvent);
+                    //logg(keyEvent);
                     goNextBackground();
                 }
             );
@@ -1504,7 +1487,7 @@ const Quiz = (props) => {
                     on: "keyup",
                 },
                 (keyEvent) => {
-                    logg(keyEvent);
+                    //logg(keyEvent);
                     goPrevBackground();
                 }
             );
