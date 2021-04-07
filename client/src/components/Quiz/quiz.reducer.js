@@ -288,7 +288,6 @@ const goNextRound = ({
 
 		const nextSlots = shuffle(nextRound.answers, nextRound.numAnswers);
 		const nextCorrectSlotIndex = getCorrectSlotIndex(nextSlots, 0);
-		debugger;
 		const nextCorrectAnswer = nextSlots[nextCorrectSlotIndex]; // a Slot contains a single  AnswerItem, so we can treat them as one and the same
 		const nextCorrectItemIndex = nextCorrectAnswer?.itemIndex;
 		const nextCorrectItem = nextCorrectAnswer?.item;
@@ -528,6 +527,7 @@ const quizReducer = (state, action) => {
 		//alias
 		case "correctAnswer":
 			currentRound.completed = true;
+			currentRound.correctAnswer.completed = true;
 			return {
 				...state,
 				isWrong: false,

@@ -53,38 +53,15 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 
-// import "react-step-progress-bar/styles.css";
-//import { ProgressBar, Step } from "react-step-progress-bar";
-
-// import DebuggerView from "../UI/DebuggerView/DebuggerView.jsx";
-
 import ReactPlayer from "react-player";
 import styles from "./quiz.module.scss";
+
+import SFX from "../../constants/soundEffects.js";
 
 let speechRecognizer;
 
 // const getAorAn = (noun = "") =>
 //     ["a", "e", "i", "o", "u"].includes(noun?.[0]?.toLowerCase()) ? "an" : "a";
-
-const SFX = {
-    roundComplete: {
-        url: "/sfx/app_alert_tone_032.mp3",
-    },
-    correctAnswer: {
-        url:
-            "/sfx/zapsplat_multimedia_alert_chime_delay_bright_positive_11634.mp3",
-    },
-    wrongAnswer: {
-        // url: "/sfx/zapsplat_multimedia_game_menu_tone_015_25430.mp3",
-        url: "/sfx/app_alert_tone_remove_delete_001.mp3",
-    },
-    gameComplete: {
-        url: "/app_alert_tone_034",
-    },
-    msgSent: {
-        url: "/sfx/app_alert_tone_024.mp3",
-    },
-};
 
 const useGridStyles = makeStyles(({ breakpoints }) => ({
     root: {
@@ -567,8 +544,6 @@ const Quiz = (props) => {
                 rounds[0]?.type
             );
 
-            debugger;
-
             if (!instructionMsg) {
                 loggError("NO INSTRUCTION MSG???");
             }
@@ -690,6 +665,7 @@ const Quiz = (props) => {
     const advanceRound = useCallback(
         async ({ nextRoundIndex, completed = false }) => {
             const nextRound = $quizState.current?.rounds?.[nextRoundIndex];
+            //bug here
             const nextCorrectAnswer = nextRound.answers.filter(
                 (answer) => answer.stepIndex === 0
             )[0];
@@ -698,7 +674,6 @@ const Quiz = (props) => {
                 capitalizeFirstLetter(nextCorrectAnswer?.item?.label),
                 nextRound.type
             );
-            debugger;
 
             const fadeOutItems = promiseKeeper.stall(
                 DURATIONS.exit * $currentRound.current.numAnswers + 700,
@@ -774,7 +749,6 @@ const Quiz = (props) => {
                 //             ?.slotIndex ?? false;
 
                 const wrongAnswer = selectedSlot?.item !== correctItem;
-                debugger;
 
                 if (quizIsDone) {
                     return "quiz is done";
@@ -1096,7 +1070,7 @@ const Quiz = (props) => {
         if (!answers || !answers.length) return null;
 
         const currentRoundType = currentRound.type;
-        const hasBeenAnswered = currentRound.completed;
+        const hasBeenAnswered = currentRound.completed; //might cause a bug
         const isCardActive = active;
 
         if (currentRoundType === SAY__REPEAT) {
@@ -1184,7 +1158,12 @@ const Quiz = (props) => {
                                 const { stepIndex, itemIndex } = answerSlot;
                                 const isCorrectAnswer =
                                     stepIndex === currentRound.step;
-                                const hasBeenAnswered = completed;
+
+                                //bug
+                                const hasBeenAnswered = answerSlot.completed;
+                                if (hasBeenAnswered) {
+                                    debugger;
+                                }
                                 const hasJustBeenAnswered =
                                     completed && i === stepIndex + 1;
                                 const isCardActive = active && !hasBeenAnswered;
@@ -1316,8 +1295,8 @@ const Quiz = (props) => {
                                 //update: is it?
 
                                 const isCorrectAnswer = stepIndex === step;
-
-                                const hasBeenAnswered = completed || quizIsDone; //consider adding "skipping"
+                                const hasBeenAnswered =
+                                    answerSlot.completed || quizIsDone;
 
                                 const hasJustBeenAnswered = i === stepIndex + 1;
                                 const isCardActive = active && !hasBeenAnswered;
@@ -1443,13 +1422,13 @@ const Quiz = (props) => {
                 (keyEvent) => {
                     //  logg("Latest promise: ", promiseKeeper.latestPromise);
                     promiseKeeper.resolveLatest();
-                    debugger;
-                    processAnswer({
-                        selectedStepIndex: 0, //to mark it as a correct answer
-                        selectedSlotIndex: 0,
-                        selectedSlot: $quizState.current.answerSlots?.[0],
-                        currentRound: $quizState.current.currentRound,
-                    });
+
+                    // processAnswer({
+                    //     selectedStepIndex: 0, //to mark it as a correct answer
+                    //     selectedSlotIndex: 0,
+                    //     selectedSlot: $quizState.current.answerSlots?.[0],
+                    //     currentRound: $quizState.current.currentRound,
+                    // });
                 }
             );
             handlePress(
@@ -1659,19 +1638,3 @@ const Quiz = (props) => {
 };
 
 export default Quiz;
-
-/*
-
-<DebuggerView
-                    show={false}
-                    columns={debuggerColumns}
-                    data={[
-                        { property: "Round#", value: quizState.roundIndex },
-                        {
-                            property: "Step#",
-                            value: quizState.currentRound.step,
-                        },
-                    ]}
-                    noHeader={true}
-                />
-*/
