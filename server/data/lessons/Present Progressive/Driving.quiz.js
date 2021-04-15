@@ -9,7 +9,7 @@ const DrivingQuiz = {
 		{
 			templateName: Quiz,
 			heading: "Present Progressive",
-			//subheading: "Living the moment",
+			subheading: "Quiz",
 			//title: "I am driving.",
 			//videoSet,
 			bgClass: "gradient",

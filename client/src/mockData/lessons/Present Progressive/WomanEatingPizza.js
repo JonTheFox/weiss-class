@@ -4,9 +4,9 @@ const {
 	CenteredHeadings,
 } = require("../../slideTemplates.js");
 
-const videoSet = require("./presentProgressiveVideos.js").girlStudying;
+const videoSet = require("./presentProgressiveVideos.js").womanEatingPizza;
 
-const girlStudying = {
+const womanEatingPizza = {
 	//bgImage
 	bg: "var(--white)",
 	pages: [
@@ -14,20 +14,17 @@ const girlStudying = {
 			templateName: VideoCentered,
 			//bgClass: "field-day",
 			heading: "Present Progressive",
-			//subheading: "Living the moment",
+			subheading: "Quiz",
 			//title: "I am driving.",
 			videoSet,
 			paragraphs: [
-				{
-					text: "She is studying. ",
-					className: "caption",
-				},
+				{ text: "She is eating pizza. ", className: "caption" },
 			],
 		},
 	],
 };
 
-module.exports = girlStudying;
+module.exports = womanEatingPizza;
 
 /*
 

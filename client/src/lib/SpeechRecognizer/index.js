@@ -81,7 +81,7 @@ class SpeechRecognizer {
     } //for Chrome
 
     this.listening = false;
-    this.words = words;
+    this.words = words.map((word) => word?.toLowerCase?.());
 
     const combinedConfig = {};
     for (let [key, value] of Object.entries(defaultConfig)) {

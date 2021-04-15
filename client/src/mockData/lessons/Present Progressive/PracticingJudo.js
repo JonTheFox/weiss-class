@@ -1,6 +1,6 @@
 const { VideoCentered } = require("../../slideTemplates.js");
 
-const videoSet = require("./presentProgressiveVideos.js").PracticingJudo;
+const videoSet = require("./presentProgressiveVideos.js").practicingJudo;
 
 const PracticingJudo = {
 	bg: "var(--white)",

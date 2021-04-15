@@ -194,64 +194,9 @@ const createInstructionMsg = (itemName = "", type = "touch") => {
     //     : "";
 };
 
-const fetchItems = async () => {
-    const _items = [
-        {
-            label: "I am driving.",
-            title: "I am driving.",
-            photographer: {
-                name: "Yaroslav Shuraev",
-                id: 649765,
-            },
-            //tags: undefined,
-            //label: "Sushi",
-
-            images: [
-                {
-                    urls: {
-                        regular:
-                            "https://images.pexels.com/videos/4434242/pexels-photo-4434242.jpeg?fit=crop&w=1200&h=630&auto=compress&cs=tinysrgb",
-                    },
-                },
-            ],
-            videoSet: {
-                phone:
-                    "https://player.vimeo.com/external/420239207.sd.mp4?s=2b5a6633c37af1a6fb0beb02c06bdc376fdfcce2&profile_id=164&oauth2_token_id=57447761",
-                tablet:
-                    "https://player.vimeo.com/external/420239207.hd.mp4?s=9fa34fce5989c66f5edc65fc533f2d91085d7599&profile_id=174&oauth2_token_id=57447761",
-                hdReady:
-                    "https://player.vimeo.com/external/420239207.hd.mp4?s=9fa34fce5989c66f5edc65fc533f2d91085d7599&profile_id=170&oauth2_token_id=57447761",
-                fullHd:
-                    "https://player.vimeo.com/external/420239207.hd.mp4?s=9fa34fce5989c66f5edc65fc533f2d91085d7599&profile_id=172&oauth2_token_id=57447761",
-            },
-            image:
-                "https://images.pexels.com/videos/4434242/pictures/preview-0.jpg",
-        },
-
-        {
-            title: "I am working.",
-            label: "I am working.",
-            user: {
-                name: "cottonbro",
-                url: "https://www.pexels.com/@cottonbro",
-                id: 1437723,
-            },
-            videoSet: {
-                phone:
-                    "https://player.vimeo.com/external/403652508.sd.mp4?s=f6fff2f196fc5899d730fd9af5544b7e6fbc5aa6&profile_id=164&oauth2_token_id=57447761",
-                tablet:
-                    "https://player.vimeo.com/external/403652508.hd.mp4?s=619899d6bfc52d8832cad04c0c0be57d45bb6c02&profile_id=174&oauth2_token_id=57447761",
-                hdReady:
-                    "https://player.vimeo.com/external/403652508.hd.mp4?s=619899d6bfc52d8832cad04c0c0be57d45bb6c02&profile_id=171&oauth2_token_id=57447761",
-                fullHd:
-                    "https://player.vimeo.com/external/403652508.hd.mp4?s=619899d6bfc52d8832cad04c0c0be57d45bb6c02&profile_id=173&oauth2_token_id=57447761",
-            },
-            image:
-                "https://images.pexels.com/videos/4065630/pictures/preview-0.jpg",
-        },
-    ];
-    // return props.items;
-    return _items;
+const fetchItems = async (items) => {
+    return items;
+    //todo: fetch
 };
 
 const compLabel = "Quiz";
@@ -456,6 +401,7 @@ const Quiz = (props) => {
 
     const startRecognition = useCallback(() => {
         const phrases = getPhrases(currentRound.correctItem, items);
+        debugger;
         speechRecognizer = createSpeechRecognizer(phrases, {
             onCorrect: async ({ transricpt }) => {
                 processAnswer({
@@ -508,6 +454,7 @@ const Quiz = (props) => {
                 setShowInstruction(false);
                 setShowItems(true);
             });
+            debugger;
 
             const _currentRound = $quizState.current?.currentRound;
             const enterDuration = DURATIONS.enter;
@@ -543,6 +490,7 @@ const Quiz = (props) => {
                 correctItemLabel,
                 rounds[0]?.type
             );
+            debugger;
 
             if (!instructionMsg) {
                 loggError("NO INSTRUCTION MSG???");
@@ -1049,7 +997,7 @@ const Quiz = (props) => {
                     }
                     className={clsx(styles.letter, "letter stroke")}
                 >
-                    {instruction}
+                    {instruction ?? ""}
                 </SplitText>
             </dt>
         </div>
@@ -1249,7 +1197,7 @@ const Quiz = (props) => {
                                                             POSES.char_fadeIn__old
                                                         }
                                                     >
-                                                        {label}
+                                                        {label ?? ""}
                                                     </SplitText>
                                                 );
                                             }}

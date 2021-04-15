@@ -16,8 +16,15 @@ const GirlPlayingWithCat = require("./GirlPlayingWithCat.js");
 const PlayingBasketball = require("./PlayingBasketball.js");
 const PlayingSoccer = require("./PlayingSoccer.js");
 const DrivingQuiz = require("./Driving.quiz.js");
-const GenericQuiz = require("./Generic.quiz.js");
+const PositiveQuiz2 = require("./Positive2.quiz.js");
+const PositiveQuiz3 = require("./Positive3.quiz.js");
+const PositiveQuiz4 = require("./Positive4.quiz.js");
+const PositiveQuiz5 = require("./Positive5.quiz.js");
 //const FlyingByClouds = require("./FlyingByClouds.js");
+const ManLyingOnHammock = require("./ManLyingOnHammovk.js");
+const WomanEatingPizza = require("./WomanEatingPizza.js");
+const WomanDrinkingCoffee = require("./WomanDrinkingCoffee.js");
+const ManThinking = require("./ManThinking.js");
 
 const PresentProgressiveSlides = [
 	//portrait
@@ -25,24 +32,22 @@ const PresentProgressiveSlides = [
 	DrivingInNiceScenery,
 	WorkingOnComputer,
 	DrivingQuiz,
+	ManLyingOnHammock,
 	GirlStudying,
-	CookingSoy,
-	TastingPancake,
-	GenericQuiz,
 	DancingLadies,
-	PracticingJudo,
-	GirlPlayingWithCat,
-	PlayingBasketball,
+	PositiveQuiz2,
 	PlayingSoccer,
-	//FlyingByClouds,
-
-	//landscape
-	// Raining,
-	// BikeRidingFirstPerson,
-	// Skiing,
-	// FlyingAboveMountain,
-	// CatsResting,
-	// DogPlaying,
+	PlayingBasketball,
+	GirlPlayingWithCat,
+	PositiveQuiz3,
+	WomanEatingPizza,
+	CookingSoy,
+	WomanDrinkingCoffee,
+	PositiveQuiz4,
+	TastingPancake,
+	ManThinking,
+	PracticingJudo,
+	PositiveQuiz5,
 ];
 
 module.exports = PresentProgressiveSlides;

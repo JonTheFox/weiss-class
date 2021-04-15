@@ -357,7 +357,7 @@ const catWalkingOnPiano = {
 	},
 };
 
-const PracticingJudo = {
+const practicingJudo = {
 	user: {
 		name: "Artem Podrez",
 		url: "https://www.pexels.com/@artempodrez",
@@ -385,7 +385,7 @@ const PracticingJudo = {
 	},
 };
 
-const PlayingBasketball = {
+const playingBasketball = {
 	user: {
 		name: "Tima Miroshnichenko",
 		url: "https://www.pexels.com/@tima-miroshnichenko",
@@ -409,7 +409,7 @@ const PlayingBasketball = {
 	},
 };
 
-const PlayingSoccer = {
+const playingSoccer = {
 	user: {
 		name: "Tima Miroshnichenko",
 		url: "https://www.pexels.com/@tima-miroshnichenko",
@@ -434,6 +434,7 @@ const PlayingSoccer = {
 };
 
 const girlStudying = {
+	label: "She is studying",
 	user: {
 		name: "Polina Tankilevitch",
 		url: "https://www.pexels.com/@polina-tankilevitch",
@@ -675,6 +676,7 @@ const cleaningAndDancing = {
 };
 
 const dancingYellow = {
+	label: "She is dancing",
 	user: {
 		name: "Anna Shvets",
 		url: "https://www.pexels.com/@shvetsa",
@@ -703,6 +705,7 @@ const dancingYellow = {
 };
 
 const dancingLadies = {
+	label: "They are dancing",
 	user: {
 		name: "Anna Shvets",
 		url: "https://www.pexels.com/@shvetsa",
@@ -801,6 +804,7 @@ const girlPlayingWithCat = {
 };
 
 const workingOnComputer = {
+	label: "I am working on my computer",
 	user: {
 		name: "cottonbro",
 		url: "https://www.pexels.com/@cottonbro",
@@ -922,6 +926,7 @@ const pillowFighting = {
 };
 
 const drivingInNiceScenery = {
+	label: "I am driving",
 	user: {
 		name: "Yaroslav Shuraev",
 		url: "https://www.pexels.com/@yaroslav-shuraev",
@@ -966,6 +971,85 @@ const flyingThroughClouds = {
 	},
 };
 
+const manLyingOnHammock = {
+	label: "He is resting",
+	alt: ["The man is resting", "He is lying on a hammock"],
+	user: {
+		name: "Peggy Anke",
+		url: "https://www.pexels.com/@reisefreiheit",
+		id: 2071672,
+	},
+	links: {
+		phone:
+			"https://player.vimeo.com/external/459254323.sd.mp4?s=186e271ac938d6cb5a84906deb8aeb8784f1318c&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/459254323.hd.mp4?s=5c7e488819d308049bd7d038ded982a84f520155&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/459254323.hd.mp4?s=5c7e488819d308049bd7d038ded982a84f520155&profile_id=175&oauth2_token_id=57447761",
+	},
+	image: "https://images.pexels.com/videos/5383550/pictures/preview-0.jpg",
+};
+
+const womanEatingPizza = {
+	label: "She is eating pizza",
+	user: {
+		name: "cottonbro",
+		url: "https://www.pexels.com/@cottonbro",
+		id: 1437723,
+	},
+	links: {
+		phone:
+			"https://player.vimeo.com/external/400923981.sd.mp4?s=43985b29157d8cc3fed3769fc4308658cf594af5&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/400923981.hd.mp4?s=8b91a8081ae02a4ea050e9aca1d28fbd00c1fc8e&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/400923981.hd.mp4?s=8b91a8081ae02a4ea050e9aca1d28fbd00c1fc8e&profile_id=171&oauth2_token_id=57447761",
+		fullHd:
+			"https://player.vimeo.com/external/400923981.hd.mp4?s=8b91a8081ae02a4ea050e9aca1d28fbd00c1fc8e&profile_id=173&oauth2_token_id=57447761",
+	},
+	image: "https://images.pexels.com/videos/4008535/pictures/preview-0.jpg",
+};
+
+const womanDrinkingCoffeeAndReading = {
+	label: "She is drinking coffee",
+	user: {
+		name: "George Milton",
+		url: "https://www.pexels.com/@george-milton",
+		id: 19162611,
+	},
+	links: {
+		phone:
+			"https://player.vimeo.com/external/519030299.sd.mp4?s=bb1d7d39cc38159bbabbc39d538cbdbd5f84ee17&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/519030299.hd.mp4?s=f28e97e3355dab569000a0d2de8026e333a6e808&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/519030299.hd.mp4?s=f28e97e3355dab569000a0d2de8026e333a6e808&profile_id=170&oauth2_token_id=57447761",
+		fullHd:
+			"https://player.vimeo.com/external/519030299.hd.mp4?s=f28e97e3355dab569000a0d2de8026e333a6e808&profile_id=172&oauth2_token_id=57447761",
+	},
+	image: "https://images.pexels.com/videos/7026657/pictures/preview-0.jpg",
+};
+
+const manThinking = {
+	label: "He is thinking",
+	user: {
+		name: "Tima Miroshnichenko",
+		url: "https://www.pexels.com/@tima-miroshnichenko",
+		id: 3088726,
+	},
+	links: {
+		phone:
+			"https://player.vimeo.com/external/483936341.sd.mp4?s=c1f313ac08f1215db4ceb22473860174f24def34&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/483936341.hd.mp4?s=028798b2b877fc92c4bcb842fc575fa76681249c&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/483936341.hd.mp4?s=028798b2b877fc92c4bcb842fc575fa76681249c&profile_id=170&oauth2_token_id=57447761",
+		fullHd:
+			"https://player.vimeo.com/external/483936341.hd.mp4?s=028798b2b877fc92c4bcb842fc575fa76681249c&profile_id=172&oauth2_token_id=57447761",
+	},
+	image: "https://images.pexels.com/videos/5992471/pictures/preview-0.jpg",
+};
+
 module.exports = {
 	rainyForest,
 	rainingSilent,
@@ -979,9 +1063,9 @@ module.exports = {
 	wavingCrashing,
 
 	catWalkingOnPiano,
-	PracticingJudo,
-	PlayingBasketball,
-	PlayingSoccer,
+	practicingJudo,
+	playingBasketball,
+	playingSoccer,
 	seaShoreWaves,
 	girlStudying,
 	tastingPancake,
@@ -1000,6 +1084,10 @@ module.exports = {
 	walkingOnWater,
 	womanEatingBun,
 	coupleTastingPancake,
+	manLyingOnHammock,
+	womanEatingPizza,
+	womanDrinkingCoffeeAndReading,
+	manThinking,
 
 	coupleWalkingOnTheBeach: {
 		phone:

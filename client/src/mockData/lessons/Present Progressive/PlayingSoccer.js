@@ -4,7 +4,7 @@ const {
 	CenteredHeadings,
 } = require("../../slideTemplates.js");
 
-const videoSet = require("./presentProgressiveVideos.js").PlayingSoccer;
+const videoSet = require("./presentProgressiveVideos.js").playingSoccer;
 
 const PlayingSoccer = {
 	//bgImage
@@ -18,7 +18,7 @@ const PlayingSoccer = {
 			//title: "I am driving.",
 			videoSet,
 			paragraphs: [
-				{ text: "They are playing soccer. ", className: "caption" },
+				{ text: "He is playing soccer. ", className: "caption" },
 			],
 		},
 	],

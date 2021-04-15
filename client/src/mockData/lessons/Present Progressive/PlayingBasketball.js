@@ -4,7 +4,7 @@ const {
 	CenteredHeadings,
 } = require("../../slideTemplates.js");
 
-const videoSet = require("./presentProgressiveVideos.js").PlayingBasketball;
+const videoSet = require("./presentProgressiveVideos.js").playingBasketball;
 
 const PlayingBasketball = {
 	//bgImage

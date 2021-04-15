@@ -128,11 +128,3 @@ const Slide = (props) => {
 };
 
 export default Slide;
-
-/*
-
-background={{
-								backgroundImage: bgImage,
-								backgroundAttachment: "fixed",
-							}}
-*/

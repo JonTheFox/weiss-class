@@ -24,6 +24,7 @@ const QuizTemplate = (props) => {
 		p = [""],
 		bgImage = "",
 		pages = [],
+		items,
 	} = props;
 
 	// const { logg, loggError } = useLogg({ label });
@@ -33,7 +34,7 @@ const QuizTemplate = (props) => {
 			className={"Page--centered-headings centered quiz-page"}
 			style={{ height: "100%", display: "flex" }}
 		>
-			<Quiz />
+			<Quiz items={items} />
 		</div>
 	);
 };

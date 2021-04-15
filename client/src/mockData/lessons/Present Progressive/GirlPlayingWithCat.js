@@ -19,7 +19,8 @@ const DancingLadies = {
 			videoSet,
 			paragraphs: [
 				{
-					text: "The girl is playing with the cat. ",
+					text: "She is playing with the cat. ",
+					alt: "The girl is playing with the cat",
 					className: "caption",
 				},
 			],
