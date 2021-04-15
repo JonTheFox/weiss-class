@@ -56,7 +56,9 @@ import FeedbackContent from "./FeedbackContent.js";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useHistory } from "react-router-dom";
 
+let animationFrame;
 const baseRoute = "/";
 const label = "RealtimeIndex";
 const SECTION_ROUTE = `rt/`;
@@ -75,6 +77,7 @@ const Realtime = (props) => {
 		CLIENT_ONLY,
 		getRandomUpTo,
 		request,
+		navigateTo,
 	} = appUtils;
 
 	const { logg, loggError } = useLogg({ label });
@@ -92,6 +95,7 @@ const Realtime = (props) => {
 	const setLesson = useSetRecoilState(lessonState);
 	const [client, setClient] = useRecoilState(clientState);
 	const { slides } = useRecoilValue(lessonState);
+	const history = useHistory();
 
 	const keepServersAwake = useCallback(async (serversUris = []) => {
 		try {
@@ -197,11 +201,19 @@ const Realtime = (props) => {
 
 			socket.on("server__failedAuth", ({ error }) => {
 				loggError("server__failedAuth: ", error);
+				socket.emit("client__providesCredentials", {
+					user: {
+						email,
+						password,
+						first_name,
+						last_name,
+						role,
+					},
+					// clientType: clientType.toLowerCase(),
+					clientType: client.type,
+				});
 
-				// setConnectionStatus(CONNECTION_STATES.CONNECTED);
-				// animationFrame = window.requestAnimationFrame(() => {
-				// 	setServerMsg(content);
-				// });
+				navigateTo("/login", history);
 			});
 
 			socket.on("re:client__selectsRoom", ({ classroom, lesson }) => {
@@ -303,6 +315,10 @@ const Realtime = (props) => {
 		} catch (err) {
 			loggError(err.message);
 			console.error(`error in initsocket(): `, err);
+			//retry
+			promiseKeeper.stall(1000, "rety to connect to room").then(() => {
+				initSocket({ user });
+			});
 		}
 	}, []);
 

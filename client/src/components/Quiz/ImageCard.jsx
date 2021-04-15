@@ -57,6 +57,7 @@ const ImageCard = (props) => {
     renderHeader = null,
     showHeaderText = false,
     showActionBar = false,
+    showBgImage = true,
     showOverlay = false,
     ripple = false,
     actions = [],
@@ -67,6 +68,7 @@ const ImageCard = (props) => {
     overlayActions = [],
     active = true,
     //iconActions = []
+    bgClass = "",
   } = props;
 
   const [appUtils = {}] = useContext(AppContext);
@@ -187,7 +189,11 @@ const ImageCard = (props) => {
       </CardContent>
 
       <CardMedia
-        className={clsx(styles.cardMedia, "card--media")}
+        className={clsx(
+          styles.cardMedia,
+          "card--media",
+          showBgImage ? styles["show-bg-image"] : styles["hide-bg-image"]
+        )}
         image={selected && highResLoaded ? regular : small || imgURL}
         //title={label}
       />
@@ -242,6 +248,7 @@ const ImageCard = (props) => {
         className={cardClassNames}
         onMouseOver={handleMouseOver}
         onMouseOut={handleMouseOut}
+        className={bgClass}
       >
         <CardActionArea
           className={clsx(styles.cardActionArea, "card--action-area")}

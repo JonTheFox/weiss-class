@@ -24,7 +24,15 @@
     padding-top: 56.25%; // 16:9;
     object-fit: cover;
     overflow: hidden;
-  }
+    opacity: 1;
+    font-weight: bold;
+
+    &.show-bg-image {
+      opacity: 1;
+    }
+    &.hide-bg-image {
+      opacity: 0;
+    }
 
   &.header--bottom {
     position: relative;

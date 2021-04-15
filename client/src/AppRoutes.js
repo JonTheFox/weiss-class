@@ -82,7 +82,7 @@ const AppRoutes = (props) => {
 				scaleToFitViewport={video?.scaleToFitViewport ?? false}
 				startSecond={video?.startSecond ?? 0}
 				stopSecond={video?.stopSecond}
-				fadeInWhenReady={false}
+				fadeInWhenReady={true}
 				onReady={() => {
 					//setShowBg(false);
 				}}

@@ -73,11 +73,11 @@ const scaleInPoses = {
     opacity: 0,
     transition: { duration: 400 },
   },
-  large: {
-    scale: 1.5,
+  navigating: {
+    scale: 0,
     rotateZ: "2.5deg",
     opacity: 0,
-    transition: { duration: 400 },
+    transition: { duration: 400, type: "spring" },
   },
 };
 const ScaleIn = posed.div(scaleInPoses);
@@ -142,30 +142,21 @@ SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 export default function ClassroomSelect(props) {
   const [appUtils, appState, setAppState] = useContext(AppContext);
-
   const [video, setVideo] = useRecoilState(videoState);
-
   const { capitalizeFirstLetter, pickRandomFrom, is, navigateTo } = appUtils;
   const { logg, loggError } = useLogg({ label });
   const promiseKeeper = usePromiseKeeper({ label });
-
   const classes = useStyles();
   const refs = useRecoilValue(refsState);
-
   const [rooms, setRooms] = useRecoilState(roomsState);
   const room = useRecoilValue(roomState);
   const setRoom = useSetRecoilState(roomState);
-
   const socket = useRecoilValue(socketState);
   const client = useRecoilValue(clientState);
-
   const history = useHistory();
-
   const isSoundOn = useRecoilValue(isSoundOnState);
-
   const [showCarousel, setShowCarousel] = useState(false);
-
-  const [isLarge, setIsLarge] = useState(false);
+  const [isNavigating, setIsNavigating] = useState(false);
 
   const roomsInfo = rooms.map((room) => {
     return {
@@ -176,29 +167,34 @@ export default function ClassroomSelect(props) {
   });
 
   const onRoomSelect = (room) => {
-    if (is(socket).aString) {
-      loggError("socket is inactive");
-      debugger;
-      return null;
+    try {
+      if (is(socket).aString) {
+        loggError("socket is inactive");
+        debugger;
+        return null;
+      }
+      isSoundOn && mainClickSound.play();
+
+      const { id, type } = client;
+      const roomKey = room.roomKey;
+
+      socket.emit("client__selectsRoom", {
+        roomKey,
+        clientId: client.id,
+        clientType: client.type,
+      });
+
+      setRoom({ roomKey });
+      setShowCarousel(false);
+      setIsNavigating(true);
+
+      promiseKeeper.stall(350 * 1, "nav to classroom").then(() => {
+        navigateTo(`/classroom`, history);
+      });
+    } catch (err) {
+      //try again
+      onRoomSelect(room);
     }
-    isSoundOn && mainClickSound.play();
-
-    const { id, type } = client;
-    const roomKey = room.roomKey;
-
-    socket.emit("client__selectsRoom", {
-      roomKey,
-      clientId: client.id,
-      clientType: client.type,
-    });
-
-    setRoom({ roomKey });
-    setShowCarousel(false);
-    setIsLarge(true);
-
-    promiseKeeper.stall(100 * 1, "nav to classroom").then(() => {
-      navigateTo(`/classroom`, history);
-    });
   };
   useEffect(() => {
     promiseKeeper.stall(0.25 * 1000, "show carousel").then(() => {
@@ -213,7 +209,7 @@ export default function ClassroomSelect(props) {
       <main>
         <div className={classes.heroContent}>
           <Container maxWidth="sm">
-            <ScaleIn initialPose="exit" pose={isLarge ? "exit" : "enter"}>
+            <ScaleIn initialPose="exit" pose={isNavigating ? "exit" : "enter"}>
               <Heading h="2" className="title">
                 Join a class
               </Heading>
@@ -231,7 +227,9 @@ export default function ClassroomSelect(props) {
             >
               <ScaleIn
                 initialPose="exit"
-                pose={isLarge ? "large" : showCarousel ? "enter" : "exit"}
+                pose={
+                  isNavigating ? "navigating" : showCarousel ? "enter" : "exit"
+                }
               >
                 <Carousel
                   className={"glass"}

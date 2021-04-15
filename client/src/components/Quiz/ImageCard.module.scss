@@ -164,6 +164,14 @@
   padding-top: 56.25%;
   object-fit: cover;
   overflow: hidden;
+  transition: all 0.2s;
+}
+
+.show-bg-image {
+  opacity: 1;
+}
+.hide-bg-image {
+  opacity: 0;
 }
 
 .imageCard .headerBottom {

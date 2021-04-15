@@ -413,8 +413,6 @@ const quizReducer = (state, action) => {
 				? -1
 				: answerSlots[nextCorrectSlotIndex].itemIndex;
 
-			debugger;
-
 			if (typeof state.items !== "undefined") {
 				const _items = state.items;
 				const nextCorrectItem = roundIsNowComplete
@@ -605,7 +603,6 @@ const quizReducer = (state, action) => {
 			break;
 
 		case "goNextRound":
-			debugger;
 			return goNextRound({
 				currentRoundIndex: roundIndex,
 				rounds,

@@ -576,6 +576,7 @@ const supplementIO = function(io) {
 					email,
 					clients: classroomsManager.clients,
 				});
+
 				//todo:  disconnect other sockets that use the same email
 
 				// classroomsManager.disconnectClient(existingClient);

@@ -69,7 +69,9 @@ const ImageCard = (props) => {
     active = true,
     //iconActions = []
     showBgImage = true,
+    style = {},
   } = props;
+  debugger;
 
   const [appUtils] = useContext(AppContext);
   const { Logger, PromiseKeeper, loadImage, capitalizeFirstLetter } = appUtils;
@@ -182,10 +184,8 @@ const ImageCard = (props) => {
       </CardContent>
 
       <CardMedia
-        className="card--media"
-        image={
-          selected && highResLoaded && showBgImage ? regular : small || imgURL
-        }
+        className={clsx("card--media", showBgImage && "show-bg-image")}
+        image={selected && highResLoaded ? regular : small || imgURL}
         //title={label}
       />
     </React.Fragment>
@@ -266,6 +266,7 @@ const ImageCard = (props) => {
 
 ImageCard.propTypes = {
   imgURL: PropTypes.string,
+  style: PropTypes.object,
   regular: PropTypes.string,
   small: PropTypes.string,
   thumb: PropTypes.string,

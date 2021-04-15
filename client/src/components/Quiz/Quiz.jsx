@@ -832,11 +832,11 @@ const Quiz = (props) => {
                         (answer) => answer.stepIndex === nextStep
                     )[0].itemIndex;
                     const nextCorrectItem = items[nextCorrectItemIndex];
+
                     const instructionMsg = createInstructionMsg(
                         capitalizeFirstLetter(nextCorrectItem?.label) || "",
                         $quizState.current?.currentRound?.type
                     );
-                    debugger;
 
                     animationFrame = window.requestAnimationFrame(() => {
                         setInstruction(instructionMsg);
@@ -902,8 +902,6 @@ const Quiz = (props) => {
 
                     const nextRoundIndex =
                         ($quizState.current?.currentRound?.roundIndex ?? 0) + 1;
-
-                    debugger;
 
                     if (nextRoundIndex < quizState.numTotalRounds) {
                         //More rounds left to go. Advance to the next round.
@@ -1161,9 +1159,6 @@ const Quiz = (props) => {
 
                                 //bug
                                 const hasBeenAnswered = answerSlot.completed;
-                                if (hasBeenAnswered) {
-                                    debugger;
-                                }
                                 const hasJustBeenAnswered =
                                     completed && i === stepIndex + 1;
                                 const isCardActive = active && !hasBeenAnswered;
@@ -1227,22 +1222,38 @@ const Quiz = (props) => {
                                         numAnswers={numAnswers}
                                         active={isCardActive}
                                     >
-                                        <Card
-                                            className={"text-card"}
-                                            elevation={3}
-                                        >
-                                            <CardContent>
-                                                <Typography
-                                                    gutterBottom
-                                                    variant="h5"
-                                                    component="h2"
-                                                >
-                                                    {capitalizeFirstLetter(
-                                                        item?.label
-                                                    )}
-                                                </Typography>
-                                            </CardContent>
-                                        </Card>
+                                        <ImageCard
+                                            //className={"text-card"}
+                                            className={styles?.imageCard}
+                                            imgURL={imgURL}
+                                            urls={imageItem?.urls}
+                                            elevation={2}
+                                            active={isCardActive}
+                                            label={capitalizeFirstLetter(
+                                                item?.label
+                                            )}
+                                            bgClass={"gradient"}
+                                            showHeader={true}
+                                            showHeaderText={true}
+                                            headerBottom={true}
+                                            showBgImage={hasBeenAnswered}
+                                            renderHeader={(label) => {
+                                                return (
+                                                    <SplitText
+                                                        initialPose="exit"
+                                                        pose={"enter"}
+                                                        charPoses={
+                                                            POSES.char__stagger
+                                                        }
+                                                        wordPoses={
+                                                            POSES.char_fadeIn__old
+                                                        }
+                                                    >
+                                                        {label}
+                                                    </SplitText>
+                                                );
+                                            }}
+                                        />
                                     </PosedCard>
                                 );
                             })}
