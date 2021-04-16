@@ -358,6 +358,7 @@ const catWalkingOnPiano = {
 };
 
 const practicingJudo = {
+	label: "They are practicing basketball.",
 	user: {
 		name: "Artem Podrez",
 		url: "https://www.pexels.com/@artempodrez",
@@ -386,6 +387,7 @@ const practicingJudo = {
 };
 
 const playingBasketball = {
+	label: "He is practicing basketball.",
 	user: {
 		name: "Tima Miroshnichenko",
 		url: "https://www.pexels.com/@tima-miroshnichenko",
@@ -410,6 +412,7 @@ const playingBasketball = {
 };
 
 const playingSoccer = {
+	label: "He is playing soccer",
 	user: {
 		name: "Tima Miroshnichenko",
 		url: "https://www.pexels.com/@tima-miroshnichenko",
@@ -776,6 +779,7 @@ const dancingGuy = {
 };
 
 const girlPlayingWithCat = {
+	label: "She is playing with the cat",
 	user: {
 		name: "cottonbro",
 		url: "https://www.pexels.com/@cottonbro",

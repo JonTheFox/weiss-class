@@ -60,6 +60,16 @@ import SFX from "../../constants/soundEffects.js";
 
 let speechRecognizer;
 
+const getAppropriateImageUrl = (urls) => {
+    return (
+        urls?.small ??
+        urls?.regular ??
+        urls?.hdReady ??
+        urls?.fullHd ??
+        urls?.fourK
+    );
+};
+
 // const getAorAn = (noun = "") =>
 //     ["a", "e", "i", "o", "u"].includes(noun?.[0]?.toLowerCase()) ? "an" : "a";
 
@@ -339,7 +349,7 @@ const Quiz = (props) => {
                 refs: recognizerRef,
                 onResult: ({ transcript, confidence }) => {
                     // const _transcript = transcript.toLowerCase();
-                    const _transcript = transcript.trim();
+                    const _transcript = transcript.trim().toLowerCase();
 
                     logg("transcript: ", _transcript);
 
@@ -396,12 +406,13 @@ const Quiz = (props) => {
         const text = item?.label;
         const withoutPunctuations = text?.replace?.(/[.,?;]/gi, " ");
         const trimmed = withoutPunctuations?.trim?.();
-        return trimmed ? [trimmed] : [];
+        const lowerCased = trimmed?.toLowerCase?.();
+        return lowerCased ? [lowerCased] : [];
     };
 
     const startRecognition = useCallback(() => {
         const phrases = getPhrases(currentRound.correctItem, items);
-        debugger;
+
         speechRecognizer = createSpeechRecognizer(phrases, {
             onCorrect: async ({ transricpt }) => {
                 processAnswer({
@@ -617,6 +628,7 @@ const Quiz = (props) => {
             const nextCorrectAnswer = nextRound.answers.filter(
                 (answer) => answer.stepIndex === 0
             )[0];
+            debugger;
 
             const instructionMsg = createInstructionMsg(
                 capitalizeFirstLetter(nextCorrectAnswer?.item?.label),
@@ -1114,6 +1126,7 @@ const Quiz = (props) => {
                                 //todo: figure out why itemIndex is wrong
                                 const item = answerSlot.item;
                                 const imageItem = getOneImageItem(item);
+
                                 const imgURL =
                                     imageItem?.urls?.small ??
                                     imageItem?.urls?.regular;
@@ -1185,22 +1198,6 @@ const Quiz = (props) => {
                                             showHeaderText={true}
                                             headerBottom={true}
                                             showBgImage={hasBeenAnswered}
-                                            renderHeader={(label) => {
-                                                return (
-                                                    <SplitText
-                                                        initialPose="exit"
-                                                        pose={"enter"}
-                                                        charPoses={
-                                                            POSES.char__stagger
-                                                        }
-                                                        wordPoses={
-                                                            POSES.char_fadeIn__old
-                                                        }
-                                                    >
-                                                        {label ?? ""}
-                                                    </SplitText>
-                                                );
-                                            }}
                                         />
                                     </PosedCard>
                                 );
@@ -1262,9 +1259,9 @@ const Quiz = (props) => {
 
                                 const item = answerSlot.item;
                                 const imageItem = getOneImageItem(item);
-                                const imgURL =
-                                    imageItem?.urls?.small ??
-                                    imageItem?.urls?.regular;
+                                const imgURL = getAppropriateImageUrl(
+                                    imageItem?.urls
+                                );
 
                                 return (
                                     <PosedCard

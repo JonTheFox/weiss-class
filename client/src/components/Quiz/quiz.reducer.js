@@ -178,7 +178,6 @@ class Game {
 						randomUniqueItem = pickRandomFrom(shuffledItems);
 						j++;
 					}
-
 					roundItems.push(randomUniqueItem);
 				}
 

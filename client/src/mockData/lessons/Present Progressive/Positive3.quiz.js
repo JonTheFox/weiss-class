@@ -5,7 +5,8 @@ const {
 	girlPlayingWithCat,
 } = require("./presentProgressiveVideos.js");
 const mapVideoObjectToQuizItem = require("../../../components/Quiz/mapVideoObjectToQuizItem.js");
-const videoObjects = [playingSoccer, playingBasketball, girlPlayingWithCat];
+// const videoObjects = [playingSoccer, playingBasketball, girlPlayingWithCat];
+const videoObjects = [playingSoccer, playingBasketball];
 
 const items = videoObjects.map(mapVideoObjectToQuizItem);
 
