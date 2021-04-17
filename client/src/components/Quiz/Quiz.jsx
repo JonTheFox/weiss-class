@@ -61,13 +61,7 @@ import SFX from "../../constants/soundEffects.js";
 let speechRecognizer;
 
 const getAppropriateImageUrl = (urls) => {
-    return (
-        urls?.small ??
-        urls?.regular ??
-        urls?.hdReady ??
-        urls?.fullHd ??
-        urls?.fourK
-    );
+    return urls?.small ?? urls?.regular ?? urls?.full;
 };
 
 // const getAorAn = (noun = "") =>
@@ -205,8 +199,8 @@ const createInstructionMsg = (itemName = "", type = "touch") => {
 };
 
 const fetchItems = async (items) => {
+    //todo: actually fetch
     return items;
-    //todo: fetch
 };
 
 const compLabel = "Quiz";
@@ -353,19 +347,23 @@ const Quiz = (props) => {
 
                     logg("transcript: ", _transcript);
 
-                    logg(
-                        "phrases.includes(_transcript) : ",
-                        phrases.includes(_transcript)
+                    const lowercasedPhrases = phrases.map((phrase) =>
+                        phrase.trim().toLowerCase()
                     );
 
                     logg(
-                        "Number(confidence) > 0.75: ",
-                        Number(confidence) > 0.75
+                        "lowercasedPhrases.includes(_transcript) : ",
+                        lowercasedPhrases.includes(_transcript)
+                    );
+
+                    logg(
+                        "Number(confidence) > 0.70: ",
+                        Number(confidence) > 0.7
                     );
 
                     if (
-                        phrases.includes(_transcript) &&
-                        Number(confidence) > 0.75
+                        lowercasedPhrases.includes(_transcript) &&
+                        Number(confidence) > 0.7
                     ) {
                         //correctly said
                         logg(`Recognized: "${_transcript}"`);
@@ -465,7 +463,6 @@ const Quiz = (props) => {
                 setShowInstruction(false);
                 setShowItems(true);
             });
-            debugger;
 
             const _currentRound = $quizState.current?.currentRound;
             const enterDuration = DURATIONS.enter;
@@ -501,7 +498,6 @@ const Quiz = (props) => {
                 correctItemLabel,
                 rounds[0]?.type
             );
-            debugger;
 
             if (!instructionMsg) {
                 loggError("NO INSTRUCTION MSG???");
@@ -628,7 +624,6 @@ const Quiz = (props) => {
             const nextCorrectAnswer = nextRound.answers.filter(
                 (answer) => answer.stepIndex === 0
             )[0];
-            debugger;
 
             const instructionMsg = createInstructionMsg(
                 capitalizeFirstLetter(nextCorrectAnswer?.item?.label),
@@ -1116,20 +1111,16 @@ const Quiz = (props) => {
                                 const { stepIndex, itemIndex } = answerSlot;
                                 const isCorrectAnswer =
                                     stepIndex === currentRound.step;
-
-                                //bug
                                 const hasBeenAnswered = answerSlot.completed;
                                 const hasJustBeenAnswered =
                                     completed && i === stepIndex + 1;
                                 const isCardActive = active && !hasBeenAnswered;
-
-                                //todo: figure out why itemIndex is wrong
+                                //bug. todo: figure out why itemIndex is sometimes wrong
                                 const item = answerSlot.item;
                                 const imageItem = getOneImageItem(item);
-
-                                const imgURL =
-                                    imageItem?.urls?.small ??
-                                    imageItem?.urls?.regular;
+                                const imgURL = getAppropriateImageUrl(
+                                    imageItem?.urls
+                                );
 
                                 return (
                                     <PosedCard

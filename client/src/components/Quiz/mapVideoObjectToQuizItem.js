@@ -1,13 +1,36 @@
-const mapVideoObjectToQuizItem = (videoObj) => {
+const getAppropriateImageUrl = function(imageUrls = {}, screenSize) {
+	if (!imageUrls) return null;
+	//todo: account for screen size.
+	const appropriateImageSize = imageUrls?.fullHd
+		? "fullHd"
+		: imageUrls.hdReady
+		? "hdReady"
+		: imageUrls.tablet
+		? "tablet"
+		: imageUrls.phone
+		? "phone"
+		: imageUrls.fourK
+		? "fourK"
+		: "phone";
+	debugger;
+	return imageUrls[appropriateImageSize];
+};
+
+const mapVideoObjectToQuizItem = function(videoObj) {
+	//`this` should be bound by the caller
+	const screenSize = this;
 	const { user, images = [], links, image, label, title, tags } = videoObj;
-	const _images = Object.entries(images)?.reduce((accumulator, image, i) => {
-		return { urls: image.urls };
+	const imageUrls = {};
+	Object.entries(images).map(([imageSize, imageUrl], i) => {
+		imageUrls[imageSize] = imageUrl;
 	}, {});
+	const appropriateImage =
+		image || getAppropriateImageUrl(imageUrls, screenSize);
 	return {
 		videoSet: links,
 		photographer: user,
-		images: _images,
-		image,
+		images: { urls: imageUrls },
+		image: appropriateImage,
 		label,
 		title,
 		tags,

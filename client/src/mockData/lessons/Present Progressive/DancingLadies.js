@@ -1,8 +1,4 @@
-const {
-	VideoCentered,
-	ListMain,
-	CenteredHeadings,
-} = require("../../slideTemplates.js");
+const { VideoCentered } = require("../../slideTemplates.js");
 
 const videoSet = require("./presentProgressiveVideos.js").dancingLadies;
 

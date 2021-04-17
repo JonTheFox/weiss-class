@@ -59,16 +59,12 @@ const Classroom = (props) => {
 
 	const { logg, loggError } = useLogg({ label });
 	const promiseKeeper = usePromiseKeeper({ label });
-
 	const refs = useRef({ viewRef: {} });
-
 	const user = useRecoilValue(userState);
 	const currentSlide = useRecoilValue(currentSlideState);
 	// const client = useRecoilValue(clientState);
 	const room = useRecoilValue(roomState);
-
 	const { slides, currentSlideIndex } = room;
-
 	const _slides = DEBUGGING ? PRESENT_PROGRESSIVE_SLIDES : slides;
 
 	return (

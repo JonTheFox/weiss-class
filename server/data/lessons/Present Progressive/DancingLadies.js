@@ -1,8 +1,4 @@
-const {
-	VideoCentered,
-	ListMain,
-	CenteredHeadings,
-} = require("../../slideTemplates.js");
+const { VideoCentered } = require("../../slideTemplates.js");
 
 const videoSet = require("./presentProgressiveVideos.js").dancingLadies;
 
@@ -23,8 +19,3 @@ const DancingLadies = {
 };
 
 module.exports = DancingLadies;
-
-/*
-
-"When we are talking about what's  happening at the moment, we are using 'Present Progressive."
-*/

@@ -459,6 +459,27 @@ const girlStudying = {
 		hdReady:
 			"https://player.vimeo.com/external/515795363.hd.mp4?s=c36580efd21b8e0a4d74c02004f81380653040e9&profile_id=175&oauth2_token_id=57447761",
 	},
+	image: "https://images.pexels.com/videos/5535977/pictures/preview-0.jpg", // a different girl here
+};
+
+const temp = {
+	user: {
+		name: "Zen Chung",
+		url: "https://www.pexels.com/@zen-chung",
+		id: 3651179,
+	},
+	links: {
+		phone:
+			"https://player.vimeo.com/external/465238991.sd.mp4?s=b16e4e13367ee1fb86e5c6b1439844e503b6ab22&profile_id=139&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/465238991.sd.mp4?s=b16e4e13367ee1fb86e5c6b1439844e503b6ab22&profile_id=165&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/465238991.hd.mp4?s=cc7540a5ceec8b8455e6ba40115c2521beac145f&profile_id=174&oauth2_token_id=57447761",
+		fullHd:
+			"https://player.vimeo.com/external/465238991.hd.mp4?s=cc7540a5ceec8b8455e6ba40115c2521beac145f&profile_id=170&oauth2_token_id=57447761",
+		fourK:
+			"https://player.vimeo.com/external/465238991.hd.mp4?s=cc7540a5ceec8b8455e6ba40115c2521beac145f&profile_id=172&oauth2_token_id=57447761",
+	},
 };
 
 const womanEatingBun = {
