@@ -3,6 +3,14 @@
 		max-width: 550px;
 		margin: auto;
 	}
+
+	.carousel {
+		border: 4px solid var(--canvas);
+		&.selected {
+			border: 4px solid var(--primary);
+		}
+	}
+
 	.heading .letter {
 		font-size: 1.75rem;
 	}

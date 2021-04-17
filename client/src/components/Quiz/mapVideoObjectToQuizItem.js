@@ -1,7 +1,7 @@
 const getAppropriateImageUrl = function(imageUrls = {}, screenSize) {
 	if (!imageUrls) return null;
 	//todo: account for screen size.
-	const appropriateImageSize = imageUrls?.fullHd
+	const appropriateImageSize = imageUrls.fullHd
 		? "fullHd"
 		: imageUrls.hdReady
 		? "hdReady"

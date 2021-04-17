@@ -62,22 +62,19 @@ import "./CLassroomSelect.scss";
 
 const scaleInPoses = {
   enter: {
-    scale: 1,
-    rotateZ: "0deg",
     opacity: 1,
-    transition: { duration: 400 },
+    transition: { duration: 200 },
   },
   exit: {
-    scale: 0,
-    rotateZ: "12deg",
     opacity: 0,
-    transition: { duration: 400 },
+    transition: { duration: 200 },
   },
   navigating: {
-    scale: 0,
-    rotateZ: "2.5deg",
-    opacity: 0,
-    transition: { duration: 400, type: "spring" },
+    opacity: 0.75,
+    // scale: 0.9,
+    // transition: { duration: 20, type: "spring" },
+    // borderRadius: "8px",
+    // border: "4px solid var(--primary)",
   },
 };
 const ScaleIn = posed.div(scaleInPoses);
@@ -188,7 +185,7 @@ export default function ClassroomSelect(props) {
       setShowCarousel(false);
       setIsNavigating(true);
 
-      promiseKeeper.stall(350 * 1, "nav to classroom").then(() => {
+      promiseKeeper.stall(10, "nav to classroom").then(() => {
         navigateTo(`/classroom`, history);
       });
     } catch (err) {
@@ -232,7 +229,7 @@ export default function ClassroomSelect(props) {
                 }
               >
                 <Carousel
-                  className={"glass"}
+                  className={clsx("carousel glass", isNavigating && "selected")}
                   onItemSelect={onRoomSelect}
                   items={roomsInfo}
                 />
