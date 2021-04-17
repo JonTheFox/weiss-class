@@ -1,23 +1,23 @@
 const { Quiz } = require("../../slideTemplates.js");
 const {
-	tastingPancake,
+	guyListeningToMusic,
 	manThinking,
 	practicingJudo,
 } = require("./presentProgressiveVideos.js");
 const mapVideoObjectToQuizItem = require("../../../components/Quiz/mapVideoObjectToQuizItem.js");
-const videoObjects = [tastingPancake, manThinking, practicingJudo];
+const videoObjects = [guyListeningToMusic, manThinking, practicingJudo];
 
 const items = videoObjects.map(mapVideoObjectToQuizItem);
 
 const Positive4Quiz = {
 	//bgImage
-	bg: "field-day",
+	bg: "fun-gumi",
 	pages: [
 		{
 			templateName: Quiz,
 			heading: "Present Progressive",
 			subheading: "Quiz",
-			bgClass: "cloud-up",
+			bgClass: "fun-gumi",
 			items,
 		},
 	],

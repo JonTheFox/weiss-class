@@ -19,7 +19,7 @@ const womanDrinkingCoffeeAndReading = {
 			//title: "I am driving.",
 			videoSet,
 			paragraphs: [
-				{ text: "She is eating pizza. ", className: "caption" },
+				{ text: "She is drinking coffee. ", className: "caption" },
 			],
 		},
 	],

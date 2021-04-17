@@ -12,7 +12,6 @@ const getAppropriateImageUrl = function(imageUrls = {}, screenSize) {
 		: imageUrls.fourK
 		? "fourK"
 		: "phone";
-	debugger;
 	return imageUrls[appropriateImageSize];
 };
 

@@ -17,7 +17,7 @@ const cookingSoy = {
 			//subheading: "Living the moment",
 			//title: "I am driving.",
 			videoSet,
-			paragraphs: [{ text: "He is cooking soy. ", className: "caption" }],
+			paragraphs: [{ text: "He is cooking. ", className: "caption" }],
 		},
 	],
 };

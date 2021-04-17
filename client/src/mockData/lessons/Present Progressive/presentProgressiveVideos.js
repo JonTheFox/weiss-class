@@ -358,7 +358,7 @@ const catWalkingOnPiano = {
 };
 
 const practicingJudo = {
-	label: "They are practicing basketball.",
+	label: "They are practicing Judo.",
 	user: {
 		name: "Artem Podrez",
 		url: "https://www.pexels.com/@artempodrez",
@@ -366,13 +366,17 @@ const practicingJudo = {
 	},
 	images: {
 		phone:
-			"https://player.vimeo.com/external/493409070.sd.mp4?s=77480349978d6dc7067d1fab5a0cc0368a6b8654&profile_id=164&oauth2_token_id=57447761",
+			"https://images.unsplash.com/photo-1515025617920-e1e674b5033c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDN8fGp1ZG98ZW58MHwwfHx8MTYxODY2MTE0Mg&ixlib=rb-1.2.1&q=80&w=400",
 		tablet:
-			"https://player.vimeo.com/external/493409070.hd.mp4?s=dcf495b2bbbc08b656bf44d32173366349e5bf08&profile_id=174&oauth2_token_id=57447761",
+			"https://images.unsplash.com/photo-1515025617920-e1e674b5033c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDN8fGp1ZG98ZW58MHwwfHx8MTYxODY2MTE0Mg&ixlib=rb-1.2.1&q=80&w=1080",
 		hdReady:
-			"https://player.vimeo.com/external/493409070.hd.mp4?s=dcf495b2bbbc08b656bf44d32173366349e5bf08&profile_id=170&oauth2_token_id=57447761",
+			"https://images.unsplash.com/photo-1515025617920-e1e674b5033c?crop=entropy&cs=srgb&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDN8fGp1ZG98ZW58MHwwfHx8MTYxODY2MTE0Mg&ixlib=rb-1.2.1&q=85",
 		fullHd:
-			"https://player.vimeo.com/external/493409070.hd.mp4?s=dcf495b2bbbc08b656bf44d32173366349e5bf08&profile_id=172&oauth2_token_id=57447761",
+			"https://images.unsplash.com/photo-1515025617920-e1e674b5033c?crop=entropy&cs=srgb&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDN8fGp1ZG98ZW58MHwwfHx8MTYxODY2MTE0Mg&ixlib=rb-1.2.1&q=85",
+		fourK:
+			"https://images.unsplash.com/photo-1515025617920-e1e674b5033c?ixid=MnwzMTI2M3wwfDF8c2VhcmNofDN8fGp1ZG98ZW58MHwwfHx8MTYxODY2MTE0Mg&ixlib=rb-1.2.1",
+		thumb:
+			"https://images.unsplash.com/photo-1515025617920-e1e674b5033c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDN8fGp1ZG98ZW58MHwwfHx8MTYxODY2MTE0Mg&ixlib=rb-1.2.1&q=80&w=200",
 	},
 	links: {
 		phone:
@@ -386,20 +390,68 @@ const practicingJudo = {
 	},
 };
 
+const theyArePlayingBasketBall = {
+	user: {
+		name: "Tima Miroshnichenko",
+		url: "https://www.pexels.com/@tima-miroshnichenko",
+		id: 3088726,
+	},
+	links: {
+		phone:
+			"https://player.vimeo.com/external/467429546.sd.mp4?s=04248268536d9fd56e59207c9f37639530cd3779&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/467429546.hd.mp4?s=181c59d9eee51d0b7f75a3feaedab8d6d0d7d330&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/467429546.hd.mp4?s=181c59d9eee51d0b7f75a3feaedab8d6d0d7d330&profile_id=170&oauth2_token_id=57447761",
+		fullHd:
+			"https://player.vimeo.com/external/467429546.hd.mp4?s=181c59d9eee51d0b7f75a3feaedab8d6d0d7d330&profile_id=172&oauth2_token_id=57447761",
+	},
+	image: "https://images.pexels.com/videos/5586530/pictures/preview-0.jpg",
+};
+
+const basketballImages = {
+	user: {
+		name: "Macau Photo Agency",
+		url: "https://unsplash.com/@macauphotoagency",
+		id: "VllT5xAFi88",
+	},
+	links: {
+		phone:
+			"https://images.unsplash.com/photo-1568913431180-dcd18c7ecd3b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDV8fGJhc2tldGJhbGx8ZW58MHwwfHx8MTYxODY1OTMyNg&ixlib=rb-1.2.1&q=80&w=400",
+		tablet:
+			"https://images.unsplash.com/photo-1568913431180-dcd18c7ecd3b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDV8fGJhc2tldGJhbGx8ZW58MHwwfHx8MTYxODY1OTMyNg&ixlib=rb-1.2.1&q=80&w=1080",
+		hdReady:
+			"https://images.unsplash.com/photo-1568913431180-dcd18c7ecd3b?crop=entropy&cs=srgb&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDV8fGJhc2tldGJhbGx8ZW58MHwwfHx8MTYxODY1OTMyNg&ixlib=rb-1.2.1&q=85",
+		fullHd:
+			"https://images.unsplash.com/photo-1568913431180-dcd18c7ecd3b?crop=entropy&cs=srgb&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDV8fGJhc2tldGJhbGx8ZW58MHwwfHx8MTYxODY1OTMyNg&ixlib=rb-1.2.1&q=85",
+		fourK:
+			"https://images.unsplash.com/photo-1568913431180-dcd18c7ecd3b?ixid=MnwzMTI2M3wwfDF8c2VhcmNofDV8fGJhc2tldGJhbGx8ZW58MHwwfHx8MTYxODY1OTMyNg&ixlib=rb-1.2.1",
+		thumb:
+			"https://images.unsplash.com/photo-1568913431180-dcd18c7ecd3b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDV8fGJhc2tldGJhbGx8ZW58MHwwfHx8MTYxODY1OTMyNg&ixlib=rb-1.2.1&q=80&w=200",
+	},
+};
+
 const playingBasketball = {
-	label: "He is practicing basketball.",
+	label: "He is playing basketball.",
 	user: {
 		name: "Tima Miroshnichenko",
 		url: "https://www.pexels.com/@tima-miroshnichenko",
 		id: 3088726,
 	},
 	images: {
+		//a different, landscape image
 		phone:
-			"https://player.vimeo.com/external/467436330.sd.mp4?s=76304706368278640ac086aa2232c50327b2491e&profile_id=164&oauth2_token_id=57447761",
+			"https://images.unsplash.com/photo-1568913431180-dcd18c7ecd3b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDV8fGJhc2tldGJhbGx8ZW58MHwwfHx8MTYxODY1OTMyNg&ixlib=rb-1.2.1&q=80&w=400",
 		tablet:
-			"https://player.vimeo.com/external/467436330.hd.mp4?s=17d8359d3357d31ea836ea898966b17b4af4b34c&profile_id=174&oauth2_token_id=57447761",
+			"https://images.unsplash.com/photo-1568913431180-dcd18c7ecd3b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDV8fGJhc2tldGJhbGx8ZW58MHwwfHx8MTYxODY1OTMyNg&ixlib=rb-1.2.1&q=80&w=1080",
 		hdReady:
-			"https://player.vimeo.com/external/467436330.hd.mp4?s=17d8359d3357d31ea836ea898966b17b4af4b34c&profile_id=175&oauth2_token_id=57447761",
+			"https://images.unsplash.com/photo-1568913431180-dcd18c7ecd3b?crop=entropy&cs=srgb&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDV8fGJhc2tldGJhbGx8ZW58MHwwfHx8MTYxODY1OTMyNg&ixlib=rb-1.2.1&q=85",
+		fullHd:
+			"https://images.unsplash.com/photo-1568913431180-dcd18c7ecd3b?crop=entropy&cs=srgb&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDV8fGJhc2tldGJhbGx8ZW58MHwwfHx8MTYxODY1OTMyNg&ixlib=rb-1.2.1&q=85",
+		fourK:
+			"https://images.unsplash.com/photo-1568913431180-dcd18c7ecd3b?ixid=MnwzMTI2M3wwfDF8c2VhcmNofDV8fGJhc2tldGJhbGx8ZW58MHwwfHx8MTYxODY1OTMyNg&ixlib=rb-1.2.1",
+		thumb:
+			"https://images.unsplash.com/photo-1568913431180-dcd18c7ecd3b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDV8fGJhc2tldGJhbGx8ZW58MHwwfHx8MTYxODY1OTMyNg&ixlib=rb-1.2.1&q=80&w=200",
 	},
 	links: {
 		phone:
@@ -412,7 +464,7 @@ const playingBasketball = {
 };
 
 const playingSoccer = {
-	label: "He is playing soccer",
+	label: "They are playing soccer",
 	user: {
 		name: "Tima Miroshnichenko",
 		url: "https://www.pexels.com/@tima-miroshnichenko",
@@ -420,11 +472,17 @@ const playingSoccer = {
 	},
 	images: {
 		phone:
-			"https://player.vimeo.com/external/487388032.sd.mp4?s=cc10a3427332da8fd21611b744ea852ae3d49b6a&profile_id=164&oauth2_token_id=57447761",
+			"https://images.unsplash.com/photo-1543326727-cf6c39e8f84c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDl8fHNvY2NlcnxlbnwwfDB8fHwxNjE4NjYwMzQ5&ixlib=rb-1.2.1&q=80&w=400",
 		tablet:
-			"https://player.vimeo.com/external/487388032.hd.mp4?s=6ea672d27c5579ed42872ef665472bd8c4973dd1&profile_id=174&oauth2_token_id=57447761",
+			"https://images.unsplash.com/photo-1543326727-cf6c39e8f84c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDl8fHNvY2NlcnxlbnwwfDB8fHwxNjE4NjYwMzQ5&ixlib=rb-1.2.1&q=80&w=1080",
 		hdReady:
-			"https://player.vimeo.com/external/487388032.hd.mp4?s=6ea672d27c5579ed42872ef665472bd8c4973dd1&profile_id=175&oauth2_token_id=57447761",
+			"https://images.unsplash.com/photo-1543326727-cf6c39e8f84c?crop=entropy&cs=srgb&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDl8fHNvY2NlcnxlbnwwfDB8fHwxNjE4NjYwMzQ5&ixlib=rb-1.2.1&q=85",
+		fullHd:
+			"https://images.unsplash.com/photo-1543326727-cf6c39e8f84c?crop=entropy&cs=srgb&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDl8fHNvY2NlcnxlbnwwfDB8fHwxNjE4NjYwMzQ5&ixlib=rb-1.2.1&q=85",
+		fourK:
+			"https://images.unsplash.com/photo-1543326727-cf6c39e8f84c?ixid=MnwzMTI2M3wwfDF8c2VhcmNofDl8fHNvY2NlcnxlbnwwfDB8fHwxNjE4NjYwMzQ5&ixlib=rb-1.2.1",
+		thumb:
+			"https://images.unsplash.com/photo-1543326727-cf6c39e8f84c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDl8fHNvY2NlcnxlbnwwfDB8fHwxNjE4NjYwMzQ5&ixlib=rb-1.2.1&q=80&w=200",
 	},
 	links: {
 		phone:
@@ -622,14 +680,25 @@ const womanPlayingKeyboards = {
 };
 
 const cookingSoy = {
+	label: "He is cooking",
 	user: {
 		name: "cottonbro",
 		url: "https://www.pexels.com/@cottonbro",
 		id: 1437723,
 	},
 	images: {
+		phone:
+			"https://images.unsplash.com/photo-1556910103-1c02745aae4d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDJ8fGNvb2tpbmd8ZW58MHwwfHx8MTYxODY2MDU4MA&ixlib=rb-1.2.1&q=80&w=400",
+		tablet:
+			"https://images.unsplash.com/photo-1556910103-1c02745aae4d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDJ8fGNvb2tpbmd8ZW58MHwwfHx8MTYxODY2MDU4MA&ixlib=rb-1.2.1&q=80&w=1080",
+		hdReady:
+			"https://images.unsplash.com/photo-1556910103-1c02745aae4d?crop=entropy&cs=srgb&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDJ8fGNvb2tpbmd8ZW58MHwwfHx8MTYxODY2MDU4MA&ixlib=rb-1.2.1&q=85",
+		fullHd:
+			"https://images.unsplash.com/photo-1556910103-1c02745aae4d?crop=entropy&cs=srgb&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDJ8fGNvb2tpbmd8ZW58MHwwfHx8MTYxODY2MDU4MA&ixlib=rb-1.2.1&q=85",
 		fourK:
-			"https://images.pexels.com/videos/3298720/pictures/preview-14.jpg",
+			"https://images.unsplash.com/photo-1556910103-1c02745aae4d?ixid=MnwzMTI2M3wwfDF8c2VhcmNofDJ8fGNvb2tpbmd8ZW58MHwwfHx8MTYxODY2MDU4MA&ixlib=rb-1.2.1",
+		thumb:
+			"https://images.unsplash.com/photo-1556910103-1c02745aae4d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDJ8fGNvb2tpbmd8ZW58MHwwfHx8MTYxODY2MDU4MA&ixlib=rb-1.2.1&q=80&w=200",
 	},
 	links: {
 		phone:
@@ -736,8 +805,18 @@ const dancingLadies = {
 		id: 1984515,
 	},
 	images: {
+		phone:
+			"https://images.unsplash.com/photo-1531747056595-07f6cbbe10ad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDZ8fGRhbmNpbmd8ZW58MHwwfHx8MTYxODY1OTUxMA&ixlib=rb-1.2.1&q=80&w=400",
+		tablet:
+			"https://images.unsplash.com/photo-1531747056595-07f6cbbe10ad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDZ8fGRhbmNpbmd8ZW58MHwwfHx8MTYxODY1OTUxMA&ixlib=rb-1.2.1&q=80&w=1080",
+		hdReady:
+			"https://images.unsplash.com/photo-1531747056595-07f6cbbe10ad?crop=entropy&cs=srgb&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDZ8fGRhbmNpbmd8ZW58MHwwfHx8MTYxODY1OTUxMA&ixlib=rb-1.2.1&q=85",
+		fullHd:
+			"https://images.unsplash.com/photo-1531747056595-07f6cbbe10ad?crop=entropy&cs=srgb&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDZ8fGRhbmNpbmd8ZW58MHwwfHx8MTYxODY1OTUxMA&ixlib=rb-1.2.1&q=85",
 		fourK:
-			"https://images.pexels.com/videos/4800576/pictures/preview-14.jpg",
+			"https://images.unsplash.com/photo-1531747056595-07f6cbbe10ad?ixid=MnwzMTI2M3wwfDF8c2VhcmNofDZ8fGRhbmNpbmd8ZW58MHwwfHx8MTYxODY1OTUxMA&ixlib=rb-1.2.1",
+		thumb:
+			"https://images.unsplash.com/photo-1531747056595-07f6cbbe10ad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDZ8fGRhbmNpbmd8ZW58MHwwfHx8MTYxODY1OTUxMA&ixlib=rb-1.2.1&q=80&w=200",
 	},
 	links: {
 		phone:
@@ -749,6 +828,39 @@ const dancingLadies = {
 		fullHd:
 			"https://player.vimeo.com/external/435373899.hd.mp4?s=17d13bc3178c2dc3e20c6f2725916e72874a801d&profile_id=172&oauth2_token_id=57447761",
 	},
+};
+
+const womanHoldingCat = {
+	user: {
+		name: "KoolShooters",
+		url: "https://www.pexels.com/@kool-shooters",
+		id: 3798027,
+	},
+	links: {
+		phone:
+			"https://player.vimeo.com/external/515031606.sd.mp4?s=a825dccfa0821a9e024748f78e307b2b689230cf&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/515031606.hd.mp4?s=c5f539acfede27d4ece58572617651589c9d867a&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/515031606.hd.mp4?s=c5f539acfede27d4ece58572617651589c9d867a&profile_id=170&oauth2_token_id=57447761",
+		fullHd:
+			"https://player.vimeo.com/external/515031606.hd.mp4?s=c5f539acfede27d4ece58572617651589c9d867a&profile_id=172&oauth2_token_id=57447761",
+	},
+	images: {
+		phone:
+			"https://images.unsplash.com/photo-1589170643699-a126dc4cb056?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDN8fGdpcmwlMjB3aXRoJTIwY2F0fGVufDB8MHx8fDE2MTg2NTk3MzY&ixlib=rb-1.2.1&q=80&w=400",
+		tablet:
+			"https://images.unsplash.com/photo-1589170643699-a126dc4cb056?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDN8fGdpcmwlMjB3aXRoJTIwY2F0fGVufDB8MHx8fDE2MTg2NTk3MzY&ixlib=rb-1.2.1&q=80&w=1080",
+		hdReady:
+			"https://images.unsplash.com/photo-1589170643699-a126dc4cb056?crop=entropy&cs=srgb&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDN8fGdpcmwlMjB3aXRoJTIwY2F0fGVufDB8MHx8fDE2MTg2NTk3MzY&ixlib=rb-1.2.1&q=85",
+		fullHd:
+			"https://images.unsplash.com/photo-1589170643699-a126dc4cb056?crop=entropy&cs=srgb&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDN8fGdpcmwlMjB3aXRoJTIwY2F0fGVufDB8MHx8fDE2MTg2NTk3MzY&ixlib=rb-1.2.1&q=85",
+		fourK:
+			"https://images.unsplash.com/photo-1589170643699-a126dc4cb056?ixid=MnwzMTI2M3wwfDF8c2VhcmNofDN8fGdpcmwlMjB3aXRoJTIwY2F0fGVufDB8MHx8fDE2MTg2NTk3MzY&ixlib=rb-1.2.1",
+		thumb:
+			"https://images.unsplash.com/photo-1589170643699-a126dc4cb056?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDN8fGdpcmwlMjB3aXRoJTIwY2F0fGVufDB8MHx8fDE2MTg2NTk3MzY&ixlib=rb-1.2.1&q=80&w=200",
+	},
+	image: "https://images.pexels.com/videos/6908507/pictures/preview-0.jpg",
 };
 
 const womanDancing = {
@@ -807,14 +919,19 @@ const girlPlayingWithCat = {
 		id: 1437723,
 	},
 	images: {
+		//a different, landscape image
 		phone:
-			"https://player.vimeo.com/external/513848114.sd.mp4?s=f1f7f288617965ecbbf76fdb43cc3924225c683e&profile_id=164&oauth2_token_id=57447761",
+			"https://images.unsplash.com/photo-1616781429707-a459157f9018?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDR8fGdpcmwlMjB3aXRoJTIwY2F0fGVufDB8MHx8fDE2MTg2NTk3MzY&ixlib=rb-1.2.1&q=80&w=400",
 		tablet:
-			"https://player.vimeo.com/external/513848114.hd.mp4?s=bf13232aefde611877694b4485949ce7979eef10&profile_id=174&oauth2_token_id=57447761",
+			"https://images.unsplash.com/photo-1616781429707-a459157f9018?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDR8fGdpcmwlMjB3aXRoJTIwY2F0fGVufDB8MHx8fDE2MTg2NTk3MzY&ixlib=rb-1.2.1&q=80&w=1080",
 		hdReady:
-			"https://player.vimeo.com/external/513848114.hd.mp4?s=bf13232aefde611877694b4485949ce7979eef10&profile_id=170&oauth2_token_id=57447761",
+			"https://images.unsplash.com/photo-1616781429707-a459157f9018?crop=entropy&cs=srgb&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDR8fGdpcmwlMjB3aXRoJTIwY2F0fGVufDB8MHx8fDE2MTg2NTk3MzY&ixlib=rb-1.2.1&q=85",
 		fullHd:
-			"https://player.vimeo.com/external/513848114.hd.mp4?s=bf13232aefde611877694b4485949ce7979eef10&profile_id=172&oauth2_token_id=57447761",
+			"https://images.unsplash.com/photo-1616781429707-a459157f9018?crop=entropy&cs=srgb&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDR8fGdpcmwlMjB3aXRoJTIwY2F0fGVufDB8MHx8fDE2MTg2NTk3MzY&ixlib=rb-1.2.1&q=85",
+		fourK:
+			"https://images.unsplash.com/photo-1616781429707-a459157f9018?ixid=MnwzMTI2M3wwfDF8c2VhcmNofDR8fGdpcmwlMjB3aXRoJTIwY2F0fGVufDB8MHx8fDE2MTg2NTk3MzY&ixlib=rb-1.2.1",
+		thumb:
+			"https://images.unsplash.com/photo-1616781429707-a459157f9018?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDR8fGdpcmwlMjB3aXRoJTIwY2F0fGVufDB8MHx8fDE2MTg2NTk3MzY&ixlib=rb-1.2.1&q=80&w=200",
 	},
 	links: {
 		phone:
@@ -967,7 +1084,21 @@ const drivingInNiceScenery = {
 		fullHd:
 			"https://player.vimeo.com/external/420239207.hd.mp4?s=9fa34fce5989c66f5edc65fc533f2d91085d7599&profile_id=172&oauth2_token_id=57447761",
 	},
-	image: "https://images.pexels.com/videos/4434242/pictures/preview-0.jpg",
+	// image: "https://images.pexels.com/videos/4434242/pictures/preview-0.jpg",
+	images: {
+		phone:
+			"https://images.unsplash.com/photo-1550517636-ad7bac40dc28?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDN8fGRyaXZpbmd8ZW58MHwwfHx8MTYxODY2MjUwNg&ixlib=rb-1.2.1&q=80&w=400",
+		tablet:
+			"https://images.unsplash.com/photo-1550517636-ad7bac40dc28?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDN8fGRyaXZpbmd8ZW58MHwwfHx8MTYxODY2MjUwNg&ixlib=rb-1.2.1&q=80&w=1080",
+		hdReady:
+			"https://images.unsplash.com/photo-1550517636-ad7bac40dc28?crop=entropy&cs=srgb&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDN8fGRyaXZpbmd8ZW58MHwwfHx8MTYxODY2MjUwNg&ixlib=rb-1.2.1&q=85",
+		fullHd:
+			"https://images.unsplash.com/photo-1550517636-ad7bac40dc28?crop=entropy&cs=srgb&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDN8fGRyaXZpbmd8ZW58MHwwfHx8MTYxODY2MjUwNg&ixlib=rb-1.2.1&q=85",
+		fourK:
+			"https://images.unsplash.com/photo-1550517636-ad7bac40dc28?ixid=MnwzMTI2M3wwfDF8c2VhcmNofDN8fGRyaXZpbmd8ZW58MHwwfHx8MTYxODY2MjUwNg&ixlib=rb-1.2.1",
+		thumb:
+			"https://images.unsplash.com/photo-1550517636-ad7bac40dc28?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDN8fGRyaXZpbmd8ZW58MHwwfHx8MTYxODY2MjUwNg&ixlib=rb-1.2.1&q=80&w=200",
+	},
 };
 
 const flyingThroughClouds = {
@@ -1012,7 +1143,21 @@ const manLyingOnHammock = {
 		hdReady:
 			"https://player.vimeo.com/external/459254323.hd.mp4?s=5c7e488819d308049bd7d038ded982a84f520155&profile_id=175&oauth2_token_id=57447761",
 	},
-	image: "https://images.pexels.com/videos/5383550/pictures/preview-0.jpg",
+	// image: "https://images.pexels.com/videos/5383550/pictures/preview-0.jpg",
+	images: {
+		phone:
+			"https://images.unsplash.com/photo-1599956260443-2d171e2825f1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDl8fGhhbW1vY2t8ZW58MHwwfHx8MTYxODY2MjU3MQ&ixlib=rb-1.2.1&q=80&w=400",
+		tablet:
+			"https://images.unsplash.com/photo-1599956260443-2d171e2825f1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDl8fGhhbW1vY2t8ZW58MHwwfHx8MTYxODY2MjU3MQ&ixlib=rb-1.2.1&q=80&w=1080",
+		hdReady:
+			"https://images.unsplash.com/photo-1599956260443-2d171e2825f1?crop=entropy&cs=srgb&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDl8fGhhbW1vY2t8ZW58MHwwfHx8MTYxODY2MjU3MQ&ixlib=rb-1.2.1&q=85",
+		fullHd:
+			"https://images.unsplash.com/photo-1599956260443-2d171e2825f1?crop=entropy&cs=srgb&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDl8fGhhbW1vY2t8ZW58MHwwfHx8MTYxODY2MjU3MQ&ixlib=rb-1.2.1&q=85",
+		fourK:
+			"https://images.unsplash.com/photo-1599956260443-2d171e2825f1?ixid=MnwzMTI2M3wwfDF8c2VhcmNofDl8fGhhbW1vY2t8ZW58MHwwfHx8MTYxODY2MjU3MQ&ixlib=rb-1.2.1",
+		thumb:
+			"https://images.unsplash.com/photo-1599956260443-2d171e2825f1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDl8fGhhbW1vY2t8ZW58MHwwfHx8MTYxODY2MjU3MQ&ixlib=rb-1.2.1&q=80&w=200",
+	},
 };
 
 const womanEatingPizza = {
@@ -1032,7 +1177,21 @@ const womanEatingPizza = {
 		fullHd:
 			"https://player.vimeo.com/external/400923981.hd.mp4?s=8b91a8081ae02a4ea050e9aca1d28fbd00c1fc8e&profile_id=173&oauth2_token_id=57447761",
 	},
-	image: "https://images.pexels.com/videos/4008535/pictures/preview-0.jpg",
+	// image: "https://images.pexels.com/videos/4008535/pictures/preview-0.jpg",
+	images: {
+		phone:
+			"https://images.unsplash.com/photo-1598610089901-ade9d3eb16e2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDJ8fGVhdGluZyUyMHBpenphfGVufDB8MXx8fDE2MTg2NjA4NTE&ixlib=rb-1.2.1&q=80&w=400",
+		tablet:
+			"https://images.unsplash.com/photo-1598610089901-ade9d3eb16e2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDJ8fGVhdGluZyUyMHBpenphfGVufDB8MXx8fDE2MTg2NjA4NTE&ixlib=rb-1.2.1&q=80&w=1080",
+		hdReady:
+			"https://images.unsplash.com/photo-1598610089901-ade9d3eb16e2?crop=entropy&cs=srgb&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDJ8fGVhdGluZyUyMHBpenphfGVufDB8MXx8fDE2MTg2NjA4NTE&ixlib=rb-1.2.1&q=85",
+		fullHd:
+			"https://images.unsplash.com/photo-1598610089901-ade9d3eb16e2?crop=entropy&cs=srgb&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDJ8fGVhdGluZyUyMHBpenphfGVufDB8MXx8fDE2MTg2NjA4NTE&ixlib=rb-1.2.1&q=85",
+		fourK:
+			"https://images.unsplash.com/photo-1598610089901-ade9d3eb16e2?ixid=MnwzMTI2M3wwfDF8c2VhcmNofDJ8fGVhdGluZyUyMHBpenphfGVufDB8MXx8fDE2MTg2NjA4NTE&ixlib=rb-1.2.1",
+		thumb:
+			"https://images.unsplash.com/photo-1598610089901-ade9d3eb16e2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDJ8fGVhdGluZyUyMHBpenphfGVufDB8MXx8fDE2MTg2NjA4NTE&ixlib=rb-1.2.1&q=80&w=200",
+	},
 };
 
 const womanDrinkingCoffeeAndReading = {
@@ -1052,7 +1211,21 @@ const womanDrinkingCoffeeAndReading = {
 		fullHd:
 			"https://player.vimeo.com/external/519030299.hd.mp4?s=f28e97e3355dab569000a0d2de8026e333a6e808&profile_id=172&oauth2_token_id=57447761",
 	},
-	image: "https://images.pexels.com/videos/7026657/pictures/preview-0.jpg",
+	// image: "https://images.pexels.com/videos/7026657/pictures/preview-0.jpg",
+	images: {
+		phone:
+			"https://images.unsplash.com/photo-1536914561643-9e3a7a8d063d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDF8fHdvbWFuJTIwY29mZmVlfGVufDB8MHx8fDE2MTg2NjEwNDY&ixlib=rb-1.2.1&q=80&w=400",
+		tablet:
+			"https://images.unsplash.com/photo-1536914561643-9e3a7a8d063d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDF8fHdvbWFuJTIwY29mZmVlfGVufDB8MHx8fDE2MTg2NjEwNDY&ixlib=rb-1.2.1&q=80&w=1080",
+		hdReady:
+			"https://images.unsplash.com/photo-1536914561643-9e3a7a8d063d?crop=entropy&cs=srgb&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDF8fHdvbWFuJTIwY29mZmVlfGVufDB8MHx8fDE2MTg2NjEwNDY&ixlib=rb-1.2.1&q=85",
+		fullHd:
+			"https://images.unsplash.com/photo-1536914561643-9e3a7a8d063d?crop=entropy&cs=srgb&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDF8fHdvbWFuJTIwY29mZmVlfGVufDB8MHx8fDE2MTg2NjEwNDY&ixlib=rb-1.2.1&q=85",
+		fourK:
+			"https://images.unsplash.com/photo-1536914561643-9e3a7a8d063d?ixid=MnwzMTI2M3wwfDF8c2VhcmNofDF8fHdvbWFuJTIwY29mZmVlfGVufDB8MHx8fDE2MTg2NjEwNDY&ixlib=rb-1.2.1",
+		thumb:
+			"https://images.unsplash.com/photo-1536914561643-9e3a7a8d063d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDF8fHdvbWFuJTIwY29mZmVlfGVufDB8MHx8fDE2MTg2NjEwNDY&ixlib=rb-1.2.1&q=80&w=200",
+	},
 };
 
 const manThinking = {
@@ -1072,7 +1245,55 @@ const manThinking = {
 		fullHd:
 			"https://player.vimeo.com/external/483936341.hd.mp4?s=028798b2b877fc92c4bcb842fc575fa76681249c&profile_id=172&oauth2_token_id=57447761",
 	},
-	image: "https://images.pexels.com/videos/5992471/pictures/preview-0.jpg",
+	//image: "https://images.pexels.com/videos/5992471/pictures/preview-0.jpg",
+	images: {
+		phone:
+			"https://images.unsplash.com/photo-1595907936728-57245acf036a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDl8fHRoaW5rfGVufDB8MHx8fDE2MTg2NjEyODE&ixlib=rb-1.2.1&q=80&w=400",
+		tablet:
+			"https://images.unsplash.com/photo-1595907936728-57245acf036a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDl8fHRoaW5rfGVufDB8MHx8fDE2MTg2NjEyODE&ixlib=rb-1.2.1&q=80&w=1080",
+		hdReady:
+			"https://images.unsplash.com/photo-1595907936728-57245acf036a?crop=entropy&cs=srgb&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDl8fHRoaW5rfGVufDB8MHx8fDE2MTg2NjEyODE&ixlib=rb-1.2.1&q=85",
+		fullHd:
+			"https://images.unsplash.com/photo-1595907936728-57245acf036a?crop=entropy&cs=srgb&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDl8fHRoaW5rfGVufDB8MHx8fDE2MTg2NjEyODE&ixlib=rb-1.2.1&q=85",
+		fourK:
+			"https://images.unsplash.com/photo-1595907936728-57245acf036a?ixid=MnwzMTI2M3wwfDF8c2VhcmNofDl8fHRoaW5rfGVufDB8MHx8fDE2MTg2NjEyODE&ixlib=rb-1.2.1",
+		thumb:
+			"https://images.unsplash.com/photo-1595907936728-57245acf036a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDl8fHRoaW5rfGVufDB8MHx8fDE2MTg2NjEyODE&ixlib=rb-1.2.1&q=80&w=200",
+	},
+};
+
+const guyListeningToMusic = {
+	label: "He is listening to music",
+	user: {
+		name: "cottonbro",
+		url: "https://www.pexels.com/@cottonbro",
+		id: 1437723,
+	},
+	links: {
+		phone:
+			"https://player.vimeo.com/external/507878170.sd.mp4?s=0d0d8cc41917b2b0e16472f37133d5a7841d0fe7&profile_id=164&oauth2_token_id=57447761",
+		tablet:
+			"https://player.vimeo.com/external/507878170.hd.mp4?s=23dd831711b0e9adf0ca7e3a66f35100c653ad0f&profile_id=174&oauth2_token_id=57447761",
+		hdReady:
+			"https://player.vimeo.com/external/507878170.hd.mp4?s=23dd831711b0e9adf0ca7e3a66f35100c653ad0f&profile_id=171&oauth2_token_id=57447761",
+		fullHd:
+			"https://player.vimeo.com/external/507878170.hd.mp4?s=23dd831711b0e9adf0ca7e3a66f35100c653ad0f&profile_id=173&oauth2_token_id=57447761",
+	},
+	// image: "https://images.pexels.com/videos/6700187/pictures/preview-0.jpg",
+	images: {
+		phone:
+			"https://images.unsplash.com/photo-1594434533760-02e0f3faaa68?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDV8fGxpc3RlbmluZ3xlbnwwfDB8fHwxNjE4NjYxMzk2&ixlib=rb-1.2.1&q=80&w=400",
+		tablet:
+			"https://images.unsplash.com/photo-1594434533760-02e0f3faaa68?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDV8fGxpc3RlbmluZ3xlbnwwfDB8fHwxNjE4NjYxMzk2&ixlib=rb-1.2.1&q=80&w=1080",
+		hdReady:
+			"https://images.unsplash.com/photo-1594434533760-02e0f3faaa68?crop=entropy&cs=srgb&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDV8fGxpc3RlbmluZ3xlbnwwfDB8fHwxNjE4NjYxMzk2&ixlib=rb-1.2.1&q=85",
+		fullHd:
+			"https://images.unsplash.com/photo-1594434533760-02e0f3faaa68?crop=entropy&cs=srgb&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDV8fGxpc3RlbmluZ3xlbnwwfDB8fHwxNjE4NjYxMzk2&ixlib=rb-1.2.1&q=85",
+		fourK:
+			"https://images.unsplash.com/photo-1594434533760-02e0f3faaa68?ixid=MnwzMTI2M3wwfDF8c2VhcmNofDV8fGxpc3RlbmluZ3xlbnwwfDB8fHwxNjE4NjYxMzk2&ixlib=rb-1.2.1",
+		thumb:
+			"https://images.unsplash.com/photo-1594434533760-02e0f3faaa68?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDV8fGxpc3RlbmluZ3xlbnwwfDB8fHwxNjE4NjYxMzk2&ixlib=rb-1.2.1&q=80&w=200",
+	},
 };
 
 module.exports = {
@@ -1113,6 +1334,7 @@ module.exports = {
 	womanEatingPizza,
 	womanDrinkingCoffeeAndReading,
 	manThinking,
+	guyListeningToMusic,
 
 	coupleWalkingOnTheBeach: {
 		phone:

@@ -25,29 +25,30 @@ const ManLyingOnHammock = require("./ManLyingOnHammovk.js");
 const WomanEatingPizza = require("./WomanEatingPizza.js");
 const WomanDrinkingCoffee = require("./WomanDrinkingCoffee.js");
 const ManThinking = require("./ManThinking.js");
+const GuyListeningToMusic = require("./GuyListeningToMusic.js");
 
 const PresentProgressiveSlides = [
 	//portrait
-	// CoverPage,
-	// DrivingInNiceScenery,
-	// WorkingOnComputer,
-	// DrivingQuiz,
-	// ManLyingOnHammock,
-	// GirlStudying,
-	// DancingLadies,
+	CoverPage,
+	DrivingInNiceScenery,
+	WorkingOnComputer,
+	DrivingQuiz,
+	ManLyingOnHammock,
+	GirlStudying,
+	DancingLadies,
 	PositiveQuiz2,
-	// PlayingSoccer,
-	// PlayingBasketball,
-	// GirlPlayingWithCat,
-	// PositiveQuiz3,
-	// WomanEatingPizza,
-	// CookingSoy,
-	// WomanDrinkingCoffee,
-	// PositiveQuiz4,
-	// TastingPancake,
-	// ManThinking,
-	// PracticingJudo,
-	// PositiveQuiz5,
+	PlayingSoccer,
+	PlayingBasketball,
+	GirlPlayingWithCat,
+	PositiveQuiz3,
+	WomanEatingPizza,
+	CookingSoy,
+	WomanDrinkingCoffee,
+	PositiveQuiz4,
+	GuyListeningToMusic,
+	ManThinking,
+	PracticingJudo,
+	PositiveQuiz5,
 ];
 
 module.exports = PresentProgressiveSlides;

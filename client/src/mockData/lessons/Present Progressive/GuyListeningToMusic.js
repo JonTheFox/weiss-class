@@ -1,12 +1,8 @@
-const {
-	VideoCentered,
-	ListMain,
-	CenteredHeadings,
-} = require("../../slideTemplates.js");
+const { VideoCentered } = require("../../slideTemplates.js");
 
-const videoSet = require("./presentProgressiveVideos.js").playingSoccer;
+const videoSet = require("./presentProgressiveVideos.js").guyListeningToMusic;
 
-const PlayingSoccer = {
+const GuyListeningToMusic = {
 	//bgImage
 	bg: "var(--white)",
 	pages: [
@@ -18,13 +14,13 @@ const PlayingSoccer = {
 			//title: "I am driving.",
 			videoSet,
 			paragraphs: [
-				{ text: "They are playing soccer. ", className: "caption" },
+				{ text: "He is listening to music. ", className: "caption" },
 			],
 		},
 	],
 };
 
-module.exports = PlayingSoccer;
+module.exports = GuyListeningToMusic;
 
 /*
 

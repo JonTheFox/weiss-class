@@ -236,12 +236,10 @@ const VideoPlayer = React.forwardRef((props, ref) => {
 
 	useEffect(() => {
 		refs.current.video = props.video;
-		if (!isValidVideo(props.video)) return;
-
 		if (fadeInWhenReady) {
 			setFaded(true);
 		}
-		setVideo(props.video);
+		setVideo(isValidVideo(props.video) ? props.video : null);
 		promiseKeeper.stall(200, () => {
 			setVideoOpacity();
 		});

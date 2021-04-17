@@ -15,13 +15,13 @@ const items = videoObjects.map(mapVideoObjectToQuizItem);
 
 const Positive4Quiz = {
 	//bgImage
-	bg: "field-day",
+	bg: "bg--primary-and-secondary",
 	pages: [
 		{
 			templateName: Quiz,
 			heading: "Present Progressive",
 			subheading: "Quiz",
-			bgClass: "cloud-up",
+			bgClass: "bg--primary-and-secondary",
 			items,
 		},
 	],
