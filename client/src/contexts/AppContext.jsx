@@ -76,6 +76,7 @@ try {
         timeout: 4500,
         DEBUGGING,
         autoResolveWhenDebugging: false,
+        retryOnError: true,
     });
 } catch (err) {
     synthVoice = fallback;
