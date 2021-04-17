@@ -1,16 +1,11 @@
 const { Quiz } = require("../../slideTemplates.js");
-const {
-	drivingInNiceScenery,
-	workingOnComputer,
-} = require("./presentProgressiveVideos.js");
+const { cookingSoy } = require("./presentProgressiveVideos.js");
+const videoObjects = [cookingSoy];
 const mapVideoObjectToQuizItem = require("../../../components/Quiz/mapVideoObjectToQuizItem.js");
-const videoObjects = [drivingInNiceScenery, workingOnComputer];
 
 const items = videoObjects.map(mapVideoObjectToQuizItem);
 
-// const videoSet = require("./presentProgressiveVideos.js").skiing;
-
-const DrivingQuiz = {
+const GenericQuiz = {
 	//bgImage
 	bg: "var(--white)",
 	pages: [
@@ -27,9 +22,4 @@ const DrivingQuiz = {
 	],
 };
 
-module.exports = DrivingQuiz;
-
-/*
-
-"When we are talking about what's  happening at the moment, we are using 'Present Progressive."
-*/
+module.exports = GenericQuiz;

@@ -1,23 +1,26 @@
 const { VideoCentered } = require("../../slideTemplates.js");
 
-const videoSet = require("./presentProgressiveVideos.js").practicingJudo;
+const videoSet = require("./presentProgressiveVideos.js").guyListeningToMusic;
 
-const PracticingJudo = {
+const GuyListeningToMusic = {
+	//bgImage
 	bg: "var(--white)",
 	pages: [
 		{
 			templateName: VideoCentered,
+			//bgClass: "field-day",
 			heading: "Present Progressive",
 			//subheading: "Living the moment",
 			//title: "I am driving.",
 			videoSet,
-			paragraphs: [{ text: "They are practicing judo. " }],
-			//bgClass: ""
+			paragraphs: [
+				{ text: "He is listening to music. ", className: "caption" },
+			],
 		},
 	],
 };
 
-module.exports = PracticingJudo;
+module.exports = GuyListeningToMusic;
 
 /*
 

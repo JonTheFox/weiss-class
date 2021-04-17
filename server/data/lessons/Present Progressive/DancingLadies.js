@@ -19,3 +19,8 @@ const DancingLadies = {
 };
 
 module.exports = DancingLadies;
+
+/*
+
+"When we are talking about what's  happening at the moment, we are using 'Present Progressive."
+*/
