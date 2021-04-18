@@ -1,15 +1,17 @@
 const { Quiz } = require("../../slideTemplates.js");
 const {
-	womanEatingPizza,
-	cookingSoy,
-	womanDrinkingCoffeeAndReading,
+	guyListeningToMusic,
+	manThinking,
+	practicingJudo,
+	womanPracticingYoga,
 } = require("./presentProgressiveVideos.js");
-const mapVideoObjectToQuizItem = require("../../../../client/src/components/Quiz/mapVideoObjectToQuizItem.js");
 
+const mapVideoObjectToQuizItem = require("../../../components/Quiz/mapVideoObjectToQuizItem.js");
 const videoObjects = [
-	womanEatingPizza,
-	cookingSoy,
-	womanDrinkingCoffeeAndReading,
+	guyListeningToMusic,
+	manThinking,
+	practicingJudo,
+	womanPracticingYoga,
 ];
 
 const items = videoObjects.map(mapVideoObjectToQuizItem);
@@ -22,6 +24,7 @@ const Positive4Quiz = {
 			templateName: Quiz,
 			heading: "Present Progressive",
 			subheading: "Quiz",
+
 			bgClass: "bg--primary-and-secondary",
 			items,
 		},
