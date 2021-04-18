@@ -962,7 +962,21 @@ const workingOnComputer = {
 		fullHd:
 			"https://player.vimeo.com/external/403652508.hd.mp4?s=619899d6bfc52d8832cad04c0c0be57d45bb6c02&profile_id=173&oauth2_token_id=57447761",
 	},
-	image: "https://images.pexels.com/videos/4065630/pictures/preview-0.jpg",
+	// image: "https://images.pexels.com/videos/4065630/pictures/preview-0.jpg",
+	images: {
+		phone:
+			"https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDV8fHdvcmtpbmclMjBvbiUyMGNvbXB1dGVyfGVufDB8MHx8fDE2MTg3NjI3MDI&ixlib=rb-1.2.1&q=80&w=400",
+		tablet:
+			"https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDV8fHdvcmtpbmclMjBvbiUyMGNvbXB1dGVyfGVufDB8MHx8fDE2MTg3NjI3MDI&ixlib=rb-1.2.1&q=80&w=1080",
+		hdReady:
+			"https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?crop=entropy&cs=srgb&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDV8fHdvcmtpbmclMjBvbiUyMGNvbXB1dGVyfGVufDB8MHx8fDE2MTg3NjI3MDI&ixlib=rb-1.2.1&q=85",
+		fullHd:
+			"https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?crop=entropy&cs=srgb&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDV8fHdvcmtpbmclMjBvbiUyMGNvbXB1dGVyfGVufDB8MHx8fDE2MTg3NjI3MDI&ixlib=rb-1.2.1&q=85",
+		fourK:
+			"https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?ixid=MnwzMTI2M3wwfDF8c2VhcmNofDV8fHdvcmtpbmclMjBvbiUyMGNvbXB1dGVyfGVufDB8MHx8fDE2MTg3NjI3MDI&ixlib=rb-1.2.1",
+		thumb:
+			"https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDV8fHdvcmtpbmclMjBvbiUyMGNvbXB1dGVyfGVufDB8MHx8fDE2MTg3NjI3MDI&ixlib=rb-1.2.1&q=80&w=200",
+	},
 };
 
 const girlsDancing = {
@@ -1004,6 +1018,7 @@ const manDancing = {
 };
 
 const womanPracticingYoga = {
+	label: "She is practicing yoga",
 	user: {
 		name: "Anthony Shkraba",
 		url: "https://www.pexels.com/@shkrabaanthony",
@@ -1015,7 +1030,21 @@ const womanPracticingYoga = {
 		tablet:
 			"https://player.vimeo.com/external/431585425.hd.mp4?s=08094a47844b0c7fc5126388873e9f062113bb0f&profile_id=175&oauth2_token_id=57447761",
 	},
-	image: "https://images.pexels.com/videos/4712079/pictures/preview-0.jpg",
+	// image: "https://images.pexels.com/videos/4712079/pictures/preview-0.jpg",
+	images: {
+		phone:
+			"https://images.unsplash.com/photo-1603988363607-e1e4a66962c6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDN8fHdvbWFuJTIweW9nYXxlbnwwfDB8fHwxNjE4NzY3MjA5&ixlib=rb-1.2.1&q=80&w=400",
+		tablet:
+			"https://images.unsplash.com/photo-1603988363607-e1e4a66962c6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDN8fHdvbWFuJTIweW9nYXxlbnwwfDB8fHwxNjE4NzY3MjA5&ixlib=rb-1.2.1&q=80&w=1080",
+		hdReady:
+			"https://images.unsplash.com/photo-1603988363607-e1e4a66962c6?crop=entropy&cs=srgb&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDN8fHdvbWFuJTIweW9nYXxlbnwwfDB8fHwxNjE4NzY3MjA5&ixlib=rb-1.2.1&q=85",
+		fullHd:
+			"https://images.unsplash.com/photo-1603988363607-e1e4a66962c6?crop=entropy&cs=srgb&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDN8fHdvbWFuJTIweW9nYXxlbnwwfDB8fHwxNjE4NzY3MjA5&ixlib=rb-1.2.1&q=85",
+		fourK:
+			"https://images.unsplash.com/photo-1603988363607-e1e4a66962c6?ixid=MnwzMTI2M3wwfDF8c2VhcmNofDN8fHdvbWFuJTIweW9nYXxlbnwwfDB8fHwxNjE4NzY3MjA5&ixlib=rb-1.2.1",
+		thumb:
+			"https://images.unsplash.com/photo-1603988363607-e1e4a66962c6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDN8fHdvbWFuJTIweW9nYXxlbnwwfDB8fHwxNjE4NzY3MjA5&ixlib=rb-1.2.1&q=80&w=200",
+	},
 };
 
 const playingTennis = {
@@ -1335,6 +1364,7 @@ module.exports = {
 	womanDrinkingCoffeeAndReading,
 	manThinking,
 	guyListeningToMusic,
+	womanPracticingYoga,
 
 	coupleWalkingOnTheBeach: {
 		phone:

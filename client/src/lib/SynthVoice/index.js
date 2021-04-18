@@ -609,58 +609,6 @@ class SynthVoice {
                     return resolve(msg);
                 }
 
-                const callSpeak = () => {
-                    if (!text) {
-                        //wake up the native SpeechSynthesis API (it tends to sleep)
-                        window.speechSynthesis.speak(utterance);
-                        return resolve(
-                            "Fired off and empty utterance to wake up the native SpeechSynthesis browser API"
-                        );
-                    }
-
-                    let {
-                        lang,
-                        accent,
-                        pitch,
-                        rate,
-                        volume = 1,
-                        onStart,
-                        onPause,
-                        onResume,
-                        onMark,
-                        onBoundary,
-                    } = config;
-
-                    lang =
-                        lang && lang.toLowerCase() + "-" + accent.toUpperCase();
-
-                    Object.assign(utterance, { lang, pitch, rate, volume });
-
-                    const timeTillAutoResolve = 5000;
-                    this.setAutoResolveTimer(
-                        setTimeout(() => {
-                            if (!instance.ended && !instance.errored) {
-                                const msg = `SpeechSynthesis Utterance of the text " ${text} " has timed out (${timeTillAutoResolve} milli seconds after starting). Resolving.`;
-                                logg(msg);
-
-                                return resolve(msg);
-                            }
-                        }, timeTillAutoResolve)
-                    );
-
-                    utterance.onstart = onStart;
-                    utterance.onmark = onMark;
-                    utterance.onpause = onPause;
-                    utterance.onresume = onResume;
-                    utterance.onboundary = onBoundary.bind({
-                        numWords: text.split(" ").length,
-                        wordIndex: 0,
-                    });
-                    //
-
-                    window.speechSynthesis.speak(utterance);
-                };
-
                 const utterance = new SpeechSynthesisUtterance();
                 utterance.voice = voice;
                 utterance.text = text;
@@ -668,8 +616,11 @@ class SynthVoice {
                     //dont let a failed utterance ruin entire processes
                     this.errored = true;
                     if (config.retryOnError) {
-                        callSpeak();
+                        const retryTimeout = setTimeout(() => {
+                            this._speak(text, voice, config);
+                        }, 50);
                     }
+
                     if (config && config.onError) config.onError(ev, reject);
                     loggError("error");
                     resolve("error");
@@ -708,8 +659,54 @@ class SynthVoice {
                     // return this.errored ? reject(ev) : resolve(ev);
                 };
 
-                callSpeak();
+                if (!text) {
+                    //wake up the native SpeechSynthesis API (it tends to sleep)
+                    window.speechSynthesis.speak(utterance);
+                    return resolve(
+                        "Fired off and empty utterance to wake up the native SpeechSynthesis browser API"
+                    );
+                }
 
+                let {
+                    lang,
+                    accent,
+                    pitch,
+                    rate,
+                    volume = 1,
+                    onStart,
+                    onPause,
+                    onResume,
+                    onMark,
+                    onBoundary,
+                } = config;
+
+                lang = lang && lang.toLowerCase() + "-" + accent.toUpperCase();
+
+                Object.assign(utterance, { lang, pitch, rate, volume });
+
+                const timeTillAutoResolve = 5000;
+                this.setAutoResolveTimer(
+                    setTimeout(() => {
+                        if (!instance.ended && !instance.errored) {
+                            const msg = `SpeechSynthesis Utterance of the text " ${text} " has timed out (${timeTillAutoResolve} milli seconds after starting). Resolving.`;
+                            logg(msg);
+
+                            return resolve(msg);
+                        }
+                    }, timeTillAutoResolve)
+                );
+
+                utterance.onstart = onStart;
+                utterance.onmark = onMark;
+                utterance.onpause = onPause;
+                utterance.onresume = onResume;
+                utterance.onboundary = onBoundary.bind({
+                    numWords: text.split(" ").length,
+                    wordIndex: 0,
+                });
+                //
+
+                window.speechSynthesis.speak(utterance);
                 return;
             } catch (err) {
                 logg(

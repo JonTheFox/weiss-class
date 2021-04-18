@@ -26,6 +26,7 @@ const WomanEatingPizza = require("./WomanEatingPizza.js");
 const WomanDrinkingCoffee = require("./WomanDrinkingCoffee.js");
 const ManThinking = require("./ManThinking.js");
 const GuyListeningToMusic = require("./GuyListeningToMusic.js");
+const WomanPracticingYoga = require("./WomanPracticingYoga.js");
 
 const PresentProgressiveSlides = [
 	//portrait
@@ -46,9 +47,10 @@ const PresentProgressiveSlides = [
 	WomanDrinkingCoffee,
 	PositiveQuiz4,
 	GuyListeningToMusic,
-	ManThinking,
 	PracticingJudo,
+	WomanPracticingYoga,
 	PositiveQuiz5,
+	ManThinking,
 ];
 
 module.exports = PresentProgressiveSlides;

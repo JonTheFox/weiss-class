@@ -432,19 +432,7 @@ const Quiz = (props) => {
             type: "createGame",
             payload: {
                 items,
-                config: { numAnswersRequired: 1, numAnswers: 2 },
-                rounds: [
-                    {
-                        type: MULTIPLE_ANSWER_CARDS,
-                        numAnswers: 2,
-                    },
-                    //  {
-                    //     type: SAY__REPEAT,
-                    //     numTimes: 3,
-                    //     numAnswersRequired: 1,
-                    //     numAnswers: 1,
-                    // },
-                ],
+                config: { numAnswersRequired: 1 },
             },
         });
         synthVoice.turnOn();
@@ -694,6 +682,7 @@ const Quiz = (props) => {
         }) => {
             try {
                 dispatch({ type: "clearCorrect", payload: {} });
+                if (quizIsDone) return "quiz is done";
 
                 const { currentRound = {} } = $quizState.current;
                 const { step, roundIndex, correctItem } = currentRound;
@@ -704,10 +693,7 @@ const Quiz = (props) => {
                 //             ?.slotIndex ?? false;
 
                 const wrongAnswer = selectedSlot?.item !== correctItem;
-
-                if (quizIsDone) {
-                    return "quiz is done";
-                }
+                debugger;
 
                 logg("correct answer selected:  ", !wrongAnswer);
 
@@ -716,37 +702,28 @@ const Quiz = (props) => {
                         dispatch({ type: "incorrectAnswer", payload: {} });
                         setPromptContent({ eventType: "incorrect" });
                         setActive(false);
+                    });
 
-                        promiseKeeper
-                            .stall(DURATIONS.exit, "proceed to next round")
-                            .then(() => {
-                                animationFrame = window.requestAnimationFrame(
-                                    () => {
-                                        setShowItems(false);
-                                        promiseKeeper
-                                            .stall(
-                                                DURATIONS.exit,
-                                                "skip to next round"
-                                            )
-                                            .then(() => {
-                                                animationFrame = window.requestAnimationFrame(
-                                                    () => {
-                                                        advanceRound({
-                                                            nextRoundIndex:
-                                                                $quizState
-                                                                    .current
-                                                                    .currentRound
-                                                                    .roundIndex +
-                                                                1,
-                                                            completed: false,
-                                                            skipping: true, //effectively the same as !completed. It's here just for clarity
-                                                        });
-                                                    }
-                                                );
-                                            });
-                                    }
-                                );
+                    await promiseKeeper.stall(
+                        DURATIONS.exit,
+                        "proceed to next round"
+                    );
+                    animationFrame = window.requestAnimationFrame(async () => {
+                        setShowItems(false);
+                        await promiseKeeper.stall(
+                            DURATIONS.exit,
+                            "skip to next round"
+                        );
+
+                        animationFrame = window.requestAnimationFrame(() => {
+                            advanceRound({
+                                nextRoundIndex:
+                                    $quizState.current.currentRound.roundIndex +
+                                    1,
+                                completed: false,
+                                skipping: true, //effectively the same as !completed. It's here just for clarity
                             });
+                        });
                     });
 
                     return null;
@@ -1182,7 +1159,7 @@ const Quiz = (props) => {
                                             elevation={2}
                                             active={isCardActive}
                                             label={capitalizeFirstLetter(
-                                                item?.label
+                                                item?.label ?? ""
                                             )}
                                             bgClass={"gradient"}
                                             showHeader={true}
@@ -1336,7 +1313,7 @@ const Quiz = (props) => {
                                                             POSES.char_fadeIn__old
                                                         }
                                                     >
-                                                        {label}
+                                                        {label ?? ""}
                                                     </SplitText>
                                                 );
                                             }}

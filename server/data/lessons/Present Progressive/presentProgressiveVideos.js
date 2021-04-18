@@ -962,7 +962,21 @@ const workingOnComputer = {
 		fullHd:
 			"https://player.vimeo.com/external/403652508.hd.mp4?s=619899d6bfc52d8832cad04c0c0be57d45bb6c02&profile_id=173&oauth2_token_id=57447761",
 	},
-	image: "https://images.pexels.com/videos/4065630/pictures/preview-0.jpg",
+	// image: "https://images.pexels.com/videos/4065630/pictures/preview-0.jpg",
+	images: {
+		phone:
+			"https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDV8fHdvcmtpbmclMjBvbiUyMGNvbXB1dGVyfGVufDB8MHx8fDE2MTg3NjI3MDI&ixlib=rb-1.2.1&q=80&w=400",
+		tablet:
+			"https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDV8fHdvcmtpbmclMjBvbiUyMGNvbXB1dGVyfGVufDB8MHx8fDE2MTg3NjI3MDI&ixlib=rb-1.2.1&q=80&w=1080",
+		hdReady:
+			"https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?crop=entropy&cs=srgb&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDV8fHdvcmtpbmclMjBvbiUyMGNvbXB1dGVyfGVufDB8MHx8fDE2MTg3NjI3MDI&ixlib=rb-1.2.1&q=85",
+		fullHd:
+			"https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?crop=entropy&cs=srgb&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDV8fHdvcmtpbmclMjBvbiUyMGNvbXB1dGVyfGVufDB8MHx8fDE2MTg3NjI3MDI&ixlib=rb-1.2.1&q=85",
+		fourK:
+			"https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?ixid=MnwzMTI2M3wwfDF8c2VhcmNofDV8fHdvcmtpbmclMjBvbiUyMGNvbXB1dGVyfGVufDB8MHx8fDE2MTg3NjI3MDI&ixlib=rb-1.2.1",
+		thumb:
+			"https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTI2M3wwfDF8c2VhcmNofDV8fHdvcmtpbmclMjBvbiUyMGNvbXB1dGVyfGVufDB8MHx8fDE2MTg3NjI3MDI&ixlib=rb-1.2.1&q=80&w=200",
+	},
 };
 
 const girlsDancing = {

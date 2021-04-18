@@ -1,11 +1,15 @@
 const { Quiz } = require("../../slideTemplates.js");
 const {
-	guyListeningToMusic,
-	manThinking,
-	practicingJudo,
+	womanEatingPizza,
+	cookingSoy,
+	womanDrinkingCoffeeAndReading,
 } = require("./presentProgressiveVideos.js");
 const mapVideoObjectToQuizItem = require("../../../components/Quiz/mapVideoObjectToQuizItem.js");
-const videoObjects = [guyListeningToMusic, manThinking, practicingJudo];
+const videoObjects = [
+	womanEatingPizza,
+	cookingSoy,
+	womanDrinkingCoffeeAndReading,
+];
 
 const items = videoObjects.map(mapVideoObjectToQuizItem);
 
