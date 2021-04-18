@@ -4,7 +4,7 @@ const {
 	cookingSoy,
 	womanDrinkingCoffeeAndReading,
 } = require("./presentProgressiveVideos.js");
-const mapVideoObjectToQuizItem = require("../../../components/Quiz/mapVideoObjectToQuizItem.js");
+const mapVideoObjectToQuizItem = require("../../../../client/src/components/Quiz/mapVideoObjectToQuizItem.js");
 const videoObjects = [
 	womanEatingPizza,
 	cookingSoy,

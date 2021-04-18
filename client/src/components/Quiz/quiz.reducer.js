@@ -163,8 +163,9 @@ class Game {
 
 				const { numShuffles, numRepeats } = item;
 
+				const numAnswers = Math.min(4, shuffledItems.length);
 				//start easy
-				const numAnswers = itemIndex < 2 ? 2 : itemIndex < 6 ? 3 : 4;
+				//itemIndex < 2 ? 2 : itemIndex < 6 ? 3 : 4;
 				const correctItem = item;
 				const roundItems = [correctItem];
 				//pick wrong answers at random
@@ -548,20 +549,11 @@ const quizReducer = (state, action) => {
 			// });
 
 			//clone the failed round
-			const newRound = new GameRound({
-				itemsIndexes,
-				numAnswers: currentRound.numAnswers,
-				numAnswersRequired: currentRound.numAnswersRequired,
-				roundIndex: rounds.length, //make it the last round
-				type: currentRound.type,
-				items: roundItems,
-				correctItem: currentRound.correctItem,
-				numRepeats: currentRound.numRepeats,
-			});
-			const supplementedRounds = [...rounds, newRound];
+			const revisitedRound = new GameRound(currentRound);
+			const supplementedRounds = [...rounds, revisitedRound];
 
 			const newNumTotalAnswersRequired =
-				numTotalAnswersRequired + newRound.numAnswersRequired;
+				numTotalAnswersRequired + revisitedRound.numAnswersRequired;
 			const newLastStep = newNumTotalAnswersRequired;
 			const newNumTotalRounds = numTotalRounds + 1;
 			const numRounds = supplementedRounds.length;
@@ -574,7 +566,7 @@ const quizReducer = (state, action) => {
 				lastStep: newLastStep, // make sure that is correct
 				numTotalRounds: numRounds, //verify this
 				numTotalMistakes: newNumTotalMistakes,
-				progress: getProgress(supplementedRounds),
+				//progress: getProgress(supplementedRounds),
 				isWrong: true,
 				isCorrect: false,
 			});

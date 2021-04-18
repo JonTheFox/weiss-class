@@ -49,8 +49,8 @@ const PresentProgressiveSlides = [
 	GuyListeningToMusic,
 	PracticingJudo,
 	WomanPracticingYoga,
-	PositiveQuiz5,
 	ManThinking,
+	PositiveQuiz5,
 ];
 
 module.exports = PresentProgressiveSlides;
