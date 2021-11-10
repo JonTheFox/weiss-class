@@ -18,34 +18,34 @@ import ENDPOINTS from "../../AJAX/ajax-endpoints.js";
 
 import { AppContext } from "../../contexts/AppContext.jsx";
 import {
-	// atom,
-	// selector,
-	// useRecoilState,
-	// useRecoilValue,
-	useSetRecoilState,
+  // atom,
+  // selector,
+  // useRecoilState,
+  // useRecoilValue,
+  useSetRecoilState,
 } from "recoil";
 import userState from "../../store/user.atom.js";
 
 import Copyright from "../../components/Copyright/Copyright.js";
 
 const useStyles = makeStyles((theme) => ({
-	paper: {
-		marginTop: theme.spacing(8),
-		display: "flex",
-		flexDirection: "column",
-		alignItems: "center",
-	},
-	avatar: {
-		margin: theme.spacing(1),
-		backgroundColor: theme.palette.secondary.main,
-	},
-	form: {
-		width: "100%", // Fix IE 11 issue.
-		marginTop: theme.spacing(1),
-	},
-	submit: {
-		margin: theme.spacing(3, 0, 2),
-	},
+  paper: {
+    marginTop: theme.spacing(8),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: "100%", // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
 }));
 
 let logg;
@@ -54,148 +54,144 @@ let animationFrame;
 let label = "login";
 
 export default function SignIn(props) {
-	const { route } = props;
-	const { history } = route;
-	const classes = useStyles();
+  const { route } = props;
+  const { history } = route;
+  const classes = useStyles();
 
-	const [appUtil, appState] = useContext(AppContext);
-	// const { localStorageKey, user } = appState;
-	const {
-		Logger,
-		request,
-		navigateTo,
-		//localStorage,
-		//PromiseKeeper,
-	} = appUtil;
+  const [appUtil, appState] = useContext(AppContext);
+  // const { localStorageKey, user } = appState;
+  const {
+    Logger,
+    request,
+    navigateTo,
+    //localStorage,
+    //PromiseKeeper,
+  } = appUtil;
 
-	const setUser = useSetRecoilState(userState);
+  const setUser = useSetRecoilState(userState);
 
-	const submitForm = useCallback(async (ev) => {
-		ev.preventDefault();
-		try {
-			const formData = new FormData(ev.target);
-			const email = formData.get("email");
-			const password = formData.get("password");
-			const rememberMe = formData.get("remember");
-			const _end = ENDPOINTS;
+  const submitForm = useCallback(async (ev) => {
+    ev.preventDefault();
+    try {
+      const formData = new FormData(ev.target);
+      const email = formData.get("email");
+      const password = formData.get("password");
+      const rememberMe = formData.get("remember");
+      const _end = ENDPOINTS;
 
-			const ajaxResult = await request(
-				"POST",
-				ENDPOINTS.users.POST.login.path,
-				{ email, password },
-				{
-					headers: {
-						"Access-Control-Allow-Origin": "*",
-						"Access-Control-Allow-Headers":
-							"Origin, X-Requested-With, Content-Type, Accept",
-					},
-				}
-			);
+      const ajaxResult = await request(
+        "POST",
+        ENDPOINTS.users.POST.login.path,
+        { email, password },
+        {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers":
+              "Origin, X-Requested-With, Content-Type, Accept",
+          },
+        }
+      );
 
-			const { error, wrongCredentials, loggedIn, user } = ajaxResult;
+      const { error, wrongCredentials, loggedIn, user } = ajaxResult;
 
-			debugger;
+      if (error) throw new Error(error);
+      if (wrongCredentials) {
+        throw new Error("Login failed. Reason: wrong credentials provided.");
+      }
+      if (!loggedIn) {
+        throw new Error("Login failed for an unknown reason.");
+      }
+      const { first_name, last_name, role, profile_pic_url } = user;
+      const loggedInUser = {
+        email,
+        password,
+        role,
+        first_name,
+        last_name,
+        profile_pic_url,
+      };
+      // appState.setUser(loggedInUser, rememberMe);
+      setUser(loggedInUser);
+      logg(`logged in ${role ? role : ""} user ${email} `);
+      animationFrame = window.requestAnimationFrame(() => {
+        navigateTo("/client-type-select", history);
+      });
+    } catch (err) {
+      loggError(err);
+    }
+  }, []);
 
-			if (error) throw new Error(error);
-			if (wrongCredentials) {
-				throw new Error(
-					"Login failed. Reason: wrong credentials provided."
-				);
-			}
-			if (!loggedIn) {
-				throw new Error("Login failed for an unknown reason.");
-			}
-			const { first_name, last_name, role, profile_pic_url } = user;
-			const loggedInUser = {
-				email,
-				password,
-				role,
-				first_name,
-				last_name,
-				profile_pic_url,
-			};
-			// appState.setUser(loggedInUser, rememberMe);
-			setUser(loggedInUser);
-			logg(`logged in ${role ? role : ""} user ${email} `);
-			animationFrame = window.requestAnimationFrame(() => {
-				navigateTo("/client-type-select", history);
-			});
-		} catch (err) {
-			loggError(err);
-		}
-	}, []);
+  useEffect(() => {
+    const logger = new Logger({ label });
+    logg = logger.logg;
+    loggError = logger.loggError;
+    return () => {
+      cancelAnimationFrame(animationFrame);
+    };
+  }, [Logger]);
 
-	useEffect(() => {
-		const logger = new Logger({ label });
-		logg = logger.logg;
-		loggError = logger.loggError;
-		return () => {
-			cancelAnimationFrame(animationFrame);
-		};
-	}, [Logger]);
+  return (
+    <View animate={false} className="login-page">
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Log in
+          </Typography>
+          <form className={classes.form} onSubmit={submitForm}>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+            />
 
-	return (
-		<View animate={false} className="login-page">
-			<Container component="main" maxWidth="xs">
-				<CssBaseline />
-				<div className={classes.paper}>
-					<Avatar className={classes.avatar}>
-						<LockOutlinedIcon />
-					</Avatar>
-					<Typography component="h1" variant="h5">
-						Log in
-					</Typography>
-					<form className={classes.form} onSubmit={submitForm}>
-						<TextField
-							variant="outlined"
-							margin="normal"
-							required
-							fullWidth
-							id="email"
-							label="Email Address"
-							name="email"
-							autoComplete="email"
-							autoFocus
-						/>
-						<TextField
-							variant="outlined"
-							margin="normal"
-							required
-							fullWidth
-							name="password"
-							label="Password"
-							type="password"
-							id="password"
-							autoComplete="current-password"
-						/>
-
-						<Button
-							type="submit"
-							fullWidth
-							variant="contained"
-							color="primary"
-							className={classes.submit}
-						>
-							Sign In
-						</Button>
-						<Grid container>
-							<Grid item xs>
-								<Link href="/" variant="body2">
-									Forgot password?
-								</Link>
-							</Grid>
-							<Grid item>
-								<Link href="/signup" variant="body2">
-									{"Don't have an account? Sign Up"}
-								</Link>
-							</Grid>
-						</Grid>
-					</form>
-				</div>
-				<Box mt={8}>
-					<Copyright />
-				</Box>
-			</Container>
-		</View>
-	);
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Sign In
+            </Button>
+            <Grid container>
+              <Grid item xs>
+                <Link href="/" variant="body2">
+                  Forgot password?
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link href="/signup" variant="body2">
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
+            </Grid>
+          </form>
+        </div>
+        <Box mt={8}>
+          <Copyright />
+        </Box>
+      </Container>
+    </View>
+  );
 }

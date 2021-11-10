@@ -1,309 +1,309 @@
 #root .infinite {
-	animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
 }
 
 /* 	**********************
 	animation-duration
 	********************** */
 .x-slow {
-	animation-duration: 11s;
+  animation-duration: 11s;
 }
 .slow {
-	animation-duration: 9s;
+  animation-duration: 9s;
 }
 .medium-speed {
-	animation-duration: 7s;
+  animation-duration: 7s;
 }
 .fast {
-	animation-duration: 5s;
+  animation-duration: 5s;
 }
 .very-fast {
-	animation-duration: 3s;
+  animation-duration: 3s;
 }
 .x-fast {
-	animation-duration: 1s;
+  animation-duration: 1s;
 }
 
 /* 	**********************
 	animation-delay
 	********************** */
 #root .animation-delay--1 {
-	animation-delay: var(--enter);
+  animation-delay: var(--enter);
 }
 #root .animation-delay--2 {
-	animation-delay: calc(2 * var(--enter));
+  animation-delay: calc(2 * var(--enter));
 }
 #root .animation-delay--3 {
-	animation-delay: calc(3 * var(--enter));
+  animation-delay: calc(3 * var(--enter));
 }
 #root .animation-delay--4 {
-	animation-delay: calc(4 * var(--enter));
+  animation-delay: calc(4 * var(--enter));
 }
 #root .animation-delay--5 {
-	animation-delay: calc(5 * var(--enter));
+  animation-delay: calc(5 * var(--enter));
 }
 
 .wobble {
-	animation-name: wobble-KF;
-	animation-iteration-count: infinite;
-	animation-direction: alternate;
-	animation-timing-function: ease;
-	animation-duration: 15s;
-	animation-delay: 3s;
+  animation-name: wobble-KF;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-timing-function: ease;
+  animation-duration: 15s;
+  animation-delay: 3s;
 }
 
 @keyframes wobble-KF {
-	0% {
-		transform: rotate(0deg) translateY(0%) translateX(0%);
-	}
-	25% {
-		transform: rotate(-2.5deg) translateY(-3%) translateX(2%);
-	}
-	50% {
-		transform: translateY(-1%);
-	}
-	75% {
-		transform: rotate(0deg) translateX(3.5%);
-	}
-	100% {
-		transform: rotate(2deg) translateY(3%) translateX(0%);
-	}
+  0% {
+    transform: rotate(0deg) translateY(0%) translateX(0%);
+  }
+  25% {
+    transform: rotate(-2.5deg) translateY(-3%) translateX(2%);
+  }
+  50% {
+    transform: translateY(-1%);
+  }
+  75% {
+    transform: rotate(0deg) translateX(3.5%);
+  }
+  100% {
+    transform: rotate(2deg) translateY(3%) translateX(0%);
+  }
 }
 .semi-wobble {
-	animation-name: semi-wobble-KF;
-	animation-iteration-count: infinite;
-	animation-direction: alternate;
-	animation-timing-function: ease;
-	animation-duration: 15s;
-	animation-delay: 3s;
+  animation-name: semi-wobble-KF;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-timing-function: ease;
+  animation-duration: 15s;
+  animation-delay: 3s;
 }
 
 @keyframes semi-wobble-KF {
-	0% {
-		transform: translateY(0%) translateX(0%);
-	}
-	25% {
-		transform: translateY(-5%) translateX(2%);
-	}
-	50% {
-		transform: translateY(-1%);
-	}
-	75% {
-		transform: translateX(3.5%);
-	}
-	100% {
-		transform: translateY(5%) translateX(0%);
-	}
+  0% {
+    transform: translateY(0%) translateX(0%);
+  }
+  25% {
+    transform: translateY(-5%) translateX(2%);
+  }
+  50% {
+    transform: translateY(-1%);
+  }
+  75% {
+    transform: translateX(3.5%);
+  }
+  100% {
+    transform: translateY(5%) translateX(0%);
+  }
 }
 
 .scroll {
-	animation-name: scroll-KF;
-	animation-iteration-count: infinite;
-	animation-direction: normal;
-	animation-timing-function: linear;
-	animation-duration: 10s;
-	animation-delay: 0s;
+  animation-name: scroll-KF;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+  animation-timing-function: linear;
+  animation-duration: 10s;
+  animation-delay: 0s;
 }
 
 @keyframes scroll-KF {
-	0% {
-		transform: translateX(100vw);
-	}
-	50% {
-		transform: translateX(0);
-	}
-	100% {
-		transform: translateX(-100vw);
-	}
+  0% {
+    transform: translateX(100vw);
+  }
+  50% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100vw);
+  }
 }
 
 .move-and-scroll {
-	animation-name: move-and-scroll-KF;
-	animation-iteration-count: infinite;
-	animation-direction: normal;
-	animation-timing-function: linear;
-	animation-duration: 10s;
-	animation-delay: 0s;
+  animation-name: move-and-scroll-KF;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+  animation-timing-function: linear;
+  animation-duration: 10s;
+  animation-delay: 0s;
 }
 
 @keyframes move-and-scroll-KF {
-	0% {
-		transform: translateX(-100vw) rotateY(0deg);
-	}
-	50% {
-		transform: translateX(0) rotateY(35deg);
-	}
-	100% {
-		transform: translateX(100vw) rotateY(0deg);
-	}
+  0% {
+    transform: translateX(-100vw) rotateY(0deg);
+  }
+  50% {
+    transform: translateX(0) rotateY(35deg);
+  }
+  100% {
+    transform: translateX(100vw) rotateY(0deg);
+  }
 }
 
 /* 	********************************************
 	animations state manipulation (paused, running)
 	******************************************** */
 #root .animation {
-	animation-play-state: idle;
-	&.paused,
-	&.paused.has-before:before {
-		animation-play-state: paused;
-	}
+  animation-play-state: idle;
+  &.paused,
+  &.paused.has-before:before {
+    animation-play-state: paused;
+  }
 
-	&.running {
-		animation-play-state: running;
-	}
+  &.running {
+    animation-play-state: running;
+  }
 }
 
 #root .pause-children *,
 .animation--paused---before:before,
 .animation--paused---after:after {
-	animation-play-state: paused !important; //doesnt work without the important statement, for some reason
+  animation-play-state: paused !important; //doesnt work without the important statement, for some reason
 }
 
 //same for :before animations
 #root .has-before {
-	&:before {
-		animation-play-state: idle;
-	}
-	&.before--paused {
-		&:before {
-			animation-play-state: paused;
-		}
-	}
-	&.before--running {
-		&:before {
-			animation-play-state: running;
-		}
-	}
+  &:before {
+    animation-play-state: idle;
+  }
+  &.before--paused {
+    &:before {
+      animation-play-state: paused;
+    }
+  }
+  &.before--running {
+    &:before {
+      animation-play-state: running;
+    }
+  }
 }
 
 #root .fade-in {
-	animation-name: fadeInAnim;
-	animation-duration: $duration-enter;
-	animation-fill-mode: forwards;
+  animation-name: fadeInAnim;
+  animation-duration: 0.4s;
+  animation-fill-mode: forwards;
 }
 
 @keyframes fadeInAnim {
-	from {
-		opacity: 0;
-	}
+  from {
+    opacity: 0;
+  }
 
-	to {
-		opacity: 1;
-	}
+  to {
+    opacity: 1;
+  }
 }
 
 #root .fade-out {
-	animation-name: fadeOutAnim;
-	animation-duration: $duration-exit;
-	animation-fill-mode: forwards;
-	pointer-events: none;
+  animation-name: fadeOutAnim;
+  animation-duration: 0.3s;
+  animation-fill-mode: forwards;
+  pointer-events: none;
 }
 
 @keyframes fadeOutAnim {
-	from {
-		opacity: 1;
-	}
+  from {
+    opacity: 1;
+  }
 
-	to {
-		opacity: 0;
-	}
+  to {
+    opacity: 0;
+  }
 }
 
 #root .rise-up {
-	animation-name: rise-up-anim;
-	animation-duration: calc(2 * var(--enter));
-	animation-fill-mode: forwards;
-	transform: translateY(200vh);
+  animation-name: rise-up-anim;
+  animation-duration: calc(2 * var(--enter));
+  animation-fill-mode: forwards;
+  transform: translateY(200vh);
 }
 @keyframes rise-up-anim {
-	from {
-		transform: translateY(200vh);
-	}
+  from {
+    transform: translateY(200vh);
+  }
 
-	to {
-		transform: translateY(0vh);
-	}
+  to {
+    transform: translateY(0vh);
+  }
 }
 
 #root .letters-rise {
-	animation-name: letters-rise-anim;
-	animation-duration: calc(2 * var(--enter));
-	animation-fill-mode: forwards;
-	// overflow: hidden;
+  animation-name: letters-rise-anim;
+  animation-duration: calc(2 * var(--enter));
+  animation-fill-mode: forwards;
+  // overflow: hidden;
 }
 @keyframes letters-rise-anim {
-	from {
-		line-height: 6;
-		// letter-spacing: 2.25px;
-		// overflow-wrap: normal;
-		// overflow: hidden;
-		opacity: 0;
-	}
+  from {
+    line-height: 6;
+    // letter-spacing: 2.25px;
+    // overflow-wrap: normal;
+    // overflow: hidden;
+    opacity: 0;
+  }
 
-	to {
-		line-height: 1.2;
-		// letter-spacing: 0.25px;
-		// overflow-wrap: break-word;
-		opacity: 1;
-	}
+  to {
+    line-height: 1.2;
+    // letter-spacing: 0.25px;
+    // overflow-wrap: break-word;
+    opacity: 1;
+  }
 }
 
 #root .letters-windup {
-	animation-name: letters-windup-anim;
-	animation-duration: calc(2 * var(--exit, 0.4s));
-	animation-fill-mode: forwards;
-	// overflow: hidden;
+  animation-name: letters-windup-anim;
+  animation-duration: calc(2 * var(--exit, 0.4s));
+  animation-fill-mode: forwards;
+  // overflow: hidden;
 }
 @keyframes letters-windup-anim {
-	from {
-		line-height: 1.2;
-		letter-spacing: 0.25px;
-	}
-	to {
-		line-height: 12;
-		letter-spacing: 0px;
-	}
+  from {
+    line-height: 1.2;
+    letter-spacing: 0.25px;
+  }
+  to {
+    line-height: 12;
+    letter-spacing: 0px;
+  }
 }
 
 #root .slide--from-right {
-	animation-name: slide--from-right-KF;
-	animation-duration: calc(2 * var(--enter));
-	animation-fill-mode: forwards;
-	opacity: 0;
+  animation-name: slide--from-right-KF;
+  animation-duration: calc(2 * var(--enter));
+  animation-fill-mode: forwards;
+  opacity: 0;
 }
 @keyframes slide--from-right-KF {
-	0% {
-		transform: translateX(100vw);
-		opacity: 0;
-	}
-	5% {
-		transform: translateX(100vw);
-		opacity: 0.5;
-	}
-	80% {
-		opacity: 0.5;
-	}
-	100% {
-		opacity: 1;
-		transform: translateX(0);
-	}
+  0% {
+    transform: translateX(100vw);
+    opacity: 0;
+  }
+  5% {
+    transform: translateX(100vw);
+    opacity: 0.5;
+  }
+  80% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 #root .transition--opaque {
-	animation-name: transition--opaque-anim;
-	animation-fill-mode: forwards;
-	opacity: 0;
+  animation-name: transition--opaque-anim;
+  animation-fill-mode: forwards;
+  opacity: 0;
 }
 @keyframes transition--opaque-anim {
-	from {
-		opacity: 0;
-	}
-	to {
-		opacity: 1;
-	}
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 #root .transition-box {
-	height: 100%;
-	width: 100%;
+  height: 100%;
+  width: 100%;
 }

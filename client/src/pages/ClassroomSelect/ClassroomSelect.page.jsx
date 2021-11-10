@@ -201,6 +201,11 @@ export default function ClassroomSelect(props) {
       setVideo(flyingThroughCloudsOriginal);
   }, []);
 
+  useEffect(() => {
+    const ans = rooms;
+    debugger;
+  }, [rooms]);
+
   return (
     <View className={clsx("classroom-select", classes.root)}>
       <main>
