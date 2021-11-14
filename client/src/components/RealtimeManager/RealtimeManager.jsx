@@ -100,8 +100,9 @@ const Realtime = (props) => {
   const keepServersAwake = useCallback(async (serversUris = []) => {
     try {
       let ninjaCode = 0;
+      return;
       return promiseKeeper.every(
-        5 * 1000,
+        2 * 60 * 1000,
         () => {
           ninjaCode = getRandomUpTo(100);
           Object.values(serversUris).map(async (serverUri) => {
@@ -143,14 +144,10 @@ const Realtime = (props) => {
     setUser(localStorageUser);
     const localStorageClient = localStorage.getObj(CLIENT_STORAGE_KEY);
     setClient(localStorageClient);
-    const promiseTokeepServerAwake = keepServersAwake([
+    const promiseToKeepServersAlive = keepServersAwake([
       ENDPOINTS.ninjaCode.POST.ninjaCodeUser.path,
       ENDPOINTS.ninjaCode.POST.ninjaCodeDomestic.path,
     ]);
-
-    return () => {
-      promiseTokeepServerAwake.reject("component unmounts");
-    };
   }, []);
 
   useEffect(() => {
@@ -227,8 +224,6 @@ const Realtime = (props) => {
 
       socket.on("server__authedClient", ({ classrooms, client }) => {
         logg("server__authedClient", client);
-        debugger;
-
         setClient((_client) => ({ ..._client, id: client.id }));
         setRooms(classrooms);
       });
@@ -275,8 +270,6 @@ const Realtime = (props) => {
           // clientType: clientType.toLowerCase(),
         });
 
-        debugger;
-
         socket.emit("client__providesCredentials", {
           user: {
             email,
@@ -294,12 +287,11 @@ const Realtime = (props) => {
         const { currentSlideIndex } = payload;
         const content = "Received slide: " + currentSlideIndex;
         logg(payload);
-        debugger;
       });
 
       socket.on("server__sendsRooms", function (payload) {
         const { rooms } = payload;
-        debugger;
+
         //todo : setRooms
         const content = "Received rooms: ";
         logg(content, rooms);

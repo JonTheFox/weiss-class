@@ -1708,6 +1708,7 @@ const request = async (method = "GET", uri = "", payload = {}, config = {}) => {
     };
 
     logg(ajaxResult);
+
     const throwOnError = config.throwOnError || false;
     if (throwOnError) {
       throw new Error(err);

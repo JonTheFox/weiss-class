@@ -45,7 +45,7 @@ import "file-upload-with-preview/dist/file-upload-with-preview.min.css";
 
 import firebase from "firebase/app";
 import "firebase/storage";
-import { storage } from "../../firebase/firebase.js";
+import { uploadImage } from "../../services/uploadImage.js";
 const PASSWORD_REQUIREMENTS =
   "Password must be at least 8 characters long and contain a lowercase letter (a-z), an uppercase letter (A-Z) and a digit (0-9).";
 
@@ -408,42 +408,24 @@ export default function Signup(props) {
       // };
       //refs.current._image = formData;
 
-      if (_image === "") {
-        loggError(`not an image, the image file is a ${typeof _image}`);
-      }
+      const storagePath = `/${_image.name}`;
 
-      const uploadTask = storage.ref(`/images/${_image.name}`).put(_image);
+      const { url: fireBaseUrl } = uploadImage({
+        path: storagePath,
+        image: _image,
+      });
+      debugger;
+      // set the image from firebase as the value for the url key
+      refs.current.profile_pic_url = fireBaseUrl;
+      refs.current.profileData.profile_pic_url = fireBaseUrl;
 
-      uploadTask.on(
-        "state_changed",
-        (snapShot) => {
-          //takes a snap shot of the process as it is happening
-          logg(snapShot);
-        },
-        (err) => {
-          logg(err);
-        },
-        () => {
-          // gets the functions from storage refences the image storage in firebase by the children
-          // gets the download url then sets the image from firebase as the value for the url key:
-          storage
-            .ref("images")
-            .child(_image.name)
-            .getDownloadURL()
-            .then((fireBaseUrl) => {
-              refs.current.profile_pic_url = fireBaseUrl;
-              refs.current.profileData.profile_pic_url = fireBaseUrl;
+      refs.current.handleChange(fireBaseUrl);
 
-              refs.current.handleChange(fireBaseUrl);
-
-              //todo: test to see that the image was indeed uploaded successfully
-              setProfilePic((prevObject) => ({
-                ...prevObject,
-                url: fireBaseUrl,
-              }));
-            });
-        }
-      );
+      //todo: test to see that the image was indeed uploaded successfully
+      setProfilePic((prevObject) => ({
+        ...prevObject,
+        url: fireBaseUrl,
+      }));
     } catch (err) {
       loggError(err);
       debugger;

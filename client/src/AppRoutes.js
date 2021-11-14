@@ -1,10 +1,10 @@
 import React, { Suspense, lazy, useEffect, useState } from "react";
 import {
-	Route,
-	BrowserRouter as Router,
-	Switch,
-	Redirect,
-	Fragment,
+  Route,
+  BrowserRouter as Router,
+  Switch,
+  Redirect,
+  Fragment,
 } from "react-router-dom";
 
 import View from "./components/layout/View.jsx";
@@ -15,6 +15,7 @@ import Classroom from "./components/Classroom/Classroom.js";
 import Card from "./components/Card/Card.js";
 import ClassroomSelect from "./pages/ClassroomSelect/ClassroomSelect.page.jsx";
 import LogoScreen from "./pages/LogoScreen/LogoScreen.jsx";
+import ImageUploadPage from "./pages/ImageUpload/ImageUploadPage.jsx";
 import GlowingLoader from "./components/GlowingLoader/GlowingLoader.jsx";
 import VideoPlayer from "./components/VideoPlayer/VideoPlayer.jsx";
 
@@ -44,96 +45,102 @@ import showBgState from "./store/showBg.atom.js";
 // import "./_RealtimeManager.scss";
 
 const SageAdvice = lazy(() =>
-	import(
-		/* webpackPrefetch: true, webpackChunkName: "SageAdvice" */ "./pages/SageAdvice/SageAdvice.jsx"
-	)
+  import(
+    /* webpackPrefetch: true, webpackChunkName: "SageAdvice" */ "./pages/SageAdvice/SageAdvice.jsx"
+  )
 );
 
 const LazyLogin = lazy(() =>
-	import(/* webpackChunkName: "Login" */ "./pages/Login/Login.jsx")
+  import(/* webpackChunkName: "Login" */ "./pages/Login/Login.jsx")
 );
 
 const LazySignup = lazy(() =>
-	import(/* webpackChunkName: "Signup" */ "./pages/Signup/Signup.js")
+  import(/* webpackChunkName: "Signup" */ "./pages/Signup/Signup.js")
 );
 
 const baseRoute = "/";
 
 const AppRoutes = (props) => {
-	const { route } = props;
-	const { match, location } = route;
+  const { route } = props;
+  const { match, location } = route;
 
-	const video = useRecoilValue(videoState);
-	const sound = useRecoilValue(soundState);
-	const setShowBg = useSetRecoilState(showBgState);
+  const video = useRecoilValue(videoState);
+  const sound = useRecoilValue(soundState);
+  const setShowBg = useSetRecoilState(showBgState);
 
-	return (
-		<React.Fragment>
-			<VideoPlayer
-				video={video}
-				controls={false}
-				noInteraction={true}
-				light={false}
-				playing={true}
-				loop={true}
-				faded={false}
-				muted={true}
-				volume={sound?.muted || !video || !video.playSound ? 0 : 0.25}
-				scaleToFitViewport={video?.scaleToFitViewport ?? false}
-				startSecond={video?.startSecond ?? 0}
-				stopSecond={video?.stopSecond}
-				fadeInWhenReady={true}
-				onReady={() => {
-					//setShowBg(false);
-				}}
-				//onPlay={() => {
-				//	setIsVideoPlaying(true);
-				//}}
-			></VideoPlayer>
-			<Suspense fallback={<GlowingLoader />}>
-				<Switch location={location}>
-					<Route
-						path={`${match.path}client-type-select`}
-						render={(route) => <ClientTypeSelect route={route} />}
-					/>
+  return (
+    <React.Fragment>
+      <VideoPlayer
+        video={video}
+        controls={false}
+        noInteraction={true}
+        light={false}
+        playing={true}
+        loop={true}
+        faded={false}
+        muted={true}
+        volume={sound?.muted || !video || !video.playSound ? 0 : 0.25}
+        scaleToFitViewport={video?.scaleToFitViewport ?? false}
+        startSecond={video?.startSecond ?? 0}
+        stopSecond={video?.stopSecond}
+        fadeInWhenReady={true}
+        onReady={() => {
+          //setShowBg(false);
+        }}
+        //onPlay={() => {
+        //	setIsVideoPlaying(true);
+        //}}
+      ></VideoPlayer>
+      <Suspense fallback={<GlowingLoader />}>
+        <Switch location={location}>
+          <Route
+            path={`${match.path}client-type-select`}
+            render={(route) => <ClientTypeSelect route={route} />}
+          />
 
-					<Route
-						path={`${match.path}classroom-select`}
-						render={(route) => <ClassroomSelect route={route} />}
-					/>
-					<Route
-						path={`${match.path}classroom`}
-						render={(route) => <Classroom route={route} />}
-					/>
+          <Route
+            path={`${baseRoute}upload`}
+            render={(route) => <ImageUploadPage route={route} />}
+          ></Route>
 
-					<Route path={`${baseRoute}advice`}>
-						<SageAdvice />
-					</Route>
+          <Route
+            path={`${match.path}classroom-select`}
+            render={(route) => <ClassroomSelect route={route} />}
+          />
+          <Route
+            path={`${match.path}classroom`}
+            render={(route) => <Classroom route={route} />}
+          />
 
-					<Route
-						path={`${baseRoute}login`}
-						render={(route) => <LazyLogin route={route} />}
-					/>
+          <Route path={`${baseRoute}advice`}>
+            <SageAdvice />
+          </Route>
 
-					<Route
-						path={`${baseRoute}signup`}
-						render={(route) => <LazySignup route={route} />}
-					/>
+          <Route
+            path={`${baseRoute}login`}
+            render={(route) => <LazyLogin route={route} />}
+          />
 
-					<Route path={`${baseRoute}loading`}>
-						<GlowingLoader route={route} />
-					</Route>
-					<Route path={`${baseRoute}error`}>
-						<ErrorBoundary debug={true} route={route} />
-					</Route>
-					<Route path={`${baseRoute}`}>
-						<LogoScreen route={route}></LogoScreen>
-					</Route>
-					<Redirect to={`${match.path}client-type-select`} />
-				</Switch>
-			</Suspense>
-		</React.Fragment>
-	);
+          <Route
+            path={`${baseRoute}signup`}
+            render={(route) => <LazySignup route={route} />}
+          />
+
+          <Route path={`${baseRoute}loading`}>
+            <GlowingLoader route={route} />
+          </Route>
+          <Route path={`${baseRoute}error`}>
+            <ErrorBoundary debug={true} route={route} />
+          </Route>
+          <Route path={`${baseRoute}`}>
+            <LogoScreen route={route}></LogoScreen>
+          </Route>
+
+          <Redirect to={`${match.path}client-type-select`} />
+        </Switch>
+      </Suspense>
+    </React.Fragment>
+  );
 };
 
 export default AppRoutes;

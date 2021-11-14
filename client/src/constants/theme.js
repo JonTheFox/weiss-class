@@ -1,4 +1,4 @@
-import { createMuiTheme } from "@material-ui/core/styles/";
+import { createTheme } from "@material-ui/core/styles/";
 
 const paletteTheme = {
   primary: { main: "rgba(148, 116, 204, 1)" }, // washed up purple
@@ -7,7 +7,7 @@ const paletteTheme = {
   //canvasColor: "rgba(255, 255, 255, 0.87)" //white
 };
 
-const theme = createMuiTheme({
+const theme = createTheme({
   palette: paletteTheme,
   spacing: 8,
   typography: {

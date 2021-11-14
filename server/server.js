@@ -8,13 +8,13 @@ const path = require("path");
 // const cors = require("cors");
 const ServerLogger = require("./lib/logg-server.js");
 const {
-	is,
-	our,
-	request,
-	asyncForEach,
-	sanitizeVarName,
-	getRandomUpTo,
-	getUniqueString,
+  is,
+  our,
+  request,
+  asyncForEach,
+  sanitizeVarName,
+  getRandomUpTo,
+  getUniqueString,
 } = require("./lib/issy.js");
 //
 global.is = is;
@@ -29,9 +29,9 @@ const fetch = require("node-fetch");
 global.fetch = fetch;
 
 const mainLogger = new ServerLogger({
-	label: "Weiss",
-	stylePreset: "sky",
-	logInProduction: false,
+  label: "Weiss",
+  stylePreset: "sky",
+  logInProduction: false,
 });
 const { logg, loggError } = mainLogger;
 global.logger = mainLogger;
@@ -45,9 +45,9 @@ const PORT = process.env.PORT || 5000;
 // 		: process.env.HOMEPAGE_URL;
 global.HOST = process.env.SERVER_URL;
 global.USER_SERVER_URL =
-	process.env.NODE_ENV === "development"
-		? "http://localhost:5001"
-		: process.env.USER_SERVER_URL;
+  process.env.NODE_ENV === false && "development"
+    ? "http://localhost:5000"
+    : process.env.USER_SERVER_URL;
 
 const authenticate = require("./api/auth.js"); // dependends on logger
 global.authenticate = authenticate;
@@ -79,15 +79,15 @@ const BUILD_FOLDER = path.join(__dirname, "../client", "build");
 const HOMEPAGE_FILENAME = "index.html";
 
 const sendHomepage = (req, res, next) => {
-	//maybe switch to "^/$"
-	logg("Sending Homepage!");
-	res.sendFile(INDEX_PAGE, {}, (err) => {
-		if (err) {
-			loggError(err);
-			return next(err);
-		}
-		logg(`File ${HOMEPAGE_FILENAME} was successfully sent to client. `);
-	});
+  //maybe switch to "^/$"
+  logg("Sending Homepage!");
+  res.sendFile(INDEX_PAGE, {}, (err) => {
+    if (err) {
+      loggError(err);
+      return next(err);
+    }
+    logg(`File ${HOMEPAGE_FILENAME} was successfully sent to client. `);
+  });
 };
 
 //graphql
@@ -104,16 +104,21 @@ app.get("/", sendHomepage);
 app.use("/", express.static(BUILD_FOLDER));
 app.use("/static", express.static(BUILD_FOLDER));
 
+// console.log("got here");
+
 //mount a socket.io server (for real-time communication between the server and its clients) on top of the standard Express app
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
 const supplementSocket = require("./socket/index.js");
-supplementSocket(io);
 
+supplementSocket(io);
 http.listen({ port: process.env.PORT || PORT }, () => {
-	logg(
-		`Express server is listening on port ${PORT}. GraphQL endpoint: ${server.graphqlPath}`
-	);
+  console.log(
+    `Express server is listening on port ${PORT}. GraphQL endpoint: ${server.graphqlPath}`
+  );
+  // logg(
+  //   `Express server is listening on port ${PORT}. GraphQL endpoint: ${server.graphqlPath}`
+  // );
 });
 
 module.exports = http;
