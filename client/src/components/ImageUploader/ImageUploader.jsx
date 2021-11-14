@@ -19,17 +19,18 @@ const ImageUploader = ({ onChange, onUploaded, children, ...otherProps }) => {
       const newImage = files.slice(-1)[0];
       if (onChange) onChange(newImage, files);
       const uploadedImage = await uploadImage({
-        path: `/images/${newImage.name}`,
+        path: `/${newImage.name}`,
         image: newImage,
       });
 
       setUploadedImages((_images) => [..._images, uploadedImage]);
 
       // insert image URL and other data to DB
+      debugger;
       uploadImageData({
-        //urls: newImage.urls || [],
-        title: "TITLE" || newImage.title,
-        id: getUniqueString(),
+        url: uploadedImage.url,
+        title: newImage.title || "Untitled",
+        id: getUniqueString(30),
         ...uploadedImage,
       });
 

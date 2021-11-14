@@ -1,6 +1,5 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const getUniqueString = require("../lib/issy.js").getUniqueString;
 
 const { logger, is, request, getRandomUpTo } = global;
 
@@ -23,15 +22,14 @@ const router = express.Router();
 const Schema = mongoose.Schema;
 
 const ImageSchema = new Schema({
-  // id: {
-  //   type: String,
-  //   trim: true,
-  //   required: true,
-  //   unique: true,
-  //   default: getUniqueString(),
-  // },
+  id: {
+    type: String,
+    trim: true,
+    required: false,
+    unique: false,
+  },
   title: { type: String, lowercase: false, trim: true, required: true },
-  description: String,
+  description: { type: String, trim: true, required: false },
   tags: {
     //e.g. ["surf", "beach"]
     type: Array,
@@ -40,16 +38,10 @@ const ImageSchema = new Schema({
   },
   width: { type: Number, min: 1, required: false },
   height: { type: Number, min: 1, required: false },
-  urls: {
+  url: {
     required: true,
-    type: Array,
-    default: {
-      raw: String,
-      full: { type: String, required: false },
-      regular: { type: String, required: false },
-      small: { type: String, required: false },
-      thumb: String,
-    },
+    type: String,
+    unique: true,
   },
 });
 
@@ -59,7 +51,7 @@ const DB_NAME = "paintings1";
 const COLLECTION_NAME = "1";
 const URI = process.env.MONGODB_URI_PAINTINGS;
 
-const saveImageUrl = async ({ title }) => {
+const saveImageUrl = async ({ url, id, title }) => {
   let errMsg;
   try {
     //connect to db
@@ -68,7 +60,6 @@ const saveImageUrl = async ({ title }) => {
 
     const isConnected = mongoose.connect(URI, {
       dbName: DB_NAME,
-      collectionName: COLLECTION_NAME,
     });
     isConnected.catch((err) => {
       // handle connection errors
@@ -84,11 +75,10 @@ const saveImageUrl = async ({ title }) => {
     const ImageModel = mongoose.model(modelName, ImageSchema);
     const mongooseConnection = mongoose.connection;
     // const collection = await mongooseConnection.db.collection(COLLECTION_NAME);
-    const query = "";
-    const imageRecord = new ImageModel({ title });
-    const doc = await imageRecord.save();
-    console.log("result: doc: ", doc);
-    return doc;
+    const imageRecord = new ImageModel({ url, title, id });
+    const { _id, tags } = await imageRecord.save();
+    console.log("Saved image: ", { title, url, tags, _id });
+    return { title, url, tags, _id, id };
   } catch (error) {
     loggError("Could not upload file. ", error);
     return error;
@@ -97,8 +87,8 @@ const saveImageUrl = async ({ title }) => {
 
 router.post("/uploadImageData", async (req, res, next) => {
   try {
-    const { title } = req.body;
-    const result = await saveImageUrl({ title });
+    const { url, title, id } = req.body;
+    const result = await saveImageUrl({ url, title, id });
     return res.send(result);
   } catch (err) {
     loggError(err);

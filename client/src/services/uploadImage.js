@@ -44,53 +44,27 @@ export const upload = ({ file, path, storageRef }) => {
 };
 
 export const uploadImage = async ({ path, image }) => {
-  const storageRef = "/";
+  const storageRef = "paintings1";
   const storagePath = `/${storageRef}/${image.name}`;
   return upload({ file: image, path: storagePath, storageRef });
 };
 
-export const uploadImageData = async ({ title, id }) => {
+export const uploadImageData = async ({ url, title, id }) => {
   let errMsg;
   try {
-    //connect to db
     const headers = {
       Accept: "application/json",
       "Content-Type": "application/json",
     };
 
+    debugger;
+
     const ajaxResult = await request(
       "POST",
       "/api/images/uploadImageData",
-      { title, id },
+      { url, title, id },
       headers
     );
-
-    //  const ajaxResult = await fetch(
-
-    //  "/api/images/uploadImageData",
-    //  {method: "POST"}
-    //  { url, name, title },
-    //  {
-    //    headers: {
-    //      "Access-Control-Allow-Origin": "*",
-    //      "Access-Control-Allow-Headers":
-    //        "Origin, X-Requested-With, Content-Type, Accept",
-    //    },
-    //  }
-    //  );
-
-    // const ajaxResult = await request(
-    //   "POST",
-    //   "/api/images/uploadImageData",
-    //   { url, name, title },
-    //   {
-    //     headers: {
-    //       "Access-Control-Allow-Origin": "*",
-    //       "Access-Control-Allow-Headers":
-    //         "Origin, X-Requested-With, Content-Type, Accept",
-    //     },
-    //   }
-    // );
 
     console.log("ajaxResult: ", ajaxResult);
     debugger;
